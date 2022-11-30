@@ -8,8 +8,13 @@ public class MainController {
 
     // 최초 진입 시 실행 페이지
 	@GetMapping(value="/")
-	public String page() {
-		return "main";
+	public String home() {
+		return "login";
+	}
+
+	@GetMapping(value="/join")
+	public String join() {
+		return "join1";
 	}
 
 }

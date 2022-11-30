@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="manage_event.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
@@ -50,22 +50,60 @@
                 </li>
             </ul>
         </div>
+
         <!-- main -->
         <div class="content">
             <div class="container">
                 <div class="page-header">
                     <div class="page-title">
-                        <span>(주)포유커뮤니케이션즈</span>
+                        <span>행사관리</span>
                     </div>
                 </div>
+
+                <div class="detail_bar">
+                    <div class="detail1">
+                        <img src="material-view-list.svg">
+                        <input type="button" value="행사현황">
+                    </div>
+                    <div class="detail2">
+                        <img src="pen_gray.svg">
+                        <input type="button" value="행사등록">
+                    </div>
+                    
+                </div>
+
                 <div class="area">
-                    <div class="area1">
-                        <div class="area1_1"><p class="area_title">최근 행사</p></div>
-                        <div class="area1_2"><p class="area_title">대기 중인 직원</p></div>
+                    <div class="search_area">
+                        <input type="text" class="calendar">
+                        <input type="text" class="word_search">
                     </div>
-                    <div class="area2">
-                        <p class="area_title">직원 근무 기록</p>
-                    </div>
+                    
+
+                    <ul class="list">
+                        <ol>
+                            <li>No</li>
+                            <li>행사명</li>
+                            <li>행사기간</li>
+                            <li>진행현황</li>
+                            <li>지원현황</li>
+                            <li>부스현황</li>
+                        </ol>
+                            
+
+                    </ul>
+                </div>
+
+
+                <!-- 페이징 처리(Unix 참조) -->
+                <div>
+                    <ul>
+                        <!-- 이전 -->
+
+                        <!-- 번호 -->
+
+                        <!-- 다음 -->
+
+                    </ul>
                 </div>
             </div>
         </div>

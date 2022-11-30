@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>ID, PW 검색</title>
+        <link rel="stylesheet" href="find_id_pw.css">
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+    </head>
+    <body>
+        <div id="wrap">
+            <!-- 화면 중앙 기준, 좌측 화면 -->
+            <div class="login_comment">
+                <p>다양한 행사에 참여하고<br/>운영요원이 되어 경험을 쌓아보세요!</p>
+            </div>
+            <div class="login_img_area">
+                <div class="login_img"></div>
+            </div>
+
+            <!-- 화면 중앙 기준, 우측 화면 -->
+            
+            <div class="tab">
+                <input id="tab1" type="radio" name="tab"/>
+                <input id="tab2" type="radio" name="tab"/>
+                <label for="tab1">아이디 찾기</label>
+                <label for="tab2">비밀번호 찾기</label>
+                <div class="tab1_content">
+                    <section id="find_id">
+                        <form>
+                            <p>이름</p>
+                            <input type="text" placeholder="이름을 입력해주세요." class="put_name">
+                            <p>휴대전화</p>
+                            <input type="text" placeholder="예) 01012345678" class="put_number">
+                            <input type="button" value="인증번호" class="ask_certifinum">
+                            <p>인증번호</p>
+                            <input type="text" placeholder="인증번호를 입력하세요." class="certifi_num">
+                            <input type="button" value="확인" class="ask_certifinum">
+
+                            <input type="button" value="아이디 찾기" class="find_id_btn">
+                            <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome">
+                        </form>
+                    </section>
+                </div>
+                <div class="tab2_content">
+                    <section id="find_pw">
+                        <form action="">
+                            <p>아이디</p>
+                            <input type="text" placeholder="아이디를 입력해주세요." class="put_name">
+                            <p>휴대전화</p>
+                            <input type="text" placeholder="예) 01012345678" class="put_number">
+                            <input type="button" value="인증번호" class="ask_certifinum">
+                            <p>인증번호</p>
+                            <input type="text" placeholder="인증번호를 입력하세요." class="certifi_num">
+                            <input type="button" value="확인" class="ask_certifinum">
+
+                            <input type="button" value="비밀번호 재설정" class="find_id_btn">
+                            <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome">
+                        </form>
+                    </section>
+                </div>
+             </div>
+        </div>
+        <script>
+            $(function() {
+                $("#tab1").on("click", function() {
+                    $(".tab1_content").css('display', 'inline');
+                    $(".tab2_content").css('display', 'none');
+                });
+                
+                $("#tab2").on("click", function() {
+                    $(".tab1_content").css('display', 'none');
+                    $(".tab2_content").css('display', 'inline');
+                });
+            });
+        </script>
+    </body>
+</html>
