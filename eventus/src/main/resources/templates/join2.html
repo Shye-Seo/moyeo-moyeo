@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>회원 정보</title>
-        <link rel="stylesheet" href="join2.css">
+        <link rel="stylesheet" href="/css/join2.css?after">
     </head>
     <body>
         <div id="wrap">
@@ -27,8 +27,11 @@
             <!-- 회원 정보 입력 -->
             <div id="member">
                 <form action="">
-                    <p class="item">아이디</p>
-                    <input type="" placeholder="아이디 입력" value="">
+                    <div class="name_area">
+                        <p class="item">아이디</p>
+                        <input type="" placeholder="아이디 입력" value="">
+                    </div>
+
                     <p class="item">비밀번호</p>
                     <input type="" placeholder="비밀번호 입력" value="">
                     <p class="item">비밀번호 확인</p>
@@ -48,7 +51,7 @@
 
             <div class="button_position">
                 <input type="button" value="뒤로" class="back_btn" onclick="">
-                <input type="button" value="회원가입" class="join_btn">
+                <input type="button" value="회원가입" class="join_btn" onclick="location.href='/join3'">
             </div>
         </div>
     </body>
