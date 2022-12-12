@@ -167,8 +167,6 @@ body {
 }
 
 #member input::placeholder {
-    color: var(--unnamed-color-dddddd);
-    text-align: left;
     font: normal normal normal 16px/19px Pretendard;
     letter-spacing: 0px;
     color: #DDDDDD;
@@ -187,8 +185,6 @@ body {
     height: 50px;
     /* UI Properties */
     color:#5B8FD2;
-    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    border: 1px solid var(--unnamed-color-dddddd);
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #66666629;
     border: 1px solid #DDDDDD;
@@ -201,7 +197,6 @@ body {
     height: 50px;
     /* UI Properties */
     color: #FFFFFF;
-    background: var(--unnamed-color-5b8fd2) 0% 0% no-repeat padding-box;
     background: #5B8FD2 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #66666629;
     border: 1px solid #5B8FD2;
