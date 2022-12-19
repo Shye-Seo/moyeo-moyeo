@@ -1,21 +1,18 @@
 package com.service.eventus.member;
 
-import net.minidev.json.JSONObject;
-import org.apache.logging.log4j.message.Message;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class MemberService {
 
     // https://m.blog.naver.com/seek316/222116844258
-    @Autowired
+    @Inject
     private MemberDao memberDao;
 
     // 회원 가입

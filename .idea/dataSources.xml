@@ -8,5 +8,23 @@
       <jdbc-url>jdbc:mysql://eventus-db.cdc39ucustpp.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="com.service.eventus.test/Hibernate" uuid="70cb8eb2-f153-4210-bb9f-4f2dfec695cd">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://eventus-db.cdc39ucustpp.ap-northeast-2.rds.amazonaws.com:3306/testdb?serverTimezone=UTC</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="com.service.eventus.main/Hibernate" uuid="003a4e82-8f8f-44d4-b8ee-f83a7897b0e5">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://eventus-db.cdc39ucustpp.ap-northeast-2.rds.amazonaws.com:3306/testdb?serverTimezone=UTC</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
