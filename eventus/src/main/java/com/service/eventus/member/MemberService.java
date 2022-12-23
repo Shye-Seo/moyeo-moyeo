@@ -4,7 +4,7 @@ import com.service.eventus.mappers.MemberDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpSession;
 
 @Service
 public class MemberService {
@@ -18,19 +18,21 @@ public class MemberService {
     }
 
     // 로그인할 때 회원확인
-    public int loginCheck(HashMap<String, Object> map) {
-        int result = memberDao.loginCheck(map);
+    public boolean loginCheck(MemberVo memberVo, HttpSession session) {
+        boolean result = memberDao.loginCheck(memberVo);
 
-        if(result!=0) { // true일 경우 세션에 등록
-            MemberVo memberVo1 = viewMember(map);
-;
+        if(result) { // true일 경우 세션에 등록
+            MemberVo memberVo1 = viewMember(memberVo);
+
+            session.setAttribute("user_id", memberVo1.getStaff_id());
+            session.setAttribute("id", memberVo1.getId());
 
         }
         return result;
     }
 
     // 로그인할때 회원정보 가져올때
-    public MemberVo viewMember(HashMap<String, Object> memberVo) {
+    public MemberVo viewMember(MemberVo memberVo) {
         return memberDao.viewMember(memberVo);
     }
 }

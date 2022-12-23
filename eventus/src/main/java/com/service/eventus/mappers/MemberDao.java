@@ -7,20 +7,18 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-
 @Mapper
 @Repository
 public interface MemberDao {
 
+    @Select("select * from staff_table where staff_id = #{staff_id} and staff_pw = #{staff_pw}")
+    MemberVo viewMember(MemberVo memberVo);  // 로그인할 때 회원정보 가져올 때
 
-    MemberVo viewMember(HashMap<String, Object> map);  // 로그인할 때 회원정보 가져올 때
-
-
+    @Select("select count(*) from staff_table where staff_id=#{staff_id}")
     int idChk(String user_id); // 아이디 중복 체크
 
-
-    int loginCheck(HashMap<String, Object> map); // 로그인할 때 회원확인(세션등록)
+    @Select("select * from staff_table where staff_id = #{staff_id} and staff_pw = #{staff_pw}")
+    boolean loginCheck(MemberVo memberVo); // 로그인할 때 회원확인(세션등록)
 
 
 }
