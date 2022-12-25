@@ -18,14 +18,12 @@ public class MemberService {
     }
 
     // 로그인할 때 회원확인
-    public boolean loginCheck(MemberVo memberVo, HttpSession session) {
+    public boolean loginCheck(MemberVo memberVo) {
         boolean result = memberDao.loginCheck(memberVo);
 
         if(result) { // true일 경우 세션에 등록
             MemberVo memberVo1 = viewMember(memberVo);
 
-            session.setAttribute("user_id", memberVo1.getStaff_id());
-            session.setAttribute("id", memberVo1.getId());
 
         }
         return result;

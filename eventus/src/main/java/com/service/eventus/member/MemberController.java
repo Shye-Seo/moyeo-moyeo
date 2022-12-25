@@ -22,14 +22,13 @@ public class MemberController {
 
     // 로그인 처리
     @RequestMapping("/LoginProc")
-    public ModelAndView loginCheck(@ModelAttribute MemberVo memberVo, HttpSession session) throws Exception {
-        boolean result = memberService.loginCheck(memberVo, session);
+    public ModelAndView loginCheck(@ModelAttribute MemberVo memberVo) throws Exception {
+        boolean result = memberService.loginCheck(memberVo);
         ModelAndView mav = new ModelAndView();
 
         if(result) { // 로그인 성공
             // main으로 이동
             System.out.println("로그인성공");
-            session.setAttribute("user_id", memberService.viewMember(memberVo).getStaff_id());
             mav.setViewName("/main");
             mav.addObject("msg", "success");
         }else { // 로그인 실패
