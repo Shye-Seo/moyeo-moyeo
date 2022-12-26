@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
-    <link rel="stylesheet" href="manage_event.css">
+    <link rel="stylesheet" href="/css/manage_event.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
@@ -13,13 +13,13 @@
         <!-- fixed menu -->
         <div class="sidebar">
             <a href="#" class="logo">
-                <img src="logo.png" alt="eventusLAB">
+                <img src="/imgs/logo.png" alt="eventusLAB">
             </a>
             <ul class="menu-categories">
                 <li class="menu">
                     <a href="#">
                         <div>
-                            <img src="main.svg" alt="main">
+                            <img src="/imgs/main.svg" alt="main">
                             <span>메인</span>
                         </div>
                     </a>
@@ -27,7 +27,7 @@
                 <li class="menu">
                     <a href="#">
                         <div>
-                            <img src="schedule.svg" alt="schedule">
+                            <img src="/imgs/schedule.svg" alt="schedule">
                             <span>행사관리</span>
                         </div>
                     </a>
@@ -35,7 +35,7 @@
                 <li class="menu">
                     <a href="#">
                         <div>
-                            <img src="stafflist.svg" alt="stafflist">
+                            <img src="/imgs/stafflist.svg" alt="stafflist">
                             <span>직원관리</span>
                         </div>
                     </a>
@@ -43,7 +43,7 @@
                 <li class="menu">
                     <a href="#">
                         <div>
-                            <img src="timesheet.svg" alt="timesheet">
+                            <img src="/imgs/timesheet.svg" alt="timesheet">
                             <span>근무기록</span>
                         </div>
                     </a>
@@ -88,8 +88,12 @@
                             <li>지원현황</li>
                             <li>부스현황</li>
                         </ol>
-                            
-
+<!-- 						<ol th:each="event : ${event_list}"> -->
+<!-- 							<li th:text="${event.id}"></li> -->
+<!-- 							<li th:text="${event.event_title}"></li> -->
+<!-- 							<li th:text="${event.event_startDate} - ${event.event_endDate}"></li> -->
+<!-- 							<li th:text="${event.event_status}"></li> -->
+<!-- 						</ol> -->
                     </ul>
                 </div>
 
