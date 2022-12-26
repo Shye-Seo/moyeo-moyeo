@@ -22,4 +22,9 @@ public class EventService {
 	public EventVo viewEventDetail(int event_id) {
 		return eventDao.viewEventDetail(event_id);
 	}
+	
+	//
+	public boolean insertEvent(EventVo eventVo) {
+		return eventDao.insertEvent(eventVo);
+	}
 }

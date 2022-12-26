@@ -53,6 +53,9 @@ public class EventController {
 	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
 	public String eventAdd(@ModelAttribute EventVo eventVo) throws Exception{
 		System.out.println(eventVo);
+		boolean result = eventService.insertEvent(eventVo);
+		
+		
 		return "redirect:manage_event";
 	}
 	
