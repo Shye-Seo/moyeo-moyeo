@@ -12,6 +12,8 @@ public class EventVo {
     private String event_startDate;
     private String event_endDate;
     private String event_status;
+    private String event_position;
+    private int event_position_count;
     private Date created_at;
     private Date updated_at;
     private String flag;

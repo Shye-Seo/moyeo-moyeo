@@ -17,4 +17,9 @@ public class EventService {
 	public List<EventVo> event_list() {
 		return eventDao.event_list();
 	}
+	
+	// 행사 상세 조회
+	public EventVo viewEventDetail(int event_id) {
+		return eventDao.viewEventDetail(event_id);
+	}
 }

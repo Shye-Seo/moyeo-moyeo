@@ -73,16 +73,17 @@
                 </div>
 
                 <div class="area">
+                    <form action="/eventAdd" method="post">
                     <div class="area1">
                         <span>행사명</span>
-                        <input type="text" placeholder="행사명을 입력해주세요.">
-                        <input type="date">
+                        <input type="text" name="event_title" placeholder="행사명을 입력해주세요." >
+                        <input type="date" name="event_startDate">
                         -
-                        <input type="date">
+                        <input type="date" name="event_endDate">
                     </div>
                     <div class="area2">
                         <span>행사상세설명</span>
-                        <textarea placeholder="200자 이내로 입력"></textarea>
+                        <textarea placeholder="200자 이내로 입력" name="event_content"></textarea>
                     </div>
                     <div class="area3">
                         <span>이미지/파일첨부</span>
@@ -90,14 +91,18 @@
                     </div>
                     <div class="area4">
                         <span>담당업무 및 모집인원</span>
-                        <input type="text" placeholder="포지션명을 입력해주세요.">
+                        <input type="text" name="event_position" placeholder="포지션명을 입력해주세요.">
                         <div class="area4_pn">
                             <span class="pn_text1">모집인원</span>
                             <span class="pn_text2">명</span>
-                            <input type="text" class="input_pn" placeholder="숫자입력">
+                            <input type="text" class="input_pn" name="event_position_count" placeholder="숫자입력">
                         </div>
                     </div>
-
+                    <div>
+                        <button type="button">취소</button>
+                        <button type="submit">저장</button>
+                    </div>
+                    </form>
                 </div>
 
 

@@ -5,11 +5,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.service.eventus.member.MemberVo;
 
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -27,10 +27,34 @@ public class EventController {
 	     return "manage_event";
 	}
 	
-	@RequestMapping(value="/manage_event_register", method=RequestMethod.GET)
+	@RequestMapping("/manage_event_register")
 	public String event_insert(ModelMap model) throws Exception{
 		 
 		 
 	     return "manage_event_register";
 	}
+	
+	
+	//행사상세조회
+	@RequestMapping(value="/eventDetail", method=RequestMethod.GET)
+	public ModelAndView eventDetail(@RequestParam("id") int event_id) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		
+		EventVo detailVo = eventService.viewEventDetail(event_id);
+		System.out.println(detailVo);
+		
+		mav.addObject("event", detailVo);
+		
+		mav.setViewName("manage_eventDetail");
+		return mav;
+	}
+	
+	//행사등록
+	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
+	public String eventAdd(@ModelAttribute EventVo eventVo) throws Exception{
+		System.out.println(eventVo);
+		return "redirect:manage_event";
+	}
+	
+	
 }

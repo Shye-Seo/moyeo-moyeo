@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>행사현황</title>
+	
+</head>
+<body>
+	<div class="event_table">
+		<ul>
+			<li class="t_title">행사명</li>
+			<li id="event_title">[(${event.event_title})]</li>
+		</ul>
+		<ul>
+			<li class="t_title">행사기간</li>
+			<li id="event_date">[(${event.event_startDate})]~[(${event.event_endDate})]</li>
+		</ul>
+		<textarea name="event_content" id="event_content" cols="30" rows="10" spellcheck="false">[(${event.event_content})]</textarea>
+		<ul>
+			<li class="t_title">첨부파일</li>
+			<li class="event_file"></li>
+		</ul>
+	</div>
+	<div>
+		<button type="button">목록으로</button>
+		<button type="button">수정하기</button>
+	</div>
+</body>
+</html>
