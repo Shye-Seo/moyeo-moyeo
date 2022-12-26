@@ -41,8 +41,6 @@ public class EventController {
 		ModelAndView mav = new ModelAndView();
 		
 		EventVo detailVo = eventService.viewEventDetail(event_id);
-		System.out.println(detailVo);
-		
 		mav.addObject("event", detailVo);
 		
 		mav.setViewName("manage_eventDetail");
@@ -52,11 +50,9 @@ public class EventController {
 	//행사등록
 	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
 	public String eventAdd(@ModelAttribute EventVo eventVo) throws Exception{
-		System.out.println(eventVo);
-		boolean result = eventService.insertEvent(eventVo);
+		int id = eventService.insertEvent(eventVo);
 		
-		
-		return "redirect:manage_event";
+		return "redirect:eventDetail?id="+id;
 	}
 	
 	

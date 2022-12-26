@@ -24,7 +24,9 @@ public class EventService {
 	}
 	
 	//
-	public boolean insertEvent(EventVo eventVo) {
-		return eventDao.insertEvent(eventVo);
+	public int insertEvent(EventVo eventVo) {
+		eventDao.insertEvent(eventVo);
+		int id = eventDao.maxEventId();
+		return id;
 	}
 }
