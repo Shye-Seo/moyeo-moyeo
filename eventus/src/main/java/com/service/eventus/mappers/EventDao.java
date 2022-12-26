@@ -13,6 +13,5 @@ import com.service.eventus.event.EventVo;
 public interface EventDao {
 
 	@Select("select * from event order by id desc")
-	public List<EventVo> event_list();  // 행사현황 리스트
-
+	List<EventVo> event_list();  // 행사현황 리스트
 }

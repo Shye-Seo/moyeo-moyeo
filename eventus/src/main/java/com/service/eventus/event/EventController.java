@@ -18,18 +18,16 @@ public class EventController {
 	@Inject
     private EventService eventService;
 	
-	@RequestMapping(value="/manage_event", method=RequestMethod.GET)
-	public String event_list(ModelMap model) throws Exception{
+	@GetMapping(value="/manage_event")
+	public String event_list(ModelMap model, EventVo eventvo) throws Exception{
 		 List<EventVo> event_list = eventService.event_list();
-		 
-		 
 	     model.addAttribute("event_list", event_list);
+	     System.out.println("event_list=========>"+event_list);
 	     return "manage_event";
 	}
 	
 	@RequestMapping(value="/manage_event_register", method=RequestMethod.GET)
 	public String event_insert(ModelMap model) throws Exception{
-		 
 		 
 	     return "manage_event_register";
 	}
