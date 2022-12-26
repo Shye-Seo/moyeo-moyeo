@@ -1,4 +1,4 @@
-package com.service.eventus.mappers;
+package com.service.eventus.member;
 
 import com.service.eventus.member.MemberVo;
 import org.apache.ibatis.annotations.Mapper;
