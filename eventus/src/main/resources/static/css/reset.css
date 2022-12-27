@@ -7,6 +7,7 @@
 ul,li{list-style: none;}
 a{text-decoration: none; color: #333333;}
 a:visited{color: #333333;}
+img{border: 0; width: 100%;}
 
 body {background:#F8F9FB;}
 
@@ -44,6 +45,11 @@ body {background:#F8F9FB;}
     position: relative;
     box-sizing: border-box;
     border-left: 10px solid #ffffff00;
+}
+
+.menu-categories .menu:hover{
+    background-color: #7CA6DB;
+    border-left: 10px solid #ffffff99 ;
 }
 
 .menu-categories .selected{

@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.service.eventus.mappers.EventDao;
+import com.service.eventus.event.EventDao;
 
 import jakarta.validation.OverridesAttribute;
 
@@ -23,5 +22,12 @@ public class EventService {
 	// 행사 상세 조회
 	public EventVo viewEventDetail(int event_id) {
 		return eventDao.viewEventDetail(event_id);
+	}
+	
+	//행사등록
+	public int insertEvent(EventVo eventVo) {
+		eventDao.insertEvent(eventVo);
+		int id = eventDao.maxEventId();
+		return id;
 	}
 }
