@@ -14,6 +14,7 @@ public class MemberVo {
     private String staff_birth;
     private String staff_gender;
     private String staff_phone;
+	private String authority;
 	public int getId() {
 		return id;
 	}
