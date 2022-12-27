@@ -19,7 +19,7 @@ public class EventController {
     private EventService eventService;
 	
 	@GetMapping(value="/manage_event")
-	public String event_list(ModelMap model, EventVo eventvo) throws Exception{
+	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
 		 List<EventVo> event_list = eventService.event_list();
 	     model.addAttribute("event_list", event_list);
 	     System.out.println("event_list=========>"+event_list);
@@ -30,5 +30,26 @@ public class EventController {
 	public String event_insert(ModelMap model) throws Exception{
 		 
 	     return "manage_event_register";
+	}
+	
+	//행사상세조회
+	@RequestMapping(value="/eventDetail", method=RequestMethod.GET)
+	public ModelAndView eventDetail(@RequestParam("id") int event_id) throws Exception{
+		ModelAndView mav = new ModelAndView();
+
+		EventVo detailVo = eventService.viewEventDetail(event_id);
+		System.out.println(detailVo);
+
+		mav.addObject("event", detailVo);
+
+		mav.setViewName("manage_eventDetail");
+		return mav;
+	}
+
+	//행사등록
+	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
+	public String eventAdd(@ModelAttribute EventVo eventVo) throws Exception{
+		System.out.println(eventVo);
+		return "redirect:manage_event";
 	}
 }

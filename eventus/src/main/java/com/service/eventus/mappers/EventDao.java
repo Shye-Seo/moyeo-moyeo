@@ -14,4 +14,7 @@ public interface EventDao {
 
 	@Select("select * from event order by id desc")
 	List<EventVo> event_list();  // 행사현황 리스트
+	
+	@Select("SELECT * FROM event where id = #{event_id}")
+	EventVo viewEventDetail (int event_id); // 행사현황 세부페이지
 }
