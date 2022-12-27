@@ -89,6 +89,9 @@
                     <div class="page-title">
                         <span>행사관리</span>
                     </div>
+                    <div class="excel_download">
+                        엑셀 데이터 다운로드
+                    </div>
                 </div>
 
                 <div class="detail_bar">
@@ -112,13 +115,13 @@
                             <span>
                                 <p>시작기간</p>
                                 <!-- <input type="date" name="event_startDate" data-placeholder="YYYY.MM.DD" required> -->
-                                <input type="text" name="event_startDate" class="datepicker date_input" placeholder="YYYY.MM.DD">
+                                <input type="text" name="event_startDate" class="datepicker date_input" placeholder="YYYY.MM.DD" autocomplete='off'>
                             </span>
                             -
                             <span>
                                 <p>종료기간</p>
                                 <!-- <input type="date" name="event_endDate" data-placeholder="YYYY.MM.DD" required> -->
-                                <input type="text" name="event_endDate" class="datepicker date_input" placeholder="YYYY.MM.DD">
+                                <input type="text" name="event_endDate" class="datepicker date_input" placeholder="YYYY.MM.DD" autocomplete='off'>
                             </span>
                         </div>
                         
@@ -156,7 +159,7 @@
                         </div>
                     </div>
                     <div class="btn_wrap">
-                        <button type="button">취소</button>
+                        <button type="button" onclick="location.href='manage_event'">취소</button>
                         <button type="submit">저장</button>
                     </div>
                     </form>
