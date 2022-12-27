@@ -1,0 +1,20 @@
+package com.service.eventus.event;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class EventVo {
+	private int id;
+    private String event_title;
+    private String event_content;
+    private String event_startDate;
+    private String event_endDate;
+    private String event_status;
+    private String event_position;
+    private int event_position_count;
+    private Date created_at;
+    private Date updated_at;
+    private String flag;
+}

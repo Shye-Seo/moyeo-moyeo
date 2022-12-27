@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>sidebar</title>
+</head>
+<body>
+	<!-- fixed menu -->
+        <div class="sidebar" th:fragment="sidebar_manage">
+            <a href="/main" class="logo">
+                <img src="/imgs/logo.png" alt="eventusLAB">
+            </a>
+            <ul class="menu-categories">
+                <li class="menu">
+                    <a href="/main">
+                        <div>
+                            <img src="/imgs/main.svg" alt="main">
+                            <span>메인</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
+                    <a href="/manage_event">
+                        <div>
+                            <img src="/imgs/schedule.svg" alt="schedule">
+                            <span>행사관리</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
+                    <a href="/manage_staff">
+                        <div>
+                            <img src="/imgs/stafflist.svg" alt="stafflist">
+                            <span>직원관리</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
+                    <a href="/report_work">
+                        <div>
+                            <img src="/imgs/timesheet.svg" alt="timesheet">
+                            <span>근무기록</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+</body>
+</html>

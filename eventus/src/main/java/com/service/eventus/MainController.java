@@ -1,8 +1,16 @@
 package com.service.eventus;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.service.eventus.event.EventService;
+import com.service.eventus.event.EventVo;
 
 @Controller
 public class MainController {
@@ -41,10 +49,12 @@ public class MainController {
 		return "main";
 	}
 
-	@GetMapping(value="/manage_event")
-	public String manage_event() {
-		return "manage_event";
-	}
+//	@GetMapping(value="/manage_event")
+//	public String manage_event(ModelMap model) {
+//		List<EventVo> event_list = eventService.event_list();    
+//	    model.addAttribute("event_list", event_list);
+//		return "manage_event";
+//	}
 
 	@GetMapping(value="/manage_staff")
 	public String manage_staff() {
