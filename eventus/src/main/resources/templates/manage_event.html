@@ -12,38 +12,38 @@
     <div id="wrap">
         <!-- fixed menu -->
         <div class="sidebar">
-            <a href="#" class="logo">
-                <img src="../imgs/logo.png" alt="eventusLAB">
+            <a href="/main" class="logo">
+                <img src="/imgs/logo.png" alt="eventusLAB">
             </a>
             <ul class="menu-categories">
                 <li class="menu">
-                    <a href="#">
+                    <a href="/main">
                         <div>
-                            <img src="../imgs/main.svg" alt="main">
+                            <img src="/imgs/main.svg" alt="main">
                             <span>메인</span>
                         </div>
                     </a>
                 </li>
                 <li class="menu">
-                    <a href="#">
+                    <a href="/manage_event">
                         <div>
-                            <img src="../imgs/schedule.svg" alt="schedule">
+                            <img src="/imgs/schedule.svg" alt="schedule">
                             <span>행사관리</span>
                         </div>
                     </a>
                 </li>
                 <li class="menu">
-                    <a href="#">
+                    <a href="/manage_staff">
                         <div>
-                            <img src="../imgs/stafflist.svg" alt="stafflist">
+                            <img src="/imgs/stafflist.svg" alt="stafflist">
                             <span>직원관리</span>
                         </div>
                     </a>
                 </li>
                 <li class="menu">
-                    <a href="#">
+                    <a href="/report_work">
                         <div>
-                            <img src="../imgs/timesheet.svg" alt="timesheet">
+                            <img src="/imgs/timesheet.svg" alt="timesheet">
                             <span>근무기록</span>
                         </div>
                     </a>
@@ -62,12 +62,12 @@
 
                 <div class="detail_bar">
                     <div class="detail1">
-                        <img src="../imgs/material-view-list.svg">
+                        <img src="/imgs/material-view-list.svg">
                         <input type="button" value="행사현황">
                     </div>
                     <div class="detail2">
-                        <img src="../imgs/pen_gray.svg">
-                        <input type="button" value="행사등록">
+                        <img src="/imgs/pen_gray.svg">
+                        <input type="button" value="행사등록" onclick="location.href='manage_event_register'">
                     </div>
                     
                 </div>
@@ -80,7 +80,7 @@
                     
 
                     <ul class="list">
-                        <ol>
+                        <ol id="top_ol">
                             <li>No</li>
                             <li>행사명</li>
                             <li>행사기간</li>
@@ -88,15 +88,16 @@
                             <li>지원현황</li>
                             <li>부스현황</li>
                         </ol>
-<!-- 						<ol th:each="event : ${event_list}"> -->
-<!-- 							<li th:text="${event.id}"></li> -->
-<!-- 							<li th:text="${event.event_title}"></li> -->
-<!-- 							<li th:text="${event.event_startDate} - ${event.event_endDate}"></li> -->
-<!-- 							<li th:text="${event.event_status}"></li> -->
-<!-- 						</ol> -->
+						<ol th:each="event : ${event_list}" id="list_ol">
+							<li th:text="${event.id}"></li>
+							<li th:text="${event.event_title}"></li>
+							<li th:text="${event.event_startDate} + ' - ' + ${event.event_endDate}"></li>
+							<li th:text="${event.event_status}"></li>
+							<li th:text="${event.event_status}"></li>
+							<li th:text="${event.event_status}"></li>
+						</ol>
                     </ul>
                 </div>
-
 
                 <!-- 페이징 처리(Unix 참조) -->
                 <div>
