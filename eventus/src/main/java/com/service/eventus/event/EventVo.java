@@ -16,10 +16,12 @@ public class EventVo {
     private String event_status;
     private String event_position;
     private int event_position_count;
+    private int application_count;
+    private int booth_count;
     private Date created_at;
     private Date updated_at;
     private String flag;
-    
+	
 	public int getId() {
 		return id;
 	}
@@ -67,6 +69,19 @@ public class EventVo {
 	}
 	public void setEvent_position_count(int event_position_count) {
 		this.event_position_count = event_position_count;
+	}
+    public int getApplication_count() {
+		return application_count;
+	}
+	public void setApplication_count(int application_count) {
+		this.application_count = application_count;
+	}
+	
+	public int getBooth_count() {
+		return booth_count;
+	}
+	public void setBooth_count(int booth_count) {
+		this.booth_count = booth_count;
 	}
 	public Date getCreated_at() {
 		return created_at;

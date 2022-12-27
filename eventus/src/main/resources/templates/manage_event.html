@@ -90,14 +90,15 @@
                         </ol>
 						<ol th:each="event : ${event_list}" id="list_ol">
 							<li th:text="${event.id}"></li>
-							<li th:text="${event.event_title}"></li>
+							<a th:href="@{eventDetail(id=${event.id})}"><li th:text="${event.event_title}"></li></a>
 							<li th:text="${event.event_startDate} + ' - ' + ${event.event_endDate}"></li>
-							<li th:text="${event.event_status}"></li>
-							<li th:text="${event.event_status}"></li>
-							<li th:text="${event.event_status}"></li>
+							<li th:if="${event.event_status == '0'}">모집중</li><li th:if="${event.event_status == '1'}">진행중</li><li th:if="${event.event_status == '2'}">진행완료</li>
+							<a th:if="${event.event_status == '0'}" th:href="@{application_modal(id=${event.id})}"><li th:text="${event.application_count} + ' 명'"></li></a>
+							<li th:text="${event.booth_count} + ' 개'"></li>
 						</ol>
                     </ul>
                 </div>
+                
 
                 <!-- 페이징 처리(Unix 참조) -->
                 <div>
