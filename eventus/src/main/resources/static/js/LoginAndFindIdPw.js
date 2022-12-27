@@ -29,7 +29,7 @@ $(function() {
     });
     
     // 빈칸에 대하여 경고창 띄우기
-    $(".ask_certifinum").click(function(){
+    $("#find_id .ask_certifinum").click(function(){
         if($("#find_id_form input[name=user_phone]").val() == ""){
             alert("전화번호를 입력해주세요.");
             $("#find_id_form input[name=user_phone]").focus();
@@ -37,15 +37,27 @@ $(function() {
         }
     });
 
-    $(".asked_certifinum").click(function(){
+    $("#find_pw .asked_certifinum").click(function(){
         if($("#find_id_form input[name=user_phone]").val() == ""){
             alert("인증번호를 입력해주세요.");
             $("#find_id_form input[name=user_phone]").focus();
             return false;
         }
-        else {
-            location.href="/login";
+    });
+
+    $("#find_id .ask_certifinum").click(function(){
+        if($("#find_id_form input[name=user_phone]").val() == ""){
+            alert("전화번호를 입력해주세요.");
+            $("#find_id_form input[name=user_phone]").focus();
+            return false;
         }
     });
 
+    $("#find_pw .asked_certifinum").click(function(){
+        if($("#find_id_form input[name=user_phone]").val() == ""){
+            alert("인증번호를 입력해주세요.");
+            $("#find_id_form input[name=user_phone]").focus();
+            return false;
+        }
+    });
 });
