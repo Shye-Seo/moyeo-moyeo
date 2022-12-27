@@ -3,11 +3,12 @@
 
 /* reset */
 
-*{margin: 0; padding: 0; font-family: 'pretendard';}
+*{margin: 0; padding: 0; font-family: 'pretendard'; color: #333333}
 ul,li{list-style: none;}
 a{text-decoration: none; color: #333333;}
 a:visited{color: #333333;}
 img{border: 0; width: 100%;}
+input:focus-visible, textarea:focus-visible{outline: none;}
 
 body {background:#F8F9FB;}
 
@@ -58,7 +59,7 @@ body {background:#F8F9FB;}
 }
 
 .menu-categories .menu a{
-    height: 150px;
+    height: 130px;
     display: flex;
     justify-content: center;
     align-items: center;
