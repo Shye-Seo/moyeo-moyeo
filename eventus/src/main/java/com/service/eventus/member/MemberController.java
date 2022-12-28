@@ -43,18 +43,14 @@ public class MemberController {
 
     // 아이디 찾기
     @RequestMapping("/findId")
-    public ModelAndView findId(@ModelAttribute MemberVo memberVo) throws Exception {
-        ModelAndView mav = new ModelAndView();
+    @ResponseBody
+    public String findId(@ModelAttribute MemberVo memberVo) throws Exception {
         String result = memberService.findId(memberVo);
         if(result != null) {
-            mav.setViewName("/login");
-            mav.addObject("msg", "success");
-            mav.addObject("user_id", result);
+            return result;
         }else {
-            mav.setViewName("/find_id_pw");
-            mav.addObject("msg", "failure");
+            return "failure";
         }
-        return mav;
     }
 
     // 휴대폰인증
@@ -64,7 +60,7 @@ public class MemberController {
         int randomNumber = (int)((Math.random() * (9999 - 1000 +1)) + 1000); // 난수 생성
 
         memberService.sendSms(userPhoneNumber, randomNumber);
-
+        System.out.println(randomNumber);
         return Integer.toString(randomNumber);
     }
 

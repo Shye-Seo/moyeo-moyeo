@@ -176,9 +176,11 @@ input[type=text]::placeholder {
 }
 
 .tab1_content {
-    display:none;
+    display:inline;
 }
 
-.tab2_content {
-    display:inline;
+.tab2_content,
+.found_id,
+.changing_pw{
+    display:none;
 }

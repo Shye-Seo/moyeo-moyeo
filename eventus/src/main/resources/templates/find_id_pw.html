@@ -36,7 +36,7 @@
                             <input type="button" value="확인" class="asked_certifinum">
 
                             <input type="button" value="아이디 찾기" class="find_id_btn">
-                            <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome">
+                            <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome" onclick="location.href='/login'">
                         </form>
                     </section>
                 </div>
@@ -44,20 +44,42 @@
                     <section id="find_pw">
                         <form action="">
                             <p>아이디</p>
-                            <input type="text" placeholder="아이디를 입력해주세요." class="put_name">
+                            <input type="text" name="user_id" placeholder="아이디를 입력해주세요." class="put_name">
                             <p>휴대전화</p>
-                            <input type="text" placeholder="예) 01012345678" class="put_number">
+                            <input type="text" name="user_phone" placeholder="예) 01012345678" class="put_number">
                             <input type="button" value="인증번호" class="ask_certifinum">
                             <p>인증번호</p>
                             <input type="text" placeholder="인증번호를 입력하세요." class="certifi_num">
                             <input type="button" value="확인" class="asked_certifinum">
 
                             <input type="button" value="비밀번호 재설정" class="find_pw_btn">
-                            <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome">
+                            <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome" onclick="location.href='/login'">
                         </form>
                     </section>
                 </div>
+                <div class="found_id">
+                    <p>아이디는 <span id="getid"></span> 입니다.</p>
+                    <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome" onclick="location.href='/login'">
+                </div>
              </div>
+            <div class="changing_pw">
+                <div class="changing_pw_comment">
+                    <p>비밀번호 재설정</p>
+                    <p>기존 비밀번호는 암호화 처리되어 안내가 불가능하오니,<br/>새로운 비밀번호를 등록해 주시기 바랍니다.</p>
+                </div>
+
+                <div>
+                    <form>
+                        <p>새로운 비밀번호</p>
+                        <input type="password" name="user_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10자~16자">
+                        <p>비밀번호 확인</p>
+                        <input type="password" id="checked_new_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10~16자">
+
+                        <input type="button" value="비밀번호 저장" class="change_pw_btn">
+                        <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome" onclick="location.href='/login'">
+                    </form>
+                </div>
+            </div>
         </div>
         <script type="text/javascript" src="/js/LoginAndFindIdPw.js"></script>
     </body>
