@@ -15,7 +15,11 @@ public class EventVo {
     private String event_endDate;
     private String event_status;
     private String event_position;
-    private int event_position_count;
+    private String event_venue;
+    private String event_deadline;
+    private String event_position_count;
+    private int application_count;
+    private int booth_count;
     private Date created_at;
     private Date updated_at;
     private String flag;
@@ -62,10 +66,10 @@ public class EventVo {
 	public void setEvent_position(String event_position) {
 		this.event_position = event_position;
 	}
-	public int getEvent_position_count() {
+	public String getEvent_position_count() {
 		return event_position_count;
 	}
-	public void setEvent_position_count(int event_position_count) {
+	public void setEvent_position_count(String event_position_count) {
 		this.event_position_count = event_position_count;
 	}
 	public Date getCreated_at() {

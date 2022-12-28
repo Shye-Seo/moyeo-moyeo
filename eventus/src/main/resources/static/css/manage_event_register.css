@@ -109,7 +109,7 @@
     border: 0.5px solid #5B8FD2 !important;
 }
 
-.area1,.area2,.area3,.area4{
+.area1,.area2,.area3,.area4,.area5{
     margin-bottom: 30px;
     display: flex;
 }
@@ -118,7 +118,7 @@
     align-items: center;
 }
 
-.area1 input[name="event_title"]{
+.area1 input[name="event_title"], .area5 input[name="event_venue"]{
     width: 40%;
     /* max-width: 530px; */
     margin-right: 5%;
@@ -129,6 +129,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 .date_wrap span{
     width: auto;
@@ -144,6 +145,10 @@
     padding-right: 10px;
     padding-top: 15px;
     cursor: pointer;
+    background: url(../imgs/register-calendar.svg) no-repeat;
+    background-origin: content-box;
+    background-position-x: right;
+    background-position-y: 13px;
 }
 /* date 기본글 */
 /* .date_wrap input[type="date"]::before{
@@ -165,6 +170,9 @@
     border: 0.5px solid #DDDDDD;
     box-sizing: border-box;
     font-size: 15px;
+}
+.area5 input[name="event_deadline"]{
+    width: 60%;
 }
 .area3 p{
     font-size: 13px;
@@ -190,7 +198,7 @@
     background: none;
 }
 
-.area4 span:first-child{
+.area4 span:first-child,.area5 span:first-child{
     margin-top: 10px;
 }
 
@@ -237,20 +245,32 @@
     position: relative;
     margin-bottom: 50px;
 }
+.position_btn{
+    width: 70px; height: 30px;
+    position: absolute;
+    bottom: 25px; right: -100px;
+    display: flex;
+}
 
 #add_position{
-    width: 27px; height: 27px;
-    border: 2px solid #5B8FD2;
-    border-radius: 50%;
-    color: #5B8FD2;
-    line-height: 22px; text-align: center;
-    font-size: 40px; font-weight: 200;
-    margin-left: 20px;
+    width: 30px; height: 30px;
+    background: url("../imgs/register-add-circle.svg") no-repeat;
+    background-size: cover;
     cursor: pointer;
 
     position: absolute;
     bottom: 25px;
     right: -50px;
+}
+
+.remove_position{
+    width: 30px;
+    height: 30px;
+    background: url("../imgs/register-minus-circle.svg") no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    margin-right: 10px;
+    transform: translateX(20px);
 }
 
 .btn_wrap{

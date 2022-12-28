@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
 
-    <!-- datepicker, jquery, jqueryUI -->
+    <!-- datepicker, jquery, jqueryUI, datetimepicker -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
+    
     
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/manage_event_register.css">
@@ -18,64 +22,103 @@
 
         $(function () {
             $(".datepicker").datepicker({ dateFormat: "yy.mm.dd" });
+            $(".datetimepicker").datetimepicker({ format: "Y.m.d H:i"});
 
             // 모집인원 숫자만 입력받기
-            $('input[name="event_position_count"]').on("keyup", function() {
+            $('.input_pn').on("keyup", function() {
                 $(this).val($(this).val().replace(/[^0-9]/g,""));
             });
+            
         });
 
         // datepicker setting
         $.datepicker.setDefaults({
-            dateFormat: 'yy-mm-dd',
-            prevText: '이전 달',
-            nextText: '다음 달',
-            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            dateFormat: 'yy.mm.dd',
+            //prevText: '이전 달',
+            //nextText: '다음 달',
+           //monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            //monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            //dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            //dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            //dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
             showMonthAfterYear: true,
-            yearSuffix: '년'
+            //yearSuffix: '년'
         });
         
         // 포지션 추가
         let position_num =1;
+        const max_num =5;
 
         function add_position(){
-            $(".area4_pn:first").clone().appendTo($(".position_wrap"));
-            $('.area4_pn:last input[name="event_position"]').val('');
-            $('.area4_pn:last input[name="event_position"]').attr('name','event_position'+position_num);
-            $('.area4_pn:last input[name="event_position_count"]').val('');
-            $('.area4_pn:last input[name="event_position_count"]').attr('name','event_position_count'+position_num);
+            $(".area4_pn:first").clone(true).appendTo($(".position_wrap"));
+            $('.area4_pn:last input[name="input_event_position"]').val('');
+            $('.area4_pn:last input[name="input_event_position"]').attr('name','input_event_position'+position_num);
+            $('.area4_pn:last input[name="input_event_position_count"]').val('');
+            $('.area4_pn:last input[name="input_event_position_count"]').attr('name','input_event_position_count'+position_num);
+            $('.area4_pn:last').append('<div class="remove_position"  style="--i :'+position_num+' ;" onclick="remove_position(this)"></div>');
 
             position_num++;
+            if(position_num == max_num){
+                $("#add_position").hide();
+            }
+        }
+
+        function remove_position(obj){
+            let remove_num= $(obj).css('--i')*1;
+            if(remove_num == position_num-1){
+            }else{
+                $('.input_po').each(function(){
+                    let i = $(this).attr('name').charAt($(this).attr('name').length-1);
+                    if(i>remove_num){
+                        $(this).attr('name','input_event_position'+ (i-1));
+                    }
+                })
+                $('.input_pn').each(function(){
+                    let i = $(this).attr('name').charAt($(this).attr('name').length-1);
+                    if(i>remove_num){
+                        $(this).attr('name','input_event_position_count'+ (i-1));
+                    }
+                })
+                $('.remove_position').each(function(){
+                    let i = $(this).css('--i')*1;
+                    if(i>remove_num){
+                        $(this).css('--i',(i-1));
+                    }
+                })
+            }
+            $(obj).parent().remove();
+            position_num--;
+        }
+
+        // form submit
+        function submitDate(){
+
+            let event_position = $('input[name="input_event_position"]').val();
+            let event_position_count = $('input[name="input_event_position_count"]').val();
+
+            $('.area4').append('<input type="text" name="event_position" hidden/>')
+            $('.area4').append('<input type="text" name="event_position_count" hidden/>')
+
+
+            if(position_num==1){ //추가 없을시 바로 submit
+                $('input[name="event_position"]').val(event_position);
+                $('input[name="event_position_count"]').val(event_position_count);
+                $('form[name="eventAddForm"]').submit(); 
+                return null;
+            }
+
+            for(let i=1;position_num>i;i++){ 
+                event_position += ','+$('input[name="input_event_position'+i+'"]').val();
+                event_position_count += ','+$('input[name="input_event_position_count'+i+'"]').val();
+            }
+
+            // hidden input요소에 합친 값을 저장
+            $('input[name="event_position"]').val(event_position);
+            $('input[name="event_position_count"]').val(event_position_count);
+
+            $('form[name="eventAddForm"]').submit();
         }
     </script>
-    <style>
-        /* datepicker UI수정 */
-        .ui-widget-header{
-            border: 0;
-        }
-        .ui-datepicker td span, .ui-datepicker td a{
-            text-align: center;
-            height: 30px;
-            width: 30px;
-            line-height: 30px;
-            border-radius: 50%;
-        }
-        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active{
-            background:#ffffff;
-            border:0;
-        }
-        .ui-state-hover{
-            background: #eee !important;
-        }
-        .ui-state-active{
-            background: #5B8FD2 !important;
-        }
-    </style>
-
 
 </head>
 <body>
@@ -107,7 +150,7 @@
                 </div>
 
                 <div class="area">
-                	<form action="/eventAdd" method="post">
+                	<form name="eventAddForm" action="/eventAdd" method="post">
                     <div class="area1">
                         <span>행사명</span>
                         <input type="text" name="event_title" placeholder="행사명을 입력해주세요." >
@@ -126,6 +169,15 @@
                         </div>
                         
                     </div>
+                    <div class="area5">
+                        <span>행사장소 <br>및 접수마감</span>
+                        <input type="text" name="event_venue" placeholder="행사장소를 입력해주세요." >
+                        <div class="date_wrap">
+                            <p>접수마감기한</p>
+                            <input type="text" name="event_deadline" class="datetimepicker date_input" placeholder="YYYY.MM.DD 00:00" autocomplete='off'>
+                        </div>
+                    </div>
+
                     <div class="area2">
                         <span>행사상세설명</span>
                         <textarea placeholder="200자 이내로 입력" name="event_content"></textarea>
@@ -148,19 +200,19 @@
                         <span>담당업무 <br>및 모집인원</span>
                         <div class="position_wrap">
                             <div class="area4_pn">
-                                <input type="text" name="event_position" placeholder="포지션명을 입력해주세요."/>
+                                <input type="text" class="input_po" name="input_event_position" placeholder="포지션명을 입력해주세요." />
                                 <span>
                                     <p>모집인원</p>
                                     <p>명</p>
-                                    <input type="text" class="input_pn" name="event_position_count" placeholder="숫자입력">
+                                    <input type="text" class="input_pn" name="input_event_position_count" placeholder="숫자입력">
                                 </span>
                             </div>
-                            <div id="add_position" onclick="add_position()">+</div>
+                            <div id="add_position" onclick="add_position()"></div>
                         </div>
                     </div>
                     <div class="btn_wrap">
                         <button type="button" onclick="location.href='manage_event'">취소</button>
-                        <button type="submit">저장</button>
+                        <button type="button" onclick="submitDate()">저장</button>
                     </div>
                     </form>
                 </div>
