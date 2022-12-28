@@ -21,6 +21,11 @@ public class MainController {
 		return "login";
 	}
 
+	@GetMapping(value="/login")
+	public String login() {
+		return "login";
+	}
+
 	// 회원가입 약관동의 페이지
 	@GetMapping(value="/join1")
 	public String join() {

@@ -25,15 +25,6 @@ public class EventController {
 	     return "manage_event";
 	}
 	
-	//지원현황(모집중) 모달창
-	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
-	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
-		List<MemberVo> application_list = eventService.application_list(event_id);
-	    model.addAttribute("application_list", application_list);
-	    System.out.println("==============>"+application_list);
-		return "application_modal";
-	}
-	
 	@RequestMapping(value="/manage_event_register", method=RequestMethod.GET)
 	public String event_insert(ModelMap model) throws Exception{
 		 
@@ -44,20 +35,26 @@ public class EventController {
 	@RequestMapping(value="/eventDetail", method=RequestMethod.GET)
 	public ModelAndView eventDetail(@RequestParam("id") int event_id) throws Exception{
 		ModelAndView mav = new ModelAndView();
-
 		EventVo detailVo = eventService.viewEventDetail(event_id);
-		System.out.println(detailVo);
 
 		mav.addObject("event", detailVo);
 
 		mav.setViewName("manage_eventDetail");
 		return mav;
 	}
-	
+
 	//행사등록
 	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
 	public String eventAdd(@ModelAttribute EventVo eventVo) throws Exception{
-		System.out.println(eventVo);
-		return "redirect:manage_event";
+		int id =eventService.insertEvent(eventVo);
+		return "redirect:eventDetail?id="+id;
+	}
+	
+	//지원현황(모집중) 모달창
+	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
+	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
+		List<MemberVo> application_list = eventService.application_list(event_id);
+	    model.addAttribute("application_list", application_list);
+		return "application_modal";
 	}
 }

@@ -2,6 +2,7 @@ package com.service.eventus.mappers;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -16,8 +17,15 @@ public interface EventDao {
 	@Select("select * from event order by id desc")
 	List<EventVo> event_list();  // 행사현황 리스트
 	
-	@Select("SELECT * FROM event where id = #{event_id}")
+	@Select("select * from event where id = #{event_id}")
 	EventVo viewEventDetail (int event_id); // 행사현황 세부페이지
+	
+	@Insert("insert into event (event_title, event_content, event_startDate, event_endDate, event_status, event_position, event_position_count, event_venue, event_deadline, created_at) "
+			+ "values(#{event_title}, #{event_content}, #{event_startDate}, #{event_endDate}, 0, #{event_position}, #{event_position_count}, #{event_venue}, #{event_deadline}, sysdate())")
+	boolean insertEvent (EventVo eventVo); //행사 추가
+	
+	@Select("select max(id) from event")
+	int maxEventId (); //마지막 추가 행사 id
 	
 	@Select("select count(*) from event e inner join staff_application s where e.id = s.event_id and e.id = #{event_id}")
 	int application_count(int event_id); // 지원현황 count

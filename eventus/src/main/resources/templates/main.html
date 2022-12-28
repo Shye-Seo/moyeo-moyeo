@@ -1,55 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
+    <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
     <div id="wrap">
-        <!-- fixed menu -->
-        <div class="sidebar">
-            <a href="/main" class="logo">
-                <img src="/imgs/logo.png" alt="eventusLAB">
-            </a>
-            <ul class="menu-categories">
-                <li class="menu">
-                    <a href="/main">
-                        <div>
-                            <img src="/imgs/main.svg" alt="main">
-                            <span>메인</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="/manage_event">
-                        <div>
-                            <img src="/imgs/schedule.svg" alt="schedule">
-                            <span>행사관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="/manage_staff">
-                        <div>
-                            <img src="/imgs/stafflist.svg" alt="stafflist">
-                            <span>직원관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="/report_work">
-                        <div>
-                            <img src="/imgs/timesheet.svg" alt="timesheet">
-                            <span>근무기록</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    
+        <!-- 어떤 메뉴를 쓸지 파라미터로 넘겨야 합니다 -->
+
+    <!-- 
+
+        사이드바가 올 자리에
+        <div th:replace="~{common/side :: sidebar_manage ('***')}"></div>
+
+        *** ↓↓↓
+        메인 = main
+        행사관리 = schedule
+        직원관리 = stafflist
+        근무기록 = timesheet
+
+
+
+     -->
+    
+    <div th:replace="~{common/side :: sidebar_manage ('main')}"></div>
         <!-- main -->
         <div class="content">
             <div class="container">

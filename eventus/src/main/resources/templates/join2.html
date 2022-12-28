@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>회원 정보</title>
-        <link rel="stylesheet" href="/css/join2.css?after">
+        <link rel="stylesheet" href="/css/join2.css">
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     </head>
     <body>
         <div id="wrap">
@@ -27,28 +28,38 @@
             <!-- 회원 정보 입력 -->
             <div id="member">
                 <form action="">
-                    <div class="name_area">
+                    <div class="id_area">
                         <p class="item">아이디</p>
-                        <input type="" placeholder="아이디 입력" value="">
+                        <input type="text" placeholder="아이디 입력" value="">
+                    </div>
+
+                    <div class="pw_area">
+                        <p class="item">비밀번호</p>
+                        <input type="password" placeholder="비밀번호 입력" value="">
                     </div>
 
                     <div class="pw_area">
                         <p class="item">비밀번호 확인</p>
-                        <input type="" placeholder="비밀번호 재확인" value="">
+                        <input type="password" placeholder="비밀번호 재확인" value="">
                     </div>
 
                     <div class="name_area">
                         <p class="item">이름</p>
-                        <input type="" placeholder="이름 입력" value="">
+                        <input type="text" placeholder="이름 입력" value="">
                     </div>
 
                     <div class="email_area">
                         <p class="item">이메일주소</p>
-                        <input type="" placeholder="example@foryoucom.com" value="">
+                        <input type="text" placeholder="example@foryoucom.com" value="">
                     </div>
 
                     <div class="birth_area">
                         <p class="item">생일/성별</p>
+
+                        <select id="birth_year"></select>
+                        <select id="birth_month"></select>
+                        <select id="birth_day"></select>
+
                     </div>
 
                     <div class="gender_area">
@@ -58,19 +69,31 @@
 
                     <div class="phone_area">
                         <p class="item">휴대전화</p>
+
+                        <!-- 국제번호 select -->
+                        <select id="phone_country">
+                            <option data-countryCode="KR" value="82">+82</option>
+                        </select>
+                        <input type="text" placeholder="예) 01012345678" value="">
+                        <input type="button" id="certifinum_submit" value="인증">
                     </div>
 
                     <div class="certifinum_area">
                         <p class="item">인증번호</p>
-                        <input type="" placeholder="인증번호 입력" value="">
+                        <input type="text" placeholder="인증번호 입력" value="">
                     </div>
                 </form>
             </div>
 
             <div class="button_position">
-                <input type="button" value="뒤로" class="back_btn" onclick="">
-                <input type="button" value="회원가입" class="join_btn" onclick="location.href='/join3'">
+                <input type="submit" value="뒤로" class="back_btn" onclick="location.href='/join1'">
+                <input type="button" value="회원가입" class="join_complete_btn" onclick="location.href='/join3'">
             </div>
         </div>
+        <script>
+
+
+        </script>
+        <script type="text/javascript" src="/js/join.js"></script>
     </body>
 </html>

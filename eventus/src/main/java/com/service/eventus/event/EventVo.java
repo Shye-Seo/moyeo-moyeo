@@ -13,9 +13,11 @@ public class EventVo {
     private String event_content;
     private String event_startDate;
     private String event_endDate;
-    private String event_status;
+    private String event_venue;
+    private String event_deadline;
     private String event_position;
-    private int event_position_count;
+    private String event_position_count;
+    private int event_status;
     private int application_count;
     private int booth_count;
     private Date created_at;
@@ -52,11 +54,17 @@ public class EventVo {
 	public void setEvent_endDate(String event_endDate) {
 		this.event_endDate = event_endDate;
 	}
-	public String getEvent_status() {
-		return event_status;
+	public String getEvent_venue() {
+		return event_venue;
 	}
-	public void setEvent_status(String event_status) {
-		this.event_status = event_status;
+	public void setEvent_venue(String event_venue) {
+		this.event_venue = event_venue;
+	}
+	public String getEvent_deadline() {
+		return event_deadline;
+	}
+	public void setEvent_deadline(String event_deadline) {
+		this.event_deadline = event_deadline;
 	}
 	public String getEvent_position() {
 		return event_position;
@@ -64,11 +72,17 @@ public class EventVo {
 	public void setEvent_position(String event_position) {
 		this.event_position = event_position;
 	}
-	public int getEvent_position_count() {
+	public String getEvent_position_count() {
 		return event_position_count;
 	}
-	public void setEvent_position_count(int event_position_count) {
+	public void setEvent_position_count(String event_position_count) {
 		this.event_position_count = event_position_count;
+	}
+	public int getEvent_status() {
+		return event_status;
+	}
+	public void setEvent_status(int event_status) {
+		this.event_status = event_status;
 	}
     public int getApplication_count() {
 		return application_count;
@@ -76,7 +90,6 @@ public class EventVo {
 	public void setApplication_count(int application_count) {
 		this.application_count = application_count;
 	}
-	
 	public int getBooth_count() {
 		return booth_count;
 	}

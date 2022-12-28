@@ -3,28 +3,64 @@
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>행사현황</title>
-
+	<title>이벤터즈랩(eventusLAB)</title>
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/manage_event_Detail.css">
 </head>
 <body>
-	<div class="event_table">
-		<ul>
-			<li class="t_title">행사명</li>
-			<li id="event_title">[(${event.event_title})]</li>
-		</ul>
-		<ul>
-			<li class="t_title">행사기간</li>
-			<li id="event_date">[(${event.event_startDate})]~[(${event.event_endDate})]</li>
-		</ul>
-		<textarea name="event_content" id="event_content" cols="30" rows="10" spellcheck="false">[(${event.event_content})]</textarea>
-		<ul>
-			<li class="t_title">첨부파일</li>
-			<li class="event_file"></li>
-		</ul>
+	
+	<div th:replace="~{common/side :: sidebar_manage('schedule')}"></div>
+
+	<div class="content">
+		<div class="container">
+			<div class="page-header">
+				<div class="page-title">
+					<span>행사목록</span>
+				</div>
+				<div class="excel_download">
+					엑셀 데이터 다운로드
+				</div>
+			</div>
+			<div class="detail_bar">
+				<div class="detail1 this_bar" onclick="location.href='manage_event'">
+					<img src="imgs/material-view-list.svg">
+					<p>행사현황</p>
+				</div>
+				<div class="detail2" onclick="location.href='manage_event_register'">
+					<img src="imgs/pen_gray.svg">
+					<p>행사등록</p>
+				</div>
+			</div>
+
+			<div class="area">
+				<div class="event_table">
+					<ul>
+						<li class="t_title">행사명</li>
+						<li id="event_title">[(${event.event_title})]</li>
+					</ul>
+					<ul>
+						<li class="t_title">행사기간</li>
+						<li id="event_date">[(${event.event_startDate})] ~ [(${event.event_endDate})]</li>
+					</ul>
+					<textarea name="event_content" id="event_content" cols="30" rows="10" spellcheck="false" disabled>[(${event.event_content})]</textarea>
+					<ul>
+						<li class="t_title">첨부파일</li>
+						<li class="event_file"></li>
+					</ul>
+				</div>
+				<div class="btn_wrap">
+					<button type="button" onclick="location.href='manage_event'">목록으로</button>
+					<button type="button">수정하기</button>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+
 	</div>
-	<div>
-		<button type="button">목록으로</button>
-		<button type="button">수정하기</button>
-	</div>
+	
 </body>
 </html>
