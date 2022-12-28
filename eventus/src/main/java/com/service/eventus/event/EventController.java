@@ -5,8 +5,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.service.eventus.member.MemberVo;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,9 +34,7 @@ public class EventController {
 	@RequestMapping(value="/eventDetail", method=RequestMethod.GET)
 	public ModelAndView eventDetail(@RequestParam("id") int event_id) throws Exception{
 		ModelAndView mav = new ModelAndView();
-
 		EventVo detailVo = eventService.viewEventDetail(event_id);
-		System.out.println(detailVo);
 
 		mav.addObject("event", detailVo);
 
@@ -49,7 +45,7 @@ public class EventController {
 	//행사등록
 	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
 	public String eventAdd(@ModelAttribute EventVo eventVo) throws Exception{
-		System.out.println(eventVo);
-		return "redirect:manage_event";
+		int id =eventService.insertEvent(eventVo);
+		return "redirect:eventDetail?id="+id;
 	}
 }

@@ -5,51 +5,82 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
-    <link rel="stylesheet" href="/css/manage_event_register.css">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+
+    <!-- datepicker, jquery, jqueryUI -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/manage_event_register.css">
+    <script>
+
+        $(function () {
+            $(".datepicker").datepicker({ dateFormat: "yy.mm.dd" });
+
+            // 모집인원 숫자만 입력받기
+            $('input[name="event_position_count"]').on("keyup", function() {
+                $(this).val($(this).val().replace(/[^0-9]/g,""));
+            });
+        });
+
+        // datepicker setting
+        $.datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd',
+            prevText: '이전 달',
+            nextText: '다음 달',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+            showMonthAfterYear: true,
+            yearSuffix: '년'
+        });
+        
+        // 포지션 추가
+        let position_num =1;
+
+        function add_position(){
+            $(".area4_pn:first").clone().appendTo($(".position_wrap"));
+            $('.area4_pn:last input[name="event_position"]').val('');
+            $('.area4_pn:last input[name="event_position"]').attr('name','event_position'+position_num);
+            $('.area4_pn:last input[name="event_position_count"]').val('');
+            $('.area4_pn:last input[name="event_position_count"]').attr('name','event_position_count'+position_num);
+
+            position_num++;
+        }
+    </script>
+    <style>
+        /* datepicker UI수정 */
+        .ui-widget-header{
+            border: 0;
+        }
+        .ui-datepicker td span, .ui-datepicker td a{
+            text-align: center;
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+        }
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active{
+            background:#ffffff;
+            border:0;
+        }
+        .ui-state-hover{
+            background: #eee !important;
+        }
+        .ui-state-active{
+            background: #5B8FD2 !important;
+        }
+    </style>
+
+
 </head>
 <body>
     <div id="wrap">
-        <!-- fixed menu -->
-        <div class="sidebar">
-            <a href="#" class="logo">
-                <img src="/imgs/logo.png" alt="eventusLAB">
-            </a>
-            <ul class="menu-categories">
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="/imgs/main.svg" alt="main">
-                            <span>메인</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="/imgs/schedule.svg" alt="schedule">
-                            <span>행사관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="/imgs/stafflist.svg" alt="stafflist">
-                            <span>직원관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="/imgs/timesheet.svg" alt="timesheet">
-                            <span>근무기록</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <div th:replace="~{common/side :: sidebar_manage ('schedule')}"></div>
 
         <!-- main -->
         <div class="content">
@@ -58,16 +89,19 @@
                     <div class="page-title">
                         <span>행사관리</span>
                     </div>
+                    <div class="excel_download">
+                        엑셀 데이터 다운로드
+                    </div>
                 </div>
 
                 <div class="detail_bar">
-                    <div class="detail1">
-                        <img src="/imgs/material-view-list-gray.svg">
-                        <input type="button" value="행사현황"onclick="location.href='manage_event'">
+                    <div class="detail1" onclick="location.href='manage_event'">
+                        <img src="imgs/material-view-list-gray.svg">
+                        <p>행사현황</p>
                     </div>
-                    <div class="detail2">
-                        <img src="/imgs/pen.svg">
-                        <input type="button" value="행사등록">
+                    <div class="detail2 this_bar">
+                        <img src="imgs/pen.svg">
+                        <p>행사등록</p>
                     </div>
                     
                 </div>
@@ -77,29 +111,55 @@
                     <div class="area1">
                         <span>행사명</span>
                         <input type="text" name="event_title" placeholder="행사명을 입력해주세요." >
-                        <input type="date" name="event_startDate">
-                        -
-                        <input type="date" name="event_endDate">
+                        <div class="date_wrap">
+                            <span>
+                                <p>시작기간</p>
+                                <!-- <input type="date" name="event_startDate" data-placeholder="YYYY.MM.DD" required> -->
+                                <input type="text" name="event_startDate" class="datepicker date_input" placeholder="YYYY.MM.DD" autocomplete='off'>
+                            </span>
+                            -
+                            <span>
+                                <p>종료기간</p>
+                                <!-- <input type="date" name="event_endDate" data-placeholder="YYYY.MM.DD" required> -->
+                                <input type="text" name="event_endDate" class="datepicker date_input" placeholder="YYYY.MM.DD" autocomplete='off'>
+                            </span>
+                        </div>
+                        
                     </div>
                     <div class="area2">
                         <span>행사상세설명</span>
                         <textarea placeholder="200자 이내로 입력" name="event_content"></textarea>
                     </div>
                     <div class="area3">
-                        <span>이미지/파일첨부</span>
-                        <input type="file">
+                        <span>이미지/파일첨부<p>(최대 5개)</p></span>
+                        <div class="file_area">
+                            <div class="file_names">
+                                <!-- 파일 이름 -->
+                                <label for="event_file1" class="fname">5555.jpg</label>
+                            </div>
+                            <button id="file_upload" type="button">
+
+                            </button>
+                        </div>
+                        <input type="file" name="event_file1" hidden>
+                        <!-- ... -->
                     </div>
                     <div class="area4">
-                        <span>담당업무 및 모집인원</span>
-                         <input type="text" name="event_position" placeholder="포지션명을 입력해주세요.">
-                        <div class="area4_pn">
-                            <span class="pn_text1">모집인원</span>
-                            <span class="pn_text2">명</span>
-                            <input type="text" class="input_pn" name="event_position_count" placeholder="숫자입력">
+                        <span>담당업무 <br>및 모집인원</span>
+                        <div class="position_wrap">
+                            <div class="area4_pn">
+                                <input type="text" name="event_position" placeholder="포지션명을 입력해주세요."/>
+                                <span>
+                                    <p>모집인원</p>
+                                    <p>명</p>
+                                    <input type="text" class="input_pn" name="event_position_count" placeholder="숫자입력">
+                                </span>
+                            </div>
+                            <div id="add_position" onclick="add_position()">+</div>
                         </div>
                     </div>
-                    <div>
-                        <button type="button">취소</button>
+                    <div class="btn_wrap">
+                        <button type="button" onclick="location.href='manage_event'">취소</button>
                         <button type="submit">저장</button>
                     </div>
                     </form>

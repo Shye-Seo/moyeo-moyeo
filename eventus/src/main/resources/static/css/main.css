@@ -1,4 +1,4 @@
-*{
+/* *{
     margin: 0;
     padding: 0;
 }
@@ -26,7 +26,6 @@ body{
     width: 100%;
 }
 
-/* fixed menu */
 .sidebar{
     width: 180px;
     height: 100%;
@@ -81,7 +80,7 @@ body{
     font-size: 16px;
     font-weight: 700;
     display: block;
-}
+} */
 
 /* main */
 .content{
