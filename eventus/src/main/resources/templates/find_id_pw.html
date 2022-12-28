@@ -25,15 +25,15 @@
                 <label for="tab2">비밀번호 찾기</label>
                 <div class="tab1_content">
                     <section id="find_id">
-                        <form>
+                        <form action="" id="find_id_form">
                             <p>이름</p>
-                            <input type="text" placeholder="이름을 입력해주세요." class="put_name">
+                            <input type="text" name="user_name" placeholder="이름을 입력해주세요." class="put_name">
                             <p>휴대전화</p>
-                            <input type="text" placeholder="예) 01012345678" class="put_number">
+                            <input type="text" name="user_phone" placeholder="예) 01012345678" class="put_number">
                             <input type="button" value="인증번호" class="ask_certifinum">
                             <p>인증번호</p>
                             <input type="text" placeholder="인증번호를 입력하세요." class="certifi_num">
-                            <input type="button" value="확인" class="ask_certifinum">
+                            <input type="button" value="확인" class="asked_certifinum">
 
                             <input type="button" value="아이디 찾기" class="find_id_btn">
                             <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome">
@@ -50,27 +50,15 @@
                             <input type="button" value="인증번호" class="ask_certifinum">
                             <p>인증번호</p>
                             <input type="text" placeholder="인증번호를 입력하세요." class="certifi_num">
-                            <input type="button" value="확인" class="ask_certifinum">
+                            <input type="button" value="확인" class="asked_certifinum">
 
-                            <input type="button" value="비밀번호 재설정" class="find_id_btn">
+                            <input type="button" value="비밀번호 재설정" class="find_pw_btn">
                             <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome">
                         </form>
                     </section>
                 </div>
              </div>
         </div>
-        <script>
-            $(function() {
-                $("#tab1").on("click", function() {
-                    $(".tab1_content").css('display', 'inline');
-                    $(".tab2_content").css('display', 'none');
-                });
-                
-                $("#tab2").on("click", function() {
-                    $(".tab1_content").css('display', 'none');
-                    $(".tab2_content").css('display', 'inline');
-                });
-            });
-        </script>
+        <script type="text/javascript" src="/js/LoginAndFindIdPw.js"></script>
     </body>
 </html>

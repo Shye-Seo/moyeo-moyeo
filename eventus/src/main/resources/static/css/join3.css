@@ -155,7 +155,7 @@ body {
     left: 72px;
     text-align: center;
     font: normal normal normal 16px/19px Pretendard;
-    color: var(--unnamed-color-999999);
+    color: #999999;
 }
   
 .goto_login_btn {
@@ -170,7 +170,7 @@ body {
     color: #FFFFFF;
     background: #5B8FD2 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #66666629;
-    border: 1px solid var(--unnamed-color-5b8fd2);
+    border: 1px solid #5b8fd2;
     border-radius: 5px;
     opacity: 1;
 }

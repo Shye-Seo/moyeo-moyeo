@@ -2,11 +2,9 @@ package com.service.eventus.event;
 
 import java.util.List;
 
+import com.service.eventus.mappers.EventDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.service.eventus.event.EventDao;
-
-import jakarta.validation.OverridesAttribute;
 
 @Service
 public class EventService {
