@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.member.MemberVo;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,7 +54,15 @@ public class EventController {
 	//지원현황(모집중) 모달창
 	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
 	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
+		
 		List<MemberVo> application_list = eventService.application_list(event_id);
+		if (application_list != null) {
+			for (MemberVo memberVo : application_list) {
+				int staff_career = eventService.staff_career(memberVo.getId());
+				model.addAttribute("career_count", staff_career);
+			}
+		}
+		System.out.println("=============>list:"+application_list);
 	    model.addAttribute("application_list", application_list);
 		return "application_modal";
 	}

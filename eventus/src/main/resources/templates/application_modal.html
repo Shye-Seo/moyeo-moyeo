@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤터즈랩(eventusLAB)</title>
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
-	<ul th:each="list : ${application_list}" id="list_ol">
-		<li th:text="${list.user_name}"></li>
-		<li th:text="${list.user_birthday}"></li>
-	</ul>
+	<div class="total_applicant">
+		<div>총 지원자 수 <span style="color: #DD5067">count</span> 명</div>
+	</div>
+	<div class="application_list">
+		<div id="list" th:each="list : ${application_list}">
+			<div class="personal_info">
+				<p th:text="${list.user_name} + '(' + ${list.user_birthday} + '세)'"></p>
+				<p th:text="${list.user_phone}"></p>
+			</div>
+			<div id="line"></div>
+			<div class="career_info">
+				<p>행사경력</p>
+				<p th:text="${career_count} + ' 회'"></p>
+			</div>
+			<div id="line"></div>
+			<div class="address_info">
+				<p>거주지</p>
+				<p th:text="${list.user_address}"></p>
+			</div>
+			<div id="line"></div>
+			<div class="btn_div">
+				<button type="button" id="accept_btn">수락</button>
+				<span id="resume_open">이력서보기</span>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
