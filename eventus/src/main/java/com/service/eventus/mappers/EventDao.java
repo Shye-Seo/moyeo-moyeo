@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import com.service.eventus.event.EventVo;
+import com.service.eventus.event.ResumeVo;
 import com.service.eventus.member.MemberVo;
 
 @Mapper
@@ -30,6 +31,9 @@ public interface EventDao {
 	@Select("select count(*) from event e inner join staff_application s where e.id = s.event_id and e.id = #{event_id}")
 	int application_count(int event_id); // 지원현황 count
 	
-	@Select("select * from user u inner join staff_application s, event e where u.id = s.staff_id and e.id = #{event_id}")
-	List<MemberVo> application_list(int event_id); // 지원현황 지원자 리스트(모집중)
+	@Select("select * from user u inner join staff_application s, event e where u.id = s.staff_id and e.id = s.event_id and e.id = #{event_id}")
+	List<MemberVo> application_list(int event_id); // 지원현황 지원자 리스트(모집중) - 지원자 정보(이름, 나이, 휴대폰번호, 주소)
+	
+	@Select("select count(staff_career_eventName) from staff_resume r inner join staff_application s, user u where s.staff_id = u.id and r.staff_id = u.id and u.id = #{staff_id}")
+	int staff_career(int staff_id); // 지원현황 지원자 리스트(모집중) - 행사경력 count
 }

@@ -40,4 +40,9 @@ public class EventService {
 	public List<MemberVo> application_list(int event_id) throws Exception {
 		return eventDao.application_list(event_id);
 	}
+	
+	// 지원현황 지원자 행사경력
+	public int staff_career(int staff_id) throws Exception {
+		return eventDao.staff_career(staff_id);
+	}
 }

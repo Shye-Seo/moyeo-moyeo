@@ -15,6 +15,7 @@ public class MemberVo {
     private String user_birth;
     private String user_gender;
     private String user_phone;
+    private String user_address;
 	private String authority;
-    
+	
 }
