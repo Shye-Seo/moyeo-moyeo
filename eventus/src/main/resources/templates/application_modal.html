@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<ul th:each="list : ${application_list}" id="list_ol">
+		<li th:text="${list.user_name}"></li>
+		<li th:text="${list.user_birthday}"></li>
+	</ul>
+</body>
+</html>

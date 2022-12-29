@@ -6,6 +6,8 @@ import com.service.eventus.mappers.EventDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.service.eventus.member.MemberVo;
+
 @Service
 public class EventService {
 
@@ -27,5 +29,15 @@ public class EventService {
 		eventDao.insertEvent(eventVo);
 		int id = eventDao.maxEventId();
 		return id;
+	}
+
+	// 지원현황 count
+	public int application_count(int event_id) throws Exception {
+		return eventDao.application_count(event_id);
+	}
+	
+	// 지원현황 지원자 리스트(모집중)
+	public List<MemberVo> application_list(int event_id) throws Exception {
+		return eventDao.application_list(event_id);
 	}
 }

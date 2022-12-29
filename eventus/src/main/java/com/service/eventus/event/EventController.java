@@ -20,7 +20,6 @@ public class EventController {
 	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
 		 List<EventVo> event_list = eventService.event_list();
 	     model.addAttribute("event_list", event_list);
-	     System.out.println("event_list=========>"+event_list);
 	     return "manage_event";
 	}
 	
@@ -47,5 +46,13 @@ public class EventController {
 	public String eventAdd(@ModelAttribute EventVo eventVo) throws Exception{
 		int id =eventService.insertEvent(eventVo);
 		return "redirect:eventDetail?id="+id;
+	}
+	
+	//지원현황(모집중) 모달창
+	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
+	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
+		List<MemberVo> application_list = eventService.application_list(event_id);
+	    model.addAttribute("application_list", application_list);
+		return "application_modal";
 	}
 }
