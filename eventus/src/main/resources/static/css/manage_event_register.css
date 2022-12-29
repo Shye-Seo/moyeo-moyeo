@@ -183,19 +183,41 @@
     display: flex;
     justify-content: space-between;
 }
-.area3 .file_names{
-    flex: 1 0 auto;
+.area3 #file_names{
+    width: calc(100% - 61px); height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+
 }
-.area3 .fname{
+#file_names >div{
+    max-width: 20%; height: 20px;
     font-size: 15px;
-    line-height: 60px;
+}
+.area3 .file_con{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+.file_con .filename{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.file_con img{
+    width: 15px; height: 15px;
+    cursor: pointer;
 }
 
-.area3 button{
+.area3 label{
     width: 60px;
     border: 0;
     border-left: 0.5px solid #DDDDDD;
-    background: none;
+    background: url("../imgs/register_upload.svg") no-repeat;
+    background-position: center;
+    cursor: pointer;
 }
 
 .area4 span:first-child,.area5 span:first-child{
