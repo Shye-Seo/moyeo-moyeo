@@ -36,12 +36,13 @@
 
                     <div class="pw_area">
                         <p class="item">비밀번호</p>
+                        <span id="pw_check1"></span>
                         <input type="password" name="user_pw" placeholder="비밀번호 입력" value="">
                     </div>
 
                     <div class="pw_area">
                         <p class="item">비밀번호 확인</p>
-                        <span id="pw_check"></span>
+                        <span id="pw_check2"></span>
                         <input type="password" id="checked_pw" placeholder="비밀번호 재확인" value="">
                     </div>
 
@@ -52,6 +53,7 @@
 
                     <div class="email_area">
                         <p class="item">이메일주소</p>
+                        <span id="email_check"></span>
                         <input type="text" name="user_email" placeholder="example@foryoucom.com" value="">
                     </div>
 
@@ -77,6 +79,7 @@
 
                     <div class="certifinum_area">
                         <p class="item">인증번호</p>
+                        <span id="certifi_time"></span>
                         <input type="text" id="certifinum" placeholder="인증번호 입력">
                         <input type="button" id="certifinum_check" value="인증">
                     </div>
@@ -84,7 +87,7 @@
             </div>
 
             <div class="button_position">
-                <input type="submit" value="뒤로" class="back_btn" onclick="location.href='/join1'">
+                <input type="button" value="뒤로" class="back_btn" onclick="location.href='/join1'">
                 <input type="button" value="회원가입" class="join_complete_btn">
             </div>
         </div>

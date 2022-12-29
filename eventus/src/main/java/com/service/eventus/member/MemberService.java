@@ -16,6 +16,12 @@ public class MemberService {
     @Autowired
     private MemberDao memberDao;
 
+
+    // 회원가입
+    public int insertUser(MemberVo memberVo) {
+        return memberDao.insertUser(memberVo);
+    }
+
     // 아이디 중복체크(회원가입)
     public int idChk(String user_id) {
         return memberDao.idChk(user_id);

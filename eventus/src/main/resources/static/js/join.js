@@ -5,7 +5,10 @@ var endYear = startYear - 100;
 $(function() {
 
     var certifinum = "1"; // 인증번호
-
+    var id_checked = "0"; // 아이디 중복확인 여부
+    var pw_checked = "0" // 비밀번호 확인 여부
+    var certifi_checked = "0"; // 인증번호 확인 여부
+    var email_checked = "0"; // 이메일 중복 확인 여부
     // 약관동의
     // 전체 동의 체크 박스
     $('#all_chk').click(function(){
@@ -52,14 +55,61 @@ $(function() {
             data: {user_id: $(this).val()},
         }).done(function(data) {
             if(data == 1) {
+                id_checked = "0";
                 $("#id_check").text("이미 사용중인 아이디입니다.");
                 $("#id_check").css("color", "red");
             }
             else {
+                id_checked = "1";
                 $("#id_check").text("사용 가능한 아이디입니다.");
                 $("#id_check").css("color", "green");
             }
         });
+    });
+
+    // 비밀번호가 영문, 숫자 특수기호 중 2가지 이상 조합, 10자~16자 인지 확인
+    $("#member input[name=user_pw]").keyup(function() {
+        var regExp = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,16}$/;
+        if(!regExp.test($("#member input[name=user_pw]").val())){
+            pw_checked = "0";
+            $("#pw_check1").text("비밀번호 형식이 맞지 않습니다.");
+            $("#pw_check1").css("color", "red");
+        }
+        else {
+            pw_checked = "1";
+            $("#pw_check1").text("사용 가능한 비밀번호입니다.");
+            $("#pw_check1").css("color", "green");
+        }
+    });
+
+    // 비밀번호 확인
+    $("#member #checked_pw").keyup(function() {
+        if($(this).val() != $("#member input[name=user_pw]").val()) {
+            pw_checked = "0";
+            $("#pw_check2").text("비밀번호가 일치하지 않습니다.");
+            $("#pw_check2").css("color", "red");
+        }
+        else {
+            pw_checked = "1";
+            $("#pw_check2").text("비밀번호가 일치합니다.");
+            $("#pw_check2").css("color", "green");
+        }
+    });
+
+    // 이메일 주소 형식 확인
+    $("#member input[name=user_email]").keyup(function() {
+        var email = $(this).val();
+        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        if(emailReg.test(email)) {
+            email_checked = "1";
+            $("#email_check").text("사용 가능한 이메일입니다.");
+            $("#email_check").css("color", "green");
+        }
+        else {
+            email_checked = "0";
+            $("#email_check").text("이메일 형식이 올바르지 않습니다.");
+            $("#email_check").css("color", "red");
+        }
     });
 
     // 생년 월일 select box
@@ -77,6 +127,7 @@ $(function() {
 
     // 인증번호 발송
     $('#certifinum_submit').click(function() {
+        $("#certifinum_check").attr("disabled", false);
         if($('#member input[name=user_phone]').val() == '') {
             alert('휴대번호를 입력해주세요.');
             $('#member input[name=user_phone]').focus();
@@ -88,6 +139,22 @@ $(function() {
             setTimeout(function(){
                 $("#certifinum_submit").attr("disabled", false);
             }, 60000);
+
+            // 3분 타이머
+            certifi_checked = "0";
+            var time = 180;
+            var timer = setInterval(function() {
+                var min = Math.floor(time / 60);
+                var sec = time % 60;
+                $("#certifi_time").text(min + "분 " + sec + "초");
+                time--;
+                if(time < 0) {
+                    alert("인증시간이 만료되었습니다. 다시 시도해주세요.");
+                    clearInterval(timer);
+                    $("#certifi_time").text("시간 초과");
+                    $("#certifinum_check").attr("disabled", true);
+                }
+            }, 1000);
 
             // ajax를 이용하여 인증번호를 요청한다.
             $.ajax({
@@ -105,12 +172,11 @@ $(function() {
     $('#certifinum_check').click(function() {
         // certifinum과 인증번호가 같으면
         if(certifinum == $('#member #certifinum').val()) {
-            alert("인증번호가 일치합니다.");
+            $("#certifi_time").text("인증 완료");
+            certifi_checked = "1";
         }
         else {
             alert("인증번호가 일치하지 않습니다.");
-            // 회원가입 버튼 활성화
-            $(".join_complete_btn").attr("disabled", true);
         }
     });
 
@@ -165,9 +231,58 @@ $(function() {
             return false;
         }
 
+        // 인증번호 빈칸인지 확인
+        else if($('#member #certifinum').val() == '') {
+            alert('인증번호를 입력해주세요.');
+            $('#member #certifinum').focus();
+            return false;
+        }
+
+        // 인증번호 확인했는지 확인
+        else if(certifi_checked == "0") {
+            alert("휴대번호 인증을 해주세요.");
+            return false;
+        }
+
+        else if(id_checked == "0") {
+            alert("아이디 중복확인을 해주세요.");
+            return false;
+        }
+
+        else if(pw_checked == "0") {
+            alert("비밀번호를 확인을 해주세요.");
+            return false;
+        }
+
+        else if(email_checked == "0") {
+            alert("이메일 형식을 확인을 해주세요.");
+            return false;
+        }
+
         // 회원가입 진행
         else {
-
+            // 회원가입 진행
+            $.ajax({
+                url: "/insertUser",
+                type: "GET",
+                data: {
+                    user_id: $('#member input[name=user_id]').val(),
+                    user_pw: $('#member input[name=user_pw]').val(),
+                    user_name: $('#member input[name=user_name]').val(),
+                    user_email: $('#member input[name=user_email]').val(),
+                    user_birth: $('#member #birth_year').val() + '-' + $('#member #birth_month').val() + '-' + $('#member #birth_day').val(),
+                    user_gender: $("#member input[name=user_gender]:checked").val(),
+                    user_phone: $('#member input[name=user_phone]').val()
+                }
+            }).done(function(data) {
+                if(data==1) {
+                    location.href = "/join3";
+                }
+                else {
+                    alert("회원가입에 실패하였습니다.");
+                    location.href = "/join2";
+                }
+            })
         }
     });
 });

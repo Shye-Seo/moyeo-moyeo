@@ -1,6 +1,7 @@
 package com.service.eventus.mappers;
 
 import com.service.eventus.member.MemberVo;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -11,6 +12,11 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface MemberDao {
+
+    // 회원가입
+    @Insert("insert into user (user_id, user_pw, user_name, user_phone, user_email, user_birth, user_gender) " +
+            "values (#{user_id}, #{user_pw}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, #{user_gender})")
+    int insertUser(MemberVo memberVo);
 
     @Select("select * from user where user_id = #{user_id} and user_pw = #{user_pw}")
     MemberVo viewMember(MemberVo memberVo);  // 로그인할 때 회원정보 가져올 때

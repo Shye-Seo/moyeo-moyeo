@@ -14,6 +14,13 @@ public class MemberController {
     @Inject
     private MemberService memberService;
 
+    // 회원가입
+    @RequestMapping(value = "/insertUser")
+    @ResponseBody
+    public int insertUser(@ModelAttribute MemberVo memberVo) throws Exception {
+        return memberService.insertUser(memberVo);
+    }
+
     // 아이디 중복 체크
     @ResponseBody
     @RequestMapping(value="/idchk")
