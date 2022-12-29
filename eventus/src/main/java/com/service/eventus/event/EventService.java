@@ -24,11 +24,21 @@ public class EventService {
 		return eventDao.viewEventDetail(event_id);
 	}
 	
+	// 행사 상세 조회 파일
+	public List<EventFileVo> viewEventFileDetail (int event_id) {
+		return eventDao.viewEventFileDetail(event_id);
+	}
+	
 	//행사등록
 	public int insertEvent(EventVo eventVo) {
 		eventDao.insertEvent(eventVo);
 		int id = eventDao.maxEventId();
 		return id;
+	}
+	
+	//행사 파일 등록
+	public boolean insertEventFile(EventFileVo eventFileVo) {
+		return eventDao.insertEventFile(eventFileVo);
 	}
 
 	// 지원현황 count

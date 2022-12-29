@@ -1,21 +1,25 @@
 package com.service.eventus.event;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.service.eventus.aws.AwsS3Service;
 import com.service.eventus.member.MemberVo;
-
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class EventController {
 	
+	@Autowired
+	  AwsS3Service s3Service;
+	  
 	@Inject
     private EventService eventService;
 	
@@ -37,19 +41,44 @@ public class EventController {
 	public ModelAndView eventDetail(@RequestParam("id") int event_id) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		EventVo detailVo = eventService.viewEventDetail(event_id);
-
+		
+		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
+		
 		mav.addObject("event", detailVo);
+		mav.addObject("eventFileList", eventFileList);
 
 		mav.setViewName("manage_eventDetail");
 		return mav;
 	}
 
+	
+//	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
+//	public String eventAdd(@ModelAttribute EventVo eventVo, @RequestAttribute List<MultipartFile> library_file) throws Exception{
+//		int id =eventService.insertEvent(eventVo);
+//		return "redirect:eventDetail?id="+id;
+//	}
+	
 	//행사등록
+	@ResponseBody
 	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
-	public String eventAdd(@ModelAttribute EventVo eventVo) throws Exception{
+	public String eventAdd(@ModelAttribute EventVo eventVo, @RequestAttribute List<MultipartFile> event_file) throws Exception{
+		
 		int id =eventService.insertEvent(eventVo);
-		return "redirect:eventDetail?id="+id;
+		
+		if(event_file != null) {
+			List<String> filenames = s3Service.upload_eventFile(event_file);
+			for(String name : filenames) {
+				EventFileVo eventFileVo = new EventFileVo();
+				eventFileVo.setEvent_id(id);
+				eventFileVo.setFile_name(name);
+				eventService.insertEventFile(eventFileVo);
+			}
+		}
+		
+		return "eventDetail?id="+id;
 	}
+	
+	
 	
 	//지원현황(모집중) 모달창
 	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
