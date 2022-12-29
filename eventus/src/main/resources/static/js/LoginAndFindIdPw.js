@@ -1,6 +1,9 @@
 
 $(function() {
-    var certifinum = "1";
+    // 변수
+    var certifinum = "1"; // 인증번호
+    var getid = "1"; // 아이디
+
     // login 관련 javascript
     // loginform_check() : 로그인 폼 체크
     $(".login_btn").click(function(){
@@ -26,6 +29,11 @@ $(function() {
             $("#find_id input[name=user_name]").focus();
             return false;
          }
+        else if($("#find_id input[name=user_phone]").val() == ""){
+            alert("전화번호를 입력해주세요.");
+            $("#find_id input[name=user_phone]").focus();
+            return false;
+        }
          // 아니라면
          else {
             // 전화번호를 입력한 상태에서 인증번호 요청 버튼을 누르면
@@ -97,6 +105,11 @@ $(function() {
             $("#find_pw input[name=user_id]").focus();
             return false;
         }
+        else if($("#find_pw input[name=user_phone]").val() == ""){
+            alert("전화번호를 입력해주세요.");
+            $("#find_pw input[name=user_phone]").focus();
+            return false;
+        }
         // 아니라면
         else {
             // 전화번호를 입력한 상태에서 인증번호 요청 버튼을 누르면
@@ -136,8 +149,24 @@ $(function() {
                 
                 // 등록된 회원이 있는지 확인
                 $.ajax({
-
-                });
+                    url: "/findIdForPw",
+                    type: "GET",
+                    data: {
+                        user_id: $("#find_pw input[name=user_id]").val(),
+                        user_phone: $("#find_pw input[name=user_phone]").val()
+                    },
+                    dataType: "text",
+                }) // 성공했을 때
+                    .done(function(data){
+                        if(data == "failure"){
+                            alert("등록된 회원이 아닙니다.");
+                        }
+                        else {
+                            getid = data;
+                            $(".tab2_content").css('display', 'none');
+                            $(".changing_pw").css('display', 'inline');
+                        }
+                    });
             });
         }
         else {
@@ -148,16 +177,16 @@ $(function() {
     // 비밀번호 변경
     $(".changing_pw .change_pw_btn").click(function(){
         // 비밀번호가 영문, 숫자 특수기호 중 2가지 이상 조합, 10자~16자 인지 확인
-        var regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,16}$/;
-        if(!regExp.test($("#changing_pw input[name=user_pw]").val())){
+        var regExp = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,16}$/;
+        if(!regExp.test($(".changing_pw input[name=user_pw]").val())){
             alert("비밀번호는 영문, 숫자, 특수기호 중 2가지 이상 조합, 10자~16자로 입력해주세요.");
-            $("#changing_pw input[name=user_pw]").focus();
+            $(".changing_pw input[name=user_pw]").focus();
             return false;
         }
         // 비밀번호 확인이 비밀번호와 일치하는지 확인
-        else if($("#changing_pw input[name=user_pw]").val() != $("#changing_pw #checked_new_pw").val()){
+        else if($(".changing_pw input[name=user_pw]").val() != $(".changing_pw #checked_new_pw").val()){
             alert("비밀번호가 일치하지 않습니다.");
-            $("#changing_pw input[name=user_pw_check]").focus();
+            $(".changing_pw input[name=user_pw_check]").focus();
             return false;
         }
         // 아니라면
@@ -166,11 +195,13 @@ $(function() {
             $.ajax({
                 url: "/updatePw",
                 type: "POST",
-                data: { user_id: $("#changing_pw input[name=user_id]").val(), user_pw: $("#changing_pw input[name=user_pw]").val() },
+                data: {
+                    user_id: getid,
+                    user_pw: $(".changing_pw input[name=user_pw]").val() },
                 dataType: "text",
             }).done(function(data){
-                alert("비밀번호가 변경되었습니다.");
-                location.href = "/";
+                $(".changing_pw").css('display', 'none');
+                $(".changed_complete").css('display', 'inline');
             });
         }
     });

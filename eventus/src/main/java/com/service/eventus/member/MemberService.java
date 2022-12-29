@@ -38,6 +38,15 @@ public class MemberService {
         return memberDao.findId(memberVo);
     }
 
+    // 비밀번호 변경을 위한 아이디 찾기(user_id 반환)
+    public String findIdForPw(MemberVo memberVo) throws Exception {
+        return memberDao.findIdForPw(memberVo);
+    }
+
+    // 비밀번호 변경
+    public int updatePw(MemberVo memberVo) throws Exception {
+        return memberDao.updatePw(memberVo);
+    }
 
     // 로그인할때 회원정보 가져올때
     public MemberVo viewMember(MemberVo memberVo) {

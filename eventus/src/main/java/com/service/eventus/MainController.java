@@ -35,12 +35,6 @@ public class MainController {
 	@GetMapping(value="/find_id_pw")
 	public String find_id_pw() { return "find_id_pw"; }
 
-	@GetMapping(value="/changing_pw")
-	public String changing_pw() { return "changing_pw"; }
-
-	@GetMapping(value="/changed_pw")
-	public String changed_pw() { return "changed_pw"; }
-
 	// main 페이지
 	@GetMapping(value="/main")
 	public String Main() {

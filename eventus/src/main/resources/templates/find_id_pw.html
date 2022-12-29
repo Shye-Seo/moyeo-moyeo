@@ -57,27 +57,39 @@
                         </form>
                     </section>
                 </div>
+
+                <!-- 아이디 찾기 완료 -->
                 <div class="found_id">
                     <p>아이디는 <span id="getid"></span> 입니다.</p>
                     <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome" onclick="location.href='/login'">
                 </div>
-             </div>
-            <div class="changing_pw">
-                <div class="changing_pw_comment">
-                    <p>비밀번호 재설정</p>
-                    <p>기존 비밀번호는 암호화 처리되어 안내가 불가능하오니,<br/>새로운 비밀번호를 등록해 주시기 바랍니다.</p>
+
+                <!-- 비밀번호 변경 -->
+                <div class="changing_pw">
+                    <div class="changing_pw_comment">
+                        <p>비밀번호 재설정</p>
+                        <p>기존 비밀번호는 암호화 처리되어 안내가 불가능하오니,<br/>새로운 비밀번호를 등록해 주시기 바랍니다.</p>
+                    </div>
+
+                    <div>
+                        <form>
+                            <p>새로운 비밀번호</p>
+                            <input type="password" name="user_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10자~16자">
+                            <p>비밀번호 확인</p>
+                            <input type="password" id="checked_new_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10~16자">
+
+                            <input type="button" value="비밀번호 저장" class="change_pw_btn">
+                            <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome" onclick="location.href='/login'">
+                        </form>
+                    </div>
                 </div>
 
-                <div>
-                    <form>
-                        <p>새로운 비밀번호</p>
-                        <input type="password" name="user_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10자~16자">
-                        <p>비밀번호 확인</p>
-                        <input type="password" id="checked_new_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10~16자">
-
-                        <input type="button" value="비밀번호 저장" class="change_pw_btn">
-                        <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome" onclick="location.href='/login'">
-                    </form>
+                <!-- 비밀번호 변경 완료 -->
+                <div class="changed_complete">
+                    <div class="check_img"></div>
+                    <h2>비밀번호가 변경되었습니다.</h2>
+                    <p>새로운 비밀번호로 로그인 해보세요.</p>
+                    <input type="button" value="로그인하기" class="goto_login_btn" onclick="location.href='/login'">
                 </div>
             </div>
         </div>

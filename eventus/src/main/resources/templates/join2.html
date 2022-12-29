@@ -27,67 +27,65 @@
 
             <!-- 회원 정보 입력 -->
             <div id="member">
-                <form action="">
+                <form>
                     <div class="id_area">
                         <p class="item">아이디</p>
-                        <input type="text" placeholder="아이디 입력" value="">
+                        <span id="id_check"></span>
+                        <input type="text" name="user_id" placeholder="아이디 입력" value="">
                     </div>
 
                     <div class="pw_area">
                         <p class="item">비밀번호</p>
-                        <input type="password" placeholder="비밀번호 입력" value="">
+                        <input type="password" name="user_pw" placeholder="비밀번호 입력" value="">
                     </div>
 
                     <div class="pw_area">
                         <p class="item">비밀번호 확인</p>
-                        <input type="password" placeholder="비밀번호 재확인" value="">
+                        <span id="pw_check"></span>
+                        <input type="password" id="checked_pw" placeholder="비밀번호 재확인" value="">
                     </div>
 
                     <div class="name_area">
                         <p class="item">이름</p>
-                        <input type="text" placeholder="이름 입력" value="">
+                        <input type="text" name="user_name" placeholder="이름 입력" value="">
                     </div>
 
                     <div class="email_area">
                         <p class="item">이메일주소</p>
-                        <input type="text" placeholder="example@foryoucom.com" value="">
+                        <input type="text" name="user_email" placeholder="example@foryoucom.com" value="">
                     </div>
 
                     <div class="birth_area">
                         <p class="item">생일/성별</p>
 
-                        <select id="birth_year"></select>
-                        <select id="birth_month"></select>
-                        <select id="birth_day"></select>
+                        <select id="birth_year"><option value="년도">년도</option></select>
+                        <select id="birth_month"><option value="월">월</option></select>
+                        <select id="birth_day"><option value="일">일</option></select>
 
                     </div>
 
                     <div class="gender_area">
-                        <input type="radio" name="gender" value="male"/>남성
-                        <input type="radio" name="gender" value="female" />여성
+                        <input type="radio" name="user_gender" value="male"/>남성
+                        <input type="radio" name="user_gender" value="female" />여성
                     </div>
 
                     <div class="phone_area">
                         <p class="item">휴대전화</p>
-
-                        <!-- 국제번호 select -->
-                        <select id="phone_country">
-                            <option data-countryCode="KR" value="82">+82</option>
-                        </select>
-                        <input type="text" placeholder="예) 01012345678" value="">
+                        <input type="text" name="user_phone" placeholder="예) 01012345678">
                         <input type="button" id="certifinum_submit" value="인증">
                     </div>
 
                     <div class="certifinum_area">
                         <p class="item">인증번호</p>
-                        <input type="text" placeholder="인증번호 입력" value="">
+                        <input type="text" id="certifinum" placeholder="인증번호 입력">
+                        <input type="button" id="certifinum_check" value="인증">
                     </div>
                 </form>
             </div>
 
             <div class="button_position">
                 <input type="submit" value="뒤로" class="back_btn" onclick="location.href='/join1'">
-                <input type="button" value="회원가입" class="join_complete_btn" onclick="location.href='/join3'">
+                <input type="button" value="회원가입" class="join_complete_btn">
             </div>
         </div>
         <script>

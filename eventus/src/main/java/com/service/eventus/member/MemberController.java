@@ -16,7 +16,7 @@ public class MemberController {
 
     // 아이디 중복 체크
     @ResponseBody
-    @PostMapping(value="idChk")
+    @RequestMapping(value="/idchk")
     public int idChk(@RequestParam("user_id") String user_id) {
         return memberService.idChk(user_id);
     }
@@ -48,6 +48,30 @@ public class MemberController {
         String result = memberService.findId(memberVo);
         if(result != null) {
             return result;
+        }else {
+            return "failure";
+        }
+    }
+
+    // 비밀번호 변경을 위한 아이디 찾기
+    @RequestMapping("/findIdForPw")
+    @ResponseBody
+    public String findIdForPw(@ModelAttribute MemberVo memberVo) throws Exception {
+        String result = memberService.findIdForPw(memberVo);
+        if(result != null) {
+            return result;
+        }else {
+            return "failure";
+        }
+    }
+
+    // 비밀번호 변경
+    @RequestMapping("/updatePw")
+    @ResponseBody
+    public String updatePw(@ModelAttribute MemberVo memberVo) throws Exception {
+        int result = memberService.updatePw(memberVo);
+        if(result == 1) {
+            return "success";
         }else {
             return "failure";
         }

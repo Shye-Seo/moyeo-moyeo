@@ -21,11 +21,11 @@ public interface MemberDao {
     @Select("select user_id from user where user_name = #{user_name} and user_phone = #{user_phone}")
     String findId(MemberVo memberVo); // 아이디 찾기(user_id 반환)
 
+    @Select("select user_id from user where user_id = #{user_id} and user_phone = #{user_phone}")
+    String findIdForPw(MemberVo memberVo); // 비밀번호 변경을 위한 아이디 찾기(user_id 반환)
+
     @Select("select count(*) from user where user_id = #{user_id} and user_pw = #{user_pw}")
     int loginCheck(MemberVo memberVo); // 로그인할 때 회원확인(세션등록)
-
-    @Select("select count(*) from user where user_id = #{user_id} and user_phone = #{user_phone}")
-    int findPwCheck(MemberVo memberVo); // 비밀번호 찾기 전에 등록된 유저인지 아이디와 전화번호로 확인
 
     @Update("update user set user_pw = #{user_pw} where user_id = #{user_id}")
     int updatePw(MemberVo memberVo); // 비밀번호 변경
