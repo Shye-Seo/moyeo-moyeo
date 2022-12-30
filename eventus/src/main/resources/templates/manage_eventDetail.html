@@ -46,8 +46,11 @@
 					<ul>
 						<li class="t_title">첨부파일</li>
 						<li id="event_file">
-							<div th:each="FileList : ${eventFileList}">
-								<div th:text="${FileList.file_name}"></div>
+							<div th:each="FileList : ${eventFileList}" >
+								<a th:href="@{event_download(filename=${FileList.file_name})}">
+									<div>■</div>
+									<div th:text="${FileList.file_name}"></div>
+								</a>
 							</div>
 						</li>
 					</ul>

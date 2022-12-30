@@ -1,6 +1,7 @@
 package com.service.eventus.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -9,10 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.aws.AwsS3Service;
 import com.service.eventus.member.MemberVo;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class EventController {
@@ -94,5 +98,12 @@ public class EventController {
 		System.out.println("=============>list:"+application_list);
 	    model.addAttribute("application_list", application_list);
 		return "application_modal";
+	}
+	
+	//행사 파일 다운로드
+	@RequestMapping({"/event_download"})
+	@ResponseBody
+	public ResponseEntity<byte[]> download(@RequestParam String filename) throws IOException {
+		return s3Service.getObject_event(filename);
 	}
 }
