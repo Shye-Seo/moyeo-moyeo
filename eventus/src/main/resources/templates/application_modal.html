@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤터즈랩(eventusLAB)</title>
+    <link rel="stylesheet" href="/css/modal.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+</head>
+<body>
+	<div class="total_applicant">
+		<div>총 지원자 수 <span style="color: #DD5067" th:text="${applicant_count}"></span> 명</div>
+	</div>
+	<div class="application_list">
+		<div id="list" th:each="list : ${application_list}">
+			<img src="/imgs/trash_can.svg" id="trash_icon">
+			<div id="each_">
+			<div class="img_div">
+				<img src="/imgs/profile_none_img.svg" id="profile_img">
+			</div>
+			<div class="personal_info">
+				<div id="personal_div" class="upper_div">
+					<img src="/imgs/personal_icon.svg" id="icon">
+					<p th:text="${list.user_name} + '(' + ${user_age} + '세)'"></p>
+				</div>
+				<div id="personal_div">
+					<img src="/imgs/phone_icon.svg" id="icon">
+					<p th:text="${user_phone}"></p>
+				</div>
+			</div>
+			<div id="line"></div>
+			<div class="career_info">
+				<div class="upper_div"><p>행사경력</p></div>
+				<div><p th:text="${career_count} + ' 회'"></p></div>
+			</div>
+			<div id="line"></div>
+			<div class="address_info">
+				<div class="upper_div"><p>거주지</p></div>
+				<div><p th:text="${user_address}"></p></div>
+			</div>
+			<div id="line"></div>
+			<div class="btn_div">
+				<button type="button" id="accept_btn" onclick="acceptApplicant()">수락</button>
+				<span id="resume_open">이력서보기</span>
+			</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function acceptApplicant()  {
+		  const btnElement = document.getElementById('accept_btn');
+		  btnElement.innerText = '완료';
+		  btnElement.style.backgroundColor = "#333333";
+		}
+  </script>
+</body>
+</html>

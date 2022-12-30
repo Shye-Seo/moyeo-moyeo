@@ -14,7 +14,8 @@ body {background:#F8F9FB;}
 
 /* fixed menu */
 .sidebar{
-    width: 200px;
+    width: 10%;
+    max-width: 180px;
     height: 100%;
     background-color: #5B8FD2;
     position: fixed;
@@ -22,6 +23,7 @@ body {background:#F8F9FB;}
     left: 0;
     overflow: hidden;
     box-shadow: 3px 0 6px rgba(0,0,0,0.1);
+    z-index: 99;
 }
 
 .logo{
@@ -107,4 +109,56 @@ body {background:#F8F9FB;}
 
 .side_info p:last-child{
     font-weight: 600;
+}
+
+/* datepicker UI수정 */
+
+.ui-widget{
+    font-family: 'pretendard';
+    padding: 10px;
+}
+
+.ui-widget-header{
+    border: 0;
+    background: #fff;
+}
+
+.ui-datepicker td span, .ui-datepicker td a{
+    text-align: center;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    border-radius: 50%;
+    margin: 5px;
+    font-weight: 600 !important;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active{
+    background:#ffffff;
+    border:0;
+}
+.ui-state-hover{
+    background: #eee !important;
+}
+.ui-state-active{
+    background: #FFD0DE !important;
+    color: #333 !important;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+    color: #ff7070 !important;
+}
+
+
+.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_default, .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_current, .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box>div>div.xdsoft_current{
+    background: #FFD0DE;
+    color: #333;
+    box-shadow : none;
+}
+.xdsoft_datetimepicker .xdsoft_calendar td:hover, .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box>div>div:hover{
+    color: #333 !important;
+    background: #ddd !important;
+}
+
+.xdsoft_datetimepicker .xdsoft_calendar td, .xdsoft_datetimepicker .xdsoft_calendar th{
+    background: #fff;
 }

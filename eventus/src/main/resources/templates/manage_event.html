@@ -8,6 +8,43 @@
     <link rel="stylesheet" href="/css/manage_event.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
+<style>
+#application_modal {
+  position:relative;
+  width:100%;
+  height:100%;
+  z-index:1;
+  display: none;
+}
+
+#application_modal h2 {
+  margin:0;   
+}
+
+#application_modal button {
+  display:inline-block;
+  width:100px;
+  margin-left:calc(100% - 100px - 10px);
+}
+
+#application_modal .modal_content {
+  width:300px;
+  margin:100px auto;
+  padding:20px 10px;
+  background:#fff;
+  border:2px solid #666;
+}
+
+#application_modal .modal_layer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index:-1;
+}   
+</style>
 <body>
     <div id="wrap">
         <!-- fixed menu -->
@@ -90,11 +127,13 @@
                         </ol>
 						<ol th:each="event : ${event_list}" id="list_ol">
 							<li th:text="${event.id}"></li>
-							<li th:text="${event.event_title}"></li>
+							<a th:href="@{eventDetail(id=${event.id})}"><li th:text="${event.event_title}"></li></a>
 							<li th:text="${event.event_startDate} + ' - ' + ${event.event_endDate}"></li>
-							<li th:text="${event.event_status}"></li>
-							<li th:text="${event.event_status}"></li>
-							<li th:text="${event.event_status}"></li>
+							<li th:if="${event.event_status == 0}">모집중</botton></li><li th:if="${event.event_status == 1}">진행중</li><li th:if="${event.event_status == 2}">진행완료</li>
+							<a th:if="${event.event_status == 0}" th:href="@{application_modal(id=${event.id})}"><li th:text="${event.application_count} + ' 명'"></li></a>
+							<a th:if="${event.event_status == 1}" th:href="@{application_modal(id=${event.id})}"><li th:text="${event.application_count} + ' 명'"></li></a>
+							<li th:if="${event.event_status == 2}" th:text="${event.application_count} + ' 명'"></li>
+							<li th:text="${event.booth_count} + ' 개'"></li>
 						</ol>
                     </ul>
                 </div>

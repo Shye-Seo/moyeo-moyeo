@@ -3,16 +3,28 @@
 /* main */
 .content{
     position:relative;
-    width: calc(100% - 200px);
-    margin-left: 200px;
+    width :95%;
+    /* width: calc(100% - 200px); */
+    /* margin-left: 200px; */
     /* height: 100vh; */
+    display: flex;
 }
+
 
 .container{
     width: 85%;
-    margin: 0 auto;
+    /*  margin: 0 auto;*/
     /* height: 100vh; */
 }
+
+/* sidebar와의 간격조정을 위해 */
+.content::before{
+	content:"";
+    display: block;
+	width: 18%;
+    max-width: 320px;
+}
+
 .page-header{
     width: 100%; max-width: 1440px;
     height: 120px;
@@ -109,7 +121,7 @@
     border: 0.5px solid #5B8FD2 !important;
 }
 
-.area1,.area2,.area3,.area4{
+.area1,.area2,.area3,.area4,.area5{
     margin-bottom: 30px;
     display: flex;
 }
@@ -118,7 +130,7 @@
     align-items: center;
 }
 
-.area1 input[name="event_title"]{
+.area1 input[name="event_title"], .area5 input[name="event_venue"]{
     width: 40%;
     /* max-width: 530px; */
     margin-right: 5%;
@@ -129,6 +141,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 .date_wrap span{
     width: auto;
@@ -144,6 +157,10 @@
     padding-right: 10px;
     padding-top: 15px;
     cursor: pointer;
+    background: url(../imgs/register-calendar.svg) no-repeat;
+    background-origin: content-box;
+    background-position-x: right;
+    background-position-y: 13px;
 }
 /* date 기본글 */
 /* .date_wrap input[type="date"]::before{
@@ -166,6 +183,9 @@
     box-sizing: border-box;
     font-size: 15px;
 }
+.area5 input[name="event_deadline"]{
+    width: 60%;
+}
 .area3 p{
     font-size: 13px;
     font-weight: 500;
@@ -175,22 +195,45 @@
     display: flex;
     justify-content: space-between;
 }
-.area3 .file_names{
-    flex: 1 0 auto;
+.area3 #file_names{
+    width: calc(100% - 61px); height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+
 }
-.area3 .fname{
+#file_names >div{
+    max-width: 20%; height: 20px;
     font-size: 15px;
-    line-height: 60px;
+}
+.area3 .file_con{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+.file_con .filename{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.file_con img{
+    width: 15px; height: 15px;
+    cursor: pointer;
+    margin-top: 2px;
 }
 
-.area3 button{
+.area3 label{
     width: 60px;
     border: 0;
     border-left: 0.5px solid #DDDDDD;
-    background: none;
+    background: url("../imgs/register_upload.svg") no-repeat;
+    background-position: center;
+    cursor: pointer;
 }
 
-.area4 span:first-child{
+.area4 span:first-child,.area5 span:first-child{
     margin-top: 10px;
 }
 
@@ -237,20 +280,32 @@
     position: relative;
     margin-bottom: 50px;
 }
+.position_btn{
+    width: 70px; height: 30px;
+    position: absolute;
+    bottom: 25px; right: -100px;
+    display: flex;
+}
 
 #add_position{
-    width: 27px; height: 27px;
-    border: 2px solid #5B8FD2;
-    border-radius: 50%;
-    color: #5B8FD2;
-    line-height: 22px; text-align: center;
-    font-size: 40px; font-weight: 200;
-    margin-left: 20px;
+    width: 30px; height: 30px;
+    background: url("../imgs/register-add-circle.svg") no-repeat;
+    background-size: cover;
     cursor: pointer;
 
     position: absolute;
     bottom: 25px;
     right: -50px;
+}
+
+.remove_position{
+    width: 30px;
+    height: 30px;
+    background: url("../imgs/register-minus-circle.svg") no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    margin-right: 10px;
+    transform: translateX(20px);
 }
 
 .btn_wrap{

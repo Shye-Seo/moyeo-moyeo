@@ -3,15 +3,26 @@
 /* main */
 .content{
     position:relative;
-    width: calc(100% - 200px);
-    margin-left: 200px;
+    width :95%;
+    /* width: calc(100% - 200px); */
+    /* margin-left: 200px; */
     /* height: 100vh; */
+    display: flex;
 }
+
 
 .container{
     width: 85%;
-    margin: 0 auto;
+    /*  margin: 0 auto;*/
     /* height: 100vh; */
+}
+
+/* sidebar와의 간격조정을 위해 */
+.content::before{
+	content:"";
+    display: block;
+	width: 18%;
+    max-width: 320px;
 }
 
 .page-header{
@@ -90,8 +101,17 @@
     box-sizing: border-box;
     margin-bottom: 40px;
 }
+.area span{
+    width: 100%;
+    display: flex;
+    gap: 40px;
+}
 .event_table{
+    width: 50%;
     margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    height: 535px;
 }
 .event_table ul{
     width: 100%; height: 60px;
@@ -100,19 +120,25 @@
     font-size: 16px;
     border-bottom: 0.5px solid #DDDDDD;
 }
-.event_table ul:first-child, .event_table ul:last-child{
+
+.event_table_R ul{
+    line-height: 535px;
+}
+.event_table ul:first-child, .event_table_R ul{
     border-top: 0.5px solid #DDDDDD;
 }
 .event_table li{
     height: 100%;
+    width: calc(100% - 150px);
+    box-sizing: border-box;
 }
 .event_table .t_title{
-    width: 240px;
+    width: 150px;
     background-color: #F7F5F5;
     text-align: center;
     color: #666666;
 }
-.event_table ul:first-child .t_title{
+.event_table_L ul:first-child .t_title{
     letter-spacing: 4.48px;
 }
 .event_table ul li:nth-child(2){
@@ -121,17 +147,41 @@
 .event_table ul:first-child li:nth-child(2){
     font-weight: 600;
 }
+.event_table .position_tab{
+    height: 100px;
+}
+
+.position_tab li{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.position_table{
+    height: 50px;
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    display: flex;
+}
+.position{
+    width: 20%;
+}
 
 .event_table textarea{
     background-color: #ffffff;
     resize: none;
-    width: 100%;
-    height: 300px;
+    flex: 1 1 auto;
     box-sizing: border-box;
     border: 0;
     padding: 20px;
     font-size: 14px; font-weight: 600;
-    
+}
+.event_table .file_tab, .event_table_R ul{
+    flex: 1 0 auto;
+}
+
+#event_file a{
+    display: flex;
 }
 
 .btn_wrap{

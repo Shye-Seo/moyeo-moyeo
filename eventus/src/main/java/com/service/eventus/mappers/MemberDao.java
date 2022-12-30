@@ -36,4 +36,10 @@ public interface MemberDao {
     @Update("update user set user_pw = #{user_pw} where user_id = #{user_id}")
     int updatePw(MemberVo memberVo); // 비밀번호 변경
 
+    @Select("select count(*) from user where user_id = #{user_id} and user_phone = #{user_phone}")
+    int findPwCheck(MemberVo memberVo); // 비밀번호 찾기 전에 등록된 유저인지 아이디와 전화번호로 확인
+
+    @Update("update user set user_pw = #{user_pw} where user_id = #{user_id}")
+    int updatePw(MemberVo memberVo); // 비밀번호 변경
+
 }
