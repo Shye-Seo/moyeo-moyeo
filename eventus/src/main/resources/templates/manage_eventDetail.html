@@ -45,7 +45,14 @@
 					<textarea name="event_content" id="event_content" cols="30" rows="10" spellcheck="false" disabled>[(${event.event_content})]</textarea>
 					<ul>
 						<li class="t_title">첨부파일</li>
-						<li class="event_file"></li>
+						<li id="event_file">
+							<div th:each="FileList : ${eventFileList}" >
+								<a th:href="@{event_download(filename=${FileList.file_name})}">
+									<div>■</div>
+									<div th:text="${FileList.file_name}"></div>
+								</a>
+							</div>
+						</li>
 					</ul>
 				</div>
 				<div class="btn_wrap">

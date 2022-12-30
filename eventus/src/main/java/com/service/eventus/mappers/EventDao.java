@@ -39,10 +39,15 @@ public interface EventDao {
 	int application_count(int event_id); // 지원현황 count
 	
 	@Select("select * from user u inner join staff_application s, event e where u.id = s.staff_id and e.id = s.event_id and e.id = #{event_id}")
-	List<MemberVo> application_list(int event_id); // 지원현황 지원자 리스트(모집중) - 지원자 정보(이름, 나이, 휴대폰번호, 주소)
+	List<MemberVo> application_list(int event_id); // 지원현황 지원자 리스트(모집중) - 지원자 정보(이름, 나이, 휴대폰번호)
 	
 	@Select("select count(staff_career_eventName) from staff_resume r inner join staff_application s, user u where s.staff_id = u.id and r.staff_id = u.id and u.id = #{staff_id}")
 	int staff_career(int staff_id); // 지원현황 지원자 리스트(모집중) - 행사경력 count
+
+	@Select("select staff_address from staff_resume r inner join staff_application s, user u where s.staff_id = u.id and r.staff_id = u.id and u.id = #{staff_id}")
+	String getStaffAddress(int staff_id); // 지원현황 지원자 리스트(모집중) - 거주지
 	
+	@Select("select round((to_days(now()) - (to_days('${user_birth}'))) / 365)")
+	String getUserAge(String user_birth); // 지원현황 지원자 리스트(모집중) - 나이계산(만 나이)
 	
 }

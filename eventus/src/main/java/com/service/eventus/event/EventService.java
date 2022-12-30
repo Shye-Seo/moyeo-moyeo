@@ -55,4 +55,14 @@ public class EventService {
 	public int staff_career(int staff_id) throws Exception {
 		return eventDao.staff_career(staff_id);
 	}
+
+	// 지원현황 지원자 거주지
+	public String getAddress(int staff_id) throws Exception {
+		return eventDao.getStaffAddress(staff_id);
+	}
+	
+	// 지원현황 지원자 만 나이
+	public String getUserAge(String user_birth) throws Exception {
+		return eventDao.getUserAge(user_birth);
+	}
 }

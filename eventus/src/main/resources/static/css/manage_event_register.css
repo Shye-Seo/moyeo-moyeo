@@ -3,16 +3,28 @@
 /* main */
 .content{
     position:relative;
-    width: calc(100% - 200px);
-    margin-left: 200px;
+    width :95%;
+    /* width: calc(100% - 200px); */
+    /* margin-left: 200px; */
     /* height: 100vh; */
+    display: flex;
 }
+
 
 .container{
     width: 85%;
-    margin: 0 auto;
+    /*  margin: 0 auto;*/
     /* height: 100vh; */
 }
+
+/* sidebar와의 간격조정을 위해 */
+.content::before{
+	content:"";
+    display: block;
+	width: 18%;
+    max-width: 320px;
+}
+
 .page-header{
     width: 100%; max-width: 1440px;
     height: 120px;
@@ -209,6 +221,7 @@
 .file_con img{
     width: 15px; height: 15px;
     cursor: pointer;
+    margin-top: 2px;
 }
 
 .area3 label{

@@ -1,6 +1,7 @@
 package com.service.eventus.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.aws.AwsS3Service;
 import com.service.eventus.member.MemberVo;
+
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,21 +82,40 @@ public class EventController {
 		return "eventDetail?id="+id;
 	}
 	
-	
+	//행사 파일 다운로드
+	@RequestMapping({"/event_download"})
+	@ResponseBody
+	public ResponseEntity<byte[]> download(@RequestParam String filename) throws IOException {
+		return s3Service.getObject_event(filename);
+	}
 	
 	//지원현황(모집중) 모달창
 	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
 	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
+		
+		int applicant_count = eventService.application_count(event_id);
+		model.addAttribute("applicant_count", applicant_count);
+		
 		
 		List<MemberVo> application_list = eventService.application_list(event_id);
 		if (application_list != null) {
 			for (MemberVo memberVo : application_list) {
 				int staff_career = eventService.staff_career(memberVo.getId());
 				model.addAttribute("career_count", staff_career);
+				
+				String user_address = eventService.getAddress(memberVo.getId());
+				model.addAttribute("user_address", user_address);
+				
+				String user_age = eventService.getUserAge(memberVo.getUser_birth());
+				model.addAttribute("user_age", user_age);
+				
+				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
+				String user_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
+				model.addAttribute("user_phone", user_phone);
 			}
 		}
-		System.out.println("=============>list:"+application_list);
 	    model.addAttribute("application_list", application_list);
 		return "application_modal";
 	}
+	
 }
