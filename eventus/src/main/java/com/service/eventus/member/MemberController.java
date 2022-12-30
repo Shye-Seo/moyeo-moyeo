@@ -14,9 +14,16 @@ public class MemberController {
     @Inject
     private MemberService memberService;
 
+    // 회원가입
+    @RequestMapping(value = "/insertUser")
+    @ResponseBody
+    public int insertUser(@ModelAttribute MemberVo memberVo) throws Exception {
+        return memberService.insertUser(memberVo);
+    }
+
     // 아이디 중복 체크
     @ResponseBody
-    @PostMapping(value="idChk")
+    @RequestMapping(value="/idchk")
     public int idChk(@RequestParam("user_id") String user_id) {
         return memberService.idChk(user_id);
     }
@@ -43,18 +50,38 @@ public class MemberController {
 
     // 아이디 찾기
     @RequestMapping("/findId")
-    public ModelAndView findId(@ModelAttribute MemberVo memberVo) throws Exception {
-        ModelAndView mav = new ModelAndView();
+    @ResponseBody
+    public String findId(@ModelAttribute MemberVo memberVo) throws Exception {
         String result = memberService.findId(memberVo);
         if(result != null) {
-            mav.setViewName("/login");
-            mav.addObject("msg", "success");
-            mav.addObject("user_id", result);
+            return result;
         }else {
-            mav.setViewName("/find_id_pw");
-            mav.addObject("msg", "failure");
+            return "failure";
         }
-        return mav;
+    }
+
+    // 비밀번호 변경을 위한 아이디 찾기
+    @RequestMapping("/findIdForPw")
+    @ResponseBody
+    public String findIdForPw(@ModelAttribute MemberVo memberVo) throws Exception {
+        String result = memberService.findIdForPw(memberVo);
+        if(result != null) {
+            return result;
+        }else {
+            return "failure";
+        }
+    }
+
+    // 비밀번호 변경
+    @RequestMapping("/updatePw")
+    @ResponseBody
+    public String updatePw(@ModelAttribute MemberVo memberVo) throws Exception {
+        int result = memberService.updatePw(memberVo);
+        if(result == 1) {
+            return "success";
+        }else {
+            return "failure";
+        }
     }
 
     // 휴대폰인증
@@ -64,7 +91,7 @@ public class MemberController {
         int randomNumber = (int)((Math.random() * (9999 - 1000 +1)) + 1000); // 난수 생성
 
         memberService.sendSms(userPhoneNumber, randomNumber);
-
+        System.out.println(randomNumber);
         return Integer.toString(randomNumber);
     }
 

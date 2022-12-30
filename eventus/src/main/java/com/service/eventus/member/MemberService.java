@@ -16,6 +16,12 @@ public class MemberService {
     @Autowired
     private MemberDao memberDao;
 
+
+    // 회원가입
+    public int insertUser(MemberVo memberVo) {
+        return memberDao.insertUser(memberVo);
+    }
+
     // 아이디 중복체크(회원가입)
     public int idChk(String user_id) {
         return memberDao.idChk(user_id);
@@ -38,6 +44,15 @@ public class MemberService {
         return memberDao.findId(memberVo);
     }
 
+    // 비밀번호 변경을 위한 아이디 찾기(user_id 반환)
+    public String findIdForPw(MemberVo memberVo) throws Exception {
+        return memberDao.findIdForPw(memberVo);
+    }
+
+    // 비밀번호 변경
+    public int updatePw(MemberVo memberVo) throws Exception {
+        return memberDao.updatePw(memberVo);
+    }
 
     // 로그인할때 회원정보 가져올때
     public MemberVo viewMember(MemberVo memberVo) {
@@ -54,7 +69,7 @@ public class MemberService {
         // 4 params(to, from, type, text) are mandatory. must be filled
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("to", user_phone);
-        params.put("from", "010-2471-0172"); // 발신전화번호. 테스트시에는 발신, 수신 둘다 본인 번호로 하면됨
+        params.put("from", "010-9878-0502"); // 발신전화번호. 테스트시에는 발신, 수신 둘다 본인 번호로 하면됨
         params.put("type", "SMS");
         params.put("text", "[TEST] 인증번호는" + "["+randomNumber+"]" + "입니다."); // 문자 내용 입력
 

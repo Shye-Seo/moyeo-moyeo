@@ -37,7 +37,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/my_mac/Desktop/EventUs"
+    "last_opened_file_path": "/Users/my_mac/Desktop/EventUs",
+    "spring.configuration.checksum": "32c962fa3447c97efa173888c0a261ad"
   }
 }]]></component>
   <component name="RunManager">
@@ -58,6 +59,7 @@
       <option name="presentableId" value="Default" />
       <updated>1671891422585</updated>
       <workItem from="1671891424718" duration="1311000" />
+      <workItem from="1672310050196" duration="8370000" />
     </task>
     <servers />
   </component>

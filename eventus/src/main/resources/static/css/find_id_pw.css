@@ -84,6 +84,12 @@ body {
     border-bottom:2px solid #5B8FD2;
 }
 
+#tab1:checked ~ .tab > label[for="tab1"], #tab2:checked ~ .tab > label[for="tab2"] {
+    color:#5B8FD2;
+    font-weight:900;
+    border-bottom:2px solid #5B8FD2;
+}
+
 #find_id p, #find_pw p {
     margin-bottom:2%;
     /* UI Properties */
@@ -176,9 +182,12 @@ input[type=text]::placeholder {
 }
 
 .tab1_content {
-    display:none;
+    display:inline;
 }
 
-.tab2_content {
-    display:inline;
+.tab2_content,
+.found_id,
+.changing_pw,
+.changed_complete {
+    display:none;
 }
