@@ -212,6 +212,7 @@ $(function() {
         $(".tab2_content").css('display', 'none');
         $(".found_id").css('display', 'none');
         $(".changing_pw").css('display', 'none');
+        $(".changed_complete").css('display', 'none');
     });
 
     $("#tab2").on("click", function() {
@@ -219,5 +220,6 @@ $(function() {
         $(".tab2_content").css('display', 'inline');
         $(".found_id").css('display', 'none');
         $(".changing_pw").css('display', 'none');
+        $(".changed_complete").css('display', 'none');
     });
 });

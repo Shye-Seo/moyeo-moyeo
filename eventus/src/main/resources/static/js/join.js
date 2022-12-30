@@ -9,6 +9,7 @@ $(function() {
     var pw_checked = "0" // 비밀번호 확인 여부
     var certifi_checked = "0"; // 인증번호 확인 여부
     var email_checked = "0"; // 이메일 중복 확인 여부
+
     // 약관동의
     // 전체 동의 체크 박스
     $('#all_chk').click(function(){
@@ -243,17 +244,20 @@ $(function() {
             alert("휴대번호 인증을 해주세요.");
             return false;
         }
-
+        
+        // 아이디 중복 여부 확인
         else if(id_checked == "0") {
             alert("아이디 중복확인을 해주세요.");
             return false;
         }
-
+        
+        // 비밀번호 형식 맞추었는지, 비밀번호와 비밀번호 확인이 같은지 확인
         else if(pw_checked == "0") {
             alert("비밀번호를 확인을 해주세요.");
             return false;
         }
-
+        
+        // 이메일 형식 갖추었는지 확인
         else if(email_checked == "0") {
             alert("이메일 형식을 확인을 해주세요.");
             return false;

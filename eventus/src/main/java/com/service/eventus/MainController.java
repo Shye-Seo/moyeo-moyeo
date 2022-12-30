@@ -2,7 +2,6 @@ package com.service.eventus;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -35,7 +34,7 @@ public class MainController {
 	@GetMapping(value="/find_id_pw")
 	public String find_id_pw() { return "find_id_pw"; }
 
-	// main 페이지
+	// 관리자 페이지 링크
 	@GetMapping(value="/main")
 	public String Main() {
 		return "main";
@@ -58,4 +57,30 @@ public class MainController {
 		return "report_work";
 	}
 
+
+	// 사용자 페이지 링크
+	@GetMapping(value="/main_ForStaff")
+	public String Main_ForStaff() {
+		return "main_ForStaff";
+	}
+
+	@GetMapping(value="/manage_career_ForStaff")
+	public String manage_career_ForStaff() {
+		return "manage_career_ForStaff";
+	}
+
+	@GetMapping(value="/eventList_ForStaff")
+	public String eventList_ForStaff() {
+		return "eventList_ForStaff";
+	}
+
+	@GetMapping(value="/resume_register")
+	public String resume_register() {
+		return "resume_register";
+	}
+
+	@GetMapping(value="/report_work_ForStaff")
+	public String report_work_ForStaff() {
+		return "report_work_ForStaff";
+	}
 }
