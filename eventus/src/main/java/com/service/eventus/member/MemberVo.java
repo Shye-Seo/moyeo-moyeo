@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class MemberVo {
     private int id;
-	private int event_id;
     private String user_id;
     private String user_pw;
     private String user_name;

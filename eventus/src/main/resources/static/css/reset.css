@@ -14,7 +14,8 @@ body {background:#F8F9FB;}
 
 /* fixed menu */
 .sidebar{
-    width: 200px;
+    width: 10%;
+    max-width: 180px;
     height: 100%;
     background-color: #5B8FD2;
     position: fixed;
@@ -22,6 +23,7 @@ body {background:#F8F9FB;}
     left: 0;
     overflow: hidden;
     box-shadow: 3px 0 6px rgba(0,0,0,0.1);
+    z-index: 99;
 }
 
 .logo{

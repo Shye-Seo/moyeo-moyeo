@@ -98,6 +98,31 @@ button{border:none; box-shadow: none;}
 	width: 70px;
 	height: 25px;
 	line-height: 100%;
+	cursor: pointer;
+}
+
+#complete_btn{
+	color: #FFFFFF;
+	font: normal normal 600 14px/30px Pretendard, SemiBold;
+	background-color: #333333;
+	border-radius: 20px;
+	border-color: #333333;
+	width: 70px;
+	height: 25px;
+	line-height: 100%;
+	cursor: pointer;
+}
+
+#undo_btn{
+	color: #FFFFFF;
+	font: normal normal 600 14px/30px Pretendard, SemiBold;
+	background-color: #999999;
+	border-radius: 20px;
+	border-color: #999999;
+	width: 70px;
+	height: 25px;
+	line-height: 100%;
+	cursor: pointer;
 }
 
 #resume_open{
@@ -105,6 +130,7 @@ button{border:none; box-shadow: none;}
 	font-size: 11px;
 	border-bottom: 1px solid #999999;
 	margin-top: 10%;
+	cursor: pointer;
 }
 
 #profile_img{
@@ -124,6 +150,7 @@ button{border:none; box-shadow: none;}
 	width: 20px;
 	height: auto;
 	float: right;
+	cursor: pointer;
 }
 
 #each_{

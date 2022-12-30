@@ -1,16 +1,8 @@
 package com.service.eventus;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.service.eventus.event.EventService;
-import com.service.eventus.event.EventVo;
 
 @Controller
 public class MainController {
@@ -42,13 +34,7 @@ public class MainController {
 	@GetMapping(value="/find_id_pw")
 	public String find_id_pw() { return "find_id_pw"; }
 
-	@GetMapping(value="/changing_pw")
-	public String changing_pw() { return "changing_pw"; }
-
-	@GetMapping(value="/changed_pw")
-	public String changed_pw() { return "changed_pw"; }
-
-	// main 페이지
+	// 관리자 페이지 링크
 	@GetMapping(value="/main")
 	public String Main() {
 		return "main";
@@ -71,4 +57,30 @@ public class MainController {
 		return "report_work";
 	}
 
+
+	// 사용자 페이지 링크
+	@GetMapping(value="/main_ForStaff")
+	public String Main_ForStaff() {
+		return "main_ForStaff";
+	}
+
+	@GetMapping(value="/manage_career_ForStaff")
+	public String manage_career_ForStaff() {
+		return "manage_career_ForStaff";
+	}
+
+	@GetMapping(value="/eventList_ForStaff")
+	public String eventList_ForStaff() {
+		return "eventList_ForStaff";
+	}
+
+	@GetMapping(value="/resume_register")
+	public String resume_register() {
+		return "resume_register";
+	}
+
+	@GetMapping(value="/report_work_ForStaff")
+	public String report_work_ForStaff() {
+		return "report_work_ForStaff";
+	}
 }

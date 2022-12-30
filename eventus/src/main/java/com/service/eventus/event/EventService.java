@@ -65,4 +65,25 @@ public class EventService {
 	public String getUserAge(String user_birth) throws Exception {
 		return eventDao.getUserAge(user_birth);
 	}
+
+	// 지원자 수락
+	public int accept_applicant(int event_id, int staff_id) {
+		return eventDao.accept_applicant(event_id, staff_id);
+	}
+	
+	// 지원자 수락해제
+	public int accept_applicant_cancel(int event_id, int staff_id) {
+		return eventDao.accept_applicant_cancel(event_id, staff_id);
+	}
+	
+	// 지원자 불합격처리
+	public int reject_applicant(int event_id, int staff_id) {
+		return eventDao.reject_applicant(event_id, staff_id);
+	}
+	
+	// 지원결과
+	public String getResult(int event_id, int staff_id) {
+		return eventDao.getResult(event_id, staff_id);
+	}
+
 }

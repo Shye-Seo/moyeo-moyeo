@@ -5,16 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/modal.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
+	<input type="hidden" th:value="${event_id}" id="event_id">
 	<div class="total_applicant">
 		<div>총 지원자 수 <span style="color: #DD5067" th:text="${applicant_count}"></span> 명</div>
 	</div>
 	<div class="application_list">
 		<div id="list" th:each="list : ${application_list}">
-			<img src="/imgs/trash_can.svg" id="trash_icon">
+			<input type="hidden" th:value="${list.id}" id="staff_id">
+			<img src="/imgs/trash_can.svg" id="trash_icon" th:if="${result == '대기중'}" onclick="rejectAccept()">
 			<div id="each_">
 			<div class="img_div">
 				<img src="/imgs/profile_none_img.svg" id="profile_img">
@@ -41,7 +44,9 @@
 			</div>
 			<div id="line"></div>
 			<div class="btn_div">
-				<button type="button" id="accept_btn" onclick="acceptApplicant()">수락</button>
+				<button type="button" id="accept_btn" onclick="acceptApplicant()" th:if="${result == '대기중'}">수락</button>
+				<button type="button" id="complete_btn" onclick="undo()" th:if="${result == '합격'}">완료</button>
+				<button type="button" id="undo_btn" onclick="undo()" th:if="${result == '불합격'}">취소</button>
 				<span id="resume_open">이력서보기</span>
 			</div>
 			</div>
@@ -49,10 +54,55 @@
 	</div>
 	<script>
 		function acceptApplicant()  {
-		  const btnElement = document.getElementById('accept_btn');
-		  btnElement.innerText = '완료';
-		  btnElement.style.backgroundColor = "#333333";
+		  var event_id = $("#event_id").val();
+		  var staff_id = $("#staff_id").val();
+		  
+		  $.ajax({
+				url : "/accept_applicant",
+				type : 'post',
+				data : {
+					staff_id:staff_id,
+					event_id:event_id
+				},
+				success: function(){
+					location.href="/application_modal?id="+event_id;
+				}
+			});
 		}
+		
+		function undo()  {
+			  var event_id = $("#event_id").val();
+			  var staff_id = $("#staff_id").val();
+			  
+			  $.ajax({
+					url : "/accept_applicant_cancel",
+					type : 'post',
+					data : {
+						staff_id:staff_id,
+						event_id:event_id
+					},
+					success: function(){
+						location.href="/application_modal?id="+event_id;
+					}
+				});
+			}
+		
+		function rejectAccept()  {
+			  var event_id = $("#event_id").val();
+			  var staff_id = $("#staff_id").val();
+			  
+			  $.ajax({
+					url : "/reject_applicant",
+					type : 'post',
+					data : {
+						staff_id:staff_id,
+						event_id:event_id
+					},
+					success: function(){
+						location.href="/application_modal?id="+event_id;
+					}
+				});
+			}
   </script>
 </body>
 </html>

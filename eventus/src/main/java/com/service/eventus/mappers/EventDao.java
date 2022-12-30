@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.service.eventus.event.EventFileVo;
@@ -49,5 +50,17 @@ public interface EventDao {
 	
 	@Select("select round((to_days(now()) - (to_days('${user_birth}'))) / 365)")
 	String getUserAge(String user_birth); // 지원현황 지원자 리스트(모집중) - 나이계산(만 나이)
+
+	@Update("update staff_application set application_result = '합격' where event_id = ${event_id} and staff_id = ${staff_id}")
+	int accept_applicant(int event_id, int staff_id); // 지원자 수락
 	
+	@Update("update staff_application set application_result = '대기중' where event_id = ${event_id} and staff_id = ${staff_id}")
+	int accept_applicant_cancel(int event_id, int staff_id); // 지원자 수락해제
+	
+	@Update("update staff_application set application_result = '불합격' where event_id = ${event_id} and staff_id = ${staff_id}")
+	int reject_applicant(int event_id, int staff_id); // 지원자 불합격처리
+	
+	@Select("select application_result from staff_application where event_id = ${event_id} and staff_id = ${staff_id}")
+	String getResult(int event_id, int staff_id); // 지원현황 지원자 리스트(모집중) - 지원결과
+
 }
