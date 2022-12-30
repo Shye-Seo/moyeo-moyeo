@@ -65,4 +65,8 @@ public class EventService {
 	public String getUserAge(String user_birth) throws Exception {
 		return eventDao.getUserAge(user_birth);
 	}
+	
+	public boolean updateEvent (EventVo eventVo) {
+		return eventDao.updateEvent(eventVo);
+	}
 }

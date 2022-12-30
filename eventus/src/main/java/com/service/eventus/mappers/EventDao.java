@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import com.service.eventus.event.EventFileVo;
@@ -22,7 +23,7 @@ public interface EventDao {
 	@Select("select * from event where id = #{event_id}")
 	EventVo viewEventDetail (int event_id); // 행사현황 세부페이지
 	
-	@Select("select * from event_file where id = #{event_id}")
+	@Select("select * from event_file where event_id = #{event_id}")
 	List<EventFileVo> viewEventFileDetail (int event_id); // 행사현황 세부페이지 파일
 	
 	@Insert("insert into event (event_title, event_content, event_startDate, event_endDate, event_status, event_position, event_position_count, event_venue, event_deadline, created_at) "
@@ -49,5 +50,9 @@ public interface EventDao {
 	
 	@Select("select round((to_days(now()) - (to_days('${user_birth}'))) / 365)")
 	String getUserAge(String user_birth); // 지원현황 지원자 리스트(모집중) - 나이계산(만 나이)
+	
+	@Update("update eventusdb.event set event_title = #{event_title}, event_content = #{event_content}, event_startDate = #{event_startDate}, event_endDate = #{event_endDate}, event_venue = #{event_venue}, "
+			+ "event_deadline = #{event_deadline}, event_position = #{event_position}, event_position_count = #{event_position_count}, updated_at = sysdate() where id = #{id}")
+	boolean updateEvent (EventVo eventVo); //행사 수정
 	
 }

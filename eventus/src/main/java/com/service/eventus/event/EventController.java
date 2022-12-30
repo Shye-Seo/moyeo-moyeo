@@ -12,11 +12,14 @@ import com.service.eventus.aws.AwsS3Service;
 import com.service.eventus.member.MemberVo;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class EventController {
@@ -48,7 +51,20 @@ public class EventController {
 		
 		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
 		
+//		포지션별로 잘라 저장
+		Map<String, String> positionMap = new HashMap<>();
+		
+		if(detailVo.getEvent_position() != null) {
+			String[] position = detailVo.getEvent_position().split(",");
+			String[] position_conut = detailVo.getEvent_position_count().split(",");
+			
+			for(int i=0; i<position.length;i++) {
+				positionMap.put(position[i], position_conut[i]);
+			}
+		}
+		
 		mav.addObject("event", detailVo);
+		mav.addObject("positionMap", positionMap);
 		mav.addObject("eventFileList", eventFileList);
 
 		mav.setViewName("manage_eventDetail");
@@ -88,30 +104,69 @@ public class EventController {
 	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
 	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
 		
-		int applicant_count = eventService.application_count(event_id);
-		model.addAttribute("applicant_count", applicant_count);
-		
-		
 		List<MemberVo> application_list = eventService.application_list(event_id);
 		if (application_list != null) {
 			for (MemberVo memberVo : application_list) {
 				int staff_career = eventService.staff_career(memberVo.getId());
 				model.addAttribute("career_count", staff_career);
-				
-				String user_address = eventService.getAddress(memberVo.getId());
-				model.addAttribute("user_address", user_address);
-				
-				String user_age = eventService.getUserAge(memberVo.getUser_birth());
-				model.addAttribute("user_age", user_age);
-				
-				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
-				String user_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
-				model.addAttribute("user_phone", user_phone);
 			}
 		}
+		System.out.println("=============>list:"+application_list);
 	    model.addAttribute("application_list", application_list);
 		return "application_modal";
 	}
+	
+	//행사 수정 조회
+	@RequestMapping(value="/manage_event_update", method=RequestMethod.GET)
+	public ModelAndView manage_event_update(@RequestParam("id") int event_id) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		EventVo detailVo = eventService.viewEventDetail(event_id);
+		
+		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
+		
+//		포지션별로 잘라 저장
+		Map<String, String> positionMap = new HashMap<>();
+		
+		String[] positions = detailVo.getEvent_position().split(",");
+		String[] positions_conut = detailVo.getEvent_position_count().split(",");
+		
+//		if(detailVo.getEvent_position() != null) {
+//			for(int i=0; i<position.length;i++) {
+//				positionMap.put(position[i], position_conut[i]);
+//			}
+//		}
+		
+		mav.addObject("event", detailVo);
+//		mav.addObject("positionMap", positionMap);
+		mav.addObject("positions", positions);
+		mav.addObject("positions_conut", positions_conut);
+		mav.addObject("eventFileList", eventFileList);
+
+		mav.setViewName("manage_event_update");
+		return mav;
+	}
+	
+	//행사 수정
+		@ResponseBody
+		@RequestMapping(value="/eventUpdate", method=RequestMethod.POST)
+		public String eventUpdate(@ModelAttribute EventVo eventVo, @RequestAttribute List<MultipartFile> event_file) throws Exception{
+			
+			eventService.updateEvent(eventVo);
+			
+			
+			
+//			if(event_file != null) {
+//				List<String> filenames = s3Service.upload_eventFile(event_file);
+//				for(String name : filenames) {
+//					EventFileVo eventFileVo = new EventFileVo();
+//					eventFileVo.setEvent_id(id);
+//					eventFileVo.setFile_name(name);
+//					eventService.insertEventFile(eventFileVo);
+//				}
+//			}
+			
+			return "eventDetail?id="+eventVo.getId();
+		}
 	
 	//행사 파일 다운로드
 	@RequestMapping({"/event_download"})
