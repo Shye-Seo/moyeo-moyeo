@@ -60,16 +60,16 @@ public class AwsS3Service {
 
     @Value("ap-northeast-2")
     private String region;
-    
+
     @Value("board-folder")
     private String eventFolder; 
-    
+
 
     private final AmazonS3 s3Client;
-    
+
     @Autowired
     EventService service;
-    
+
     @PostConstruct
     public AmazonS3Client amazonS3Client() {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
@@ -83,7 +83,7 @@ public class AwsS3Service {
     	Calendar cal = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
         String time = dateFormat.format(cal.getTime());
-        
+
         List<String> fileNameList = new ArrayList<>();
 
         // forEach 구문을 통해 multipartFile로 넘어온 파일들 하나씩 fileNameList에 추가
@@ -91,7 +91,7 @@ public class AwsS3Service {
             String fileName = time + "-" +file.getOriginalFilename();
             System.out.println("-----------");
             System.out.println("파일명 : " + file.getOriginalFilename());
-            
+
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(file.getSize());
             objectMetadata.setContentType(file.getContentType());
@@ -103,27 +103,27 @@ public class AwsS3Service {
             } catch(IOException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
             }
-            
+
             fileNameList.add(fileName);
         }
         return fileNameList;
     }
-    
+
     public ResponseEntity<byte[]> getObject_event(String storedFileName) throws IOException {
         S3Object o = s3Client.getObject(new GetObjectRequest(bucket+"/"+eventFolder, storedFileName));
         S3ObjectInputStream objectInputStream = ((S3Object) o).getObjectContent();
         byte[] bytes = IOUtils.toByteArray(objectInputStream);
- 
+
         String fileName = URLEncoder.encode(storedFileName, "UTF-8").replaceAll("\\+", "%20").replaceAll("\\[", "%5B").replaceAll("\\]", "%5D");
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         httpHeaders.setContentLength(bytes.length);
         httpHeaders.setContentDispositionFormData("attachment", fileName);
- 
+
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
     }
 
-    
+
     public void delete_s3event(String fileName) {
     	s3Client.deleteObject(new DeleteObjectRequest(bucket+"/"+eventFolder, fileName));
     }

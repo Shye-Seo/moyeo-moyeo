@@ -27,39 +27,38 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/s3")
 public class AmazonS3Controller {
-	
+
 	@Value("eventuslab")
     private String bucket;
-	
+
 	@Autowired
 	AwsS3Service awsS3Service;
-	
+
 	@Autowired
 	AmazonS3Client amazonS3Client;
 
 	@GetMapping("/upload_Eventfiles")
 	public ResponseEntity<Object> upload_Eventfiles(MultipartFile[] multipartFileList) throws Exception {
 		List<String> imagePathList = new ArrayList<>();
-		
+
 		for(MultipartFile multipartFile: multipartFileList) {
 			String originalName = multipartFile.getOriginalFilename(); // 파일 이름
 			long size = multipartFile.getSize(); // 파일 크기
-			
+
 			ObjectMetadata objectMetaData = new ObjectMetadata();
 			objectMetaData.setContentType(multipartFile.getContentType());
 			objectMetaData.setContentLength(size);
-			
+
 			// S3에 업로드
 			amazonS3Client.putObject(
 				new PutObjectRequest(bucket, originalName, multipartFile.getInputStream(), objectMetaData)
 					.withCannedAcl(CannedAccessControlList.PublicRead)
 			);
-			
+
 			String imagePath = amazonS3Client.getUrl(bucket, originalName).toString(); // 접근가능한 URL 가져오기
 			imagePathList.add(imagePath);
 		}
-		
+
 		return new ResponseEntity<Object>(imagePathList, HttpStatus.OK);
 	}
 }
-

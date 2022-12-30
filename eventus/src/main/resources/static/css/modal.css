@@ -26,16 +26,49 @@ button{border:none; box-shadow: none;}
 	background-color: #FFFFFF;
 	width: 700px;
 /* 	height: 100px; */
-	padding: 10px 25px;
+	padding: 15px;
 }
 
 .application_list #list .personal_info, .career_info, .address_info, .btn_div{
 	font: 16px;
 	color: #333333;
 	float: left;
-	margin: 1% 5%;
+	margin: 0 3%;
 	width: auto;
 	height: 50px;
+}
+
+.application_list #list .personal_info{
+	width: 22%;
+}
+
+.application_list #list .career_info{
+	width: 10%;
+}
+
+.application_list #list .address_info{
+	width: 18%;
+}
+
+.application_list #list .personal_info p{
+	margin: 3.5% 0;
+}
+
+.application_list #list .career_info p{
+	margin: 10% 0;
+}
+
+.application_list #list .address_info p{
+	margin: 7% 0;
+}
+
+.upper_div{
+	margin-top: 0;
+}
+
+#personal_div{
+	display: flex;
+/* 	flex-direction: row; */
 }
 
 #line{
@@ -45,14 +78,15 @@ button{border:none; box-shadow: none;}
 	float: left;
 }
 
-.application_list #list div p{
-	margin: 5% 0;
-}
+/* .application_list #list div p{ */
+/* 	margin: 5% 0; */
+/* } */
 
 .btn_div{
 	display: flex;
 	align-items: center;
     flex-direction: column;
+    margin: 0 5%;
 }
 
 #accept_btn{
@@ -70,5 +104,30 @@ button{border:none; box-shadow: none;}
 	color: #999999;
 	font-size: 11px;
 	border-bottom: 1px solid #999999;
-	margin-top: 5%;
+	margin-top: 10%;
+}
+
+#profile_img{
+	width: 60px;
+	height: 60px;
+	float: left;
+	padding-left: 10px;
+}
+
+#icon{
+	width: 24px;
+	height: auto;
+	margin-right: 5px;
+}
+
+#trash_icon{
+	width: 20px;
+	height: auto;
+	float: right;
+}
+
+#each_{
+	height: 90%;
+	width: 100%;
+	display: flex;
 }

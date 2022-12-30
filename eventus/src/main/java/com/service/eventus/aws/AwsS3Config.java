@@ -21,10 +21,10 @@ public class AwsS3Config {
 
     @Value("ap-northeast-2")
     private String region;
-    
+
    // public static final String boardFolder = "board-folder/";
    // public static final String libraryFolder = "library-folder/";
-    
+
     @Bean
     public AmazonS3Client amazonS3Client() {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
