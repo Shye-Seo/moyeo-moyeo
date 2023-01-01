@@ -126,7 +126,15 @@
                 var formData = new FormData(form[0]);
                 for (var i = 0; i < fileList.length; i++) {
                     formData.append('event_file', fileList[i]);
+                    console.log(formData.get('event_file')) 
+                    console.log(fileList[i]) 
                 }
+                for(let i = 0; i < deleteFileNameList.length; i++){
+                    formData.append('deleteFileNameList['+i+']', deleteFileNameList[i]);
+                    console.log(formData.get('deleteFileNameList['+i+']')) 
+                    console.log(deleteFileNameList[i]) 
+                }
+                
                 $.ajax({
                     url : actionUrl,
                     data : formData,
@@ -161,6 +169,9 @@
             
             var maxFileNum = 5;
             // 파일 최대갯수
+
+            //행사수정 시 지울 파일 목록
+            let deleteFileNameList = new Array();
 
             var files = new Array();
 
@@ -262,8 +273,18 @@
        }
 
         console.log("totalFileSize="+totalFileSize);
+    }
 
     
+
+    function deleteFile_for_update(fIndex, fileName){
+        $("#fileTr_" + fIndex).remove();
+        deleteFileNameList.push(fileName);
+
+        if($('#input_file').attr("disabled")=='disabled'){
+            $('#input_file').removeAttr("disabled");
+            $('.area3 label').css({'background-color':'#fff', 'cursor':'pointer'});
+        }
     }
    
    function deleteAll() {

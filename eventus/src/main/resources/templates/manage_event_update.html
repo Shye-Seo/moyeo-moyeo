@@ -89,7 +89,8 @@
                                 <div th:each="FileList : ${eventFileList}"  th:id="'fileTr_' + ${FileListStat.index}">
                                     <div class='file_con'>
                                         <div class="filename" th:text="${FileList.file_name}"></div>
-                                        <img src="../imgs/material-cancel.svg" href="#" th:onclick="'deleteFile('+${FileListStat.index}+'); return false;'">
+                                        <img src="../imgs/material-cancel.svg" th:data-fileName="${FileList.file_name}" th:data-index="${FileListStat.index}" 
+                                        th:onclick="deleteFile_for_update(this.getAttribute('data-index'),this.getAttribute('data-fileName'))">
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +140,7 @@
                             }
 
                             fileIndex=eventFileList.length;
-                            console.log(fileIndex)
+                            
                             if($('#file_names').children().length >=maxFileNum){
                                 $('#input_file').attr("disabled","disabled");
                                 $('.area3 label').css({'background-color':'#eee', 'cursor':'unset'});

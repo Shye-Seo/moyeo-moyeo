@@ -125,10 +125,14 @@ public class EventController {
 		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
 		
 //		포지션별로 잘라 저장
-		Map<String, String> positionMap = new HashMap<>();
+//		Map<String, String> positionMap = new HashMap<>();
 		
-		String[] positions = detailVo.getEvent_position().split(",");
-		String[] positions_conut = detailVo.getEvent_position_count().split(",");
+		String[] positions =null;
+		String[] positions_conut =null;
+		if(detailVo.getEvent_position() != null) {
+			positions = detailVo.getEvent_position().split(",");
+			positions_conut = detailVo.getEvent_position_count().split(",");
+		}
 		
 //		if(detailVo.getEvent_position() != null) {
 //			for(int i=0; i<position.length;i++) {
@@ -149,9 +153,9 @@ public class EventController {
 	//행사 수정
 		@ResponseBody
 		@RequestMapping(value="/eventUpdate", method=RequestMethod.POST)
-		public String eventUpdate(@ModelAttribute EventVo eventVo, @RequestAttribute List<MultipartFile> event_file) throws Exception{
-			
-			eventService.updateEvent(eventVo);
+		public String eventUpdate(@ModelAttribute EventVo eventVo, @RequestAttribute("event_file") List<MultipartFile> event_file, @RequestAttribute(value="deleteFileNameList[]") List<String> deleteFileNameList) throws Exception{
+			System.out.println(deleteFileNameList.toString());
+//			eventService.updateEvent(eventVo);
 			
 			
 			
