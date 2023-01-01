@@ -66,7 +66,13 @@ public class EventService {
 		return eventDao.getUserAge(user_birth);
 	}
 	
+	//행사 수정
 	public boolean updateEvent (EventVo eventVo) {
 		return eventDao.updateEvent(eventVo);
+	}
+	
+	//행사 파일 삭제
+	public boolean deleteFile (int event_id, String file_name) {
+		return eventDao.deleteFile(event_id, file_name);
 	}
 }

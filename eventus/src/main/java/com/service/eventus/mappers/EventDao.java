@@ -2,6 +2,7 @@ package com.service.eventus.mappers;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -54,5 +55,8 @@ public interface EventDao {
 	@Update("update eventusdb.event set event_title = #{event_title}, event_content = #{event_content}, event_startDate = #{event_startDate}, event_endDate = #{event_endDate}, event_venue = #{event_venue}, "
 			+ "event_deadline = #{event_deadline}, event_position = #{event_position}, event_position_count = #{event_position_count}, updated_at = sysdate() where id = #{id}")
 	boolean updateEvent (EventVo eventVo); //행사 수정
+	
+	@Delete("delete from event_file where event_id = #{event_id} and file_name = #{file_name}")
+	boolean deleteFile (int event_id, String file_name); //파일 삭제
 	
 }

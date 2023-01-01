@@ -147,20 +147,20 @@ public class EventController {
 		@ResponseBody
 		@RequestMapping(value="/eventUpdate", method=RequestMethod.POST)
 		public String eventUpdate(MultipartHttpServletRequest multipartRequest, @ModelAttribute EventVo eventVo, @RequestAttribute("event_file") List<MultipartFile> event_file) throws Exception{
+			
+			//지울 파일 리스트
 			String[] deleteFileNameList = multipartRequest.getParameterValues("deleteFileNameList");
-			
+			//수정 시 지운파일 삭제
 			if(deleteFileNameList != null) {
-				for( String name : deleteFileNameList) {
+				for( String name : deleteFileNameList ) {
 					s3Service.delete_s3event(name);
-//					++파일테이블에서 이름으로 찾아서 지우기 (혹시 모르니 이름, 아이디 둘다 비교)
+					eventService.deleteFile(eventVo.getId(), name);
 				}
-				
 			}
-			
+			//행사 내용 수정
 			eventService.updateEvent(eventVo);
 			
-			
-			
+			//수정 시 추가한 파일 추가
 			if(event_file != null) {
 				List<String> filenames = s3Service.upload_eventFile(event_file);
 				for(String name : filenames) {
