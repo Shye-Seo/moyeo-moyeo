@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.aws.AwsS3Service;
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class EventController {
@@ -51,6 +51,7 @@ public class EventController {
 		
 		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
 		
+		// update랑 똑같이 고치기
 //		포지션별로 잘라 저장
 		Map<String, String> positionMap = new HashMap<>();
 		
@@ -124,8 +125,6 @@ public class EventController {
 		
 		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
 		
-//		포지션별로 잘라 저장
-//		Map<String, String> positionMap = new HashMap<>();
 		
 		String[] positions =null;
 		String[] positions_conut =null;
@@ -134,14 +133,8 @@ public class EventController {
 			positions_conut = detailVo.getEvent_position_count().split(",");
 		}
 		
-//		if(detailVo.getEvent_position() != null) {
-//			for(int i=0; i<position.length;i++) {
-//				positionMap.put(position[i], position_conut[i]);
-//			}
-//		}
 		
 		mav.addObject("event", detailVo);
-//		mav.addObject("positionMap", positionMap);
 		mav.addObject("positions", positions);
 		mav.addObject("positions_conut", positions_conut);
 		mav.addObject("eventFileList", eventFileList);
@@ -153,21 +146,30 @@ public class EventController {
 	//행사 수정
 		@ResponseBody
 		@RequestMapping(value="/eventUpdate", method=RequestMethod.POST)
-		public String eventUpdate(@ModelAttribute EventVo eventVo, @RequestAttribute("event_file") List<MultipartFile> event_file, @RequestAttribute(value="deleteFileNameList[]") List<String> deleteFileNameList) throws Exception{
-			System.out.println(deleteFileNameList.toString());
-//			eventService.updateEvent(eventVo);
+		public String eventUpdate(MultipartHttpServletRequest multipartRequest, @ModelAttribute EventVo eventVo, @RequestAttribute("event_file") List<MultipartFile> event_file) throws Exception{
+			String[] deleteFileNameList = multipartRequest.getParameterValues("deleteFileNameList");
+			
+			if(deleteFileNameList != null) {
+				for( String name : deleteFileNameList) {
+					s3Service.delete_s3event(name);
+//					++파일테이블에서 이름으로 찾아서 지우기 (혹시 모르니 이름, 아이디 둘다 비교)
+				}
+				
+			}
+			
+			eventService.updateEvent(eventVo);
 			
 			
 			
-//			if(event_file != null) {
-//				List<String> filenames = s3Service.upload_eventFile(event_file);
-//				for(String name : filenames) {
-//					EventFileVo eventFileVo = new EventFileVo();
-//					eventFileVo.setEvent_id(id);
-//					eventFileVo.setFile_name(name);
-//					eventService.insertEventFile(eventFileVo);
-//				}
-//			}
+			if(event_file != null) {
+				List<String> filenames = s3Service.upload_eventFile(event_file);
+				for(String name : filenames) {
+					EventFileVo eventFileVo = new EventFileVo();
+					eventFileVo.setEvent_id(eventVo.getId());
+					eventFileVo.setFile_name(name);
+					eventService.insertEventFile(eventFileVo);
+				}
+			}
 			
 			return "eventDetail?id="+eventVo.getId();
 		}

@@ -121,6 +121,10 @@
                 $('input[name="event_position"]').val(event_position);
                 $('input[name="event_position_count"]').val(event_position_count);
 
+                for(let i = 0; i < deleteFileNameList.length; i++){
+                    $('form[name="eventAddForm"]').append("<input type='hidden' name='deleteFileNameList' value='"+deleteFileNameList[i]+"'/>")
+                }
+
                 var uploadFileList = Object.keys(fileList);
                 var form = $('form[name="eventAddForm"]');
                 var formData = new FormData(form[0]);
@@ -129,12 +133,12 @@
                     console.log(formData.get('event_file')) 
                     console.log(fileList[i]) 
                 }
-                for(let i = 0; i < deleteFileNameList.length; i++){
-                    formData.append('deleteFileNameList['+i+']', deleteFileNameList[i]);
-                    console.log(formData.get('deleteFileNameList['+i+']')) 
-                    console.log(deleteFileNameList[i]) 
-                }
-                
+                // for(let i = 0; i < deleteFileNameList.length; i++){
+                //     formData.append('deleteFileNameList', String(deleteFileNameList[i]));
+                //     console.log(formData.get('deleteFileNameList['+i+']')) 
+                //     console.log(deleteFileNameList[i]) 
+                // }
+
                 $.ajax({
                     url : actionUrl,
                     data : formData,
