@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -79,7 +79,7 @@
 
                     <div class="area2">
                         <span>행사상세설명</span>
-                        <textarea placeholder="200자 이내로 입력" name="event_content"></textarea>
+                        <textarea placeholder="700자 이내로 입력" name="event_content" maxlength="700"></textarea>
                     </div>
                     <div class="area3">
                         <span>이미지/파일첨부<p>(최대 5개)</p></span>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="btn_wrap">
                         <button type="button" onclick="location.href='manage_event'">취소</button>
-                        <button type="button" onclick="submitDate()">저장</button>
+                        <button type="button" onclick="submitDate('/eventAdd')">저장</button>
                     </div>
                     </form>
                 </div>

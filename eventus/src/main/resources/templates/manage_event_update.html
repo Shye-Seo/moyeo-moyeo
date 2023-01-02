@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤터즈랩(eventusLAB)</title>
+
+    <!-- datepicker, jquery, jqueryUI, datetimepicker -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/manage_event_register.css">
+    
+    <script src="js/event_register.js"></script>
+
+</head>
+<body>
+    <div id="wrap">
+        <div th:replace="~{common/side :: sidebar_manage ('schedule')}"></div>
+
+        <!-- main -->
+        <div class="content">
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">
+                        <span>행사관리</span>
+                    </div>
+                    <div class="excel_download">
+                        엑셀 데이터 다운로드
+                    </div>
+                </div>
+
+                <div class="detail_bar">
+                    <div class="detail1" onclick="location.href='manage_event'">
+                        <img src="imgs/material-view-list-gray.svg">
+                        <p>행사현황</p>
+                    </div>
+                    <div class="detail2 this_bar">
+                        <img src="imgs/pen.svg">
+                        <p>행사등록</p>
+                    </div>
+                    
+                </div>
+
+                <div class="area">
+                	<form name="eventAddForm" action="/eventAdd" enctype="multipart/form-data" method="post">
+                    <div class="area1">
+                        <span>행사명</span>
+                        <input type="text" name="event_title" placeholder="행사명을 입력해주세요." th:value="${event.event_title}" >
+                        <div class="date_wrap">
+                            <span>
+                                <p>시작기간</p>
+                                <!-- <input type="date" name="event_startDate" data-placeholder="YYYY.MM.DD" required> -->
+                                <input type="text" name="event_startDate" class="datepicker date_input" placeholder="YYYY.MM.DD" autocomplete='off' th:value="${event.event_startDate}">
+                            </span>
+                            -
+                            <span>
+                                <p>종료기간</p>
+                                <!-- <input type="date" name="event_endDate" data-placeholder="YYYY.MM.DD" required> -->
+                                <input type="text" name="event_endDate" class="datepicker date_input" placeholder="YYYY.MM.DD" autocomplete='off' th:value="${event.event_endDate}">
+                            </span>
+                        </div>
+                        
+                    </div>
+                    <div class="area5">
+                        <span>행사장소 <br>및 접수마감</span>
+                        <input type="text" name="event_venue" placeholder="행사장소를 입력해주세요." th:value="${event.event_venue}">
+                        <div class="date_wrap">
+                            <p>접수마감기한</p>
+                            <input type="text" name="event_deadline" class="datetimepicker date_input" placeholder="YYYY.MM.DD 00:00" autocomplete='off' th:value="${event.event_deadline}">
+                        </div>
+                    </div>
+
+                    <div class="area2">
+                        <span>행사상세설명</span>
+                        <textarea placeholder="700자 이내로 입력" name="event_content" maxlength="700" th:value="${event.event_content}" th:text="${event.event_content}"></textarea>
+                    </div>
+                    <div class="area3">
+                        <span>이미지/파일첨부<p>(최대 5개)</p></span>
+                        <div class="file_area">
+                            <div id="file_names">
+                                <!-- 파일 이름 -->
+                                <div th:each="FileList : ${eventFileList}"  th:id="'fileTr_' + ${FileListStat.index}">
+                                    <div class='file_con'>
+                                        <div class="filename" th:text="${FileList.file_name}"></div>
+                                        <img src="../imgs/material-cancel.svg" th:data-fileName="${FileList.file_name}" th:data-index="${FileListStat.index}" 
+                                        th:onclick="deleteFile_for_update(this.getAttribute('data-index'),this.getAttribute('data-fileName'))">
+                                    </div>
+                                </div>
+                            </div>
+                            <label for="input_file" id="file_upload">  </label>
+                        </div>
+                        <input type="file" id="input_file" multiple="multiple" name="file" hidden />
+                        <!-- ... -->
+                    </div>
+                    <div class="area4">
+                        <span>담당업무 <br>및 모집인원</span>
+                        <div class="position_wrap">
+                            <div class="area4_pn">
+                                <input type="text" class="input_po" name="input_event_position" placeholder="포지션명을 입력해주세요." />
+                                <span>
+                                    <p>모집인원</p>
+                                    <p>명</p>
+                                    <input type="text" class="input_pn" name="input_event_position_count" placeholder="숫자입력">
+                                </span>
+                            </div>
+                            <div id="add_position" onclick="add_position()"></div>
+                        </div>
+                    </div>
+                    <div class="btn_wrap">
+                        <button type="button" onclick="location.href='manage_event'">취소</button>
+                        <button type="button" onclick="submitDate('/eventUpdate')">저장</button>
+                    </div>
+
+                    <!-- update -->
+                        <input type="text" name="id" hidden th:value="${event.id}">
+                        
+                    </form>
+                    <script th:inline="javascript">
+                        /*<![CDATA[*/
+                        $(function(){
+                            let positions = /*[[${positions}]]*/
+                            console.log();
+                            let positions_conut = /*[[${positions_conut}]]*/
+                            console.log();
+                            let eventFileList = /*[[${eventFileList}]]*/
+
+                            $('input[name="input_event_position"]').val(positions[0])
+                            $('input[name="input_event_position_count"]').val(positions_conut[0])
+
+                            for(i =1; i<positions.length;i++){
+                                add_position_forUpdate(positions[i],positions_conut[i]);
+                                console.log(positions[i] +' ' +positions_conut[i])
+                            }
+
+                            fileIndex=eventFileList.length;
+                            
+                            if($('#file_names').children().length >=maxFileNum){
+                                $('#input_file').attr("disabled","disabled");
+                                $('.area3 label').css({'background-color':'#eee', 'cursor':'unset'});
+                            }
+                        })
+                        /*]]>*/
+                    </script>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -40,6 +40,16 @@ public class EventService {
 	public boolean insertEventFile(EventFileVo eventFileVo) {
 		return eventDao.insertEventFile(eventFileVo);
 	}
+	
+	//행사 수정
+	public boolean updateEvent (EventVo eventVo) {
+		return eventDao.updateEvent(eventVo);
+	}
+		
+	//행사 파일 삭제
+	public boolean deleteFile (int event_id, String file_name) {
+		return eventDao.deleteFile(event_id, file_name);
+	}
 
 	// 지원현황 count
 	public int application_count(int event_id) throws Exception {

@@ -6,15 +6,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.aws.AwsS3Service;
 import com.service.eventus.member.MemberVo;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -22,7 +25,7 @@ import javax.inject.Inject;
 public class EventController {
 	
 	@Autowired
-	  AwsS3Service s3Service;
+	AwsS3Service s3Service;
 	  
 	@Inject
     private EventService eventService;
@@ -48,7 +51,21 @@ public class EventController {
 		
 		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
 		
+		// update랑 똑같이 고치기
+//		포지션별로 잘라 저장
+		Map<String, String> positionMap = new HashMap<>();
+		
+		if(detailVo.getEvent_position() != null) {
+			String[] position = detailVo.getEvent_position().split(",");
+			String[] position_conut = detailVo.getEvent_position_count().split(",");
+			
+			for(int i=0; i<position.length;i++) {
+				positionMap.put(position[i], position_conut[i]);
+			}
+		}
+		
 		mav.addObject("event", detailVo);
+		mav.addObject("positionMap", positionMap);
 		mav.addObject("eventFileList", eventFileList);
 
 		mav.setViewName("manage_eventDetail");
@@ -80,6 +97,63 @@ public class EventController {
 		}
 		
 		return "eventDetail?id="+id;
+	}
+	
+	//행사 수정 조회
+	@RequestMapping(value="/manage_event_update", method=RequestMethod.GET)
+	public ModelAndView manage_event_update(@RequestParam("id") int event_id) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		EventVo detailVo = eventService.viewEventDetail(event_id);
+		
+		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
+		
+		
+		String[] positions =null;
+		String[] positions_conut =null;
+		if(detailVo.getEvent_position() != null) {
+			positions = detailVo.getEvent_position().split(",");
+			positions_conut = detailVo.getEvent_position_count().split(",");
+		}
+		
+		
+		mav.addObject("event", detailVo);
+		mav.addObject("positions", positions);
+		mav.addObject("positions_conut", positions_conut);
+		mav.addObject("eventFileList", eventFileList);
+
+		mav.setViewName("manage_event_update");
+		return mav;
+	}
+	
+	//행사 수정
+	@ResponseBody
+	@RequestMapping(value="/eventUpdate", method=RequestMethod.POST)
+	public String eventUpdate(MultipartHttpServletRequest multipartRequest, @ModelAttribute EventVo eventVo, @RequestAttribute("event_file") List<MultipartFile> event_file) throws Exception{
+			
+		//지울 파일 리스트
+		String[] deleteFileNameList = multipartRequest.getParameterValues("deleteFileNameList");
+		//수정 시 지운파일 삭제
+		if(deleteFileNameList != null) {
+			for( String name : deleteFileNameList ) {
+				s3Service.delete_s3event(name);
+				eventService.deleteFile(eventVo.getId(), name);
+			}
+		}
+		//행사 내용 수정
+		eventService.updateEvent(eventVo);
+			
+		//수정 시 추가한 파일 추가
+		if(event_file != null) {
+			List<String> filenames = s3Service.upload_eventFile(event_file);
+			for(String name : filenames) {
+				EventFileVo eventFileVo = new EventFileVo();
+				eventFileVo.setEvent_id(eventVo.getId());
+				eventFileVo.setFile_name(name);
+				eventService.insertEventFile(eventFileVo);
+			}
+		}
+			
+		return "eventDetail?id="+eventVo.getId();
 	}
 	
 	//행사 파일 다운로드
