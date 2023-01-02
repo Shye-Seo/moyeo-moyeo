@@ -16,5 +16,6 @@ public class MemberVo {
     private String user_gender;
     private String user_phone;
 	private String authority;
+    private String user_date_join;
 	
 }

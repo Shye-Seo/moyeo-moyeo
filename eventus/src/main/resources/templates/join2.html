@@ -84,19 +84,30 @@
                             <input type="button" id="certifinum_submit" value="인증">
                         </div>
 
-                        <div class="certifinum_area">
-                            <p class="item">인증번호</p>
-                            <span id="certifi_time"></span>
-                            <input type="text" id="certifinum" placeholder="인증번호 입력">
-                            <input type="button" id="certifinum_check" value="인증">
-                        </div>
-                    </form>
-                </div>
+                    <div class="gender_area">
+                        <input type="radio" name="user_gender" value="남"/>남성
+                        <input type="radio" name="user_gender" value="여" />여성
+                    </div>
 
-                <div class="button_position join2_button">
-                    <input type="button" value="뒤로" class="back_btn" onclick="location.href='/join1'">
-                    <input type="button" value="회원가입" class="join_complete_btn">
-                </div>
+                    <div class="phone_area">
+                        <p class="item">휴대전화</p>
+                        <input type="text" name="user_phone" placeholder="예) 01012345678">
+                        <input type="button" id="certifinum_submit" value="인증">
+                    </div>
+
+                    <div class="certifinum_area">
+                        <p class="item">인증번호</p>
+                        <span id="certifi_time"></span>
+                        <input type="text" id="certifinum" placeholder="인증번호 입력">
+                        <input type="button" id="certifinum_check" value="인증">
+                    </div>
+                    <input type="text" name="user_date_join" hidden/>
+                </form>
+            </div>
+
+            <div class="button_position">
+                <input type="button" value="뒤로" class="back_btn" onclick="location.href='/join1'">
+                <input type="button" value="회원가입" class="join_complete_btn">
             </div>
         </div>
         <script type="text/javascript" src="/js/join.js"></script>

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 public interface MemberDao {
 
     // 회원가입
-    @Insert("insert into user (user_id, user_pw, user_name, user_phone, user_email, user_birth, user_gender) " +
-            "values (#{user_id}, #{user_pw}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, #{user_gender})")
+    @Insert("insert into user (user_id, user_pw, user_name, user_phone, user_email, user_birth, user_gender, user_date_join) " +
+            "values (#{user_id}, #{user_pw}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, #{user_gender}, #{user_date_join})")
     int insertUser(MemberVo memberVo);
 
     @Select("select * from user where user_id = #{user_id} and user_pw = #{user_pw}")
@@ -35,11 +35,5 @@ public interface MemberDao {
 
     @Update("update user set user_pw = #{user_pw} where user_id = #{user_id}")
     int updatePw(MemberVo memberVo); // 비밀번호 변경
-
-    @Select("select count(*) from user where user_id = #{user_id} and user_phone = #{user_phone}")
-    int findPwCheck(MemberVo memberVo); // 비밀번호 찾기 전에 등록된 유저인지 아이디와 전화번호로 확인
-
-//    @Update("update user set user_pw = #{user_pw} where user_id = #{user_id}")
-//    int updatePw(MemberVo memberVo); // 비밀번호 변경
 
 }
