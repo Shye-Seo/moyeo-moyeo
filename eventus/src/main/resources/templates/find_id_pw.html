@@ -3,26 +3,32 @@
     <head>
         <meta charset="UTF-8">
         <title>ID, PW 검색</title>
-        <link rel="stylesheet" href="/css/find_id_pw.css">
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/login.css">
         <script src="http://code.jquery.com/jquery-latest.js"></script>
     </head>
     <body>
         <div id="wrap">
             <!-- 화면 중앙 기준, 좌측 화면 -->
-            <div class="login_comment">
-                <p>다양한 행사에 참여하고<br/>운영요원이 되어 경험을 쌓아보세요!</p>
-            </div>
-            <div class="login_img_area">
-                <div class="login_img"></div>
-            </div>
+            <div class="login_wrap_L">
+				<div class="login_comment">
+					<p>아이디 또는 비밀번호를 잊으셨나요?<br>회원가입 시 등록한 정보를 입력하세요.</p>
+				</div>
+				<div class="login_img_area">
+					<div class="login_img"></div>
+				</div>
+			</div>
 
             <!-- 화면 중앙 기준, 우측 화면 -->
             
-            <div class="tab">
-                <input id="tab1" type="radio" name="tab"/>
-                <input id="tab2" type="radio" name="tab"/>
-                <label for="tab1">아이디 찾기</label>
-                <label for="tab2">비밀번호 찾기</label>
+            <div class="login_wrap_R">
+                <div class="radio_wrap">
+                    <input id="tab1" type="radio" name="tab" checked/>
+                    <input id="tab2" type="radio" name="tab"/>
+                    <label for="tab1">아이디 찾기</label>
+                    <label for="tab2">비밀번호 찾기</label>
+                </div>
+                
                 <div class="tab1_content">
                     <section id="find_id">
                         <form action="" id="find_id_form">

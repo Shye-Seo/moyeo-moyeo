@@ -208,7 +208,7 @@ $(function() {
 
     // display 설정
     $("#tab1").on("click", function() {
-        $(".tab1_content").css('display', 'inline');
+        $(".tab1_content").css('display', 'block');
         $(".tab2_content").css('display', 'none');
         $(".found_id").css('display', 'none');
         $(".changing_pw").css('display', 'none');
@@ -217,7 +217,7 @@ $(function() {
 
     $("#tab2").on("click", function() {
         $(".tab1_content").css('display', 'none');
-        $(".tab2_content").css('display', 'inline');
+        $(".tab2_content").css('display', 'block');
         $(".found_id").css('display', 'none');
         $(".changing_pw").css('display', 'none');
         $(".changed_complete").css('display', 'none');
