@@ -283,6 +283,7 @@ $(function() {
                     user_gender: $("#member input[name=user_gender]:checked").val(),
                     user_phone: $('#member input[name=user_phone]').val(),
                     user_date_join: today,
+                    user_authority:1,
                 }
             }).done(function(data) {
                 if(data==1) {

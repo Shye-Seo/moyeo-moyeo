@@ -87,6 +87,16 @@
                             <li>가입일자</li>
                             <li>근로계약서</li>
                         </ol>
+                        <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
+                        <ol th:block th:each="staff : ${staff_list}">
+                            <li class="stafflist"></li>
+                            <li th:text="${staff.event_title}"></li>
+                            <li th:text="${staff.user_name}"></li>
+                            <li th:text="${staff.user_gender}"></li>
+                            <li th:text="${staff.user_birth}"></li>
+                            <li th:text="${staff.user_phone}"></li>
+                            <li th:text="${staff.user_date_join}"></li>
+                        </ol>
 
 
                     </ul>
@@ -108,5 +118,13 @@
         </div>
     </div>
     <script type="text/javascript" src="/js/manage_staff.js"></script>
+    <script>
+        var num = [[${staff_num}]];
+        // class="stafflist"에 num값을 넣어줌
+        $(".stafflist").each(function(){
+            $(this).text(num);
+            num--;
+        });
+    </script>
 </body>
 </html>
