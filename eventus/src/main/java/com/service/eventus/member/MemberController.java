@@ -37,12 +37,20 @@ public class MemberController {
     @RequestMapping("/LoginProc")
     public ModelAndView loginCheck(@ModelAttribute MemberVo memberVo) throws Exception {
         int result = memberService.loginCheck(memberVo);
+        MemberVo memberVo2 = memberService.viewMember(memberVo);
         ModelAndView mav = new ModelAndView();
 
         if(result==1) { // 로그인 성공
             // main으로 이동
             System.out.println("로그인성공");
-            mav.setViewName("/main");
+            if(memberVo2.getUser_authority()==0) {
+                // 관리자 페이지 이동
+                mav.setViewName("/main");
+            }
+            else {
+                // 스태프 페이지 이동
+                mav.setViewName("/main_ForStaff");;
+            }
             mav.addObject("msg", "success");
         }else { // 로그인 실패
             System.out.println("로그인실패");

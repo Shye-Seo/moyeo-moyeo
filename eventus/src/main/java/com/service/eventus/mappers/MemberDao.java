@@ -17,8 +17,8 @@ import org.springframework.stereotype.Repository;
 public interface MemberDao {
 
     // 회원가입
-    @Insert("insert into user (user_id, user_pw, user_name, user_phone, user_email, user_birth, user_gender, user_date_join) " +
-            "values (#{user_id}, #{user_pw}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, #{user_gender}, #{user_date_join})")
+    @Insert("insert into user (user_id, user_pw, user_name, user_phone, user_email, user_birth, user_gender, user_date_join, user_authority) " +
+            "values (#{user_id}, #{user_pw}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, #{user_gender}, #{user_date_join}, #{user_authority})")
     int insertUser(MemberVo memberVo);
 
     @Select("select * from user where user_id = #{user_id} and user_pw = #{user_pw}")
