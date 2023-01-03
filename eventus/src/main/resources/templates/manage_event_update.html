@@ -79,7 +79,7 @@
 
                     <div class="area2">
                         <span>행사상세설명</span>
-                        <textarea placeholder="700자 이내로 입력" name="event_content" maxlength="700" th:value="${event.event_content}" th:text="${event.event_content}"></textarea>
+                        <textarea placeholder="700자 이내로 입력" name="event_content" maxlength="700" th:value="${event.event_content}" th:text="${event.event_content}" onkeydown="resize(this)" ></textarea>
                     </div>
                     <div class="area3">
                         <span>이미지/파일첨부<p>(최대 5개)</p></span>
@@ -136,7 +136,6 @@
 
                             for(i =1; i<positions.length;i++){
                                 add_position_forUpdate(positions[i],positions_conut[i]);
-                                console.log(positions[i] +' ' +positions_conut[i])
                             }
 
                             fileIndex=eventFileList.length;
@@ -145,6 +144,8 @@
                                 $('#input_file').attr("disabled","disabled");
                                 $('.area3 label').css({'background-color':'#eee', 'cursor':'unset'});
                             }
+
+                            $('textarea').height((15 + $('textarea').prop('scrollHeight')));
                         })
                         /*]]>*/
                     </script>

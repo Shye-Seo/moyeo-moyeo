@@ -41,19 +41,27 @@ public class MainController {
 		return "main";
 	}
 
-//	@GetMapping(value="/manage_event")
-//	public String manage_event(ModelMap model) {
-//		List<EventVo> event_list = eventService.event_list();    
-//	    model.addAttribute("event_list", event_list);
-//		return "manage_event";
-//	}
+	/*
+	@GetMapping(value="/manage_event")
+	public String manage_event(ModelMap model) {
+		List<EventVo> event_list = eventService.event_list();
+		model.addAttribute("event_list", event_list);
+		return "manage_event";
+	}
+
 
 	@GetMapping(value="/manage_staff")
 	public String manage_staff() {
 		return "manage_staff";
 	}
 
-	@GetMapping(value="report_work")
+	@GetMapping(value="/manage_career_ForStaff")
+	public String manage_career_ForStaff() {
+		return "manage_career_forstaff";
+	}
+	*/
+
+	@GetMapping(value="/report_work")
 	public String report_work() {
 		return "report_work";
 	}
@@ -63,11 +71,6 @@ public class MainController {
 	@GetMapping(value="/main_ForStaff")
 	public String Main_ForStaff() {
 		return "main_ForStaff";
-	}
-
-	@GetMapping(value="/manage_career_ForStaff")
-	public String manage_career_ForStaff() {
-		return "manage_career_ForStaff";
 	}
 
 	@GetMapping(value="/eventList_ForStaff")

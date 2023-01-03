@@ -10,13 +10,18 @@
     <!-- 어떤 메뉴를 쓸지 파라미터로 넘겨야 합니다 -->
 
     <!-- 
+
         사이드바가 올 자리에
         <div th:replace="~{common/side :: sidebar_manage ('***')}"></div>
+
         *** ↓↓↓
         메인 = main
         행사관리 = schedule
         직원관리 = stafflist
         근무기록 = timesheet
+
+
+
      -->
 
         <div class="sidebar" th:fragment="sidebar_manage (thisLink)">

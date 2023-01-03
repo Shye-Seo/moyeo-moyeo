@@ -1,9 +1,14 @@
 package com.service.eventus.member;
 
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
+import org.apache.commons.collections.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -14,9 +19,16 @@ public class MemberController {
     @Inject
     private MemberService memberService;
 
+    // 회원가입
+    @RequestMapping(value = "/insertUser")
+    @ResponseBody
+    public int insertUser(@ModelAttribute MemberVo memberVo) throws Exception {
+        return memberService.insertUser(memberVo);
+    }
+
     // 아이디 중복 체크
     @ResponseBody
-    @PostMapping(value="idChk")
+    @RequestMapping(value="/idchk")
     public int idChk(@RequestParam("user_id") String user_id) {
         return memberService.idChk(user_id);
     }
@@ -25,12 +37,20 @@ public class MemberController {
     @RequestMapping("/LoginProc")
     public ModelAndView loginCheck(@ModelAttribute MemberVo memberVo) throws Exception {
         int result = memberService.loginCheck(memberVo);
+        MemberVo memberVo2 = memberService.viewMember(memberVo);
         ModelAndView mav = new ModelAndView();
 
         if(result==1) { // 로그인 성공
             // main으로 이동
             System.out.println("로그인성공");
-            mav.setViewName("/main");
+            if(memberVo2.getUser_authority()==0) {
+                // 관리자 페이지 이동
+                mav.setViewName("/main");
+            }
+            else {
+                // 스태프 페이지 이동
+                mav.setViewName("/main_ForStaff");;
+            }
             mav.addObject("msg", "success");
         }else { // 로그인 실패
             System.out.println("로그인실패");
@@ -43,18 +63,40 @@ public class MemberController {
 
     // 아이디 찾기
     @RequestMapping("/findId")
-    public ModelAndView findId(@ModelAttribute MemberVo memberVo) throws Exception {
-        ModelAndView mav = new ModelAndView();
-        String result = memberService.findId(memberVo);
-        if(result != null) {
-            mav.setViewName("/login");
-            mav.addObject("msg", "success");
-            mav.addObject("user_id", result);
-        }else {
-            mav.setViewName("/find_id_pw");
-            mav.addObject("msg", "failure");
+    @ResponseBody
+    public Map findId(@ModelAttribute MemberVo memberVo) throws Exception {
+    	
+    	Map result = memberService.findId(memberVo);
+    	
+        if(MapUtils.isEmpty(result)) {
+        	result = new HashMap<>();
+            result.put("user_id", "failure");
         }
-        return mav;
+        return result;
+    }
+
+    // 비밀번호 변경을 위한 아이디 찾기
+    @RequestMapping("/findIdForPw")
+    @ResponseBody
+    public String findIdForPw(@ModelAttribute MemberVo memberVo) throws Exception {
+        String result = memberService.findIdForPw(memberVo);
+        if(result != null) {
+            return result;
+        }else {
+            return "failure";
+        }
+    }
+
+    // 비밀번호 변경
+    @RequestMapping("/updatePw")
+    @ResponseBody
+    public String updatePw(@ModelAttribute MemberVo memberVo) throws Exception {
+        int result = memberService.updatePw(memberVo);
+        if(result == 1) {
+            return "success";
+        }else {
+            return "failure";
+        }
     }
 
     // 휴대폰인증
@@ -64,7 +106,7 @@ public class MemberController {
         int randomNumber = (int)((Math.random() * (9999 - 1000 +1)) + 1000); // 난수 생성
 
         memberService.sendSms(userPhoneNumber, randomNumber);
-
+        System.out.println(randomNumber);
         return Integer.toString(randomNumber);
     }
 

@@ -1,6 +1,9 @@
 package com.service.eventus.mappers;
 
 import com.service.eventus.member.MemberVo;
+
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -14,8 +17,8 @@ import org.springframework.stereotype.Repository;
 public interface MemberDao {
 
     // 회원가입
-    @Insert("insert into user (user_id, user_pw, user_name, user_phone, user_email, user_birth, user_gender, user_date_join) " +
-            "values (#{user_id}, #{user_pw}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, #{user_gender}, #{user_date_join})")
+    @Insert("insert into user (user_id, user_pw, user_name, user_phone, user_email, user_birth, user_gender, user_date_join, user_authority) " +
+            "values (#{user_id}, #{user_pw}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, #{user_gender}, #{user_date_join}, #{user_authority})")
     int insertUser(MemberVo memberVo);
 
     @Select("select * from user where user_id = #{user_id} and user_pw = #{user_pw}")
@@ -24,8 +27,8 @@ public interface MemberDao {
     @Select("select count(*) from user where user_id=#{user_id}")
     int idChk(String user_id); // 아이디 중복 체크(회원가입)
 
-    @Select("select user_id from user where user_name = #{user_name} and user_phone = #{user_phone}")
-    String findId(MemberVo memberVo); // 아이디 찾기(user_id 반환)
+    @Select("select user_id, user_date_join from user where user_name = #{user_name} and user_phone = #{user_phone}")
+    Map findId(MemberVo memberVo); // 아이디 찾기(user_id 반환)
 
     @Select("select user_id from user where user_id = #{user_id} and user_phone = #{user_phone}")
     String findIdForPw(MemberVo memberVo); // 비밀번호 변경을 위한 아이디 찾기(user_id 반환)

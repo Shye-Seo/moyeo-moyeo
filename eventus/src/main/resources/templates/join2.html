@@ -3,99 +3,123 @@
     <head>
         <meta charset="UTF-8">
         <title>회원 정보</title>
-        <link rel="stylesheet" href="/css/join2.css">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/login.css">
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="/js/join.js"></script>
+        <script>
+            $(function(){
+                $('select').change(function(){
+                    if($(this).val() !=null){
+                        $(this).css({'color':'#333333', 'font-size':'15px'});
+                    }else{
+                        $(this).css({'color':'#DDDDDD', 'font-size':'16px'});
+                    }
+                })
+
+                $('select').focus(function(){
+                    $(this).parent().addClass("changed")
+                })
+                $('select').blur(function(){
+                    $(this).parent().removeClass("changed")
+                })
+            })
+            
+        </script>
     </head>
     <body>
         <div id="wrap">
             <!-- 화면 중앙 기준, 좌측 화면 -->
-            <div class="login_comment">
-                <p>다양한 행사에 참여하고<br/>운영요원이 되어 경험을 쌓아보세요!</p>
-            </div>
-            <div class="login_img_area">
-                <div class="login_img"></div>
-            </div>
-
-            <!-- 화면 중앙 기준, 우측 화면 -->
-            <div class="process_join">
-                <ul>
-                    <li class="active">약관동의</li>
-                    <li class="active">회원정보</li>
-                    <li class="inactive">가입완료</li>
-                </ul>
+            <div class="login_wrap_L">
+                <div class="login_comment">
+                        <p>회원가입 후 다양한 행사를<br/>확인해보세요.</p>
+                    </div>
+                    <div class="login_img_area">
+                        <div class="login_img"></div>
+                    </div>
             </div>
 
-            <!-- 회원 정보 입력 -->
-            <div id="member">
-                <form>
-                    <div class="id_area">
-                        <p class="item">아이디</p>
-                        <span id="id_check"></span>
-                        <input type="text" name="user_id" placeholder="아이디 입력" value="">
-                    </div>
+            <div class="login_wrap_R join_R">
+                <!-- 화면 중앙 기준, 우측 화면 -->
+                <div class="process_join">
+                    <ul>
+                        <li class="active">약관동의</li>
+                        <li class="active">회원정보</li>
+                        <li class="inactive">가입완료</li>
+                    </ul>
+                </div>
 
-                    <div class="pw_area">
-                        <p class="item">비밀번호</p>
-                        <span id="pw_check1"></span>
-                        <input type="password" name="user_pw" placeholder="비밀번호 입력" value="">
-                    </div>
+                <!-- 회원 정보 입력 -->
+                <div id="member">
+                    <form>
+                        <div class="id_area">
+                            <p class="item">아이디</p>
+                            <span id="id_check"></span>
+                            <input type="text" name="user_id" placeholder="아이디 입력" value="">
+                        </div>
 
-                    <div class="pw_area">
-                        <p class="item">비밀번호 확인</p>
-                        <span id="pw_check2"></span>
-                        <input type="password" id="checked_pw" placeholder="비밀번호 재확인" value="">
-                    </div>
+                        <div class="pw_area">
+                            <p class="item">비밀번호</p>
+                            <span id="pw_check1"></span>
+                            <input type="password" name="user_pw" placeholder="비밀번호 입력" value="">
+                        </div>
 
-                    <div class="name_area">
-                        <p class="item">이름</p>
-                        <input type="text" name="user_name" placeholder="이름 입력" value="">
-                    </div>
+                        <div class="pw_area">
+                            <p class="item">비밀번호 확인</p>
+                            <span id="pw_check2"></span>
+                            <input type="password" id="checked_pw" placeholder="비밀번호 재확인" value="">
+                        </div>
 
-                    <div class="email_area">
-                        <p class="item">이메일주소</p>
-                        <span id="email_check"></span>
-                        <input type="text" name="user_email" placeholder="example@foryoucom.com" value="">
-                    </div>
+                        <div class="name_email_wrap">
+                            <div class="name_area">
+                                <p class="item">이름</p>
+                                <input type="text" name="user_name" placeholder="이름 입력" value="">
+                            </div>
 
-                    <div class="birth_area">
-                        <p class="item">생일/성별</p>
+                            <div class="email_area">
+                                <p class="item">이메일주소</p>
+                                <span id="email_check"></span>
+                                <input type="text" name="user_email" placeholder="example@foryoucom.com" value="">
+                            </div>
+                        </div>
 
-                        <select id="birth_year"><option value="년도">년도</option></select>
-                        <select id="birth_month"><option value="월">월</option></select>
-                        <select id="birth_day"><option value="일">일</option></select>
+                        <div class="birth_gender_wrap">
+                            <div class="birth_area">
+                            <p class="item">생일/성별</p>
+                                <div><select id="birth_year" ><option disabled selected>년</option></select></div>
+                                <div><select id="birth_month"><option disabled selected>월</option></select></div>
+                                <div><select id="birth_day"><option disabled selected>일</option></select></div>
+                            </div>
+        
+                            <div class="gender_area">
+                                <input type="radio" name="user_gender" value="남"/>남성
+                                <input type="radio" name="user_gender" value="여" />여성
+                            </div>
+                        </div>
 
-                    </div>
-
-                    <div class="gender_area">
-                        <input type="radio" name="user_gender" value="남"/>남성
-                        <input type="radio" name="user_gender" value="여" />여성
-                    </div>
-
-                    <div class="phone_area">
-                        <p class="item">휴대전화</p>
-                        <input type="text" name="user_phone" placeholder="예) 01012345678">
-                        <input type="button" id="certifinum_submit" value="인증">
-                    </div>
-
-                    <div class="certifinum_area">
-                        <p class="item">인증번호</p>
-                        <span id="certifi_time"></span>
-                        <input type="text" id="certifinum" placeholder="인증번호 입력">
-                        <input type="button" id="certifinum_check" value="인증">
-                    </div>
-                    <input type="text" name="user_date_join" hidden/>
-                </form>
+                        <div class="phone_certifinum_wrap">
+                            <div class="phone_area">
+                                <p class="item">휴대전화</p>
+                                <input type="text" name="user_phone" placeholder="예) 01012345678">
+                                <input type="button" id="certifinum_submit" value="인증">
+                            </div>
+        
+                            <div class="certifinum_area">
+                                <p class="item">인증번호</p>
+                                <span id="certifi_time"></span>
+                                <input type="text" id="certifinum" placeholder="인증번호 입력" onkeyup="certifinum_checking($(this).val())">
+                                <div class="check_icon"></div>
+                                <input type="button" id="certifinum_check" value="✓" disabled>
+                            </div>
+                        </div>
+                        <input type="text" name="user_date_join" hidden/>
+                    </form>
+                </div>
+    
+                <div class="button_position join2_button">
+                    <input type="button" value="뒤로" class="back_btn" onclick="location.href='/join1'">
+                    <input type="button" value="회원가입" class="join_complete_btn">
+                </div>
             </div>
-
-            <div class="button_position">
-                <input type="button" value="뒤로" class="back_btn" onclick="location.href='/join1'">
-                <input type="button" value="회원가입" class="join_complete_btn">
-            </div>
-        </div>
-        <script>
-
-
-        </script>
-        <script type="text/javascript" src="/js/join.js"></script>
-    </body>
-</html>
+        </body>
+    </html>

@@ -3,70 +3,86 @@
     <head>
         <meta charset="UTF-8">
         <title>약관 동의</title>
-        <link rel="stylesheet" href="/css/join1.css?after">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/login.css">
         <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script>
+            $(function(){
+                $('input[type="checkbox"]').change(function(){
+                    if($('#all_chk').prop("checked")){
+                        $('.join_btn').css({'background':'#5B8FD2 0% 0% no-repeat padding-box','border':'1px solid #5B8FD2'})
+                    }else{
+                        $('.join_btn').css({'background':'#CCCCCC 0% 0% no-repeat padding-box','border':'1px solid #CCCCCC'})
+                    }
+                })
+            })
+        </script>
     </head>
     <body>
         <div id="wrap">
             <!-- 화면 중앙 기준, 좌측 화면 -->
-            <div class="login_comment">
-                <p>다양한 행사에 참여하고<br/>운영요원이 되어 경험을 쌓아보세요!</p>
-            </div>
-            <div class="login_img_area">
-                <div class="login_img"></div>
-            </div>
+            <div class="login_wrap_L">
+				<div class="login_comment">
+					<p>회원가입 후 다양한 행사를<br/>확인해보세요.</p>
+				</div>
+				<div class="login_img_area">
+					<div class="login_img"></div>
+				</div>
+			</div>
 
 
             <!-- 화면 중앙 기준, 우측 화면 -->
-            <div class="process_join">
-                <ul>
-                    <li class="active">약관동의</li>
-                    <li class="inactive">회원정보</li>
-                    <li class="inactive">가입완료</li>
-                </ul>
-            </div>
-
-            <!-- 약관 동의 글 -->
-            <div class="agreement">
-                <input type="checkbox" id="all_chk" class="normal" value="">
-                <label for="all_chk">전체 동의</label>
-
-                <div class="agreement_area">
-                    <input type="checkbox" id="chk1" class="normal" value="">
-                    <label for="chk1">서비스 이용약관 동의&nbsp;<span>(필수)</span></label><br/><hr>
-                    <textarea>
-이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
-
-이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
-이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
-이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
-이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
-이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
-이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
-이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
-                    </textarea>
+            <div class="login_wrap_R join_R">
+                <div class="process_join">
+                    <ul>
+                        <li class="active">약관동의</li>
+                        <li class="inactive">회원정보</li>
+                        <li class="inactive">가입완료</li>
+                    </ul>
                 </div>
 
-                <div class="agreement_area">
-                    <input type="checkbox" id="chk2" class="normal" value="">
-                    <label for="chk2">개인정보처리 방침안내의 내용에 동의&nbsp;<span>(필수)</span></label><br/><hr>
-                    <textarea>
-개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
+                <!-- 약관 동의 글 -->
+                <div class="agreement">
+                    <input type="checkbox" id="all_chk" class="normal" value="">
+                    <label for="all_chk">전체동의</label>
 
-개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
-개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
-개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
-개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
-개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
-개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
-개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
-                    </textarea>
+                    <div class="agreement_area">
+                        <input type="checkbox" id="chk1" class="normal" value="">
+                        <label for="chk1">서비스 이용약관 동의&nbsp;<span>(필수)</span></label><br/><hr>
+                        <textarea>
+    이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
+
+    이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
+    이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
+    이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
+    이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
+    이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
+    이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
+    이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의 이용약관 동의
+                        </textarea>
+                    </div>
+
+                    <div class="agreement_area">
+                        <input type="checkbox" id="chk2" class="normal" value="">
+                        <label for="chk2">개인정보처리 방침안내의 내용에 동의&nbsp;<span>(필수)</span></label><br/><hr>
+                        <textarea>
+    개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
+
+    개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
+    개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
+    개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
+    개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
+    개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
+    개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
+    개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의 개인정보 수집 및 이용 동의
+                        </textarea>
+                    </div>
                 </div>
-            </div>
 
-            <div class="button_position">
-                <input type="button" value="취소" class="cancel_btn" onclick="location.href='/'">
-                <input type="button" value="이용약관 동의 후 회원가입" class="join_btn">
+                <div class="button_position">
+                    <input type="button" value="취소" class="cancel_btn" onclick="location.href='/'">
+                    <input type="button" value="이용약관 동의 후 회원가입" class="join_btn">
+                </div>
             </div>
         </div>
         <script type="text/javascript" src="/js/join.js"></script>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤터즈랩(eventusLAB)</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="/css/manage_staff.css">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+</head>
+<body>
+    <div id="wrap">
+        <!-- fixed menu -->
+        <div class="sidebar">
+            <a href="#" class="logo">
+                <img src="../../../../../../../eventus_front/logo.png" alt="eventusLAB">
+            </a>
+            <ul class="menu-categories">
+                <li class="menu">
+                    <a href="#">
+                        <div>
+                            <img src="main.svg" alt="main">
+                            <span>메인</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
+                    <a href="#">
+                        <div>
+                            <img src="schedule.svg" alt="schedule">
+                            <span>행사목록</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
+                    <a href="#">
+                        <div>
+                            <img src="stafflist.svg" alt="stafflist">
+                            <span>이력관리</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
+                    <a href="#">
+                        <div>
+                            <img src="timesheet.svg" alt="timesheet">
+                            <span>근무기록</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- main -->
+        <div class="content">
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">
+                        <span>이력관리</span>
+                    </div>
+                </div>
+
+                <div class="detail_bar">
+                    <div class="detail1">
+                        <img src="material-view-list.svg">
+                        <input type="button" value="직원현황">
+                    </div>
+                    <div class="detail2">
+                        <img src="material-view-list.svg">
+                        <input type="button" value="나의이력서">
+                    </div>
+                    
+                </div>
+
+                <div class="area">
+                    <div class="search_area">
+                        <input type="text" class="calendar">
+                        <input type="text" class="word_search">
+                    </div>
+                    
+
+                    <ul class="list">
+                        <ol>
+                            <li>No</li>
+                            <li>행사명</li>
+                            <li>행사기간</li>
+                            <li>합격여부</li>
+                            <li>근로계약서</li>
+                        </ol>
+                        <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
+                        <ol th:block th:each="career : ${career_list}">
+                            <li class="applicationList"></li>
+                            <li th:text="${career.event_title}"></li>
+                            <li th:text="${career.event_startDate} + ' - ' + ${career.event_endDate}"></li>
+                            <li th:text="${career.application_result}"></li>
+                        </ol>
+                            
+
+                    </ul>
+                </div>
+
+
+                <!-- 페이징 처리(Unix 참조) -->
+                <div>
+                    <ul>
+                        <!-- 이전 -->
+
+                        <!-- 번호 -->
+
+                        <!-- 다음 -->
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var num = [[${career_num}]];
+        // class="applicationList"에 num값을 넣어줌
+        $(".applicationList").each(function(){
+            $(this).text(num);
+            num--;
+        });
+    </script>
+</body>
+</html>

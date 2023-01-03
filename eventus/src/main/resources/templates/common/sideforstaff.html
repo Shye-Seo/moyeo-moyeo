@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>sidebar</title>
+
+</head>
+<body>
+	<!-- fixed menu -->
+    <!-- 어떤 메뉴를 쓸지 파라미터로 넘겨야 합니다 -->
+
+    <!-- 
+
+        사이드바가 올 자리에
+        <div th:replace="~{common/side :: sidebar_manage ('***')}"></div>
+
+        *** ↓↓↓
+        메인 = main
+        행사관리 = schedule
+        직원관리 = stafflist
+        근무기록 = timesheet
+
+
+
+     -->
+
+        <div class="sidebar" th:fragment="sidebar_manage (thisLink)">
+            <a href="/main" class="logo">
+                <img src="/imgs/logo.png" alt="eventusLAB">
+            </a>
+            <ul class="menu-categories">
+                <span th:if="${thisLink == 'main'}">
+                <li class="menu selected">
+                </span>
+                <span th:unless="${thisLink == 'main'}">
+                <li class="menu">
+                </span>
+                    <a href="/main">
+                        <div>
+                            <img src="/imgs/main.svg" alt="main">
+                            <span>메인</span>
+                        </div>
+                    </a>
+                </li>
+                <span th:if="${thisLink == 'schedule'}">
+                <li class="menu selected">
+                </span>
+                <span th:unless="${thisLink == 'schedule'}">
+                <li class="menu">
+                </span>
+                    <a href="/manage_event" >
+                        <div>
+                            <img src="/imgs/schedule.svg" alt="schedule">
+                            <span>행사목록</span>
+                        </div>
+                    </a>
+                </li>
+                <span th:if="${thisLink == 'stafflist'}">
+                <li class="menu selected">
+                </span>
+                <span th:unless="${thisLink == 'stafflist'}">
+                <li class="menu">
+                </span>
+                    <a href="/manage_staff">
+                        <div>
+                            <img src="/imgs/stafflist.svg" alt="stafflist">
+                            <span>이력관리</span>
+                        </div>
+                    </a>
+                </li>
+                <span th:if="${thisLink == 'timesheet'}">
+                <li class="menu selected">
+                </span>
+                <span th:unless="${thisLink == 'timesheet'}">
+                <li class="menu">
+                </span>
+                    <a href="/report_work">
+                        <div>
+                            <img src="/imgs/timesheet.svg" alt="timesheet">
+                            <span>근무기록</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="side_info">
+                <div class="info_img"></div>
+                <p>서강준 님</p>
+            </div>
+
+        </div>
+
+        <!-- <div class="sidebar" th:fragment="sidebar_manage">
+            <a href="/main" class="logo">
+                <img src="/imgs/logo.png" alt="eventusLAB">
+            </a>
+            <ul class="menu-categories">
+                <li class="menu">
+                    <a href="/main">
+                        <div>
+                            <img src="/imgs/main.svg" alt="main">
+                            <span>메인</span>
+                        </div>
+                    </a>
+                </li>
+                <span th:if="${thisLink == 'manage_event_register'}">
+                <li class="menu selected">
+                </span>
+                <span th:unless="${thisLink == 'manage_event_register'}">
+                <li class="menu">
+                </span>
+                    <a href="/manage_event" >
+                        <div>
+                            <img src="/imgs/schedule.svg" alt="schedule">
+                            <span>행사관리</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
+                    <a href="/manage_staff">
+                        <div>
+                            <img src="/imgs/stafflist.svg" alt="stafflist">
+                            <span>직원관리</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
+                    <a href="/report_work">
+                        <div>
+                            <img src="/imgs/timesheet.svg" alt="timesheet">
+                            <span>근무기록</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div> -->
+
+
+
+</body>
+</html>

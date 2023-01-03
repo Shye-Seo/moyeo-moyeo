@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.aws.AwsS3Service;
@@ -70,6 +71,7 @@ public class EventController {
 		
 		mav.addObject("event", detailVo);
 		mav.addObject("positionMap", positionMap);
+		mav.addObject("positionMap", positionMap);
 		mav.addObject("eventFileList", eventFileList);
 
 		mav.setViewName("manage_eventDetail");
@@ -102,6 +104,8 @@ public class EventController {
 		
 		return "eventDetail?id="+id;
 	}
+	
+	
 	
 	//행사 수정 조회
 	@RequestMapping(value="/manage_event_update", method=RequestMethod.GET)
@@ -160,12 +164,7 @@ public class EventController {
 		return "eventDetail?id="+eventVo.getId();
 	}
 	
-	//행사 파일 다운로드
-	@RequestMapping({"/event_download"})
-	@ResponseBody
-	public ResponseEntity<byte[]> download(@RequestParam String filename) throws IOException {
-		return s3Service.getObject_event(filename);
-	}
+	
 	
 	//지원현황(모집중) 모달창
 	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
@@ -196,6 +195,7 @@ public class EventController {
 				model.addAttribute("result", result);
 			}
 		}
+		System.out.println("=============>list:"+application_list);
 	    model.addAttribute("application_list", application_list);
 		return "application_modal";
 	}
