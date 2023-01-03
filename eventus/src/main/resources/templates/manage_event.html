@@ -94,7 +94,7 @@
 							<li th:text="${event.event_startDate} + ' - ' + ${event.event_endDate}"></li>
 							<li th:if="${event.event_status == 0}">모집중</botton></li><li th:if="${event.event_status == 1}">진행중</li><li th:if="${event.event_status == 2}">진행완료</li>
 							<a th:if="${event.event_status == 0}" th:href="@{application_modal(id=${event.id})}"><li th:text="${event.application_count} + ' 명'"></li></a>
-							<a th:if="${event.event_status == 1}" th:href="@{application_modal(id=${event.id})}"><li th:text="${event.application_count} + ' 명'"></li></a>
+							<a th:if="${event.event_status == 1}" th:href="@{workRecord_modal(id=${event.id})}"><li th:text="${event.application_count} + ' 명'"></li></a>
 							<li th:if="${event.event_status == 2}" th:text="${event.application_count} + ' 명'"></li>
 							<li th:text="${event.booth_count} + ' 개'"></li>
 						</ol>

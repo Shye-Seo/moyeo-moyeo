@@ -13,8 +13,12 @@ import com.service.eventus.aws.AwsS3Service;
 import com.service.eventus.member.MemberVo;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -198,31 +202,126 @@ public class EventController {
 	
 	// 지원자 수락
 	@RequestMapping(value="accept_applicant", method=RequestMethod.POST)
-	public String applicant_accept(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
-		
-		int result = eventService.accept_applicant(event_id, staff_id);
-		System.out.println("=========>결과:"+result);
-		
+	public String record_start(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
+		eventService.accept_applicant(event_id, staff_id);
 		return "application_modal";
 	}
 	
 	// 지원자 수락해제
 	@RequestMapping(value="accept_applicant_cancel", method=RequestMethod.POST)
 	public String applicant_accept_cancel(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
-		
-		int result = eventService.accept_applicant_cancel(event_id, staff_id);
-		System.out.println("=========>결과:"+result);
-			
+		eventService.accept_applicant_cancel(event_id, staff_id);
 		return "application_modal";
 	}
 	
 	// 지원자 불합격처리
 	@RequestMapping(value="reject_applicant", method=RequestMethod.POST)
 	public String reject_applicant(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
-			
-		int result = eventService.reject_applicant(event_id, staff_id);
-		System.out.println("=========>결과:"+result);
-				
+		eventService.reject_applicant(event_id, staff_id);
 		return "application_modal";
+	}
+	
+	// 지원현황(진행중) 모달창
+	@RequestMapping(value="/workRecord_modal", method=RequestMethod.GET)
+	public String workStaff_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
+		
+		int staff_count = eventService.staff_count(event_id);
+		model.addAttribute("event_id", event_id);
+		model.addAttribute("staff_count", staff_count);
+		
+		// 오늘 날짜
+        LocalDate now = LocalDate.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+        String today = year + "년 " + month + "월 " + day + "일";
+        model.addAttribute("today", today);
+        String work_date = year+"/"+month+"/"+day;
+        model.addAttribute("work_date", work_date);
+ 
+		List<MemberVo> workStaff_list = eventService.workStaff_list(event_id);
+		if (workStaff_list != null) {
+			for (MemberVo memberVo : workStaff_list) {
+				
+				//만 나이 계산
+				String staff_age = eventService.getUserAge(memberVo.getUser_birth());
+				memberVo.setStaff_age(staff_age);
+				System.out.println("나이========>"+staff_age);
+				
+				//휴대폰번호 형태
+				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
+				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
+				memberVo.setStaff_phone(staff_phone);
+				
+				//당일 근무기록
+				WorkRecordVo workTime_list = eventService.getWorkTime(memberVo.getId(), event_id, work_date);
+				System.out.println("근무기록=============>"+workTime_list);
+				if(workTime_list != null) {
+						memberVo.setRecordVo(workTime_list);
+				}
+			}
+		}
+	    model.addAttribute("workStaff_list", workStaff_list);
+		return "workRecord_modal";
+	}
+	
+	// 근무기록(출근)
+	@RequestMapping(value="/record_start", method=RequestMethod.POST)
+	public String record_startTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
+		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		
+		// 현재 시간
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String start_time = now.format(formatter);
+        System.out.println("출근시간 : "+start_time);
+        
+		eventService.record_startTime(event_id, staff_id, work_date, start_time);
+		return "workRecord_modal";
+	}
+	
+	// 근무기록(외출)
+	@RequestMapping(value="/record_out", method=RequestMethod.POST)
+	public String record_outTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
+		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		
+		// 현재 시간
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String out_time = now.format(formatter);
+        System.out.println("외출시간 : "+out_time);
+        
+		eventService.record_outTime(event_id, staff_id, work_date, out_time);
+		return "workRecord_modal";
+	}
+	
+	// 근무기록(복귀)
+	@RequestMapping(value="/record_back", method=RequestMethod.POST)
+	public String record_backTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
+		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		
+		// 현재 시간
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String back_time = now.format(formatter);
+        System.out.println("복귀시간 : "+back_time);
+        
+		eventService.record_backTime(event_id, staff_id, work_date, back_time);
+		return "workRecord_modal";
+	}
+	
+	// 근무기록(퇴근)
+	@RequestMapping(value="/record_end", method=RequestMethod.POST)
+	public String record_endTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
+		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		
+		// 현재 시간
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String end_time = now.format(formatter);
+        System.out.println("퇴근시간 : "+end_time);
+        
+		eventService.record_endTime(event_id, staff_id, work_date, end_time);
+		return "workRecord_modal";
 	}
 }

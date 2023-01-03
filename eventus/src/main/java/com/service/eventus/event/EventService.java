@@ -96,4 +96,39 @@ public class EventService {
 		return eventDao.getResult(event_id, staff_id);
 	}
 
+	// 근무직원 count
+	public int staff_count(int event_id) {
+		return eventDao.staff_count(event_id);
+	}
+
+	// 근무직원 list
+	public List<MemberVo> workStaff_list(int event_id) {
+		return eventDao.workStaff_list(event_id);
+	}
+
+	// 당일 근무기록 get
+	public WorkRecordVo getWorkTime(int staff_id, int event_id, String work_date) {
+		return eventDao.getWorkTime(staff_id, event_id, work_date);
+	}
+	
+	// 출근시간 기록
+	public boolean record_startTime(int event_id, int staff_id, String work_date, String start_time) {
+		return eventDao.record_startTime(event_id, staff_id, work_date, start_time);
+	}
+
+	// 외출시간 기록
+	public boolean record_outTime(int event_id, int staff_id, String work_date, String out_time) {
+		return eventDao.record_outTime(event_id, staff_id, work_date, out_time);
+	}
+	
+	// 복귀시간 기록
+	public boolean record_backTime(int event_id, int staff_id, String work_date, String back_time) {
+		return eventDao.record_backTime(event_id, staff_id, work_date, back_time);
+	}
+	
+	// 퇴근시간 기록
+	public boolean record_endTime(int event_id, int staff_id, String work_date, String end_time) {
+		return eventDao.record_endTime(event_id, staff_id, work_date, end_time);
+	}
+
 }

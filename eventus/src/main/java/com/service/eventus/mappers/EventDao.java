@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.service.eventus.event.EventFileVo;
 import com.service.eventus.event.EventVo;
 import com.service.eventus.event.ResumeVo;
+import com.service.eventus.event.WorkRecordVo;
 import com.service.eventus.member.MemberVo;
 
 @Mapper
@@ -71,4 +72,24 @@ public interface EventDao {
 	@Select("select application_result from staff_application where event_id = ${event_id} and staff_id = ${staff_id}")
 	String getResult(int event_id, int staff_id); // 지원현황 지원자 리스트(모집중) - 지원결과
 
+	@Select("select count(*) from event e inner join staff_application s where e.id = s.event_id and s.application_result = '합격' and e.id = #{event_id}")
+	int staff_count(int event_id); // 근무직원 count
+
+	@Select("select * from user u inner join staff_application s, event e where u.id = s.staff_id and e.id = s.event_id and s.application_result = '합격' and e.id = #{event_id}")
+	List<MemberVo> workStaff_list(int event_id); // 근무직원 리스트(진행중) - 직원정보(이름, 나이, 휴대폰번호)
+
+	@Select("select * from staff_work_record where staff_id = #{staff_id} and event_id = #{event_id} and work_date = #{work_date}")
+	WorkRecordVo getWorkTime(int staff_id, int event_id, String work_date); // 당일 근무기록 get
+	
+	@Insert("insert into staff_work_record(work_start_time, work_date, staff_id, event_id) values(#{start_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_start_time = #{start_time}")
+	boolean record_startTime (int event_id, int staff_id, String work_date, String start_time); // 출근시간 기록
+
+	@Insert("insert into staff_work_record(work_outing_time, work_date, staff_id, event_id) values(#{out_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_outing_time = #{out_time}")
+	boolean record_outTime(int event_id, int staff_id, String work_date, String out_time); // 외출시간 기록
+	
+	@Insert("insert into staff_work_record(work_comeback_time, work_date, staff_id, event_id) values(#{back_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_comeback_time = #{back_time}")
+	boolean record_backTime(int event_id, int staff_id, String work_date, String back_time); // 복귀시간 기록
+	
+	@Insert("insert into staff_work_record(work_end_time, work_date, staff_id, event_id) values(#{end_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_end_time = #{end_time}")
+	boolean record_endTime(int event_id, int staff_id, String work_date, String end_time); // 퇴근시간 기록
 }
