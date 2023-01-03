@@ -54,6 +54,11 @@ public class MainController {
 	public String manage_staff() {
 		return "manage_staff";
 	}
+
+	@GetMapping(value="/manage_career_ForStaff")
+	public String manage_career_ForStaff() {
+		return "manage_career_forstaff";
+	}
 	*/
 
 	@GetMapping(value="/report_work")
@@ -66,11 +71,6 @@ public class MainController {
 	@GetMapping(value="/main_ForStaff")
 	public String Main_ForStaff() {
 		return "main_ForStaff";
-	}
-
-	@GetMapping(value="/manage_career_ForStaff")
-	public String manage_career_ForStaff() {
-		return "manage_career_forstaff";
 	}
 
 	@GetMapping(value="/eventList_ForStaff")

@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69b3cac1-f21b-4d4e-b02f-df1c7108fabe" name="변경" comment="" />
+    <list default="true" id="69b3cac1-f21b-4d4e-b02f-df1c7108fabe" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eventus/src/main/resources/templates/common/sideforstaff.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventus/src/main/java/com/service/eventus/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventus/src/main/java/com/service/eventus/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventus/src/main/java/com/service/eventus/event/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventus/src/main/java/com/service/eventus/event/EventController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventus/src/main/java/com/service/eventus/mappers/MasterDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventus/src/main/java/com/service/eventus/mappers/MasterDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventus/src/main/java/com/service/eventus/member/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventus/src/main/java/com/service/eventus/member/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventus/src/main/resources/static/js/LoginAndFindIdPw.js" beforeDir="false" afterPath="$PROJECT_DIR$/eventus/src/main/resources/static/js/LoginAndFindIdPw.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventus/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/eventus/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventus/src/main/resources/templates/manage_career_forstaff.html" beforeDir="false" afterPath="$PROJECT_DIR$/eventus/src/main/resources/templates/manage_career_forstaff.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,11 +47,17 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/my_mac/Desktop/EventUs",
+    "last_opened_file_path": "/Users/my_mac/Desktop/EventUs/eventus/src/main/resources/templates/common",
     "spring.configuration.checksum": "32c962fa3447c97efa173888c0a261ad"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/eventus/src/main/resources/templates/common" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="EventusApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="eventus" />
@@ -76,5 +93,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

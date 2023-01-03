@@ -69,19 +69,6 @@ public class EventController {
 			}
 		}
 		
-		// update랑 똑같이 고치기
-//		포지션별로 잘라 저장
-		Map<String, String> positionMap = new HashMap<>();
-		
-		if(detailVo.getEvent_position() != null) {
-			String[] position = detailVo.getEvent_position().split(",");
-			String[] position_conut = detailVo.getEvent_position_count().split(",");
-			
-			for(int i=0; i<position.length;i++) {
-				positionMap.put(position[i], position_conut[i]);
-			}
-		}
-		
 		mav.addObject("event", detailVo);
 		mav.addObject("positionMap", positionMap);
 		mav.addObject("positionMap", positionMap);
