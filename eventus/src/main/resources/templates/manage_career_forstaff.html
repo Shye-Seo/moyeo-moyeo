@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
-    <link rel="stylesheet" href="../../../../../../../eventus_front/manage_staff.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="/css/manage_staff.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
@@ -87,6 +88,13 @@
                             <li>합격여부</li>
                             <li>근로계약서</li>
                         </ol>
+                        <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
+                        <ol th:block th:each="career : ${career_list}">
+                            <li class="applicationList"></li>
+                            <li th:text="${career.event_title}"></li>
+                            <li th:text="${career.event_startDate} + ' - ' + ${career.event_endDate}"></li>
+                            <li th:text="${career.application_result}"></li>
+                        </ol>
                             
 
                     </ul>
@@ -107,5 +115,13 @@
             </div>
         </div>
     </div>
+    <script>
+        var num = [[${career_num}]];
+        // class="applicationList"에 num값을 넣어줌
+        $(".applicationList").each(function(){
+            $(this).text(num);
+            num--;
+        });
+    </script>
 </body>
 </html>
