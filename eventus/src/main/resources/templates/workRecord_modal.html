@@ -17,8 +17,8 @@
 		<input type="hidden" th:value="${work_date}" id="today">
 	</div>
 	<div class="worker_list">
-		<div id="list" th:each="list : ${workStaff_list}">
-			<input type="text" th:value="${list.id}" id="staff_id">
+		<div id="list" th:each="list, i : ${workStaff_list}">
+			<input type="text" th:value="${list.id}" th:id="'staff_id'+${list.id}" name="staff_id">
 			<div id="each_">
 			<div class="img_div">
 				<img src="/imgs/profile_none_img.svg" id="profile_img">
@@ -35,25 +35,26 @@
 			</div>
 			<div id="line"></div>
 			<div class="record_wrap" th:each="time : ${list.recordVo}">
+			<input type="text" th:value="${time.id}">
 				<div class="record_div">
 					<div id="each_record">
 						<p>출근</p>
-						<button type="button" id="record_btn" onclick="record_startTime()" th:if="${time.work_start_time == null}">기록</button>
+						<button type="button" id="record_btn" th:onclick="'record_startTime('+${list.id}+','+${time.id}+')'" th:if="${time!=null && time.work_start_time == null}">기록</button>
 						<button type="button" id="workTime" th:if="${time.work_start_time != null}">[(${time.work_start_time})]</button>
 					</div>
 					<div id="each_record">
 						<p>외출</p>
-						<button type="button" id="record_btn" onclick="record_outTime()" th:if="${time.work_outing_time == null}">기록</button>
+						<button type="button" id="record_btn" th:onclick="'record_outTime('+${list.id}+','+${time.id}+')'" th:if="${time!=null && time.work_outing_time == null}">기록</button>
 						<button type="button" id="workTime"th:if="${time.work_outing_time != null}">[(${time.work_outing_time})]</button>
 					</div>
 					<div id="each_record">
 						<p>복귀</p>
-						<button type="button" id="record_btn" onclick="record_backTime()" th:if="${time.work_comeback_time == null}">기록</button>
+						<button type="button" id="record_btn" th:onclick="'record_backTime('+${list.id}+','+${time.id}+')'" th:if="${time!=null && time.work_comeback_time == null}">기록</button>
 						<button type="button" id="workTime" th:if="${time.work_comeback_time != null}">[(${time.work_comeback_time})]</button>
 					</div>
 					<div id="each_record">
 						<p>퇴근</p>
-						<button type="button" id="record_btn" onclick="record_endTime()" th:if="${time.work_end_time == null}">기록</button>
+						<button type="button" id="record_btn" th:onclick="'record_endTime('+${list.id}+','+${time.id}+')'" th:if="${time!=null && time.work_end_time == null}">기록</button>
 						<button type="button" id="workTime" th:if="${time.work_end_time != null}">[(${time.work_end_time})]</button>
 					</div>
 				</div>
@@ -62,19 +63,19 @@
 				<div class="record_div">
 					<div id="each_record">
 						<p>출근</p>
-						<button type="button" id="record_btn" onclick="record_startTime()">기록</button>
+						<button type="button" id="record_btn" th:onclick="'no_record_startTime('+${list.id}+')'">기록</button>
 					</div>
 					<div id="each_record">
 						<p>외출</p>
-						<button type="button" id="record_btn" onclick="record_outTime()">기록</button>
+						<button type="button" id="record_btn" th:onclick="'no_record_outTime('+${list.id}+')'">기록</button>
 					</div>
 					<div id="each_record">
 						<p>복귀</p>
-						<button type="button" id="record_btn" onclick="record_backTime()">기록</button>
+						<button type="button" id="record_btn" th:onclick="'no_record_backTime('+${list.id}+')'">기록</button>
 					</div>
 					<div id="each_record">
 						<p>퇴근</p>
-						<button type="button" id="record_btn" onclick="record_endTime()">기록</button>
+						<button type="button" id="record_btn" th:onclick="'no_record_endTime('+${list.id}+')'">기록</button>
 					</div>
 				</div>
 			</div>
@@ -82,11 +83,13 @@
 		</div>
 	</div>
 	<script>
-		function record_startTime()  {
+		function record_startTime(staff_id, record_id)  {
 		  var event_id = $("#event_id").val();
-		  var staff_id = $("#staff_id").val();
+		  var staff_id = staff_id;
 		  var work_date = $("#today").val();
+		  var record_id = record_id;
 		  debugger;
+		  
 		  $.ajax({
 				url : "/record_start",
 				type : 'post',
@@ -94,6 +97,7 @@
 					staff_id:staff_id,
 					event_id:event_id,
 					work_date:work_date,
+					record_id:record_id
 				},
 				success: function(){
 					location.href="/workRecord_modal?id="+event_id;
@@ -101,9 +105,8 @@
 			});
 		}
 
-		function record_outTime()  {
+		function record_outTime(staff_id, record_id)  {
 			var event_id = $("#event_id").val();
-			var staff_id = $("#staff_id").val();
 			var work_date = $("#today").val();
 			  
 			$.ajax({
@@ -113,6 +116,7 @@
 					staff_id:staff_id,
 					event_id:event_id,
 					work_date:work_date,
+					record_id:record_id
 				},
 				success: function(){
 					location.href="/workRecord_modal?id="+event_id;
@@ -120,13 +124,88 @@
 			});
 		}
 
-		function record_backTime()  {
+		function record_backTime(staff_id, record_id)  {
 			var event_id = $("#event_id").val();
-			var staff_id = $("#staff_id").val();
 			var work_date = $("#today").val();
 			  
 			$.ajax({
 				url : "/record_back",
+				type : 'post',
+				data : {
+					staff_id:staff_id,
+					event_id:event_id,
+					work_date:work_date,
+					record_id:record_id
+				},
+				success: function(){
+					location.href="/workRecord_modal?id="+event_id;
+				}
+			});
+		}
+		
+		function record_endTime(staff_id, record_id)  {
+			var event_id = $("#event_id").val();
+			var work_date = $("#today").val();
+			  
+			$.ajax({
+				url : "/record_end",
+				type : 'post',
+				data : {
+					staff_id:staff_id,
+					event_id:event_id,
+					work_date:work_date,
+					record_id:record_id
+				},
+				success: function(){
+					location.href="/workRecord_modal?id="+event_id;
+				}
+			});
+		}
+		
+		/* 기록없을때  */
+		function no_record_startTime(staff_id)  {
+		  var event_id = $("#event_id").val();
+		  var work_date = $("#today").val();
+		  debugger;
+		  
+		  $.ajax({
+				url : "/record_start_new",
+				type : 'post',
+				data : {
+					staff_id:staff_id,
+					event_id:event_id,
+					work_date:work_date,
+				},
+				success: function(){
+					location.href="/workRecord_modal?id="+event_id;
+				}
+			});
+		}
+
+		function no_record_outTime(staff_id)  {
+			var event_id = $("#event_id").val();
+			var work_date = $("#today").val();
+			  
+			$.ajax({
+				url : "/record_out_new",
+				type : 'post',
+				data : {
+					staff_id:staff_id,
+					event_id:event_id,
+					work_date:work_date,
+				},
+				success: function(){
+					location.href="/workRecord_modal?id="+event_id;
+				}
+			});
+		}
+
+		function no_record_backTime(staff_id)  {
+			var event_id = $("#event_id").val();
+			var work_date = $("#today").val();
+			  
+			$.ajax({
+				url : "/record_back_new",
 				type : 'post',
 				data : {
 					staff_id:staff_id,
@@ -139,13 +218,12 @@
 			});
 		}
 		
-		function record_endTime()  {
+		function no_record_endTime(staff_id)  {
 			var event_id = $("#event_id").val();
-			var staff_id = $("#staff_id").val();
 			var work_date = $("#today").val();
 			  
 			$.ajax({
-				url : "/record_end",
+				url : "/record_end_new",
 				type : 'post',
 				data : {
 					staff_id:staff_id,

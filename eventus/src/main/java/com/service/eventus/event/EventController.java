@@ -254,10 +254,12 @@ public class EventController {
 				memberVo.setStaff_phone(staff_phone);
 				
 				//당일 근무기록
-				WorkRecordVo workTime_list = eventService.getWorkTime(memberVo.getId(), event_id, work_date);
+				List<WorkRecordVo> workTime_list = eventService.getWorkTime(memberVo.getId(), event_id, work_date);
 				System.out.println("근무기록=============>"+workTime_list);
 				if(workTime_list != null) {
-						memberVo.setRecordVo(workTime_list);
+					for(WorkRecordVo recordVo : workTime_list) {
+						memberVo.setRecordVo(recordVo);
+					}
 				}
 			}
 		}
@@ -268,7 +270,7 @@ public class EventController {
 	// 근무기록(출근)
 	@RequestMapping(value="/record_start", method=RequestMethod.POST)
 	public String record_startTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
-		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		@RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
 		
 		// 현재 시간
 		LocalDateTime now = LocalDateTime.now();
@@ -276,14 +278,14 @@ public class EventController {
         String start_time = now.format(formatter);
         System.out.println("출근시간 : "+start_time);
         
-		eventService.record_startTime(event_id, staff_id, work_date, start_time);
+		eventService.record_startTime(record_id, event_id, staff_id, work_date, start_time);
 		return "workRecord_modal";
 	}
 	
 	// 근무기록(외출)
 	@RequestMapping(value="/record_out", method=RequestMethod.POST)
 	public String record_outTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
-		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		@RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
 		
 		// 현재 시간
 		LocalDateTime now = LocalDateTime.now();
@@ -291,14 +293,14 @@ public class EventController {
         String out_time = now.format(formatter);
         System.out.println("외출시간 : "+out_time);
         
-		eventService.record_outTime(event_id, staff_id, work_date, out_time);
+		eventService.record_outTime(record_id, event_id, staff_id, work_date, out_time);
 		return "workRecord_modal";
 	}
 	
 	// 근무기록(복귀)
 	@RequestMapping(value="/record_back", method=RequestMethod.POST)
 	public String record_backTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
-		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		@RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
 		
 		// 현재 시간
 		LocalDateTime now = LocalDateTime.now();
@@ -306,14 +308,14 @@ public class EventController {
         String back_time = now.format(formatter);
         System.out.println("복귀시간 : "+back_time);
         
-		eventService.record_backTime(event_id, staff_id, work_date, back_time);
+		eventService.record_backTime(record_id, event_id, staff_id, work_date, back_time);
 		return "workRecord_modal";
 	}
 	
 	// 근무기록(퇴근)
 	@RequestMapping(value="/record_end", method=RequestMethod.POST)
 	public String record_endTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
-		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		@RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
 		
 		// 현재 시간
 		LocalDateTime now = LocalDateTime.now();
@@ -321,7 +323,64 @@ public class EventController {
         String end_time = now.format(formatter);
         System.out.println("퇴근시간 : "+end_time);
         
-		eventService.record_endTime(event_id, staff_id, work_date, end_time);
+		eventService.record_endTime(record_id, event_id, staff_id, work_date, end_time);
+		return "workRecord_modal";
+	}
+	
+	// 당일 근무기록 없을 때,
+	// 근무기록(출근)
+	@RequestMapping(value="/record_start_new", method=RequestMethod.POST)
+	public String record_startTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
+		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		
+		// 현재 시간
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String start_time = now.format(formatter);
+        
+		eventService.record_startTime_new(event_id, staff_id, work_date, start_time);
+		return "workRecord_modal";
+	}
+	
+	// 근무기록(외출)
+	@RequestMapping(value="/record_out_new", method=RequestMethod.POST)
+	public String record_outTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
+		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		
+		// 현재 시간
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String out_time = now.format(formatter);
+        
+		eventService.record_outTime_new(event_id, staff_id, work_date, out_time);
+		return "workRecord_modal";
+	}
+	
+	// 근무기록(복귀)
+	@RequestMapping(value="/record_back_new", method=RequestMethod.POST)
+	public String record_backTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
+		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		
+		// 현재 시간
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String back_time = now.format(formatter);
+        
+		eventService.record_backTime_new(event_id, staff_id, work_date, back_time);
+		return "workRecord_modal";
+	}
+	
+	// 근무기록(퇴근)
+	@RequestMapping(value="/record_end_new", method=RequestMethod.POST)
+	public String record_endTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
+		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		
+		// 현재 시간
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String end_time = now.format(formatter);
+        
+		eventService.record_endTime_new(event_id, staff_id, work_date, end_time);
 		return "workRecord_modal";
 	}
 }

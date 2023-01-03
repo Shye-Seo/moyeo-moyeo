@@ -79,17 +79,30 @@ public interface EventDao {
 	List<MemberVo> workStaff_list(int event_id); // 근무직원 리스트(진행중) - 직원정보(이름, 나이, 휴대폰번호)
 
 	@Select("select * from staff_work_record where staff_id = #{staff_id} and event_id = #{event_id} and work_date = #{work_date}")
-	WorkRecordVo getWorkTime(int staff_id, int event_id, String work_date); // 당일 근무기록 get
+	List<WorkRecordVo> getWorkTime(int staff_id, int event_id, String work_date); // 당일 근무기록 get
 	
+	@Insert("insert into staff_work_record(id, work_start_time, work_date, staff_id, event_id) values(#{record_id}, #{start_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_start_time = #{start_time}")
+	boolean record_startTime (int record_id, int event_id, int staff_id, String work_date, String start_time); // 출근시간 기록
+
+	@Insert("insert into staff_work_record(id, work_outing_time, work_date, staff_id, event_id) values(#{record_id}, #{out_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_outing_time = #{out_time}")
+	boolean record_outTime(int record_id, int event_id, int staff_id, String work_date, String out_time); // 외출시간 기록
+	
+	@Insert("insert into staff_work_record(id, work_comeback_time, work_date, staff_id, event_id) values(#{record_id}, #{back_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_comeback_time = #{back_time}")
+	boolean record_backTime(int record_id, int event_id, int staff_id, String work_date, String back_time); // 복귀시간 기록
+	
+	@Insert("insert into staff_work_record(id, work_end_time, work_date, staff_id, event_id) values(#{record_id}, #{end_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_end_time = #{end_time}")
+	boolean record_endTime(int record_id, int event_id, int staff_id, String work_date, String end_time); // 퇴근시간 기록
+	
+	// 당일 근무기록 없을 때, 출퇴근 기록
 	@Insert("insert into staff_work_record(work_start_time, work_date, staff_id, event_id) values(#{start_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_start_time = #{start_time}")
-	boolean record_startTime (int event_id, int staff_id, String work_date, String start_time); // 출근시간 기록
+	boolean record_startTime_new (int event_id, int staff_id, String work_date, String start_time); // 출근시간 기록
 
 	@Insert("insert into staff_work_record(work_outing_time, work_date, staff_id, event_id) values(#{out_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_outing_time = #{out_time}")
-	boolean record_outTime(int event_id, int staff_id, String work_date, String out_time); // 외출시간 기록
+	boolean record_outTime_new(int event_id, int staff_id, String work_date, String out_time); // 외출시간 기록
 	
 	@Insert("insert into staff_work_record(work_comeback_time, work_date, staff_id, event_id) values(#{back_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_comeback_time = #{back_time}")
-	boolean record_backTime(int event_id, int staff_id, String work_date, String back_time); // 복귀시간 기록
+	boolean record_backTime_new(int event_id, int staff_id, String work_date, String back_time); // 복귀시간 기록
 	
 	@Insert("insert into staff_work_record(work_end_time, work_date, staff_id, event_id) values(#{end_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_end_time = #{end_time}")
-	boolean record_endTime(int event_id, int staff_id, String work_date, String end_time); // 퇴근시간 기록
+	boolean record_endTime_new(int event_id, int staff_id, String work_date, String end_time); // 퇴근시간 기록
 }

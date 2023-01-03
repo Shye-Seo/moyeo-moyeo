@@ -17,7 +17,7 @@ public class MemberVo {
     private String user_birth;
     private String user_gender;
     private String user_phone;
-	private String authority;
+	private int user_authority;
     private String user_date_join;
 	
     private String staff_age; //만 나이 set
