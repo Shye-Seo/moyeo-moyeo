@@ -6,6 +6,17 @@
         <link rel="stylesheet" href="css/reset.css">
         <link rel="stylesheet" href="css/login.css">
         <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script>
+            $(function(){
+                $('input[type="checkbox"]').change(function(){
+                    if($('#all_chk').prop("checked")){
+                        $('.join_btn').css({'background':'#5B8FD2 0% 0% no-repeat padding-box','border':'1px solid #5B8FD2'})
+                    }else{
+                        $('.join_btn').css({'background':'#CCCCCC 0% 0% no-repeat padding-box','border':'1px solid #CCCCCC'})
+                    }
+                })
+            })
+        </script>
     </head>
     <body>
         <div id="wrap">
@@ -21,7 +32,7 @@
 
 
             <!-- 화면 중앙 기준, 우측 화면 -->
-            <div class="login_wrap_R">
+            <div class="login_wrap_R join_R">
                 <div class="process_join">
                     <ul>
                         <li class="active">약관동의</li>

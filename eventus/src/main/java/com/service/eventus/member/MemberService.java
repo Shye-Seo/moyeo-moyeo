@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class MemberService {
@@ -40,7 +41,7 @@ public class MemberService {
     }
 
     // 아이디 찾기(user_id 반환)
-    public String findId(MemberVo memberVo) throws Exception {
+    public Map findId(MemberVo memberVo) throws Exception {
         return memberDao.findId(memberVo);
     }
 

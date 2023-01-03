@@ -13,7 +13,7 @@ body {
 }
 
 input:focus-visible {
-    border: 0.5px solid #5B8FD2 !important;
+    border: 0.5px solid #5B8FD2;
 }
 
 
@@ -225,7 +225,8 @@ input:focus-visible {
 }
 
 .find_id_btn,
-.find_pw_btn {
+.find_pw_btn,
+.change_pw_btn {
     margin-top:50px;
     margin-bottom:20px;
     width: 400px;
@@ -249,6 +250,86 @@ input:focus-visible {
     border: 1px solid #5B8FD2;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.found_id{
+    width: 400px; height: 429px;
+    margin: 0 auto;
+    padding-top: 100px;
+    box-sizing: border-box;
+}
+.id_line{
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+#getid{
+    color: #5B8FD2;
+    font-weight: 600;
+}
+#getdate{
+    color: #999999;
+}
+.date_line {
+    color: #999999;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 110px;
+}
+.found_tohome{
+    width: 200px;
+    margin-left: calc(50% - 100px);
+    background: #5B8FD2;
+    color: #ffffff;
+}
+
+.changing_pw{
+    width: 400px; height: 429px;
+    margin: 0 auto;
+    
+}
+.changing_pw_comment{
+    text-align: center;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 35px;
+}
+.changing_pw_comment p{
+    color: #999999;
+}
+.changing_pw_comment p:first-child{
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333333;
+}
+.changing_pw_input_wrap p{
+    margin: 15px 0 10px 0;
+}
+.changed_complete{
+    width: 400px; height: 429px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.changed_complete .check_img{
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+.changed_complete h2 {
+    text-align: center;
+    color: #333333;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+
+.changed_complete p { 
+    text-align: center;
+    font: normal normal normal 16px/19px Pretendard;
+    color: #999999;
+    margin-bottom: 80px;
 }
 
 .tab2_content,
@@ -469,9 +550,9 @@ input:focus-visible {
     color:#FFFFFF;
     font: normal normal bold 16px/19px Pretendard;
     letter-spacing: 0.32px;
-    background: #5B8FD2 0% 0% no-repeat padding-box;
+    background: #CCCCCC 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #66666629;
-    border: 1px solid #5B8FD2;
+    border: 1px solid #CCCCCC;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -490,19 +571,10 @@ input:focus-visible {
 }
 #member form>div span{
     position: absolute;
+    top: 33px; right: 0;
+    font-size: 12px;
 }
-
-#member .id_area {
-    position:relative;
-    border-bottom: 1px solid #DDDDDD;
-}
-
-#member .pw_area {
-    position:relative;
-    border-bottom: 1px solid #DDDDDD;
-}
-
-#member .item {
+.item {
     text-align: left;
     font: normal normal 600 14px/17px Pretendard;
     letter-spacing: 0px;
@@ -510,25 +582,152 @@ input:focus-visible {
     opacity: 1;
 }
 
-#member input {
-    width: 100%;
+#member input[type="text"], #member input[type="password"]{
+    width: 100%; height: 35px;
+    background: none;
+    outline: none;
+    border: 0;
+    border-bottom: 1px solid #DDDDDD;
+    margin-top: 5px;
+    font-size: 15px;
+}
+#member input[type="text"]:focus-visible, #member input[type="password"]:focus-visible{
+    border: 0;
+    border-bottom: 1px solid #5B8FD2;
 }
 
-#member input::placeholder {
+#member input::placeholder,.birth_area select {
     text-align: left;
-    font: normal normal normal 16px/19px Pretendard;
+    font-size: 16px; font-weight: 300;
     letter-spacing: 0px;
     color: #DDDDDD;
-    opacity: 1;
+}
+.name_email_wrap, .birth_gender_wrap, .phone_certifinum_wrap{
+    display: flex;
+    justify-content: space-between;
+}
+.name_area{
+    width: 35%;
+}
+.email_area{
+    width: 60%;
+}
+.birth_area,.phone_area{
+    width: 55%;
+}
+.certifinum_area{
+    width: 40%;
+}
+.birth_area div{
+    display: inline; 
+    position: relative;
+}
+.birth_area div::after{
+    content: "";
+    display: block; position: absolute;
+    top: 5px; right: 3px;
+    width: 10px; height: 10px;
+    background-image: url(../imgs/join_arrow.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotate(180deg);
+}
+.birth_area div.changed::after{
+    content: "";
+    display: block; position: absolute;
+    top: 5px; right: 3px;
+    width: 10px; height: 10px;
+    background-image: url(../imgs/join_arrow.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotate(0);
 }
 
-#member .phone_area #certifinum_submit {
-    width:60px;
-    height:25px;
+.birth_area select{
+    -webkit-appearance: none;
+    width: 25%; height: 35px;
+    background: none;
+    outline: none;
+    border: 0;
+    border-bottom: 1px solid #DDDDDD;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+.birth_area select:focus-visible{
+    border: 0;
+    border-bottom: 1px solid #5B8FD2;
+}
 
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border:0.5px solid #999999;
+#birth_year{
+    width: 30%;
+    margin-left: 0;
+}
+select::-webkit-scrollbar {
+    width: 8px; 
+}
+select::-webkit-scrollbar-thumb {
+    height: 30%; 
+    background: #dddddd; 
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 3px solid transparent;
+}
+.gender_area{
+    width: 40%;
+    font-size: 16px;
+    color: #999999;
+    display: flex;
+    align-items: center;
+}
+.gender_area input[type="radio"]{
+    -webkit-appearance: none;
+    margin: 0 10px 0 30px;
+    width: 20px; height: 20px;
+    border: 1px solid #DDDDDD;
+    border-radius: 50%;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.gender_area input[type="radio"]:checked{
+    border: 1px solid #5B8FD2;
+    background: #5B8FD2 content-box;
+    padding: 4px;
+}
+
+.phone_area, .certifinum_area {
+    position: relative;
+}
+
+#certifinum_submit{
+    position: absolute;
+    top: 23px; right: 0;
+    width: 60px; height: 25px;
+    background-color: #fff;
+    border: 0.5px solid #999999;
     border-radius: 5px;
+    color: #999999;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#certifinum_check{
+    position: absolute;
+    top: 30px; right: 0;
+    width: 20px;  height: 20px;
+    /* cursor: pointer; */
+    /* outline: none !important; */
+    border-radius: 50%;
+    background: #DDDDDD;
+    border: 0;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+#certifi_time{
+    color: #DD5067;
+    margin-right: 30px;
 }
 
 .join2_button {
@@ -544,6 +743,7 @@ input:focus-visible {
     border: 1px solid #DDDDDD;
     border-radius: 5px;
     font-size: 16px; font-weight: 600;
+    cursor: pointer;
 }
 
 .join2_button .join_complete_btn {
@@ -554,4 +754,53 @@ input:focus-visible {
     border: 1px solid #5B8FD2;
     border-radius: 5px;
     font-size: 16px; font-weight: 600;
+    cursor: pointer;
+}
+/* join2 end */
+
+/* join3 */
+.join_complete {
+    margin-top: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.check_img {
+    width:50px; height:50px;
+    background:url(../imgs/join_completed.svg) no-repeat;
+    margin-bottom: 40px;
+}
+
+.join_complete h2 {
+    text-align: center;
+    color: #333333;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+  
+.join_complete p { 
+    text-align: center;
+    font: normal normal normal 16px/19px Pretendard;
+    color: #999999;
+    margin-bottom: 80px;
+}
+  
+.goto_login_btn {
+    width: 200px; height: 50px;
+    font: normal normal bold 16px/19px Pretendard;
+    color: #FFFFFF;
+    background: #5B8FD2 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #66666629;
+    border: 1px solid #5b8fd2;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+/* join3 end */
+
+/* 로그인 상단 라인 맞추기 위해 */
+.join_R{
+    height: 700px;
+    margin-top: 30px;
 }

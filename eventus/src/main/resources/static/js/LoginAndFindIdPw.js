@@ -77,23 +77,35 @@ $(function() {
                     data: {
                         user_name: $("#find_id input[name=user_name]").val(),
                         user_phone: $("#find_id input[name=user_phone]").val()
-                    },
-                    dataType: "text",
+                    }
                 }) // 성공했을 때
                 .done(function(data){
-                    if(data == "failure"){
+                    if(data.user_id == "failure"){
                         alert("등록된 회원이 아닙니다.");
+                        location.reload();
                     }
                     else {
-                        $("#getid").text(data);
+
+                        $("#getid").text(data.user_id);
+                        let userJoinDate = data.user_date_join.split('-');
+
+                        if(String(userJoinDate[1]).length == 1){
+                            userJoinDate[1]= '0' + userJoinDate[1];
+                        }
+                        if(String(userJoinDate[2]).length == 1){
+                            userJoinDate[2]= '0' + userJoinDate[2];
+                        }
+
+                        $("#getdate").text(`${userJoinDate[0]}.${userJoinDate[1]}.${userJoinDate[2]}`);
                         $(".tab1_content").css('display', 'none');
-                        $(".found_id").css('display', 'inline');
+                        $(".found_id").css('display', 'block');
                     }
                 });
             });
          }
         else {
             alert("인증번호가 일치하지 않습니다.");
+            location.reload();
         }
     });
 
@@ -164,13 +176,14 @@ $(function() {
                         else {
                             getid = data;
                             $(".tab2_content").css('display', 'none');
-                            $(".changing_pw").css('display', 'inline');
+                            $(".changing_pw").css('display', 'block');
                         }
                     });
             });
         }
         else {
             alert("인증번호가 일치하지 않습니다.");
+            location.reload();
         }
     });
 
@@ -201,7 +214,7 @@ $(function() {
                 dataType: "text",
             }).done(function(data){
                 $(".changing_pw").css('display', 'none');
-                $(".changed_complete").css('display', 'inline');
+                $(".changed_complete").css('display', 'block');
             });
         }
     });
