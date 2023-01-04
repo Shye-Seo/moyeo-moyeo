@@ -75,7 +75,7 @@ input:focus-visible {
     box-sizing: border-box;
     margin: 10px 0;
     border-radius: 5px;
-} 
+}
 
 .login_position .check_wrap {
     margin-top: 5px;
@@ -169,7 +169,7 @@ input:focus-visible {
     border-bottom: 2px solid #5B8FD2;
 }
 
-.tab1_content, .tab2_content{   
+.tab1_content, .tab2_content{
     width: 400px;
     margin: 0 auto;
 }
@@ -286,7 +286,7 @@ input:focus-visible {
 .changing_pw{
     width: 400px; height: 429px;
     margin: 0 auto;
-    
+
 }
 .changing_pw_comment{
     text-align: center;
@@ -325,7 +325,7 @@ input:focus-visible {
     margin-bottom: 20px;
 }
 
-.changed_complete p { 
+.changed_complete p {
     text-align: center;
     font: normal normal normal 16px/19px Pretendard;
     color: #999999;
@@ -382,7 +382,7 @@ input:focus-visible {
     width: 14px;
     height: 14px;
     content: "";
-    
+
     border: 5px solid rgba(169, 190, 236, 0.68);
     background-clip:padding-box;
     display: block;
@@ -402,7 +402,7 @@ input:focus-visible {
     width: 14px;
     height: 14px;
     content: "";
-    
+
     background-clip:padding-box;
     display: block;
     text-align: center;
@@ -509,16 +509,16 @@ input:focus-visible {
 }
 
 .agreement textarea::-webkit-scrollbar {
-    width: 5px; 
+    width: 5px;
 }
 .agreement textarea::-webkit-scrollbar-thumb {
-    height: 30%; 
-    background: #999999; 
+    height: 30%;
+    background: #999999;
     border-radius: 10px;
 }
 
 .agreement textarea::-webkit-scrollbar-track {
-    background: #DDDDDD; 
+    background: #DDDDDD;
     border-left: 2px solid #fff;
     border-right: 2px solid #fff;
 }
@@ -565,7 +565,7 @@ input:focus-visible {
     width:500px;
     margin:0 auto;
 }
-#member form>div{  
+#member form>div{
     width: 100%; height: 80px;
     position: relative;
 }
@@ -619,7 +619,7 @@ input:focus-visible {
     width: 40%;
 }
 .birth_area div{
-    display: inline; 
+    display: inline;
     position: relative;
 }
 .birth_area div::after{
@@ -663,11 +663,11 @@ input:focus-visible {
     margin-left: 0;
 }
 select::-webkit-scrollbar {
-    width: 8px; 
+    width: 8px;
 }
 select::-webkit-scrollbar-thumb {
-    height: 30%; 
-    background: #dddddd; 
+    height: 30%;
+    background: #dddddd;
     border-radius: 10px;
     background-clip: padding-box;
     border: 3px solid transparent;
@@ -778,14 +778,14 @@ select::-webkit-scrollbar-thumb {
     font-weight: normal;
     margin-bottom: 20px;
 }
-  
-.join_complete p { 
+
+.join_complete p {
     text-align: center;
     font: normal normal normal 16px/19px Pretendard;
     color: #999999;
     margin-bottom: 80px;
 }
-  
+
 .goto_login_btn {
     width: 200px; height: 50px;
     font: normal normal bold 16px/19px Pretendard;

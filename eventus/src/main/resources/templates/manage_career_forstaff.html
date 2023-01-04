@@ -7,50 +7,12 @@
     <title>이벤터즈랩(eventusLAB)</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="/css/manage_staff.css">
+    <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
     <div id="wrap">
-        <!-- fixed menu -->
-        <div class="sidebar">
-            <a href="#" class="logo">
-                <img src="../../../../../../../eventus_front/logo.png" alt="eventusLAB">
-            </a>
-            <ul class="menu-categories">
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="main.svg" alt="main">
-                            <span>메인</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="schedule.svg" alt="schedule">
-                            <span>행사목록</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="stafflist.svg" alt="stafflist">
-                            <span>이력관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="timesheet.svg" alt="timesheet">
-                            <span>근무기록</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <div th:replace="~{common/sideforstaff :: sidebar_manage ('manage_career_forstaff')}"></div>
 
         <!-- main -->
         <div class="content">

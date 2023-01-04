@@ -25,7 +25,7 @@
      -->
 
         <div class="sidebar" th:fragment="sidebar_manage (thisLink)">
-            <a href="/main" class="logo">
+            <a href="/main_ForStaff" class="logo">
                 <img src="/imgs/logo.png" alt="eventusLAB">
             </a>
             <ul class="menu-categories">
@@ -35,7 +35,7 @@
                 <span th:unless="${thisLink == 'main'}">
                 <li class="menu">
                 </span>
-                    <a href="/main">
+                    <a href="/main_ForStaff">
                         <div>
                             <img src="/imgs/main.svg" alt="main">
                             <span>메인</span>
@@ -48,7 +48,7 @@
                 <span th:unless="${thisLink == 'schedule'}">
                 <li class="menu">
                 </span>
-                    <a href="/manage_event" >
+                    <a href="/eventList_ForStaff" >
                         <div>
                             <img src="/imgs/schedule.svg" alt="schedule">
                             <span>행사목록</span>
@@ -61,7 +61,7 @@
                 <span th:unless="${thisLink == 'stafflist'}">
                 <li class="menu">
                 </span>
-                    <a href="/manage_staff">
+                    <a href="/manage_career_forstaff">
                         <div>
                             <img src="/imgs/stafflist.svg" alt="stafflist">
                             <span>이력관리</span>
@@ -74,7 +74,7 @@
                 <span th:unless="${thisLink == 'timesheet'}">
                 <li class="menu">
                 </span>
-                    <a href="/report_work">
+                    <a href="/report_work_ForStaff">
                         <div>
                             <img src="/imgs/timesheet.svg" alt="timesheet">
                             <span>근무기록</span>
