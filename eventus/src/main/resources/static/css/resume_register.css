@@ -1,5 +1,3 @@
-
-
 /* main */
 .content{
     position:relative;
@@ -9,7 +7,6 @@
     /* height: 100vh; */
     display: flex;
 }
-
 
 .container{
     width: 85%;
@@ -70,6 +67,9 @@
     border-bottom: 3px solid #00000000;
     margin-right: 40px;
 }
+.detail_bar .detail2{
+    width: 95px;
+}
 
 .detail_bar .this_bar, .detail_bar>div:hover{
     border-bottom: 3px solid #5B8FD2;
@@ -102,218 +102,157 @@
     margin-bottom: 40px;
 }
 
-.area span {
+.area1>span, .area2>span, .area3>span {
     width: 20%; height:21px;
     /* max-width: 285px; */
     padding-left:20px;
     border-left:3px solid #5B8FD2;
     font-size: 18px;
     font-weight: 600;
+    margin-top: 20px;
 }
-.area input, .file_area{
+.area input, .area select{
     height: 60px;
     border: 0.5px solid #DDDDDD;
     box-sizing: border-box;
     padding-left: 10px;
     font-size: 15px;
+    padding-top: 15px;
+    width: 100%;
 }
-.area input:focus-visible,.area textarea:focus-visible {
-    border: 0.5px solid #5B8FD2 !important;
+.area select{
+    padding-left: 6px;
+}
+.area select:focus-visible {
+    border: 0.5px solid #5B8FD2;
+    outline: none;
 }
 
-.area1,.area2,.area3,.area4,.area5{
+.area .fix_input{
+    background-color: #FAFAFA;
+}
+.area .fix_input:focus-visible{
+    border: 0.5px solid #DDDDDD;
+}
+
+.area span.w-31p{
+    width: 31%;
+}
+.area span.w-24p{
+    width: 24%;
+}
+.area span.w-14p{
+    width: 14%;
+}
+.area span.w-12p{
+    width: 12%;
+}
+.area span.w-all{
+    flex: 1 0 auto;
+}
+
+.area input:focus-visible,.area textarea:focus-visible {
+    border: 0.5px solid #5B8FD2;
+}
+
+.area1,.area2,.area3{
     margin-bottom: 30px;
     display: flex;
 }
-.area1{
-    height: 60px;
-    align-items: center;
+.area3{
+    margin-bottom: 90px;
 }
-
-.area1 input[name="event_title"], .area5 input[name="event_venue"]{
-    width: 40%;
-    /* max-width: 530px; */
-    margin-right: 5%;
-}
-.date_wrap {
-    width: 30%; 
-    /* max-width: 400px; */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.area3>div{
     position: relative;
 }
-.date_wrap span{
-    width: auto;
-    border: 0;
-    padding: 0;
-    width: 40%;
-    height: 60px;
-    position: relative;
+.area1 .area1_info_wrap{
+    height: auto;
+    /* align-items: center; */
+    width: 55%;
+    margin-right: 10px;
 }
-
-.date_wrap .date_input{
-    width: 100%;
-    padding-right: 10px;
-    padding-top: 15px;
-    cursor: pointer;
-    background: url(../imgs/register-calendar.svg) no-repeat;
-    background-origin: content-box;
-    background-position-x: right;
-    background-position-y: 13px;
-}
-/* date 기본글 */
-/* .date_wrap input[type="date"]::before{
-    content: attr(data-placeholder);
-    width: 100%;
-}
-.date_wrap input[type="date"]:focus::before, .date_wrap input[type="date"]:valid::before{
-    display: none;
-} */
-.area2{
-    align-items: center;
-}
-.area .area2 textarea {
-    padding:10px;
-    resize:none;
-    width: 75%; 
-    /* max-width: 1000px; */
-    min-height:100px;
-    border: 0.5px solid #DDDDDD;
-    box-sizing: border-box;
-    font-size: 15px;
-}
-.area5 input[name="event_deadline"]{
-    width: 60%;
-}
-.area3 p{
-    font-size: 13px;
-    font-weight: 500;
-}
-.area3 .file_area{
-    width: 75%; 
+.area1_info_wrap>div, .school_info, .career_wrap{
     display: flex;
-    justify-content: space-between;
-}
-.area3 #file_names{
-    width: calc(100% - 61px); height: 100%;
-    display: flex;
-    align-items: center;
     gap: 10px;
-    padding-right: 10px;
-    box-sizing: border-box;
-
+    position: relative;
 }
-#file_names >div{
-    max-width: 19%; height: 20px;
-    font-size: 15px;
+.area2>div, .area3>div{
+    width: 70%;
 }
-.area3 .file_con{
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-}
-.file_con .filename{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.file_con img{
-    width: 15px; height: 15px;
-    cursor: pointer;
-    margin-top: 2px;
-}
-
-.area3 label{
-    width: 60px;
-    border: 0;
-    border-left: 0.5px solid #DDDDDD;
-    background: url("../imgs/register_upload.svg") no-repeat;
-    background-position: center;
-    cursor: pointer;
-}
-
-.area4 span:first-child,.area5 span:first-child{
-    margin-top: 10px;
-}
-
-.area4 .area4_pn {
-    /* position:relative; */
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.area4_pn input{
-    width: 250px;
-}
-
-.area4 .area4_pn span {
+.area1_info_wrap span, .school_info span, .career_wrap span{
     border-left:0;
     position: relative;
-    width: auto;
-    height: auto;
+    width: auto; height: auto;
     padding: 0;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
-.area4 .area4_pn p, .date_wrap p{
+.career_wrap{
+    margin-bottom: 10px;
+}
+.area span p{
     position: absolute;
 }
 
-.area4 .area4_pn p:nth-child(1), .date_wrap p{
+.area span p:nth-child(1){
     color: #999999;
     font-size: 11px;
     font-weight: 300;
     top: 10px; left: 10px;
 }
-.area4 .area4_pn p:nth-child(2){
+.area span p:nth-child(2){
     font-size: 15px;
     font-weight: 500;
     bottom: 13px; right: 20px;
 }
+.red_star::after{
+    content: " * ";
+    color: #DD5067;
+}
 
-.area4_pn .input_pn {
-    padding-top: 15px;
-    width:110px;
+.area1_info_wrap div:first-child {
+    margin-bottom: 10px;
 }
-.area4_pn .input_pp{
-    padding-top: 15px;
-    width:110px;
-}
-.area4_pn .input_st, .area4_pn .input_et{
-    padding-top: 15px;
-    width: 70px;
-}
-.position_wrap{
+.profile_wrap{
+    width: 110px;
+    height: 130px;
+    border: 0.5px solid #DDDDDD;
     position: relative;
-    margin-bottom: 50px;
+    overflow: hidden;
+    box-sizing: border-box;
 }
-.position_btn{
-    width: 70px; height: 30px;
+.profile_wrap image{
+    width: 100%;
+}
+#insert_profile_bt{
+    width: 100%; height: 100%;
     position: absolute;
-    bottom: 25px; right: -100px;
-    display: flex;
+    top: 0; left: 0;
+    cursor: pointer;
+}
+.school_info:first-child{
+    margin-bottom: 10px;
 }
 
-#add_position{
+#add_career{
     width: 30px; height: 30px;
     background: url("../imgs/register-add-circle.svg") no-repeat;
     background-size: cover;
     cursor: pointer;
-
     position: absolute;
     bottom: 25px;
     right: -50px;
 }
 
-.remove_position{
+.remove_career{
     width: 30px;
     height: 30px;
     background: url("../imgs/register-minus-circle.svg") no-repeat;
     background-size: cover;
     cursor: pointer;
     margin-right: 10px;
-    transform: translateX(20px);
+    position: absolute;
+    right: -60px;
+    bottom: 15px;
 }
 
 .btn_wrap{
