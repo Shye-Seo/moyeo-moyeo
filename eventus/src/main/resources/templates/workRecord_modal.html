@@ -17,8 +17,8 @@
 		<input type="hidden" th:value="${work_date}" id="today">
 	</div>
 	<div class="worker_list">
-		<div id="list" th:each="list, i : ${workStaff_list}">
-			<input type="text" th:value="${list.id}" th:id="'staff_id'+${list.id}" name="staff_id">
+		<div id="list" th:each="list : ${workStaff_list}">
+			<input type="hidden" th:value="${list.id}" th:id="'staff_id'+${list.id}" name="staff_id">
 			<div id="each_">
 			<div class="img_div">
 				<img src="/imgs/profile_none_img.svg" id="profile_img">
@@ -35,7 +35,7 @@
 			</div>
 			<div id="line"></div>
 			<div class="record_wrap" th:each="time : ${list.recordVo}">
-			<input type="text" th:value="${time.id}">
+			<input type="hidden" th:value="${time.id}">
 				<div class="record_div">
 					<div id="each_record">
 						<p>출근</p>
@@ -88,7 +88,6 @@
 		  var staff_id = staff_id;
 		  var work_date = $("#today").val();
 		  var record_id = record_id;
-		  debugger;
 		  
 		  $.ajax({
 				url : "/record_start",
@@ -166,7 +165,6 @@
 		function no_record_startTime(staff_id)  {
 		  var event_id = $("#event_id").val();
 		  var work_date = $("#today").val();
-		  debugger;
 		  
 		  $.ajax({
 				url : "/record_start_new",

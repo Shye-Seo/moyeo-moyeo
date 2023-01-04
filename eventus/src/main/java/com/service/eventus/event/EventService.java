@@ -67,8 +67,8 @@ public class EventService {
 	}
 
 	// 지원현황 지원자 거주지
-	public String getAddress(int staff_id) throws Exception {
-		return eventDao.getStaffAddress(staff_id);
+	public String getAddress(int event_id, int staff_id) throws Exception {
+		return eventDao.getStaffAddress(event_id, staff_id);
 	}
 	
 	// 지원현황 지원자 만 나이
@@ -145,4 +145,28 @@ public class EventService {
 		return eventDao.record_endTime_new(event_id, staff_id, work_date, end_time);
 	}
 
+	// 부스현황 count
+	public int booth_count(int event_id) throws Exception {
+		return eventDao.booth_count(event_id);
+	}
+
+	// 부스현황 리스트
+	public List<BoothVo> booth_list(int event_id) {
+		return eventDao.booth_list(event_id);
+	}
+
+	// 행사명 get
+	public String getEventTitle(int event_id) {
+		return eventDao.getEventTitle(event_id);
+	}
+	
+	// 시작날짜 get
+	public String getStartDate(int event_id) {
+		return eventDao.getStartDate(event_id);
+	}
+		
+	// 끝나는날짜 get
+	public String getEndDate(int event_id) {
+		return eventDao.getEndDate(event_id);
+	}	
 }

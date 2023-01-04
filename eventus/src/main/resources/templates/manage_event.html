@@ -6,50 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
     <link rel="stylesheet" href="/css/manage_event.css">
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
     <div id="wrap">
-        <!-- fixed menu -->
-        <div class="sidebar">
-            <a href="/main" class="logo">
-                <img src="/imgs/logo.png" alt="eventusLAB">
-            </a>
-            <ul class="menu-categories">
-                <li class="menu">
-                    <a href="/main">
-                        <div>
-                            <img src="/imgs/main.svg" alt="main">
-                            <span>메인</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="/manage_event">
-                        <div>
-                            <img src="/imgs/schedule.svg" alt="schedule">
-                            <span>행사관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="/manage_staff">
-                        <div>
-                            <img src="/imgs/stafflist.svg" alt="stafflist">
-                            <span>직원관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="/report_work">
-                        <div>
-                            <img src="/imgs/timesheet.svg" alt="timesheet">
-                            <span>근무기록</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <div th:replace="~{common/side :: sidebar_manage ('schedule')}"></div>
 
         <!-- main -->
         <div class="content">
@@ -58,18 +20,20 @@
                     <div class="page-title">
                         <span>행사관리</span>
                     </div>
+                    <div class="excel_download">
+                        엑셀 데이터 다운로드
+                    </div>
                 </div>
 
                 <div class="detail_bar">
-                    <div class="detail1">
-                        <img src="/imgs/material-view-list.svg">
-                        <input type="button" value="행사현황">
+                    <div class="detail1 this_bar" onclick="location.href='manage_event'">
+                        <img src="imgs/Icon material-view-list.svg">
+                        <p>행사현황</p>
                     </div>
-                    <div class="detail2">
-                        <img src="/imgs/pen_gray.svg">
-                        <input type="button" value="행사등록" onclick="location.href='manage_event_register'">
+                    <div class="detail2" onclick="location.href='manage_event_register'">
+                        <img src="imgs/pen_gray.svg">
+                        <p>행사등록</p>
                     </div>
-                    
                 </div>
 
                 <div class="area">
@@ -92,11 +56,11 @@
 							<li th:text="${event.id}"></li>
 							<a th:href="@{eventDetail(id=${event.id})}"><li th:text="${event.event_title}"></li></a>
 							<li th:text="${event.event_startDate} + ' - ' + ${event.event_endDate}"></li>
-							<li th:if="${event.event_status == 0}">모집중</botton></li><li th:if="${event.event_status == 1}">진행중</li><li th:if="${event.event_status == 2}">진행완료</li>
+							<li th:if="${event.event_status == 0}">모집중</li><li th:if="${event.event_status == 1}">진행중</li><li th:if="${event.event_status == 2}">진행완료</li>
 							<a th:if="${event.event_status == 0}" th:href="@{application_modal(id=${event.id})}"><li th:text="${event.application_count} + ' 명'"></li></a>
-							<a th:if="${event.event_status == 1}" th:href="@{workRecord_modal(id=${event.id})}"><li th:text="${event.application_count} + ' 명'"></li></a>
-							<li th:if="${event.event_status == 2}" th:text="${event.application_count} + ' 명'"></li>
-							<li th:text="${event.booth_count} + ' 개'"></li>
+							<a th:if="${event.event_status == 1}" th:href="@{workRecord_modal(id=${event.id})}"><li th:text="${event.staff_count} + ' 명'"></li></a>
+							<li th:if="${event.event_status == 2}" th:text="${event.staff_count} + ' 명'"></li>
+							<a th:href="@{manage_event_booth(id=${event.id})}"><li th:text="${event.booth_count} + ' 개'"></li>
 						</ol>
                     </ul>
                 </div>

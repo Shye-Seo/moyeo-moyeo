@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import com.service.eventus.event.BoothVo;
 import com.service.eventus.event.EventFileVo;
 import com.service.eventus.event.EventVo;
 import com.service.eventus.event.ResumeVo;
@@ -54,8 +55,8 @@ public interface EventDao {
 	@Select("select count(staff_career_eventName) from staff_resume r inner join staff_application s, user u where s.staff_id = u.id and r.staff_id = u.id and u.id = #{staff_id}")
 	int staff_career(int staff_id); // 지원현황 지원자 리스트(모집중) - 행사경력 count
 
-	@Select("select staff_address from staff_resume r inner join staff_application s, user u where s.staff_id = u.id and r.staff_id = u.id and u.id = #{staff_id}")
-	String getStaffAddress(int staff_id); // 지원현황 지원자 리스트(모집중) - 거주지
+	@Select("select staff_address from staff_resume r inner join staff_application s, user u where s.staff_id = u.id and r.staff_id = u.id and u.id = #{staff_id} and s.event_id = #{event_id}")
+	String getStaffAddress(int event_id, int staff_id); // 지원현황 지원자 리스트(모집중) - 거주지
 	
 	@Select("select round((to_days(now()) - (to_days('${user_birth}'))) / 365)")
 	String getUserAge(String user_birth); // 지원현황 지원자 리스트(모집중) - 나이계산(만 나이)
@@ -105,4 +106,20 @@ public interface EventDao {
 	
 	@Insert("insert into staff_work_record(work_end_time, work_date, staff_id, event_id) values(#{end_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_end_time = #{end_time}")
 	boolean record_endTime_new(int event_id, int staff_id, String work_date, String end_time); // 퇴근시간 기록
+	
+	//이벤트 부스-----------------------------
+	@Select("select count(*) from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id}")
+	int booth_count(int event_id); // 부스현황 count
+
+	@Select("select * from event_booth where event_id = #{event_id}")
+	List<BoothVo> booth_list(int event_id); // 부스현황 리스트
+
+	@Select("select e.event_title from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id}")
+	String getEventTitle(int event_id); // 행사명 get
+	
+	@Select("select e.event_startDate from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id}")
+	String getStartDate(int event_id); // 시작날짜 get
+	
+	@Select("select e.event_endDate from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id}")
+	String getEndDate(int event_id); // 끝나는날짜 get
 }
