@@ -3,26 +3,32 @@
     <head>
         <meta charset="UTF-8">
         <title>ID, PW 검색</title>
-        <link rel="stylesheet" href="/css/find_id_pw.css">
+        <link rel="stylesheet" href="/css/reset.css">
+        <link rel="stylesheet" href="/css/login.css">
         <script src="http://code.jquery.com/jquery-latest.js"></script>
     </head>
     <body>
         <div id="wrap">
             <!-- 화면 중앙 기준, 좌측 화면 -->
-            <div class="login_comment">
-                <p>다양한 행사에 참여하고<br/>운영요원이 되어 경험을 쌓아보세요!</p>
-            </div>
-            <div class="login_img_area">
-                <div class="login_img"></div>
-            </div>
+            <div class="login_wrap_L">
+				<div class="login_comment">
+					<p>아이디 또는 비밀번호를 잊으셨나요?<br>회원가입 시 등록한 정보를 입력하세요.</p>
+				</div>
+				<div class="login_img_area">
+					<div class="login_img"></div>
+				</div>
+			</div>
 
             <!-- 화면 중앙 기준, 우측 화면 -->
             
-            <div class="tab">
-                <input id="tab1" type="radio" name="tab"/>
-                <input id="tab2" type="radio" name="tab"/>
-                <label for="tab1">아이디 찾기</label>
-                <label for="tab2">비밀번호 찾기</label>
+            <div class="login_wrap_R">
+                <div class="radio_wrap">
+                    <input id="tab1" type="radio" name="tab" checked/>
+                    <input id="tab2" type="radio" name="tab"/>
+                    <label for="tab1">아이디 찾기</label>
+                    <label for="tab2">비밀번호 찾기</label>
+                </div>
+                
                 <div class="tab1_content">
                     <section id="find_id">
                         <form action="" id="find_id_form">
@@ -60,8 +66,9 @@
 
                 <!-- 아이디 찾기 완료 -->
                 <div class="found_id">
-                    <p>아이디는 <span id="getid"></span> 입니다.</p>
-                    <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome" onclick="location.href='/login'">
+                    <p class="id_line">회원님의 아이디는 <span id="getid"></span> 입니다.</p>
+                    <p class="date_line">가입일 : <span id="getdate"></span></p>
+                    <input type="button" value="로그인 하기" class="back_tohome found_tohome" onclick="location.href='/login'">
                 </div>
 
                 <!-- 비밀번호 변경 -->
@@ -71,12 +78,12 @@
                         <p>기존 비밀번호는 암호화 처리되어 안내가 불가능하오니,<br/>새로운 비밀번호를 등록해 주시기 바랍니다.</p>
                     </div>
 
-                    <div>
+                    <div class="changing_pw_input_wrap">
                         <form>
-                            <p>새로운 비밀번호</p>
-                            <input type="password" name="user_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10자~16자">
-                            <p>비밀번호 확인</p>
-                            <input type="password" id="checked_new_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10~16자">
+                            <p class="item">새로운 비밀번호</p>
+                            <input type="password" name="user_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10자~16자" class="put_name">
+                            <p class="item">비밀번호 확인</p>
+                            <input type="password" id="checked_new_pw" placeholder="영문, 숫자, 특수기호 중 2가지 이상 조합, 10~16자" class="put_name">
 
                             <input type="button" value="비밀번호 저장" class="change_pw_btn">
                             <input type="button" value="로그인 화면으로 돌아가기" class="back_tohome" onclick="location.href='/login'">
@@ -87,7 +94,7 @@
                 <!-- 비밀번호 변경 완료 -->
                 <div class="changed_complete">
                     <div class="check_img"></div>
-                    <h2>비밀번호가 변경되었습니다.</h2>
+                    <h2><b>비밀번호</b>가 <b>변경</b>되었습니다.</h2>
                     <p>새로운 비밀번호로 로그인 해보세요.</p>
                     <input type="button" value="로그인하기" class="goto_login_btn" onclick="location.href='/login'">
                 </div>

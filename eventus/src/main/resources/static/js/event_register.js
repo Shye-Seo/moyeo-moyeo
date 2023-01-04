@@ -52,6 +52,20 @@
             }
         }
 
+        function add_position_forUpdate(position, position_count){
+            $(".area4_pn:first").clone(true).appendTo($(".position_wrap"));
+            $('.area4_pn:last input[name="input_event_position"]').val(position);
+            $('.area4_pn:last input[name="input_event_position"]').attr('name','input_event_position'+position_num);
+            $('.area4_pn:last input[name="input_event_position_count"]').val(position_count);
+            $('.area4_pn:last input[name="input_event_position_count"]').attr('name','input_event_position_count'+position_num);
+            $('.area4_pn:last').append('<div class="remove_position"  style="--i :'+position_num+' ;" onclick="remove_position(this)"></div>');
+
+            position_num++;
+            if(position_num == max_num){
+                $("#add_position").hide();
+            }
+        }
+
         //포지션삭제
         function remove_position(obj){
             let remove_num= $(obj).css('--i')*1;
@@ -84,16 +98,9 @@
         }
 
         // form submit
-        function submitDate(){
+        function submitDate(actionUrl){
 
             if (confirm("등록 하시겠습니까?") == true){
-
-                var uploadFileList = Object.keys(fileList);
-                var form = $('form[name="eventAddForm"]');
-                var formData = new FormData(form[0]);
-                for (var i = 0; i < fileList.length; i++) {
-                    formData.append('event_file', fileList[i]);
-                }
 
                 let event_position = $('input[name="input_event_position"]').val();
                 let event_position_count = $('input[name="input_event_position_count"]').val();
@@ -102,21 +109,38 @@
                 $('.area4').append('<input type="text" name="event_position_count" hidden/>')
 
 
-                if(position_num!=1 || position_num!=0 ){ //추가 없을시 바로 submit
+                if(position_num>1){ //추가 없을시 바로 submit
                     for(let i=1;position_num>i;i++){ 
                         event_position += ','+$('input[name="input_event_position'+i+'"]').val();
                         event_position_count += ','+$('input[name="input_event_position_count'+i+'"]').val();
                     }
+                    
                 }
 
                 // hidden input요소에 합친 값을 저장
                 $('input[name="event_position"]').val(event_position);
                 $('input[name="event_position_count"]').val(event_position_count);
 
+                for(let i = 0; i < deleteFileNameList.length; i++){
+                    $('form[name="eventAddForm"]').append("<input type='hidden' name='deleteFileNameList' value='"+deleteFileNameList[i]+"'/>")
+                }
 
+                var uploadFileList = Object.keys(fileList);
+                var form = $('form[name="eventAddForm"]');
+                var formData = new FormData(form[0]);
+                for (var i = 0; i < fileList.length; i++) {
+                    formData.append('event_file', fileList[i]);
+                    console.log(formData.get('event_file')) 
+                    console.log(fileList[i]) 
+                }
+                // for(let i = 0; i < deleteFileNameList.length; i++){
+                //     formData.append('deleteFileNameList', String(deleteFileNameList[i]));
+                //     console.log(formData.get('deleteFileNameList['+i+']')) 
+                //     console.log(deleteFileNameList[i]) 
+                // }
 
                 $.ajax({
-                    url : "/eventAdd",
+                    url : actionUrl,
                     data : formData,
                     type : 'POST',
                     enctype : 'multipart/form-data',
@@ -149,6 +173,9 @@
             
             var maxFileNum = 5;
             // 파일 최대갯수
+
+            //행사수정 시 지울 파일 목록
+            let deleteFileNameList = new Array();
 
             var files = new Array();
 
@@ -250,8 +277,18 @@
        }
 
         console.log("totalFileSize="+totalFileSize);
+    }
 
     
+
+    function deleteFile_for_update(fIndex, fileName){
+        $("#fileTr_" + fIndex).remove();
+        deleteFileNameList.push(fileName);
+
+        if($('#input_file').attr("disabled")=='disabled'){
+            $('#input_file').removeAttr("disabled");
+            $('.area3 label').css({'background-color':'#fff', 'cursor':'pointer'});
+        }
     }
    
    function deleteAll() {
@@ -268,3 +305,9 @@
 	   }
 	   
 	}
+
+//textarea 글 작성시 자동 크기조정
+    function resize(obj) {
+        obj.style.height = '1px';
+        obj.style.height = (15 + obj.scrollHeight) + 'px';
+    }

@@ -3,35 +3,39 @@
     <head>
         <meta charset="UTF-8">
         <title>회원가입 완료</title>
-        <link rel="stylesheet" href="/css/join3.css">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/login.css">
     </head>
     <body>
         <div id="wrap">
             <!-- 화면 중앙 기준, 좌측 화면 -->
-            <div class="login_comment">
-                <p>다양한 행사에 참여하고<br/>운영요원이 되어 경험을 쌓아보세요!</p>
-            </div>
-            <div class="login_img_area">
-                <div class="login_img"></div>
+            <div class="login_wrap_L">
+                <div class="login_comment">
+                    <p>회원가입 후 다양한 행사를<br/>확인해보세요.</p>
+                </div>
+                <div class="login_img_area">
+                    <div class="login_img"></div>
+                </div>
             </div>
 
             <!-- 화면 중앙 기준, 우측 화면 -->
-            <div class="process_join">
-                <ul>
-                    <li class="active">약관동의</li>
-                    <li class="active">회원정보</li>
-                    <li class="active">가입완료</li>
-                </ul>
-            </div>
+            <div class="login_wrap_R join_R">
+                <div class="process_join">
+                    <ul>
+                        <li class="active">약관동의</li>
+                        <li class="active">회원정보</li>
+                        <li class="active">가입완료</li>
+                    </ul>
+                </div>
 
-            <!-- 회원가입 완료 -->
-            <div class="join_complete">
-                <div class="check_img"></div>
-                <h2>회원가입이 완료되었습니다.</h2>
-                <p>로그인 후 이력서를 통해 행사 운영 스태프에 지원해보세요. 당신을 기다립니다!</p>
-                <input type="button" value="로그인하기" class="goto_login_btn" onclick="location.href='/login'">
+                <!-- 회원가입 완료 -->
+                <div class="join_complete">
+                    <div class="check_img"></div>
+                    <h2><b>회원가입</b>이 <b>완료</b>되었습니다.</h2>
+                    <p>로그인 후 이력서를 통해 행사 운영 스태프에 지원해보세요. 당신을 기다립니다!</p>
+                    <input type="button" value="로그인하기" class="goto_login_btn" onclick="location.href='/login'">
+                </div>
             </div>
-
             
         </div>
     </body>

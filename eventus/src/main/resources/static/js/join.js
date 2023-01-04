@@ -1,6 +1,9 @@
 var now = new Date();
 var startYear = now.getFullYear();
 var endYear = startYear - 100;
+var certifi_checked = "0"; // 인증번호 확인 여부
+var certifinum = "1"; // 인증번호
+var timer; //인증번호 타이머
 
 $(function() {
     var data = new Date();
@@ -8,11 +11,8 @@ $(function() {
     var month = data.getMonth() + 1;
     var day = data.getDate();
     var today = year + "-" + month + "-" + day;
-
-    var certifinum = "1"; // 인증번호
     var id_checked = "0"; // 아이디 중복확인 여부
     var pw_checked = "0" // 비밀번호 확인 여부
-    var certifi_checked = "0"; // 인증번호 확인 여부
     var email_checked = "0"; // 이메일 중복 확인 여부
 
     // 약관동의
@@ -47,10 +47,6 @@ $(function() {
             $('.normal').prop('checked', true);
         }
     });
-
-    
-    
-    
     
     // 회원정보 입력
     // 아이디 입력했을 때 중복확인
@@ -68,7 +64,7 @@ $(function() {
             else {
                 id_checked = "1";
                 $("#id_check").text("사용 가능한 아이디입니다.");
-                $("#id_check").css("color", "green");
+                $("#id_check").css("color", "#5B8FD2");
             }
         });
     });
@@ -79,12 +75,12 @@ $(function() {
         if(!regExp.test($("#member input[name=user_pw]").val())){
             pw_checked = "0";
             $("#pw_check1").text("비밀번호 형식이 맞지 않습니다.");
-            $("#pw_check1").css("color", "red");
+            $("#pw_check1").css("color", "#DD5067");
         }
         else {
             pw_checked = "1";
             $("#pw_check1").text("사용 가능한 비밀번호입니다.");
-            $("#pw_check1").css("color", "green");
+            $("#pw_check1").css("color", "#5B8FD2");
         }
     });
 
@@ -93,12 +89,12 @@ $(function() {
         if($(this).val() != $("#member input[name=user_pw]").val()) {
             pw_checked = "0";
             $("#pw_check2").text("비밀번호가 일치하지 않습니다.");
-            $("#pw_check2").css("color", "red");
+            $("#pw_check2").css("color", "#DD5067");
         }
         else {
             pw_checked = "1";
             $("#pw_check2").text("비밀번호가 일치합니다.");
-            $("#pw_check2").css("color", "green");
+            $("#pw_check2").css("color", "#5B8FD2");
         }
     });
 
@@ -109,12 +105,12 @@ $(function() {
         if(emailReg.test(email)) {
             email_checked = "1";
             $("#email_check").text("사용 가능한 이메일입니다.");
-            $("#email_check").css("color", "green");
+            $("#email_check").css("color", "#5B8FD2");
         }
         else {
             email_checked = "0";
             $("#email_check").text("이메일 형식이 올바르지 않습니다.");
-            $("#email_check").css("color", "red");
+            $("#email_check").css("color", "#DD5067");
         }
     });
 
@@ -146,10 +142,14 @@ $(function() {
                 $("#certifinum_submit").attr("disabled", false);
             }, 60000);
 
+            // 인증버튼css
+            $('#certifinum_submit').val("재인증");
+            $('#certifinum_submit').css({ 'border': '0.5px solid #5B8FD2', 'background-color': '#5B8FD2',"color":"#ffffff"})
+
             // 3분 타이머
             certifi_checked = "0";
             var time = 180;
-            var timer = setInterval(function() {
+            timer = setInterval(function() {
                 var min = Math.floor(time / 60);
                 var sec = time % 60;
                 $("#certifi_time").text(min + "분 " + sec + "초");
@@ -173,19 +173,6 @@ $(function() {
             });
         }
     });
-
-    // 인증번호 비교
-    $('#certifinum_check').click(function() {
-        // certifinum과 인증번호가 같으면
-        if(certifinum == $('#member #certifinum').val()) {
-            $("#certifi_time").text("인증 완료");
-            certifi_checked = "1";
-        }
-        else {
-            alert("인증번호가 일치하지 않습니다.");
-        }
-    });
-
     // 회원가입
     $('.join_complete_btn').click(function(){
         // 아이디 빈칸인지 확인
@@ -297,3 +284,24 @@ $(function() {
         }
     });
 });
+
+
+// 인증번호 비교
+function certifinum_checking(input_num){
+    if(input_num.length >= 4){
+        if(certifinum == input_num){
+            $('#certifinum_check').css({'background':'#00DE3C'});
+            $("#certifi_time").text("");
+            clearInterval(timer)
+            certifi_checked = "1";
+            $('#certifinum').attr('readonly','true');
+            $("#certifinum_submit").val("인증완료");
+        }else{
+            $('#certifinum_check').css({'background':'#DDDDDD'});
+            certifi_checked = "0";
+        }
+    }else{
+        $('#certifinum_check').css({'background':'#DDDDDD'});
+        certifi_checked = "0";
+    }
+} 

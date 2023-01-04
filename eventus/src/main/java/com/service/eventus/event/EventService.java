@@ -40,6 +40,16 @@ public class EventService {
 	public boolean insertEventFile(EventFileVo eventFileVo) {
 		return eventDao.insertEventFile(eventFileVo);
 	}
+	
+	//행사 수정
+	public boolean updateEvent (EventVo eventVo) {
+		return eventDao.updateEvent(eventVo);
+	}
+		
+	//행사 파일 삭제
+	public boolean deleteFile (int event_id, String file_name) {
+		return eventDao.deleteFile(event_id, file_name);
+	}
 
 	// 지원현황 count
 	public int application_count(int event_id) throws Exception {
@@ -65,4 +75,60 @@ public class EventService {
 	public String getUserAge(String user_birth) throws Exception {
 		return eventDao.getUserAge(user_birth);
 	}
+
+	// 지원자 수락
+	public int accept_applicant(int event_id, int staff_id) {
+		return eventDao.accept_applicant(event_id, staff_id);
+	}
+	
+	// 지원자 수락해제
+	public int accept_applicant_cancel(int event_id, int staff_id) {
+		return eventDao.accept_applicant_cancel(event_id, staff_id);
+	}
+	
+	// 지원자 불합격처리
+	public int reject_applicant(int event_id, int staff_id) {
+		return eventDao.reject_applicant(event_id, staff_id);
+	}
+	
+	// 지원결과
+	public String getResult(int event_id, int staff_id) {
+		return eventDao.getResult(event_id, staff_id);
+	}
+
+	// 근무직원 count
+	public int staff_count(int event_id) {
+		return eventDao.staff_count(event_id);
+	}
+
+	// 근무직원 list
+	public List<MemberVo> workStaff_list(int event_id) {
+		return eventDao.workStaff_list(event_id);
+	}
+
+	// 당일 근무기록 get
+	public WorkRecordVo getWorkTime(int staff_id, int event_id, String work_date) {
+		return eventDao.getWorkTime(staff_id, event_id, work_date);
+	}
+	
+	// 출근시간 기록
+	public boolean record_startTime(int event_id, int staff_id, String work_date, String start_time) {
+		return eventDao.record_startTime(event_id, staff_id, work_date, start_time);
+	}
+
+	// 외출시간 기록
+	public boolean record_outTime(int event_id, int staff_id, String work_date, String out_time) {
+		return eventDao.record_outTime(event_id, staff_id, work_date, out_time);
+	}
+	
+	// 복귀시간 기록
+	public boolean record_backTime(int event_id, int staff_id, String work_date, String back_time) {
+		return eventDao.record_backTime(event_id, staff_id, work_date, back_time);
+	}
+	
+	// 퇴근시간 기록
+	public boolean record_endTime(int event_id, int staff_id, String work_date, String end_time) {
+		return eventDao.record_endTime(event_id, staff_id, work_date, end_time);
+	}
+
 }

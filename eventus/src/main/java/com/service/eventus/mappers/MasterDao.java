@@ -26,3 +26,4 @@ public interface MasterDao {
             "order by e.event_startDate desc;")
     List<MasterVo> getListUserApp(String user_id);
 }
+

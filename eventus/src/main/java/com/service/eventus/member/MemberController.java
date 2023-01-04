@@ -1,9 +1,14 @@
 package com.service.eventus.member;
 
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
+import org.apache.commons.collections.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -37,20 +42,14 @@ public class MemberController {
 
         if(result==1) { // 로그인 성공
             // main으로 이동
-            System.out.println("로그인성공");
             if(memberVo2.getUser_authority()==0) {
                 // 관리자 페이지 이동
                 mav.setViewName("/main");
             }
             else {
                 // 스태프 페이지 이동
-                mav.setViewName("/main_ForStaff");;
+                mav.setViewName("/main_ForStaff");
             }
-            mav.addObject("msg", "success");
-        }else { // 로그인 실패
-            System.out.println("로그인실패");
-            mav.setViewName("/login");
-            mav.addObject("msg", "failure");
         }
 
         return mav;
@@ -59,13 +58,15 @@ public class MemberController {
     // 아이디 찾기
     @RequestMapping("/findId")
     @ResponseBody
-    public String findId(@ModelAttribute MemberVo memberVo) throws Exception {
-        String result = memberService.findId(memberVo);
-        if(result != null) {
-            return result;
-        }else {
-            return "failure";
+    public Map findId(@ModelAttribute MemberVo memberVo) throws Exception {
+    	
+    	Map result = memberService.findId(memberVo);
+    	
+        if(MapUtils.isEmpty(result)) {
+        	result = new HashMap<>();
+            result.put("user_id", "failure");
         }
+        return result;
     }
 
     // 비밀번호 변경을 위한 아이디 찾기

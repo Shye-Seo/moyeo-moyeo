@@ -33,12 +33,14 @@
 			</div>
 
 			<div class="area">
+				<h2>행사 정보</h2>
 				<span>
 					<div class="event_table event_table_L">
 						<ul>
 							<li class="t_title">행사명</li>
-							<li id="event_title" th:text="'['+${event.event_venue}+'] '+${event.event_title}" th:if="${event.event_venue ne null}"></li>
-							<li id="event_title" th:text="${event.event_title}" th:unless="${event.event_venue ne null}"></li>
+							<!-- <li id="event_title" th:text="'['+${event.event_venue}+'] '+${event.event_title}" th:if="${event.event_venue ne null}"></li>
+							<li id="event_title" th:text="${event.event_title}" th:unless="${event.event_venue ne null}"></li> -->
+							<li id="event_title" th:text="${event.event_title}" ></li>
 						</ul>
 						<ul>
 							<li class="t_title">행사기간</li>
@@ -48,30 +50,17 @@
 							<li class="t_title">접수마감</li>
 							<li id="event_date">[(${event.event_deadline})]</li>
 						</ul>
+						<ul>
+							<li class="t_title">행사장소</li>
+							<li id="event_date">[(${event.event_venue})]</li>
+						</ul>
 						<ul class="position_tab">
 							<li class="t_title">모집부문</li>
 							<li>
 								<div class="position_table">
-									<!-- <div th:each=""></div> -->
-									<div class="position">
-										<div>운영요원</div>
-										<div>0명</div>
-									</div>
-									<div class="position">
-										<div>운영요원</div>
-										<div>0명</div>
-									</div>
-									<div class="position">
-										<div>운영요원</div>
-										<div>0명</div>
-									</div>
-									<div class="position">
-										<div>운영요원</div>
-										<div>0명</div>
-									</div>
-									<div class="position">
-										<div>운영요원</div>
-										<div>0명</div>
+									<div th:each="positions : ${positionMap}" class="position">
+										<div th:text="${positions.key}"></div>
+										<div th:text="${positions.value}+'명'"></div>
 									</div>
 								</div>
 							</li>
@@ -82,7 +71,7 @@
 							<li id="event_file">
 								<div th:each="FileList : ${eventFileList}" >
 									<a th:href="@{event_download(filename=${FileList.file_name})}">
-										<div>■</div>
+										<div><img src="imgs/event_download.svg" alt="event_download"></div>
 										<div th:text="${FileList.file_name}"></div>
 									</a>
 								</div>
@@ -99,7 +88,7 @@
 
 				<div class="btn_wrap">
 					<button type="button" onclick="location.href='manage_event'">목록으로</button>
-					<button type="button">수정하기</button>
+					<button type="button" th:onclick="|location.href='@{manage_event_update(id=${event.id})}'|">수정하기</button>
 				</div>
 
 			</div>

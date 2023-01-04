@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class MemberService {
@@ -40,7 +41,7 @@ public class MemberService {
     }
 
     // 아이디 찾기(user_id 반환)
-    public String findId(MemberVo memberVo) throws Exception {
+    public Map findId(MemberVo memberVo) throws Exception {
         return memberDao.findId(memberVo);
     }
 
@@ -61,8 +62,8 @@ public class MemberService {
 
     // coolsms에 정보를 보내 회원가입시 인증번호를 보낸 후, 인증번호를 return 한다.
     public void sendSms(String user_phone, int randomNumber) throws CoolsmsException {
-        String api_key = "NCSFGLWNPHJUTG1Q";
-        String api_secret = "ZK5DEEDCXR0T6LXJDNQCVCAUYZ1BMHA6";
+        String api_key = "NCS9HI923SUSM5VF";
+        String api_secret = "XLQEOJRXNGAIUHIFRGX5VUTCHEJV7D8N";
 
         Message coolsms = new Message(api_key, api_secret);
 

@@ -60,6 +60,11 @@
     "spring.configuration.checksum": "32c962fa3447c97efa173888c0a261ad"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/eventus/src/main/resources/templates/common" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="EventusApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="eventus" />

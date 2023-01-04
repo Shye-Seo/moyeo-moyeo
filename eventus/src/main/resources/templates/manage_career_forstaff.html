@@ -7,50 +7,15 @@
     <title>이벤터즈랩(eventusLAB)</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="/css/manage_staff.css">
+    <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
     <div id="wrap">
-        <!-- fixed menu -->
-        <div class="sidebar">
-            <a href="#" class="logo">
-                <img src="../../../../../../../eventus_front/logo.png" alt="eventusLAB">
-            </a>
-            <ul class="menu-categories">
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="main.svg" alt="main">
-                            <span>메인</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="schedule.svg" alt="schedule">
-                            <span>행사목록</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="stafflist.svg" alt="stafflist">
-                            <span>이력관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#">
-                        <div>
-                            <img src="timesheet.svg" alt="timesheet">
-                            <span>근무기록</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <div th:replace="~{common/sideforstaff :: sidebar_manage ('manage_career_forstaff')}"></div>
+        <div th:insert="contract_file :: modal1" class="contract"></div>
+        <div th:insert="contract_file :: modal2" class="security"></div>
+
 
         <!-- main -->
         <div class="content">
@@ -94,6 +59,8 @@
                             <li th:text="${career.event_title}"></li>
                             <li th:text="${career.event_startDate} + ' - ' + ${career.event_endDate}"></li>
                             <li th:text="${career.application_result}"></li>
+                            <li><input type="button" id="contract_all" value="미등록"></li>
+
                         </ol>
                             
 
@@ -115,12 +82,62 @@
             </div>
         </div>
     </div>
+    <style>
+        pre {
+            height: 300px;
+            overflow-y: scroll;
+        }
+
+        .contract,
+        .security {
+            display:none;
+            position:fixed;
+            right:0;
+            width:50%;
+            height:100%;
+            background-color:#FFFFFF;
+            border:1px solid #DDDDDD;
+            border-radius: 3px;
+            opacity: 1;
+            z-index:1;
+        }
+
+    </style>
     <script>
         var num = [[${career_num}]];
         // class="applicationList"에 num값을 넣어줌
         $(".applicationList").each(function(){
             $(this).text(num);
             num--;
+        });
+
+        // 근로계약서 미등록 클릭시 모달창 띄우기
+        $(function() {
+            // 근로계약서 등록 버튼 클릭 시
+            $("#contract_all").click(function(){
+                $(".contract").css("display", "block");
+            });
+
+            $("input[type=image]").click(function() {
+                $(".contract").css("display", "none");
+                $(".security").css("display", "none");
+            });
+
+            $("#reset_btn").click(function(){
+                $(".contract").css("display", "none");
+                $(".security").css("display", "none");
+            });
+
+            $("#back_btn").click(function(){
+                $(".contract").css("display", "block");
+                $(".security").css("display", "none");
+            });
+
+            $("#next_btn").click(function(){
+                $(".contract").css("display", "none");
+                $(".security").css("display", "block");
+            });
+
         });
     </script>
 </body>
