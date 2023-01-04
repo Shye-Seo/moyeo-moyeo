@@ -7,11 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
+
 
 @Controller
 public class MemberController {
@@ -35,8 +37,8 @@ public class MemberController {
 
     // 로그인 처리
     @RequestMapping("/LoginProc")
-    public ModelAndView loginCheck(@ModelAttribute MemberVo memberVo) throws Exception {
-        int result = memberService.loginCheck(memberVo);
+    public ModelAndView loginCheck(@ModelAttribute MemberVo memberVo, HttpSession session) throws Exception {
+        int result = memberService.loginCheck(memberVo, session);
         MemberVo memberVo2 = memberService.viewMember(memberVo);
         ModelAndView mav = new ModelAndView();
 

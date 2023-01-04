@@ -1,15 +1,19 @@
 package com.service.eventus.member;
 
-import com.service.eventus.mappers.MemberDao;
-
-import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.json.simple.JSONObject;
-import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.Map;
+
+
+
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.service.eventus.mappers.MemberDao;
+
+import jakarta.servlet.http.HttpSession;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Service
 public class MemberService {
@@ -29,12 +33,13 @@ public class MemberService {
     }
 
     // 로그인할 때 회원확인
-    public int loginCheck(MemberVo memberVo) {
+    public int loginCheck(MemberVo memberVo, HttpSession session) {
         int result = memberDao.loginCheck(memberVo);
 
         if(result==1) { // true일 경우 세션에 등록
             MemberVo memberVo1 = viewMember(memberVo);
 
+            session.setAttribute("user_id", memberVo1.getUser_id());
 
         }
         return result;
