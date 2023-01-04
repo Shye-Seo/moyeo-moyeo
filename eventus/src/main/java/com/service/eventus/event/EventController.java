@@ -74,7 +74,7 @@ public class EventController {
 		mav.addObject("positionMap", positionMap);
 		mav.addObject("eventFileList", eventFileList);
 
-		mav.setViewName("manage_eventDetail");
+		mav.setViewName("staff_eventDetail");
 		return mav;
 	}
 

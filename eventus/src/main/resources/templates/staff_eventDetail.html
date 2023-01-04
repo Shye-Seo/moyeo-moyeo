@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>이벤터즈랩(eventusLAB)</title>
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/event_Detail.css">
+</head>
+<body>
+	
+	<div th:replace="~{common/sideforstaff :: sidebar_manage ('schedule')}"></div>
+
+	<div class="content">
+		<div class="container">
+			<div class="page-header">
+				<div class="page-title">
+					<span>행사목록</span>
+				</div>
+				<div class="excel_download">
+					엑셀 데이터 다운로드
+				</div>
+			</div>
+			<div class="detail_bar">
+				<div class="detail1 this_bar" onclick="location.href='manage_event'">
+					<img src="imgs/material-view-list.svg">
+					<p>행사현황</p>
+				</div>
+				<!-- <div class="detail2" onclick="location.href='manage_event_register'">
+					<img src="imgs/pen_gray.svg">
+					<p>행사등록</p>
+				</div> -->
+			</div>
+
+			<div class="area">
+				<h2>행사 정보</h2>
+				<span th:replace="~{manage_eventDetail :: event_detail}"></span>
+
+				<div class="btn_wrap">
+					<button type="button" onclick="location.href='manage_event'">목록으로</button>
+					<button type="button" th:onclick="">지원하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
