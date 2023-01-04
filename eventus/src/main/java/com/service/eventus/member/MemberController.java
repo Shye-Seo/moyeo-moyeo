@@ -35,8 +35,8 @@ public class MemberController {
 
     // 로그인 처리
     @RequestMapping("/LoginProc")
-    public ModelAndView loginCheck(@ModelAttribute MemberVo memberVo) throws Exception {
-        int result = memberService.loginCheck(memberVo);
+    public ModelAndView loginCheck(@ModelAttribute MemberVo memberVo, HttpSession session) throws Exception {
+        int result = memberService.loginCheck(memberVo, session);
         MemberVo memberVo2 = memberService.viewMember(memberVo);
         ModelAndView mav = new ModelAndView();
 
