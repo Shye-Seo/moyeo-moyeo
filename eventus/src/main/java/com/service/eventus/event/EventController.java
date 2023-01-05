@@ -408,21 +408,47 @@ public class EventController {
 	// 부스현황 리스트
 	@GetMapping(value="/manage_event_booth")
 	public String event_booth_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
+		
 		model.addAttribute("event_id", event_id);
-		String event_title = eventService.getEventTitle(event_id);
-		model.addAttribute("event_title", event_title);
 		
 		List<BoothVo> booth_list = eventService.booth_list(event_id);
-		if(booth_list != null && booth_list.size() != 0) {
-			for(BoothVo vo : booth_list) {
-				String startDate = eventService.getStartDate(vo.getEvent_id());
+		if (booth_list != null) {
+			for (BoothVo vo : booth_list) {
+				String event_title = eventService.getEventTitle(vo.getId());
+				vo.setEvent_title(event_title);
+				
+				String startDate = eventService.getStartDate(vo.getId());
 				vo.setEvent_startDate(startDate);
 				
-				String endDate = eventService.getEndDate(vo.getEvent_id());
+				String endDate = eventService.getEndDate(vo.getId());
 				vo.setEvent_endDate(endDate);
 			}
 		}
 		model.addAttribute("booth_list", booth_list);
 	    return "manage_event_booth";
+	}
+	
+	//부스등록
+	@ResponseBody
+	@RequestMapping(value="/register_booth", method=RequestMethod.POST)
+	public String register_booth(@RequestParam("event_id") int event_id, @RequestParam("booth_name") String booth_name, 
+								 @RequestParam("counting") int counting, @RequestParam("expected_time") int expected_time) throws Exception{
+		
+		boolean check = eventService.register_booth(event_id, booth_name, counting, expected_time);
+		System.out.println("register ok==============>"+check);
+			
+		return "manage_event_booth?id="+event_id;
+	}
+	
+	//부스수정
+	@ResponseBody
+	@RequestMapping(value="/modify_booth", method=RequestMethod.POST)
+	public String modify_booth(@RequestParam("event_id") int event_id, @RequestParam("booth_id") int booth_id,  @RequestParam("booth_name") String booth_name, 
+								 @RequestParam("counting") int counting, @RequestParam("expected_time") int expected_time) throws Exception{
+			
+		boolean check = eventService.modify_booth(booth_id, booth_name, counting, expected_time);
+		System.out.println("register ok==============>"+check);
+				
+		return "manage_event_booth?id="+event_id;
 	}
 }

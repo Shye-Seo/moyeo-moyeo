@@ -114,12 +114,18 @@ public interface EventDao {
 	@Select("select * from event_booth where event_id = #{event_id}")
 	List<BoothVo> booth_list(int event_id); // 부스현황 리스트
 
-	@Select("select e.event_title from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id}")
-	String getEventTitle(int event_id); // 행사명 get
+	@Select("select e.event_title from event e inner join event_booth b where e.id = b.event_id and b.id = #{booth_id}")
+	String getEventTitle(int booth_id); // 행사명 get
 	
-	@Select("select e.event_startDate from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id}")
-	String getStartDate(int event_id); // 시작날짜 get
+	@Select("select e.event_startDate from event e inner join event_booth b where e.id = b.event_id and b.id = #{booth_id}")
+	String getStartDate(int booth_id); // 시작날짜 get
 	
-	@Select("select e.event_endDate from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id}")
-	String getEndDate(int event_id); // 끝나는날짜 get
+	@Select("select e.event_endDate from event e inner join event_booth b where e.id = b.event_id and b.id = #{booth_id}")
+	String getEndDate(int booth_id); // 끝나는날짜 get
+
+	@Insert("insert into event_booth(event_id, booth_name, counting, expected_time) values(#{event_id}, #{booth_name}, #{counting}, #{expected_time})")
+	boolean register_booth(int event_id, String booth_name, int counting, int expected_time); // 부스등록
+
+	@Update("update event_booth set booth_name = #{booth_name}, counting = #{counting}, expected_time = #{expected_time} where id = ${booth_id}")
+	boolean modify_booth(int booth_id, String booth_name, int counting, int expected_time); // 부스수정
 }

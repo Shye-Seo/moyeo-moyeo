@@ -145,28 +145,38 @@ public class EventService {
 		return eventDao.record_endTime_new(event_id, staff_id, work_date, end_time);
 	}
 
+	//-------------------부스----------------
 	// 부스현황 count
 	public int booth_count(int event_id) throws Exception {
 		return eventDao.booth_count(event_id);
 	}
-
+	
 	// 부스현황 리스트
 	public List<BoothVo> booth_list(int event_id) {
 		return eventDao.booth_list(event_id);
 	}
 
 	// 행사명 get
-	public String getEventTitle(int event_id) {
-		return eventDao.getEventTitle(event_id);
+	public String getEventTitle(int booth_id) {
+		return eventDao.getEventTitle(booth_id);
 	}
 	
 	// 시작날짜 get
-	public String getStartDate(int event_id) {
-		return eventDao.getStartDate(event_id);
+	public String getStartDate(int booth_id) {
+		return eventDao.getStartDate(booth_id);
 	}
 		
 	// 끝나는날짜 get
-	public String getEndDate(int event_id) {
-		return eventDao.getEndDate(event_id);
+	public String getEndDate(int booth_id) {
+		return eventDao.getEndDate(booth_id);
+	}
+
+	// 부스등록
+	public boolean register_booth(int event_id, String booth_name, int counting, int expected_time) {
+		return eventDao.register_booth(event_id, booth_name, counting, expected_time);
+	}
+
+	public boolean modify_booth(int booth_id, String booth_name, int counting, int expected_time) {
+		return eventDao.modify_booth(booth_id, booth_name, counting, expected_time);
 	}	
 }

@@ -219,21 +219,23 @@ ol li {
 }
 
 /*-------모달----------*/
-#modal {
+#modal, #modal_modify {
     position:fixed;
-    width:100%;
+    width:90%;
     height:100%;
+    margin-left:10%;
 	z-index:1;
 	top: 0;
+	display: none;
 }
         
-#modal #bottom_line{
+#modal_bottom_line{
 	border-bottom: 1px solid #DDDDDD;
 	margin-bottom: 30px;
 	width: 450px;
 }
 
-#modal #event_title p {
+#modal_event_title p {
 	margin:0;
 	font-size: 18px;
 	color: #333333;
@@ -242,28 +244,23 @@ ol li {
 	margin-bottom: 10px;
 }
 
-#modal #input_div p{
+#modal_input_div p{
 	font-size: 16px;
 	color: #333333;
 	font-weight: 600;
 	margin-bottom: 20px;
 }
 
-#modal #input_div input{
+#modal_input_div input{
 	height: 50px;
-	width: 450px;
+	width: 430px;
+	padding-left:20px;
 	margin-bottom: 30px;
 	border: 1px solid #DDDDDD;
 	border-radius: 10px;
 }
-
-#modal button {
-    display:inline-block;
-    width:100px;
-    margin-left:calc(100% - 100px - 10px);
-}
         
-#modal .modal_content {
+.modal_content, .modal_content_m {
 	width:540px;
 	height:600px;
 	margin:240px auto;
@@ -271,11 +268,13 @@ ol li {
     background:#fff;
     border:none;
     border-radius: 20px;
-    top: 30%;
-    left: calc(50% - 90px);
+}
+
+#modal_content_wrap{
+	padding: 45px;
 }
         
-#modal .modal_layer {
+.modal_layer, .modal_layer_m {
     position:fixed;
     top:0;
     left:0;
@@ -285,6 +284,36 @@ ol li {
 	z-index:-1;
 }
 
-#modal #modal_close_btn{
+#modal_close_btn, #modal_close_btn_m{
 	width: 40px;
+	margin-left: 90%;
+}
+
+#modal_btn_div{
+	margin-top: 12px;
+	margin-bottom: 5px;
+}
+
+#modal_insert_btn{
+	background-color: #5B8FD2;
+	border-radius: 10px;
+	width: 200px;
+	height: 50px;
+	color: #FFFFFF;
+	font-size: 18px;
+	text-align: center;
+	font-weight: 600;
+	margin-left: 126px;
+}
+
+#modal_update_btn{
+	background-color: #5B8FD2;
+	border-radius: 10px;
+	width: 200px;
+	height: 50px;
+	color: #FFFFFF;
+	font-size: 18px;
+	text-align: center;
+	font-weight: 600;
+	margin-left: 126px;
 }
