@@ -44,6 +44,9 @@
     <form name="aa" action=""></form>
     <script language = "javascript">
 
+        //https://github.com/eKoopmans/html2pdf.js
+        //https://stackoverflow.com/questions/64553366/how-to-send-pdf-as-a-file-as-form-data-to-server
+
         let element = document.getElementById('pdf_area');
         let opt = {
             // margin:       1,
@@ -60,7 +63,7 @@
             // The PDF has been converted to a Data URI string and passed to this function.
             // Use pdfAsString however you like (send as email, etc)! For instance:
             url=pdfAsString;
-            
+            console.log(url)
             
         });
 
