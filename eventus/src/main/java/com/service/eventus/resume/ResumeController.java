@@ -60,5 +60,15 @@ public class ResumeController {
 		
 		return "manage_career_forstaff";
 	}
+
+	@GetMapping(value="/test_download")
+	public String test_download() {
+		return "test_download";
+	}
 	
+    @RequestMapping("/download")
+    public String test_download(MultipartHttpServletRequest multipartRequest) throws Exception{
+    	MultipartFile profileImg = multipartRequest.getFile("file");
+    	return "manage_career_forstaff";
+    }
 }
