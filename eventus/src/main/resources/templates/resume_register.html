@@ -6,155 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/common.js"></script>
+    
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/resume_register.css">   
-    <script>
-        $(function(){
+    <script src="/js/resume.js"></script>
 
-        })
-
-        let career_num =1;
-        const max_num =5;
-
-        //경력추가
-        function add_career(){
-            $(".career_wrap:first").clone(true).appendTo($(".careers_div"));
-            $('.career_wrap:last input[name="staff_career_eventName"]').val('');
-            $('.career_wrap:last input[name="staff_career_eventName"]').attr('name','staff_career_eventName'+career_num);
-            $('.career_wrap:last input[name="staff_career_businessName"]').val('');
-            $('.career_wrap:last input[name="staff_career_businessName"]').attr('name','staff_career_businessName'+career_num);
-            $('.career_wrap:last input[name="staff_career_position"]').val('');
-            $('.career_wrap:last input[name="staff_career_position"]').attr('name','staff_career_position'+career_num);
-            $('.career_wrap:last input[name="staff_career_workday"]').val('');
-            $('.career_wrap:last input[name="staff_career_workday"]').attr('name','staff_career_workday'+career_num);
-            $('.career_wrap:last').append('<div class="remove_career"  style="--i :'+career_num+' ;" onclick="remove_career(this)"></div>');
-
-            career_num++;
-            if(career_num>1){
-                $("#add_career").css('right','-90px')
-            }else{
-                $("#add_career").css('right','-50px')
-            }
-            if(career_num == max_num){
-                $("#add_career").hide();
-            }
-        }
-
-        //경력삭제
-        function remove_career(obj){
-            let remove_num= $(obj).css('--i')*1;
-            if(remove_num == career_num-1){
-            }else{
-                $('.c_en').each(function(){
-                    let i = $(this).attr('name').charAt($(this).attr('name').length-1);
-                    if(i>remove_num){
-                        $(this).attr('name','staff_career_eventName'+ (i-1));
-                    }
-                })
-                $('.c_bn').each(function(){
-                    let i = $(this).attr('name').charAt($(this).attr('name').length-1);
-                    if(i>remove_num){
-                        $(this).attr('name','staff_career_businessName'+ (i-1));
-                    }
-                })
-                $('.c_p').each(function(){
-                    let i = $(this).attr('name').charAt($(this).attr('name').length-1);
-                    if(i>remove_num){
-                        $(this).attr('name','staff_career_position'+ (i-1));
-                    }
-                })
-                $('.c_wd').each(function(){
-                    let i = $(this).attr('name').charAt($(this).attr('name').length-1);
-                    if(i>remove_num){
-                        $(this).attr('name','staff_career_workday'+ (i-1));
-                    }
-                })
-                $('.remove_career').each(function(){
-                    let i = $(this).css('--i')*1;
-                    if(i>remove_num){
-                        $(this).css('--i',(i-1));
-                    }
-                })
-            }
-            $(obj).parent().remove();
-            career_num--;
-
-            if($("#add_career").css('display')=='none'){
-                $("#add_career").show();
-            }
-
-            if(career_num>1){
-                $("#add_career").css('right','-90px')
-            }else{
-                $("#add_career").css('right','-50px')
-            }
-            if(career_num == max_num){
-                $("#add_career").hide();
-            }
-        }
-
-        // form submit
-        function submitDate(actionUrl){
-
-        if (confirm("등록 하시겠습니까?") == true){
-
-            let event_position = $('input[name="input_event_position"]').val();
-            let event_position_count = $('input[name="input_event_position_count"]').val();
-
-            $('.area4').append('<input type="text" name="event_position" hidden/>')
-            $('.area4').append('<input type="text" name="event_position_count" hidden/>')
-
-
-            if(position_num>1){ //추가 없을시 바로 submit
-                for(let i=1;position_num>i;i++){ 
-                    event_position += ','+$('input[name="input_event_position'+i+'"]').val();
-                    event_position_count += ','+$('input[name="input_event_position_count'+i+'"]').val();
-                }
-                
-            }
-
-            // hidden input요소에 합친 값을 저장
-            $('input[name="event_position"]').val(event_position);
-            $('input[name="event_position_count"]').val(event_position_count);
-
-            for(let i = 0; i < deleteFileNameList.length; i++){
-                $('form[name="eventAddForm"]').append("<input type='hidden' name='deleteFileNameList' value='"+deleteFileNameList[i]+"'/>")
-            }
-
-            var uploadFileList = Object.keys(fileList);
-            var form = $('form[name="eventAddForm"]');
-            var formData = new FormData(form[0]);
-            for (var i = 0; i < fileList.length; i++) {
-                formData.append('event_file', fileList[i]);
-                console.log(formData.get('event_file')) 
-                console.log(fileList[i]) 
-            }
-            // for(let i = 0; i < deleteFileNameList.length; i++){
-            //     formData.append('deleteFileNameList', String(deleteFileNameList[i]));
-            //     console.log(formData.get('deleteFileNameList['+i+']')) 
-            //     console.log(deleteFileNameList[i]) 
-            // }
-
-            $.ajax({
-                url : actionUrl,
-                data : formData,
-                type : 'POST',
-                enctype : 'multipart/form-data',
-                processData : false,
-                contentType : false,
-        //                dataType : 'json',
-                cache : false,
-                success : function (result) {
-                    window.location.href= result;
-                }
-            });
-            } else {
-                return false;
-            }
-            //$('form[name="eventAddForm"]').submit();
-        }
-
-    </script>
 </head>
 <body>
     <div id="wrap">
@@ -182,8 +41,8 @@
                 </div>
 
                 <div class="area">
-                	<form action="" method="post">
-                    <input type="staff_id" value="" hidden >
+                	<form name="resumeForm" action="/resumeAdd" method="post" onsubmit="return false">
+                    <input type="text" name="staff_id" th:value="${memberInfo.id}" hidden >
                     <div class="area1">
                         <span>인적사항</span>
                         <div class="area1_info_wrap">
@@ -194,7 +53,7 @@
                                 </span>
                                 <span class="w-24p">
                                     <p class="red_star">생년월일</p>
-                                    <input type="text" class="fix_input" name="user_birth" th:value="${memberInfo.user_birth}" readonly >
+                                    <input type="text" class="fix_input" name="user_birth" readonly >
                                 </span>
                                 <span class="w-14p">
                                     <p class="red_star">성별</p>
@@ -202,7 +61,7 @@
                                 </span>
                                 <span class="w-all">
                                     <p class="red_star">휴대폰번호</p>
-                                    <input type="text" class="fix_input" name="user_phone" th:value="${memberInfo.user_phone}" placeholder="010-1234-5678" readonly >
+                                    <input type="text" class="fix_input" name="user_phone" placeholder="010-1234-5678" readonly >
                                 </span>
                                 
                             </div>
@@ -220,8 +79,8 @@
                         <div class="profile_wrap">
                             <label for="profile_img_file" id="insert_profile_bt"></label>
                             <!-- <div id="update_profile_bt">수정하기</div> -->
-                            <img src="" alt="profile_img" onerror="this.src='/imgs/profile_box.png';">
-                            <input type="file" name="profile_img" id="profile_img_file" hidden/>
+                            <img id="preview" src="" alt="profile_img" onerror="this.src='/imgs/profile_box.png';">
+                            <input type="file" name="profile_img" id="profile_img_file" onchange="readURL(this);" hidden/>
                         </div>
                     </div>
                     <div class="area2">
@@ -230,24 +89,23 @@
                             <div class="school_info">
                                 <span class="w-31p">
                                     <p class="red_star">학교명</p>
-                                    <input type="text" name="staff_school1" placeholder="학교명을 입력해주세요.">
+                                    <input type="text" name="staff_school1" class="required" placeholder="학교명을 입력해주세요.">
                                 </span>
                                 <span class="w-31p">
                                     <p class="red_star">전공/계열</p>
-                                    <input type="text" name="staff_major1" placeholder="전공/계열을 입력해주세요.">
+                                    <input type="text" name="staff_major1" class="required" placeholder="전공/계열을 입력해주세요.">
                                 </span>
                                 <span class="w-14p">
                                     <p class="red_star">입학년도</p>
-                                    <input type="text" name="staff_school_start1" placeholder="YYYY.MM">
+                                    <input type="text" name="staff_school_start1" class="onlyNum required" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
                                 </span>
                                 <span class="w-14p">
-                                    <p class="red_star">졸업년도</p>
-                                    <input type="text" name="staff_school_end1" placeholder="YYYY.MM">
+                                    <p>졸업년도</p>
+                                    <input type="text" name="staff_school_end1" class="onlyNum" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
                                 </span>
                                 <span class="w-14p">
-                                    <p>졸업구분</p>
-                                    <select name="staff_school_state1">
-                                        <option value="" selected disabled ></option>
+                                    <p class="red_star">졸업구분</p>
+                                    <select name="staff_school_state1" class="required">
                                         <option value="졸업">졸업</option>
                                         <option value="재학중">재학중</option>
                                         <option value="중퇴">중퇴</option>
@@ -257,7 +115,7 @@
                             <div class="school_info">
                                 <span class="w-31p">
                                     <p>학교명</p>
-                                    <input type="text" name="staff_school2" placeholder="학교명을 입력해주세요.">
+                                    <input type="text" name="staff_school2" placeholder="학교명을 입력해주세요." required>
                                 </span>
                                 <span class="w-31p">
                                     <p>전공/계열</p>
@@ -265,16 +123,15 @@
                                 </span>
                                 <span class="w-14p">
                                     <p>입학년도</p>
-                                    <input type="text" name="staff_school_start2" placeholder="YYYY.MM">
+                                    <input type="text" name="staff_school_start2" class="onlyNum" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
                                 </span>
                                 <span class="w-14p">
                                     <p>졸업년도</p>
-                                    <input type="text" name="staff_school_end2" placeholder="YYYY.MM">
+                                    <input type="text" name="staff_school_end2" class="onlyNum" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
                                 </span>
                                 <span class="w-14p">
                                     <p>졸업구분</p>
-                                    <select name="" id="staff_school_state2">
-                                        <option value="" selected disabled ></option>
+                                    <select name="staff_school_state2">
                                         <option value="졸업">졸업</option>
                                         <option value="재학중">재학중</option>
                                         <option value="중퇴">중퇴</option>
@@ -289,20 +146,20 @@
                             <div class="career_wrap">
                                 <span class="w-31p">
                                     <p>행사명</p>
-                                    <input type="text" class="c_en" name="staff_career_eventName" placeholder="행사명을 입력해주세요.">
+                                    <input type="text" class="c_en" name="input_staff_career_eventName" placeholder="행사명을 입력해주세요.">
                                 </span>
                                 <span class="w-31p">
                                     <p>소속기업</p>
-                                    <input type="text" class="c_bn" name="staff_career_businessName" placeholder="소속된 기업명을 입력해주세요.">
+                                    <input type="text" class="c_bn" name="input_staff_career_businessName" placeholder="소속된 기업명을 입력해주세요.">
                                 </span>
                                 <span class="w-31p">
                                     <p>담당업무</p>
-                                    <input type="text" class="c_p" name="staff_career_position" placeholder="담당(활동)했던 업무를 입력해주세요.">
+                                    <input type="text" class="c_p" name="input_staff_career_position" placeholder="담당(활동)했던 업무를 입력해주세요.">
                                 </span>
                                 <span class="w-12p">
                                     <p>근무일수</p>
                                     <p>일</p>
-                                    <input type="text" class="c_wd" name="staff_career_workday" placeholder="숫자입력">
+                                    <input type="text" class="c_wd onlyNum" name="input_staff_career_workday" placeholder="숫자입력">
                                 </span>
                             </div>
                             <div id="add_career" onclick="add_career()"></div>
@@ -311,12 +168,38 @@
                     </div>
                     <div class="btn_wrap">
                         <button type="button">취소</button>
-                        <button type="submit">저장</button>
+                        <button type="button" id="submit_bt">저장</button>
                     </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+            $(function(){
+                const in_birth = /*[[${memberInfo.user_birth}]]*/
+                console.log()
+                const in_phone = /*[[${memberInfo.user_phone}]]*/
+
+                $('input[name="user_birth"]').val(chkDate(in_birth))
+                $('input[name="user_phone"]').val(chkItemPhone(in_phone));
+            
+                //필수값 체크
+                $('#submit_bt').click(function(){
+                    let result = true;
+                    $('.required').each(function(){
+                        if($(this).val() == ""){
+                            $(this).focus();
+                            result = false;
+                            return false;
+                        }
+                    })
+                    if(!result) return false;
+                    submitDate('/resumeAdd');
+                })
+            })
+        /*]]>*/
+    </script>
 </body>
 </html>

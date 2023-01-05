@@ -63,6 +63,9 @@ public class AwsS3Service {
 
     @Value("board-folder")
     private String eventFolder; 
+    
+    @Value("profile_img")
+    private String profileFolder; 
 
 
     private final AmazonS3 s3Client;
@@ -121,6 +124,33 @@ public class AwsS3Service {
         httpHeaders.setContentDispositionFormData("attachment", fileName);
 
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
+    }
+    
+    public String upload_profile(MultipartFile file, String userID) {
+    	//Calendar cal = Calendar.getInstance();
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+        //String time = dateFormat.format(cal.getTime());
+
+//        String fileName = userID + "-" +file.getOriginalFilename();
+    	int pos = file.getOriginalFilename().lastIndexOf( "." );
+        String fileName = userID+file.getOriginalFilename().substring(pos);
+        System.out.println("-----------");
+        System.out.println("오리지날파일명 : " + file.getOriginalFilename());
+        System.out.println("현재파일명 : " + fileName);
+
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(file.getSize());
+        objectMetadata.setContentType(file.getContentType());
+
+        try(InputStream inputStream = file.getInputStream()) {
+            s3Client.putObject(new PutObjectRequest(bucket+"/"+profileFolder, fileName, inputStream, objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+            //fileNameList.add(s3Client.getUrl(bucket, fileName).toString());
+        } catch(IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패했습니다.");
+        }
+
+        return fileName;
     }
 
 

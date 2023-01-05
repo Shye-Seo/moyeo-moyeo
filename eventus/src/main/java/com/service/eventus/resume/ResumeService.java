@@ -16,4 +16,13 @@ public class ResumeService {
 	public MemberVo viewMember_forResume(String user_id) {
 		return resumeDao.viewMember_forResume(user_id);
 	}
+	// 이력서 등록
+	public boolean insertResume(ResumeVo resumeVo) {
+		return resumeDao.insertResume(resumeVo);
+	}
+	
+	// 이력서 프로필 등록
+	boolean insertProfile(int staff_id ,String file_name) {
+		return resumeDao.insertProfile(staff_id, file_name);
+	}
 }

@@ -4,9 +4,9 @@
             $(".datetimepicker").datetimepicker({ format: "Y.m.d H:i"});
 
             // 모집인원 숫자만 입력받기
-            $('.input_pn').on("keyup", function() {
-                $(this).val($(this).val().replace(/[^0-9]/g,""));
-            });
+            // $('.input_pn').on("input", function() {
+            //     $(this).val($(this).val().replace(/[^0-9]/g,""));
+            // });
 
             $("#input_file").bind('change', function() {
                 selectFile(this.files);

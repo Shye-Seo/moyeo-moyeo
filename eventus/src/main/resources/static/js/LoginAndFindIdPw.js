@@ -135,18 +135,9 @@ $(function() {
                         location.reload();
                     }
                     else {
-
                         $("#getid").text(data.user_id);
-                        let userJoinDate = data.user_date_join.split('-');
-
-                        if(String(userJoinDate[1]).length == 1){
-                            userJoinDate[1]= '0' + userJoinDate[1];
-                        }
-                        if(String(userJoinDate[2]).length == 1){
-                            userJoinDate[2]= '0' + userJoinDate[2];
-                        }
-
-                        $("#getdate").text(`${userJoinDate[0]}.${userJoinDate[1]}.${userJoinDate[2]}`);
+                        let userJoinDate = chkDate(data.user_date_join)
+                        $("#getdate").text(userJoinDate);
                         $(".tab1_content").css('display', 'none');
                         $(".found_id").css('display', 'block');
                     }

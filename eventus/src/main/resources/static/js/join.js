@@ -291,8 +291,8 @@ function certifinum_checking(input_num){
     if(input_num.length >= 4){
         if(certifinum == input_num){
             $('#certifinum_check').css({'background':'#00DE3C'});
-            $("#certifi_time").text("");
             clearInterval(timer)
+            $("#certifi_time").text("");
             certifi_checked = "1";
             $('#certifinum').attr('readonly','true');
             $("#certifinum_submit").val("인증완료");
