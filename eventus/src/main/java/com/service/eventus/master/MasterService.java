@@ -39,24 +39,4 @@ public class MasterService {
     @Value("${pdf.directory}")
     private String pdfDirectory;
 
-    public void generatePdfFile(String templateName, Map<String, Object> data, String pdfFileName) {
-        Context context = new Context();
-        context.setVariables(data);
-
-        String htmlContent = templateEngine.process(templateName, context);
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(pdfDirectory + pdfFileName);
-            ITextRenderer renderer = new ITextRenderer();
-            renderer.setDocumentFromString(htmlContent);
-            renderer.layout();
-            renderer.createPDF(fileOutputStream, false);
-            renderer.finishPDF();
-
-
-        } catch (FileNotFoundException e) {
-            logger.error(e.getMessage(), e);
-        } catch (DocumentException e) {
-            logger.error(e.getMessage(), e);
-        }
-    }
 }

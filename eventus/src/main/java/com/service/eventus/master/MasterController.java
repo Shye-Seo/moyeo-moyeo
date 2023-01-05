@@ -44,10 +44,4 @@ public class MasterController {
         return mav;
     }
 
-    public void pdf() throws Exception {
-        Map<String, Object> data = new HashMap<>();
-
-
-        masterService.generatePdfFile("pdf", data, "test.pdf");
-    }
 }
