@@ -5,10 +5,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MasterController {
+
 
     @Inject
     private MasterService masterService;
@@ -40,4 +43,5 @@ public class MasterController {
         mav.addObject("career_num", career_num);
         return mav;
     }
+
 }
