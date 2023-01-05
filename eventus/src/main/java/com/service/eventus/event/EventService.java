@@ -67,8 +67,8 @@ public class EventService {
 	}
 
 	// 지원현황 지원자 거주지
-	public String getAddress(int staff_id) throws Exception {
-		return eventDao.getStaffAddress(staff_id);
+	public String getAddress(int event_id, int staff_id) throws Exception {
+		return eventDao.getStaffAddress(event_id, staff_id);
 	}
 	
 	// 지원현황 지원자 만 나이
@@ -107,28 +107,76 @@ public class EventService {
 	}
 
 	// 당일 근무기록 get
-	public WorkRecordVo getWorkTime(int staff_id, int event_id, String work_date) {
+	public List<WorkRecordVo> getWorkTime(int staff_id, int event_id, String work_date) {
 		return eventDao.getWorkTime(staff_id, event_id, work_date);
 	}
 	
 	// 출근시간 기록
-	public boolean record_startTime(int event_id, int staff_id, String work_date, String start_time) {
-		return eventDao.record_startTime(event_id, staff_id, work_date, start_time);
+	public boolean record_startTime(int record_id, int event_id, int staff_id, String work_date, String start_time) {
+		return eventDao.record_startTime(record_id, event_id, staff_id, work_date, start_time);
 	}
 
 	// 외출시간 기록
-	public boolean record_outTime(int event_id, int staff_id, String work_date, String out_time) {
-		return eventDao.record_outTime(event_id, staff_id, work_date, out_time);
+	public boolean record_outTime(int record_id, int event_id, int staff_id, String work_date, String out_time) {
+		return eventDao.record_outTime(record_id, event_id, staff_id, work_date, out_time);
 	}
 	
 	// 복귀시간 기록
-	public boolean record_backTime(int event_id, int staff_id, String work_date, String back_time) {
-		return eventDao.record_backTime(event_id, staff_id, work_date, back_time);
+	public boolean record_backTime(int record_id, int event_id, int staff_id, String work_date, String back_time) {
+		return eventDao.record_backTime(record_id, event_id, staff_id, work_date, back_time);
 	}
 	
 	// 퇴근시간 기록
-	public boolean record_endTime(int event_id, int staff_id, String work_date, String end_time) {
-		return eventDao.record_endTime(event_id, staff_id, work_date, end_time);
+	public boolean record_endTime(int record_id, int event_id, int staff_id, String work_date, String end_time) {
+		return eventDao.record_endTime(record_id, event_id, staff_id, work_date, end_time);
+	}
+	
+	// 당일 근무기록 없을때, 출퇴근시간기록
+	public boolean record_startTime_new(int event_id, int staff_id, String work_date, String start_time) {
+		return eventDao.record_startTime_new(event_id, staff_id, work_date, start_time);
+	}
+	public boolean record_outTime_new(int event_id, int staff_id, String work_date, String out_time) {
+		return eventDao.record_outTime_new(event_id, staff_id, work_date, out_time);
+	}
+	public boolean record_backTime_new(int event_id, int staff_id, String work_date, String back_time) {
+		return eventDao.record_backTime_new(event_id, staff_id, work_date, back_time);
+	}
+	public boolean record_endTime_new(int event_id, int staff_id, String work_date, String end_time) {
+		return eventDao.record_endTime_new(event_id, staff_id, work_date, end_time);
 	}
 
+	//-------------------부스----------------
+	// 부스현황 count
+	public int booth_count(int event_id) throws Exception {
+		return eventDao.booth_count(event_id);
+	}
+	
+	// 부스현황 리스트
+	public List<BoothVo> booth_list(int event_id) {
+		return eventDao.booth_list(event_id);
+	}
+
+	// 행사명 get
+	public String getEventTitle(int booth_id) {
+		return eventDao.getEventTitle(booth_id);
+	}
+	
+	// 시작날짜 get
+	public String getStartDate(int booth_id) {
+		return eventDao.getStartDate(booth_id);
+	}
+		
+	// 끝나는날짜 get
+	public String getEndDate(int booth_id) {
+		return eventDao.getEndDate(booth_id);
+	}
+
+	// 부스등록
+	public boolean register_booth(int event_id, String booth_name, int counting, int expected_time) {
+		return eventDao.register_booth(event_id, booth_name, counting, expected_time);
+	}
+
+	public boolean modify_booth(int booth_id, String booth_name, int counting, int expected_time) {
+		return eventDao.modify_booth(booth_id, booth_name, counting, expected_time);
+	}	
 }
