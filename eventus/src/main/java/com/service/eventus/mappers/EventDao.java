@@ -20,7 +20,7 @@ import com.service.eventus.member.MemberVo;
 @Repository
 public interface EventDao {
 
-	@Select("select * from event order by id desc")
+	@Select("select * from event order by event_status asc, id desc")
 	List<EventVo> event_list();  // 행사현황 리스트
 	
 	@Select("select * from event where id = #{event_id}")
@@ -108,10 +108,10 @@ public interface EventDao {
 	boolean record_endTime_new(int event_id, int staff_id, String work_date, String end_time); // 퇴근시간 기록
 	
 	//이벤트 부스-----------------------------
-	@Select("select count(*) from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id}")
+	@Select("select count(*) from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id} and b.flag = 'Y'")
 	int booth_count(int event_id); // 부스현황 count
 
-	@Select("select * from event_booth where event_id = #{event_id}")
+	@Select("select * from event_booth where event_id = #{event_id} and flag = 'Y'")
 	List<BoothVo> booth_list(int event_id); // 부스현황 리스트
 
 	@Select("select e.event_title from event e inner join event_booth b where e.id = b.event_id and b.id = #{booth_id}")
@@ -126,6 +126,12 @@ public interface EventDao {
 	@Insert("insert into event_booth(event_id, booth_name, counting, expected_time) values(#{event_id}, #{booth_name}, #{counting}, #{expected_time})")
 	boolean register_booth(int event_id, String booth_name, int counting, int expected_time); // 부스등록
 
-	@Update("update event_booth set booth_name = #{booth_name}, counting = #{counting}, expected_time = #{expected_time} where id = ${booth_id}")
+	@Update("update event_booth set booth_name = #{booth_name}, counting = #{counting}, expected_time = #{expected_time} where id = #{booth_id}")
 	boolean modify_booth(int booth_id, String booth_name, int counting, int expected_time); // 부스수정
+
+	@Update("update event_booth set flag = 'N' where id = #{booth_id}")
+	boolean delete_booth(int booth_id); // 부스삭제
+
+	@Select("select event_title from event where id = #{event_id}")
+	String getTitle(int event_id);
 }

@@ -174,8 +174,6 @@ public class EventController {
 		return "eventDetail?id="+eventVo.getId();
 	}
 	
-	
-	
 	//지원현황(모집중) 모달창
 	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
 	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
@@ -183,6 +181,8 @@ public class EventController {
 		int applicant_count = eventService.application_count(event_id);
 		model.addAttribute("event_id", event_id);
 		model.addAttribute("applicant_count", applicant_count);
+		
+		System.out.println("=============> id:"+event_id);
 		
 		List<MemberVo> application_list = eventService.application_list(event_id);
 		if (application_list != null) {
@@ -410,6 +410,8 @@ public class EventController {
 	public String event_booth_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
 		
 		model.addAttribute("event_id", event_id);
+		String Title = eventService.getTitle(event_id);
+		model.addAttribute("Title", Title);
 		
 		List<BoothVo> booth_list = eventService.booth_list(event_id);
 		if (booth_list != null) {
@@ -444,11 +446,22 @@ public class EventController {
 	@ResponseBody
 	@RequestMapping(value="/modify_booth", method=RequestMethod.POST)
 	public String modify_booth(@RequestParam("event_id") int event_id, @RequestParam("booth_id") int booth_id,  @RequestParam("booth_name") String booth_name, 
-								 @RequestParam("counting") int counting, @RequestParam("expected_time") int expected_time) throws Exception{
+							   @RequestParam("counting") int counting, @RequestParam("expected_time") int expected_time) throws Exception{
 			
 		boolean check = eventService.modify_booth(booth_id, booth_name, counting, expected_time);
 		System.out.println("register ok==============>"+check);
 				
+		return "manage_event_booth?id="+event_id;
+	}
+	
+	//부스삭제
+	@ResponseBody
+	@RequestMapping(value="/delete_booth", method=RequestMethod.POST)
+	public String delete_booth(@RequestParam("event_id") int event_id, @RequestParam("booth_id") int booth_id) throws Exception{
+				
+		boolean check = eventService.delete_booth(booth_id);
+		System.out.println("register ok==============>"+check);
+					
 		return "manage_event_booth?id="+event_id;
 	}
 }
