@@ -157,5 +157,8 @@ public class AwsS3Service {
     public void delete_s3event(String fileName) {
     	s3Client.deleteObject(new DeleteObjectRequest(bucket+"/"+eventFolder, fileName));
     }
-
+    
+    public void delete_s3profile(String fileName) {
+    	s3Client.deleteObject(new DeleteObjectRequest(bucket+"/"+profileFolder, fileName));
+    }
 }

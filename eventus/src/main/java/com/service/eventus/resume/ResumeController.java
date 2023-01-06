@@ -1,6 +1,8 @@
 package com.service.eventus.resume;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -39,10 +41,59 @@ public class ResumeController {
 		ModelAndView mav = new ModelAndView();
 		//세션의 아이디를 받아온다
 		String id = (String) session.getAttribute("user_id");
-		
 		MemberVo memberVo = resumeService.viewMember_forResume(id);
 		
+		//이력서 조회
+		ResumeVo resumeVo = resumeService.selectMyResume(memberVo.getId());
+		if(resumeVo == null) { resumeVo = new ResumeVo(); }
+		
+		
+		//학교처리..
+		String[] nullArray = {"",""} ;
+		
+		Map<String, String[]> school_info = new HashMap<>();
+		school_info.put("school", nullArray);
+		school_info.put("major", nullArray);
+		school_info.put("start", nullArray);
+		school_info.put("end", nullArray);
+		school_info.put("state", nullArray);
+		
+		if(resumeVo.getStaff_school() != null) {
+			if(resumeVo.getStaff_school().split(",").length <2) {
+				String[] school = {resumeVo.getStaff_school(), ""};
+				String[] major = {resumeVo.getStaff_major(), ""};
+				String[] start = {resumeVo.getStaff_school_start(), ""};
+				String[] end = {resumeVo.getStaff_school_end(), ""};
+				String[] state = {resumeVo.getStaff_school_state(), ""};
+				school_info.put("school", school);
+				school_info.put("major", major);
+				school_info.put("start", start);
+				school_info.put("end", end);
+				school_info.put("state", state);
+			}else {
+				school_info.put("school", resumeVo.getStaff_school().split(","));
+				school_info.put("major", resumeVo.getStaff_major().split(","));
+				school_info.put("start", resumeVo.getStaff_school_start().split(","));
+				school_info.put("end", resumeVo.getStaff_school_end().split(","));
+				school_info.put("state", resumeVo.getStaff_school_state().split(","));
+			}
+		}
+		
+		//행사처리
+		Map<String, String[]> career_info = new HashMap<>();
+		
+		if(resumeVo.getStaff_career_eventName() != null) {
+			career_info.put("eventName", resumeVo.getStaff_career_eventName().split(","));
+			career_info.put("businessName",resumeVo.getStaff_career_businessName().split(","));
+			career_info.put("positions",resumeVo.getStaff_career_position().split(","));
+			career_info.put("workday",resumeVo.getStaff_career_workday().split(","));
+		}
+
 		mav.addObject("memberInfo",memberVo);
+		mav.addObject("resumeInfo", resumeVo);
+		mav.addObject("school_info", school_info);
+		mav.addObject("career_info", career_info);
+		
 		mav.setViewName("resume_register");
 		return mav;
 	}
@@ -53,10 +104,14 @@ public class ResumeController {
 		
 		
 		MultipartFile profileImg = multipartRequest.getFile("profile_img");
-		String filename = s3Service.upload_profile(profileImg, Integer.toString(resumeVo.getStaff_id()));
-		resumeService.insertResume(resumeVo);
-		resumeService.insertProfile(resumeVo.getStaff_id(), filename);
+		System.out.println(profileImg.getOriginalFilename());
+		if(profileImg.getOriginalFilename() != "") {
+			String filename = s3Service.upload_profile(profileImg, Integer.toString(resumeVo.getStaff_id()));
+			resumeService.insertProfile(resumeVo.getStaff_id(), filename);
+		}
 		
+		resumeService.disabledPreResume(resumeVo.getStaff_id());
+		resumeService.insertResume(resumeVo);
 		
 		return "manage_career_forstaff";
 	}

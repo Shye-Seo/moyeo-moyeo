@@ -306,8 +306,4 @@
 	   
 	}
 
-//textarea 글 작성시 자동 크기조정
-    function resize(obj) {
-        obj.style.height = '1px';
-        obj.style.height = (15 + obj.scrollHeight) + 'px';
-    }
+

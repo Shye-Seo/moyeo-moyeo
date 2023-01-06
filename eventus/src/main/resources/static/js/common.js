@@ -62,3 +62,10 @@ function chkDate(in_birth){
 
     return `${births[0]}.${births[1]}.${births[2]}`;
 }
+
+//textarea 글 작성시 자동 크기조정 
+//조정할 textarea에 onkeydown="resize(this)" 넣기
+function resize(obj) {
+    obj.style.height = '1px';
+    obj.style.height = (15 + obj.scrollHeight) + 'px';
+}

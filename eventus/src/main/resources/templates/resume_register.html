@@ -72,7 +72,7 @@
                                 </span>
                                 <span class="w-all">
                                     <p>거주지</p>
-                                    <input type="text" name="staff_address" placeholder="직접 입력해주세요.">
+                                    <input type="text" name="staff_address" th:value="${#strings.defaultString(resumeInfo.staff_address, '')}" placeholder="직접 입력해주세요." >
                                 </span>
                             </div>
                         </div>
@@ -89,19 +89,19 @@
                             <div class="school_info">
                                 <span class="w-31p">
                                     <p class="red_star">학교명</p>
-                                    <input type="text" name="staff_school1" class="required" placeholder="학교명을 입력해주세요.">
+                                    <input type="text" name="staff_school1" class="required" th:value="${#strings.defaultString(school_info.school[0], '')}" placeholder="학교명을 입력해주세요.">
                                 </span>
                                 <span class="w-31p">
                                     <p class="red_star">전공/계열</p>
-                                    <input type="text" name="staff_major1" class="required" placeholder="전공/계열을 입력해주세요.">
+                                    <input type="text" name="staff_major1" class="required" th:value="${#strings.defaultString(school_info.major[0], '')}" placeholder="전공/계열을 입력해주세요.">
                                 </span>
                                 <span class="w-14p">
                                     <p class="red_star">입학년도</p>
-                                    <input type="text" name="staff_school_start1" class="onlyNum required" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
+                                    <input type="text" name="staff_school_start1" class="onlyNum required" th:value="${#strings.defaultString(school_info.start[0], '')}" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
                                 </span>
                                 <span class="w-14p">
                                     <p>졸업년도</p>
-                                    <input type="text" name="staff_school_end1" class="onlyNum" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
+                                    <input type="text" name="staff_school_end1" class="onlyNum" th:value="${#strings.defaultString(school_info.end[0], '')}" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
                                 </span>
                                 <span class="w-14p">
                                     <p class="red_star">졸업구분</p>
@@ -115,19 +115,19 @@
                             <div class="school_info">
                                 <span class="w-31p">
                                     <p>학교명</p>
-                                    <input type="text" name="staff_school2" placeholder="학교명을 입력해주세요." required>
+                                    <input type="text" name="staff_school2" th:value="${#strings.defaultString(school_info.school[1], '')}" placeholder="학교명을 입력해주세요." required>
                                 </span>
                                 <span class="w-31p">
                                     <p>전공/계열</p>
-                                    <input type="text" name="staff_major2" placeholder="전공/계열을 입력해주세요.">
+                                    <input type="text" name="staff_major2" th:value="${#strings.defaultString(school_info.major[1], '')}" placeholder="전공/계열을 입력해주세요.">
                                 </span>
                                 <span class="w-14p">
                                     <p>입학년도</p>
-                                    <input type="text" name="staff_school_start2" class="onlyNum" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
+                                    <input type="text" name="staff_school_start2" class="onlyNum" th:value="${#strings.defaultString(school_info.start[1], '')}" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
                                 </span>
                                 <span class="w-14p">
                                     <p>졸업년도</p>
-                                    <input type="text" name="staff_school_end2" class="onlyNum" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
+                                    <input type="text" name="staff_school_end2" class="onlyNum" th:value="${#strings.defaultString(school_info.end[1], '')}" placeholder="YYYY.MM" onkeyup="chkSchool($(this))">
                                 </span>
                                 <span class="w-14p">
                                     <p>졸업구분</p>
@@ -179,12 +179,26 @@
         /*<![CDATA[*/
             $(function(){
                 const in_birth = /*[[${memberInfo.user_birth}]]*/
-                console.log()
                 const in_phone = /*[[${memberInfo.user_phone}]]*/
+                const school_state = /*[[${school_info.state}]]*/
+                const career_info = /*[[${career_info}]]*/
 
                 $('input[name="user_birth"]').val(chkDate(in_birth))
                 $('input[name="user_phone"]').val(chkItemPhone(in_phone));
-            
+
+                if(school_state[0] != ""){ $('select[name="staff_school_state1"]').val(school_state[0]); }
+                if(school_state[1] != ""){ $('select[name="staff_school_state2"]').val(school_state[1]); }
+                
+                $('input[name="input_staff_career_eventName"]').val(career_info.eventName[0]);
+                $('input[name="input_staff_career_businessName"]').val(career_info.businessName[0]);
+                $('input[name="input_staff_career_position"]').val(career_info.positions[0]);
+                $('input[name="input_staff_career_workday"]').val(career_info.workday[0]);
+                
+                for(i =1; i<career_info.eventName.length;i++){
+                    add_career_forUpdate(career_info.eventName[i],career_info.businessName[i],career_info.positions[1],career_info.workday[1]);
+                }
+
+                
                 //필수값 체크
                 $('#submit_bt').click(function(){
                     let result = true;

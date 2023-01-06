@@ -26,6 +26,30 @@ function add_career(){
     }
 }
 
+//경력추가 update
+function add_career_forUpdate(eventName, businessName, position, workday){
+    $(".career_wrap:first").clone(true).appendTo($(".careers_div"));
+    $('.career_wrap:last input[name="input_staff_career_eventName"]').val(eventName);
+    $('.career_wrap:last input[name="input_staff_career_eventName"]').attr('name','input_staff_career_eventName'+career_num);
+    $('.career_wrap:last input[name="input_staff_career_businessName"]').val(businessName);
+    $('.career_wrap:last input[name="input_staff_career_businessName"]').attr('name','input_staff_career_businessName'+career_num);
+    $('.career_wrap:last input[name="input_staff_career_position"]').val(position);
+    $('.career_wrap:last input[name="input_staff_career_position"]').attr('name','input_staff_career_position'+career_num);
+    $('.career_wrap:last input[name="input_staff_career_workday"]').val(workday);
+    $('.career_wrap:last input[name="input_staff_career_workday"]').attr('name','input_staff_career_workday'+career_num);
+    $('.career_wrap:last').append('<div class="remove_career"  style="--i :'+career_num+' ;" onclick="remove_career(this)"></div>');
+
+    career_num++;
+    if(career_num>1){
+        $("#add_career").css('right','-90px')
+    }else{
+        $("#add_career").css('right','-50px')
+    }
+    if(career_num == max_num){
+        $("#add_career").hide();
+    }
+}
+
 //경력삭제
 function remove_career(obj){
     let remove_num= obj.style.getPropertyValue("--i")*1;
@@ -198,13 +222,6 @@ if (confirm("등록 하시겠습니까?") == true){
     
     var form = $('form[name="resumeForm"]');
     var formData = new FormData(form[0]);
-    // for (var i = 0; i < fileList.length; i++) {
-    //     formData.append('event_file', fileList[i]);
-    //     console.log(formData.get('event_file')) 
-    //     console.log(fileList[i]) 
-    // }
-
-
     $.ajax({
         url : actionUrl,
         data : formData,
@@ -212,7 +229,6 @@ if (confirm("등록 하시겠습니까?") == true){
         enctype : 'multipart/form-data',
         processData : false,
         contentType : false,
-//                dataType : 'json',
         cache : false,
         success : function (result) {
             window.location.href= result;
@@ -221,7 +237,6 @@ if (confirm("등록 하시겠습니까?") == true){
     } else {
         return false;
     }
-    //$('form[name="eventAddForm"]').submit();
 
 
 }
