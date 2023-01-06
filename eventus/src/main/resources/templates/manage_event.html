@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="/css/manage_event.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
@@ -80,6 +81,7 @@
 							
 							<div id="a_count">
 							<a th:if="${event.event_status == 0}" th:href="@{application_modal(id=${event.id})}"><li th:text="${event.application_count} + ' 명'" class="red"></li></a>
+<!-- 							<li th:if="${event.event_status == 0}" th:attr="onclick=|application('${event.id}')|" th:text="${event.application_count} + ' 명'" class="red"></li> -->
 							<a th:if="${event.event_status == 1}" th:href="@{workRecord_modal(id=${event.id})}"><li th:text="${event.staff_count} + ' 명'" class="black"></li></a>
 							<li th:if="${event.event_status == 2}" th:text="${event.staff_count} + ' 명'" class="gray"></li>
 							</div>
@@ -92,6 +94,28 @@
 						</ol>
                     </ul>
                 </div>
+                
+<!--                 <div id="application_modal"> -->
+<!--                 	<div th:replace="~{/application_modal :: application}"></div> -->
+<!--                 </div> -->
+                <script>
+                	function application(event_id){
+                		document.getElementById("application_modal").style.display="block";
+                		debugger;
+                		
+                		$.ajax({
+    						url : "/application_modal",
+    						type : 'post',
+    						data : {
+    							id:event_id
+    						}
+//                 		,
+//     						success: function(){
+//     							location.href="/application_modal?id="+event_id;
+//     						}
+    					});
+                	}
+                </script>
 
                 <!-- 페이징 처리(Unix 참조) -->
                 <div>

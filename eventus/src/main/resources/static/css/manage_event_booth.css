@@ -180,27 +180,68 @@ body{
 .list {
     margin-top:20px;
 }
+
 .list #top_ol {
-    box-shadow: 0px 3px 6px #00000029;
     font-weight: bold;
-    border-top: 1px solid #DDDDDD;
-    border-bottom: 1px solid #DDDDDD;
+    border-top: 2px solid #DDDDDD;
+    border-bottom: 2px solid #DDDDDD;
+    display: flex;
+    flex-direction: row;
+    font-weight: 600;
 }
-ol li {
+
+#top_ol div li {
     display:inline-block;
-    margin-top:1.5%;
-    margin-bottom:1.5%;
-    margin-left:8%;
+    margin-top:17.5px;
+    margin-bottom:17.5px;
+    color: #666666;
 }
 
-.list ol li:nth-child(1) {
-    margin-left:4%;
+#list_ol{
+	display: flex;
+	border-bottom: 1px solid #DDDDDD;
+	line-height: 45px;
+	height: 45px;
+	font-weight: 600;
 }
 
-.list #list_ol li:nth-child(5) {
-/* 	width: 72px; */
-/* 	height: 36px; */
+#icon_area img {
+	cursor: pointer;
+	width: auto;
+	height: 17px;
+	margin-top: 14px;
 }
+
+#index_area{
+	margin-left:4%;
+	width: 7%;
+}
+
+#title_area{
+	width: 23%;
+	text-align: center;
+}
+
+#date_area{
+	width: 20%;
+	text-align: center;
+}
+
+#booth_area{
+	width: 15%;
+	text-align: center;
+}
+
+#counting_area, #time_area{
+	width: 10%;
+	text-align: center;
+}
+
+#icon_area{
+	width: 5%;
+	text-align: center;
+}
+
 
 #button_{
 	margin-top: 20px;
@@ -218,8 +259,14 @@ ol li {
 	cursor: pointer;
 }
 
+#text_over{
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 /*-------모달----------*/
-#modal, #modal_modify {
+#modal, #modal_modify, #modal_delete {
     position:fixed;
     width:90%;
     height:100%;
@@ -260,11 +307,20 @@ ol li {
 	border-radius: 10px;
 }
         
-.modal_content, .modal_content_m {
+.modal_content, .modal_content_m{
 	width:540px;
 	height:600px;
-	margin:240px auto;
-    padding:20px;
+	margin:190px auto;
+    background:#fff;
+    border:none;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.modal_content_d{
+	width:540px;
+/* 	height:310px; */
+	margin:326px auto;
     background:#fff;
     border:none;
     border-radius: 20px;
@@ -274,7 +330,7 @@ ol li {
 	padding: 45px;
 }
         
-.modal_layer, .modal_layer_m {
+.modal_layer, .modal_layer_m, .modal_layer_d {
     position:fixed;
     top:0;
     left:0;
@@ -287,11 +343,13 @@ ol li {
 #modal_close_btn, #modal_close_btn_m{
 	width: 40px;
 	margin-left: 90%;
+	cursor: pointer;
 }
 
 #modal_btn_div{
 	margin-top: 12px;
 	margin-bottom: 5px;
+	display: flex;
 }
 
 #modal_insert_btn{
@@ -304,6 +362,7 @@ ol li {
 	text-align: center;
 	font-weight: 600;
 	margin-left: 126px;
+	cursor: pointer;
 }
 
 #modal_update_btn{
@@ -316,4 +375,35 @@ ol li {
 	text-align: center;
 	font-weight: 600;
 	margin-left: 126px;
+	cursor: pointer;
+}
+
+#modal_close_btn_d{
+	background-color:#DDDDDD;
+	border-radius: 10px;
+	color: #FFFFFF;
+	width: 160px;
+	height: 50px;
+	font-size: 18px;
+	text-align: center;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+#modal_delete_btn{
+	background-color: #DD5067;
+	border-radius: 10px;
+	width: 270px;
+	height: 50px;
+	color: #FFFFFF;
+	font-size: 18px;
+	text-align: center;
+	font-weight: 600;
+	margin-left: 21px;
+	cursor: pointer;
+}
+
+#delete_confirm{
+	margin-top: 30px;
+	margin-bottom: 60px;
 }
