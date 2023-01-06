@@ -43,25 +43,27 @@
                 <div class="area">
                 	<form name="resumeForm" action="/resumeAdd" method="post" onsubmit="return false">
                     <input type="text" name="staff_id" th:value="${memberInfo.id}" hidden >
+                    <input type="text" name="OldResume_id" th:value="${resume_id}" hidden >
+                    <input type="text" name="OldProfile" th:value="${profile}" hidden >
                     <div class="area1">
                         <span>인적사항</span>
                         <div class="area1_info_wrap">
                             <div>
                                 <span class="w-24p">
                                     <p class="red_star">이름</p>
-                                    <input type="text" class="fix_input" name="user_name" th:value="${memberInfo.user_name}" readonly >
+                                    <input type="text" class="lock_input" name="user_name" th:value="${memberInfo.user_name}" readonly >
                                 </span>
                                 <span class="w-24p">
                                     <p class="red_star">생년월일</p>
-                                    <input type="text" class="fix_input" name="user_birth" readonly >
+                                    <input type="text" class="lock_input" name="user_birth" readonly >
                                 </span>
                                 <span class="w-14p">
                                     <p class="red_star">성별</p>
-                                    <input type="text" class="fix_input" name="user_gender" th:value="${memberInfo.user_gender}" readonly >
+                                    <input type="text" class="lock_input" name="user_gender" th:value="${memberInfo.user_gender}" readonly >
                                 </span>
                                 <span class="w-all">
                                     <p class="red_star">휴대폰번호</p>
-                                    <input type="text" class="fix_input" name="user_phone" placeholder="010-1234-5678" readonly >
+                                    <input type="text" class="lock_input" name="user_phone" placeholder="010-1234-5678" readonly >
                                 </span>
                                 
                             </div>
@@ -79,8 +81,8 @@
                         <div class="profile_wrap">
                             <label for="profile_img_file" id="insert_profile_bt"></label>
                             <!-- <div id="update_profile_bt">수정하기</div> -->
-                            <img id="preview" src="" alt="profile_img" onerror="this.src='/imgs/profile_box.png';">
-                            <input type="file" name="profile_img" id="profile_img_file" onchange="readURL(this);" hidden/>
+                            <img id="preview" class="in_profile" th:src="@{'https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/' +${profile}}" alt="profile_img" onerror="this.src='/imgs/profile_box.png'; this.classList.remove('in_profile');">
+                            <input type="file" name="profile_img"  id="profile_img_file" onchange="readURL(this);" hidden/>
                         </div>
                     </div>
                     <div class="area2">
@@ -106,7 +108,7 @@
                                 <span class="w-14p">
                                     <p class="red_star">졸업구분</p>
                                     <select name="staff_school_state1" class="required">
-                                        <option value="졸업">졸업</option>
+                                        <option value="졸업" selected>졸업</option>
                                         <option value="재학중">재학중</option>
                                         <option value="중퇴">중퇴</option>
                                     </select>
@@ -132,7 +134,7 @@
                                 <span class="w-14p">
                                     <p>졸업구분</p>
                                     <select name="staff_school_state2">
-                                        <option value="졸업">졸업</option>
+                                        <option value="졸업" selected>졸업</option>
                                         <option value="재학중">재학중</option>
                                         <option value="중퇴">중퇴</option>
                                     </select>
@@ -167,7 +169,8 @@
                         
                     </div>
                     <div class="btn_wrap">
-                        <button type="button">취소</button>
+                        <button type="button" onclick="location.href='manage_career_forstaff'">취소</button>
+                        <button type="button" id="update_bt">수정</button>
                         <button type="button" id="submit_bt">저장</button>
                     </div>
                     </form>
@@ -189,29 +192,18 @@
                 if(school_state[0] != ""){ $('select[name="staff_school_state1"]').val(school_state[0]); }
                 if(school_state[1] != ""){ $('select[name="staff_school_state2"]').val(school_state[1]); }
                 
-                $('input[name="input_staff_career_eventName"]').val(career_info.eventName[0]);
-                $('input[name="input_staff_career_businessName"]').val(career_info.businessName[0]);
-                $('input[name="input_staff_career_position"]').val(career_info.positions[0]);
-                $('input[name="input_staff_career_workday"]').val(career_info.workday[0]);
-                
-                for(i =1; i<career_info.eventName.length;i++){
-                    add_career_forUpdate(career_info.eventName[i],career_info.businessName[i],career_info.positions[1],career_info.workday[1]);
+                if(career_info.length != 0){
+                    $('input[name="input_staff_career_eventName"]').val(career_info.eventName[0]);
+                    $('input[name="input_staff_career_businessName"]').val(career_info.businessName[0]);
+                    $('input[name="input_staff_career_position"]').val(career_info.positions[0]);
+                    $('input[name="input_staff_career_workday"]').val(career_info.workday[0]);
+                    for(i =1; i<career_info.eventName.length;i++){
+                        add_career_forUpdate(career_info.eventName[i],career_info.businessName[i],career_info.positions[1],career_info.workday[1]);
+                    }
+                    if($('input[name="OldResume_id"]').val() != 0){
+                        $('.remove_career').hide();
+                    }
                 }
-
-                
-                //필수값 체크
-                $('#submit_bt').click(function(){
-                    let result = true;
-                    $('.required').each(function(){
-                        if($(this).val() == ""){
-                            $(this).focus();
-                            result = false;
-                            return false;
-                        }
-                    })
-                    if(!result) return false;
-                    submitDate('/resumeAdd');
-                })
             })
         /*]]>*/
     </script>

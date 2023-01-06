@@ -22,20 +22,25 @@ public class ResumeService {
 		return resumeDao.selectMyResume(staff_id);
 	}
 	
-	// 이력서 등록
-	public boolean insertResume(ResumeVo resumeVo) {
-		return resumeDao.insertResume(resumeVo);
+	// 프로필 조회
+	public String selectProfile(int resume_id) {
+		return resumeDao.selectProfile(resume_id);
+	}
+	
+	// 이력서 등록 (등록한 이력서 id 출력)
+	public int insertResume(ResumeVo resumeVo) {
+		resumeDao.insertResume(resumeVo);
+		return resumeDao.selectResumeId(resumeVo.getStaff_id());
 	}
 	
 	// 이력서 프로필 등록
-	public boolean insertProfile(int staff_id ,String file_name) {
-		return resumeDao.insertProfile(staff_id, file_name);
+	public boolean insertProfile(int staff_id, int resume_id, String file_name) {
+		return resumeDao.insertProfile(staff_id, resume_id, file_name);
 	}
 	
 	// 이전 이력서 비활성화
 	public boolean disabledPreResume(int staff_id) {
 		return resumeDao.disabledPreResume(staff_id);
 	}
-	
 	
 }

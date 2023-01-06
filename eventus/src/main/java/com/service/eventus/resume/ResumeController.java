@@ -34,8 +34,8 @@ public class ResumeController {
 	private ResumeService resumeService;
 
 	
-	//이력서 등록 페이지
-	@GetMapping(value="/resume_register")
+	//이력서 조회 / 등록 / 수정
+	@GetMapping(value="/myresume_forStaff")
 	public ModelAndView resume_register(HttpSession session) {
 		
 		ModelAndView mav = new ModelAndView();
@@ -45,7 +45,14 @@ public class ResumeController {
 		
 		//이력서 조회
 		ResumeVo resumeVo = resumeService.selectMyResume(memberVo.getId());
-		if(resumeVo == null) { resumeVo = new ResumeVo(); }
+		String profile_fileName = "";
+		int resume_id = 0;
+		if(resumeVo == null) { 
+			resumeVo = new ResumeVo(); 
+		}else {
+			profile_fileName = resumeService.selectProfile(resumeVo.getId());
+			resume_id = resumeVo.getId();
+		}
 		
 		
 		//학교처리..
@@ -61,20 +68,32 @@ public class ResumeController {
 		if(resumeVo.getStaff_school() != null) {
 			if(resumeVo.getStaff_school().split(",").length <2) {
 				String[] school = {resumeVo.getStaff_school(), ""};
-				String[] major = {resumeVo.getStaff_major(), ""};
-				String[] start = {resumeVo.getStaff_school_start(), ""};
-				String[] end = {resumeVo.getStaff_school_end(), ""};
-				String[] state = {resumeVo.getStaff_school_state(), ""};
 				school_info.put("school", school);
-				school_info.put("major", major);
-				school_info.put("start", start);
-				school_info.put("end", end);
-				school_info.put("state", state);
 			}else {
 				school_info.put("school", resumeVo.getStaff_school().split(","));
+			}
+			if(resumeVo.getStaff_major().split(",").length <2) {
+				String[] major = {resumeVo.getStaff_major(), ""};
+				school_info.put("major", major);
+			}else {
 				school_info.put("major", resumeVo.getStaff_major().split(","));
+			}
+			if(resumeVo.getStaff_school_start().split(",").length <2) {
+				String[] start = {resumeVo.getStaff_school_start(), ""};
+				school_info.put("start", start);
+			}else {
 				school_info.put("start", resumeVo.getStaff_school_start().split(","));
+			}
+			if(resumeVo.getStaff_school_end().split(",").length <2) {
+				String[] end = {resumeVo.getStaff_school_end(), ""};
+				school_info.put("end", end);
+			}else {
 				school_info.put("end", resumeVo.getStaff_school_end().split(","));
+			}
+			if(resumeVo.getStaff_major().split(",").length <2) {
+				String[] state = {resumeVo.getStaff_school_state(), ""};
+				school_info.put("state", state);
+			}else {
 				school_info.put("state", resumeVo.getStaff_school_state().split(","));
 			}
 		}
@@ -91,6 +110,8 @@ public class ResumeController {
 
 		mav.addObject("memberInfo",memberVo);
 		mav.addObject("resumeInfo", resumeVo);
+		mav.addObject("profile", profile_fileName);
+		mav.addObject("resume_id", resume_id);
 		mav.addObject("school_info", school_info);
 		mav.addObject("career_info", career_info);
 		
@@ -98,20 +119,27 @@ public class ResumeController {
 		return mav;
 	}
 	
+	//이력서 추가/수정
 	@ResponseBody
 	@RequestMapping(value="/resumeAdd", method=RequestMethod.POST)
 	public String resumeAdd(MultipartHttpServletRequest multipartRequest, @ModelAttribute ResumeVo resumeVo) throws Exception{
 		
-		
+		int OldResume_id = Integer.parseInt(multipartRequest.getParameter("OldResume_id"));
+		String OldProfile = (String) multipartRequest.getParameter("OldProfile");
 		MultipartFile profileImg = multipartRequest.getFile("profile_img");
-		System.out.println(profileImg.getOriginalFilename());
-		if(profileImg.getOriginalFilename() != "") {
-			String filename = s3Service.upload_profile(profileImg, Integer.toString(resumeVo.getStaff_id()));
-			resumeService.insertProfile(resumeVo.getStaff_id(), filename);
-		}
 		
+		//먼저 등록한 이력서 비활성화
 		resumeService.disabledPreResume(resumeVo.getStaff_id());
-		resumeService.insertResume(resumeVo);
+		
+		//이력서 등록
+		int resumeID = resumeService.insertResume(resumeVo);
+		//프로필 등록
+		if(profileImg.getOriginalFilename() != "") {
+			String filename = s3Service.upload_profile(profileImg, Integer.toString(resumeVo.getStaff_id()), Integer.toString(resumeID));
+			resumeService.insertProfile(resumeVo.getStaff_id(), resumeID, filename);
+		}else if(OldResume_id != 0 ) {
+			resumeService.insertProfile(resumeVo.getStaff_id(), resumeID, OldProfile);
+		}
 		
 		return "manage_career_forstaff";
 	}

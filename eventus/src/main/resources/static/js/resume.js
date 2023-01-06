@@ -2,6 +2,52 @@
 let career_num =1;
 const max_num =5;
 
+
+$(function(){
+
+    //등록된 이력서가 있으면 비활성화
+    if($('input[name="OldResume_id"]').val() != 0){
+        $('input').attr('readonly','true');
+        $('input').addClass('fix_input');
+        $('select').attr('disabled','true');
+        $('select').addClass('fix_input');
+        $('#add_career').hide();
+        $('#submit_bt').hide();
+    }else{
+        $('#update_bt').hide();
+    }
+
+    //수정 버튼 누를 시 활성화
+    $('#update_bt').on('click',function(){
+        $('input').removeAttr('readonly');
+        $('input').removeClass('fix_input');
+        $('select').removeAttr('disabled','false');
+        $('select').removeClass('fix_input');
+
+        $('.lock_input').attr('readonly','true');
+        $('#submit_bt').show()
+        $('.remove_career').show();
+        $('#add_career').show();
+        $('#update_bt').hide();
+        
+    })
+
+    //필수값 체크
+    $('#submit_bt').click(function(){
+        let result = true;
+        $('.required').each(function(){
+            if($(this).val() == ""){
+                $(this).focus();
+                result = false;
+                return false;
+            }
+        })
+        if(!result) return false;
+        submitDate('/resumeAdd');
+    })
+
+})
+
 //경력추가
 function add_career(){
     $(".career_wrap:first").clone(true).appendTo($(".careers_div"));
@@ -176,13 +222,22 @@ if (confirm("등록 하시겠습니까?") == true){
     let staff_school_end = $('input[name="staff_school_end1"]').val();
     let staff_school_state = $('select[name="staff_school_state1"]').val();
 
-    if($('input[name="staff_school2"]').val()!=""){//학교명2 없음 바로 submit
+    if($('input[name="staff_school2"]').val()!="" ){//학교명2 없음 바로 submit
         staff_school += ',' + $('input[name="staff_school2"]').val();
+    }
+    if($('input[name="staff_major2"]').val()!=""){
         staff_major += ',' + $('input[name="staff_major2"]').val();
+    }
+    if($('input[name="staff_school_start2"]').val()!=""){
         staff_school_start += ',' + $('input[name="staff_school_start2"]').val();
+    }
+    if($('input[name="staff_school_end2"]').val()!=""){
         staff_school_end += ',' + $('input[name="staff_school_end2"]').val();
+    }
+    if($('select[name="staff_school_state2"]').val()!=""){
         staff_school_state += ',' + $('select[name="staff_school_state2"]').val();
     }
+
 
     $('.area2').append(`<input type="text" name="staff_school" value="${staff_school}" hidden/>`);
     $('.area2').append(`<input type="text" name="staff_major" value="${staff_major}" hidden/>`);

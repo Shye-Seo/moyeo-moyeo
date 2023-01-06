@@ -128,10 +128,11 @@
     outline: none;
 }
 
-.area .fix_input{
+.area .fix_input, .area .lock_input{
     background-color: #FAFAFA;
+    opacity: 1;
 }
-.area .fix_input:focus-visible{
+.area .fix_input:focus-visible, .area .lock_input:focus-visible{
     border: 0.5px solid #DDDDDD;
 }
 
@@ -281,7 +282,7 @@
     font-size: 16px;
     cursor: pointer;
 }
-.btn_wrap button:last-child{
+#submit_bt, #update_bt{
     background-color: #5B8FD2;
     border: 0.5px solid #5B8FD2;
     color: #ffffff;
