@@ -45,12 +45,18 @@ public class MasterController {
         return mav;
     }
 
-    @RequestMapping("/contract_file")
-    public ModelAndView contract_file(@ModelAttribute MasterVo masterVo) {
+    @RequestMapping("/contract_check")
+    public ModelAndView contract_check(@ModelAttribute MasterVo masterVo) {
 
         ModelAndView mav = new ModelAndView();
+        System.out.println("test");
+        System.out.println(masterVo.getUser_name());
+        System.out.println(masterVo.getUser_phone());
+        System.out.println(masterVo.getStaff_address());
+        System.out.println(masterVo.getIdentification_number());
+        System.out.println(masterVo.getYear());
+        mav.setViewName("/contract_file");
         mav.addObject("masterVo", masterVo);
-
         return mav;
     }
 }

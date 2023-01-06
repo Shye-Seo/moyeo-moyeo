@@ -87,4 +87,9 @@ public class MainController {
 	public String report_work_ForStaff() {
 		return "report_work_ForStaff";
 	}
+
+	@GetMapping(value="/contract_file")
+	public String contract_file() {
+		return "contract_file";
+	}
 }

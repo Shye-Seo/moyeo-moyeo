@@ -14,8 +14,7 @@
 
     <div id="wrap">
         <div th:replace="~{common/sideforstaff :: sidebar_manage ('manage_career_forstaff')}"></div>
-        <div th:insert="contract_file :: modal1" id="contract" class="contract"></div>
-        <div th:insert="contract_file :: modal2" id="security" class="security"></div>
+        <form th:insert="~{contract_file :: modal}" action="contract_check" id="contract" class="contract"></form>
 
         <!-- main -->
         <div class="content">
@@ -88,8 +87,8 @@
             overflow-y: scroll;
         }
 
-        #contract,
-        #security {
+        #modal1,
+        #modal2 {
             display:none;
             position:fixed;
             right:0;
@@ -113,38 +112,28 @@
 
         // 근로계약서 미등록 클릭시 모달창 띄우기
         $(function() {
-            // 오늘 날짜 연 월 일 가져와서 변수에 저장
-            var today = new Date();
-            var year = today.getFullYear();
-            var month = today.getMonth() + 1;
-            var day = today.getDate();
-
-            // 연 월 일 변수를 각각의 span 태그에 넣어줌
-            $(".year").text(year);
-            $(".month").text(month);
-            $(".day").text(day);
 
             // 근로계약서 등록 버튼 클릭 시
             $("#contract_add").click(function(){
-                $("#contract").css("display", "block");
+                $("#modal1").css("display", "block");
             });
 
             // X 버튼 클릭 시 모달창 닫기
             $("input[type=image]").click(function() {
-                $("#contract").css("display", "none");
-                $("#security").css("display", "none");
+                $("#modal1").css("display", "none");
+                $("#modal2").css("display", "none");
             });
 
             // 취소 버튼 클릭 시 모달창 닫기
             $("#reset_btn").click(function(){
-                $("#contract").css("display", "none");
-                $("#security").css("display", "none");
+                $("#modal1").css("display", "none");
+                $("#modal2").css("display", "none");
             });
 
             // 보안 계약서 모달에서 뒤로 버튼 클릭 시 근로 계약서 모달로 이동
             $("#back_btn").click(function(){
-                $("#contract").css("display", "block");
-                $("#security").css("display", "none");
+                $("#modal1").css("display", "block");
+                $("#modal2").css("display", "none");
             });
 
             // id가 save_btn 버튼 숨기기
@@ -163,8 +152,8 @@
                     }*/
                 });
                 if (check) {
-                    $("#contract").css("display", "none");
-                    $("#security").css("display", "block");
+                    $("#modal1").css("display", "none");
+                    $("#modal2").css("display", "block");
                 }
             });
 
@@ -173,7 +162,7 @@
 
             $('#confirm_btn').click(function() {
                 var check = true;
-                $("#security input[type=text]").each(function() {
+                $("#modal2 input[type=text]").each(function() {
                     /*
                     if ($(this).val() == "") {
                         alert("빈칸을 채워주세요.");
@@ -181,8 +170,7 @@
                         return false;
                     }*/
                     if(check) {
-                        // form의 데이터 submit
-                        location.href="/contract_file";
+                        $("#contract").submit();
                     }
                 });
 

@@ -14,4 +14,11 @@ public class MasterVo {
     private String user_birth;
     private String user_phone;
     private String user_date_join;
+    private String staff_address;
+
+    private int year;
+    private int month;
+    private int day;
+    private String identification_number; // 주민등록번호
+
 }
