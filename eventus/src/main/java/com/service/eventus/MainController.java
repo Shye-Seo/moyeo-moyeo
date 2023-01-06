@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
-	
-    // 최초 진입 시 실행 페이지
+
+	// 최초 진입 시 실행 페이지
 	@GetMapping(value="/")
 	public String home() {
 		return "login";
 	}
-	
+
 	// 관리자 페이지 링크
 	@GetMapping(value="/login")
 	public String login() {
@@ -61,10 +61,10 @@ public class MainController {
 	}
 	*/
 
-	@GetMapping(value="/report_work")
-	public String report_work() {
-		return "report_work";
-	}
+//	@GetMapping(value="/report_work")
+//	public String report_work() {
+//		return "report_work";
+//	}
 
 
 	// 사용자 페이지 링크
