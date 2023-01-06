@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모달용 프레임</title>
+</head>
+<body>
+
+    <!-- list = 멤버vo -->
+    <div th:fragment="application (list)" > 
+        <input type="hidden" th:value="${list.id}" id="staff_id">
+			<img src="/imgs/trash_can.svg" id="trash_icon" th:if="${list.result == '대기중'}" th:onclick="'rejectAccept('+${list.id}+')'">
+			<div id="each_">
+			<div class="img_div">
+				<img src="/imgs/profile_none_img.svg" id="profile_img">
+			</div>
+			<div class="personal_info">
+				<div id="personal_div" class="upper_div">
+					<img src="/imgs/personal_icon.svg" id="icon">
+					<p th:text="${list.user_name} + '(' + ${list.staff_age} + '세)'"></p>
+				</div>
+				<div id="personal_div">
+					<img src="/imgs/phone_icon.svg" id="icon">
+					<p th:text="${list.staff_phone}"></p>
+				</div>
+			</div>
+			<div id="line"></div>
+			<div class="career_info">
+				<div class="upper_div"><p>행사경력</p></div>
+				<div><p th:text="${list.career_count} + ' 회'"></p></div>
+			</div>
+			<div id="line"></div>
+			<div class="address_info">
+				<div class="upper_div"><p>거주지</p></div>
+				<div><p th:text="${list.staff_address}"></p></div>
+			</div>
+			<div id="line"></div>
+			<div class="btn_div">
+				<button type="button" id="accept_btn" th:onclick="'acceptApplicant('+${list.id}+')'" th:if="${list.result == '대기중'}">수락</button>
+				<button type="button" id="complete_btn" th:onclick="'undo('+${list.id}+')'" th:if="${list.result == '합격'}">완료</button>
+				<button type="button" id="undo_btn" th:onclick="'undo('+${list.id}+')'" th:if="${list.result == '불합격'}">취소</button>
+				<span id="resume_open">이력서보기</span>
+			</div>
+			</div>
+		</div>
+    </div>
+</body>
+</html>
