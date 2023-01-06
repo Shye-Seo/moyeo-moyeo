@@ -20,8 +20,11 @@ public class MemberVo {
 	private int user_authority;
     private String user_date_join;
 	
+    private String staff_address; //지원자 주소
+    private int career_count; //경력 count
     private String staff_age; //만 나이 set
     private String staff_phone; //휴대폰번호 형태 set
+    private String result; //지원자 합격여부
     
-    private WorkRecordVo recordVo; // 당일 근무기록 불러오기위함
+    private WorkRecordVo recordVo; //당일 근무기록 불러오기위함
 }

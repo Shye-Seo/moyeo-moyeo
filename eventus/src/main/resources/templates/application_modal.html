@@ -11,13 +11,13 @@
 </head>
 <body>
 	<input type="hidden" th:value="${event_id}" id="event_id">
-	<div class="total_applicant">
-		<div>총 지원자 수 <span style="color: #DD5067" th:text="${applicant_count}"></span> 명</div>
+	<div class="top_div">
+		<div id="total">총 지원자 수 <span style="color: #DD5067" th:text="${applicant_count}"></span> 명</div>
 	</div>
 	<div class="application_list">
 		<div id="list" th:each="list : ${application_list}">
 			<input type="hidden" th:value="${list.id}" id="staff_id">
-			<img src="/imgs/trash_can.svg" id="trash_icon" th:if="${result == '대기중'}" onclick="rejectAccept()">
+			<img src="/imgs/trash_can.svg" id="trash_icon" th:if="${list.result == '대기중'}" th:onclick="'rejectAccept('+${list.id}+')'">
 			<div id="each_">
 			<div class="img_div">
 				<img src="/imgs/profile_none_img.svg" id="profile_img">
@@ -25,37 +25,36 @@
 			<div class="personal_info">
 				<div id="personal_div" class="upper_div">
 					<img src="/imgs/personal_icon.svg" id="icon">
-					<p th:text="${list.user_name} + '(' + ${user_age} + '세)'"></p>
+					<p th:text="${list.user_name} + '(' + ${list.staff_age} + '세)'"></p>
 				</div>
 				<div id="personal_div">
 					<img src="/imgs/phone_icon.svg" id="icon">
-					<p th:text="${user_phone}"></p>
+					<p th:text="${list.staff_phone}"></p>
 				</div>
 			</div>
 			<div id="line"></div>
 			<div class="career_info">
 				<div class="upper_div"><p>행사경력</p></div>
-				<div><p th:text="${career_count} + ' 회'"></p></div>
+				<div><p th:text="${list.career_count} + ' 회'"></p></div>
 			</div>
 			<div id="line"></div>
 			<div class="address_info">
 				<div class="upper_div"><p>거주지</p></div>
-				<div><p th:text="${user_address}"></p></div>
+				<div><p th:text="${list.staff_address}"></p></div>
 			</div>
 			<div id="line"></div>
 			<div class="btn_div">
-				<button type="button" id="accept_btn" onclick="acceptApplicant()" th:if="${result == '대기중'}">수락</button>
-				<button type="button" id="complete_btn" onclick="undo()" th:if="${result == '합격'}">완료</button>
-				<button type="button" id="undo_btn" onclick="undo()" th:if="${result == '불합격'}">취소</button>
+				<button type="button" id="accept_btn" th:onclick="'acceptApplicant('+${list.id}+')'" th:if="${list.result == '대기중'}">수락</button>
+				<button type="button" id="complete_btn" th:onclick="'undo('+${list.id}+')'" th:if="${list.result == '합격'}">완료</button>
+				<button type="button" id="undo_btn" th:onclick="'undo('+${list.id}+')'" th:if="${list.result == '불합격'}">취소</button>
 				<span id="resume_open">이력서보기</span>
 			</div>
 			</div>
 		</div>
 	</div>
 	<script>
-		function acceptApplicant()  {
+		function acceptApplicant(staff_id)  {
 		  var event_id = $("#event_id").val();
-		  var staff_id = $("#staff_id").val();
 		  
 		  $.ajax({
 				url : "/accept_applicant",
@@ -70,9 +69,8 @@
 			});
 		}
 		
-		function undo()  {
+		function undo(staff_id)  {
 			  var event_id = $("#event_id").val();
-			  var staff_id = $("#staff_id").val();
 			  
 			  $.ajax({
 					url : "/accept_applicant_cancel",
@@ -87,9 +85,8 @@
 				});
 			}
 		
-		function rejectAccept()  {
+		function rejectAccept(staff_id)  {
 			  var event_id = $("#event_id").val();
-			  var staff_id = $("#staff_id").val();
 			  
 			  $.ajax({
 					url : "/reject_applicant",

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤터즈랩(eventusLAB)</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/manage_event_booth.css">
+</head>
+<body>
+    <div id="wrap">
+        <div th:replace="~{common/side :: sidebar_manage ('schedule')}"></div>
+
+        <!-- main -->
+        <div class="content">
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">
+                        <span>행사관리</span>
+                    </div>
+                    <div class="excel_download">
+                        엑셀 데이터 다운로드
+                    </div>
+                </div>
+
+                <div class="detail_bar">
+                    <div class="detail1 this_bar">
+                        <img src="imgs/Icon material-view-list.svg">
+                        <p>행사현황</p>
+                    </div>
+                    <div class="detail2" onclick="location.href='manage_event_register'">
+                        <img src="imgs/pen_gray.svg">
+                        <p>행사등록</p>
+                    </div>
+                </div>
+
+                <div class="area">
+                	<div id="top_wrap">
+	                	<div class="backbtn_area">
+	                    	<img src="imgs/back_btn.svg" id="back_btn" onclick="location.href='manage_event'">
+	                    </div>
+	                    <div class="search_area">
+	                        <input type="text" class="calendar">
+	                        <input type="text" class="word_search">
+	                    </div>
+                    </div>
+                    
+                    <ul class="list">
+                        <ol id="top_ol">
+                            <li>No</li>
+                            <li>행사명</li>
+                            <li>행사기간</li>
+                            <li>부스명</li>
+                            <li>카운팅</li>
+                            <li>소요시간</li>
+                            <li>수정</li>
+                            <li>삭제</li>
+                        </ol>
+						<ol th:each="booth : ${booth_list}" id="list_ol">
+							<input type="hidden" th:value="${booth.id}" id="booth_id">
+							<li th:text="${booth.id}"></li>
+							<li th:text="${booth.event_title}"></li>
+							<li th:text="${booth.event_startDate} + ' - ' + ${booth.event_endDate}"></li>
+							<li th:text="${booth.booth_name}"></li>
+							<li style="color: #DD5067" th:text="${booth.counting} + ' 개'"></li>
+							<li style="color: #DD5067" th:text="${booth.expected_time} + ' 분'"></li>
+<!-- 							<li th:onclick="'modifyModal('+${booth.id}+')'" th:attr="data-boothName=${booth.booth_name}, data-eventTitle=${booth.event_title}" th:id="modify_data"><img src="imgs/pen.svg"></li> -->
+							<li th:attr="onclick=|modifyModal('${booth.id}', '${booth.booth_name}', '${booth.event_title}', '${event_id}' )|"><img src="imgs/pen.svg"></li>
+							<a th:href="@{delete_booth(id=${booth.id})}"><li><img src="imgs/close_btn_black.svg"></li></a>
+						</ol>
+                    </ul>
+	                <div id="button_">
+	                	<button type="button" id="register_btn">부스등록</button>
+	                </div>
+                </div>
+                
+
+                <!-- 페이징 처리(Unix 참조) -->
+                <div>
+                    <ul>
+                        <!-- 이전 -->
+
+                        <!-- 번호 -->
+
+                        <!-- 다음 -->
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        		<!-- 등록 모달 -->
+                <div id="modal">
+				    <div class="modal_content">
+				        <img src="imgs/close_btn.svg" id="modal_close_btn">
+				        <div id="modal_content_wrap">
+					        <div id="modal_event_title">
+					        	<p th:text="${event_title}"></p>
+					        	<input type="text" th:value="${event_id}" id="event_id">
+					        	<div id="modal_bottom_line"></div>
+					        </div>
+					        <div id="modal_input_div">
+					        	<p>부스명</p>
+					        	<input type="text" placeholder="부스명을 입력해주세요." id="booth_name">
+					        </div>
+					        <div id="modal_input_div">
+					        	<p>카운팅</p>
+					        	<input type="text" placeholder="카운팅" id="counting">
+					        </div>
+					        <div id="modal_input_div">
+					        	<p>소요시간</p>
+					        	<input type="text" placeholder="소요시간을 입력해주세요." id="expected_time">
+					        </div>
+					        <div id="modal_btn_div">
+					        	<button type="button" id="modal_insert_btn" th:onclick="'insertBooth('+${event_id}+')'">완료</button>
+					        </div>
+				        </div>
+				    </div>
+			   
+			   		<div class="modal_layer"></div>
+				</div>
+				
+				<!-- 수정 모달 -->
+				<div id="modal_modify">
+				    <div class="modal_content_m">
+				        <img src="imgs/close_btn.svg" id="modal_close_btn_m">
+				        <div id="modal_content_wrap">
+					        <div id="modal_event_title">
+					        	<p id="event_title_m"></p>
+					        	<input type="hidden" id="booth_id_m">
+					        	<input type="hidden" id="event_id_m">
+					        	<div id="modal_bottom_line"></div>
+					        </div>
+					        <div id="modal_input_div">
+					        	<p>부스명</p>
+					        	<input type="text" id="booth_name_m">
+					        </div>
+					        <div id="modal_input_div">
+					        	<p>카운팅</p>
+					        	<input type="text" placeholder="카운팅" id="counting_m">
+					        </div>
+					        <div id="modal_input_div">
+					        	<p>소요시간</p>
+					        	<input type="text" placeholder="소요시간을 입력해주세요." id="expected_time_m">
+					        </div>
+					        <div id="modal_btn_div">
+					        	<button type="button" id="modal_update_btn" th:onclick="updateBooth()">완료</button>
+					        </div>
+				        </div>
+				    </div>
+			   
+			   		<div class="modal_layer_m"></div>
+				</div>
+				
+			<script>
+				/* 모달창 띄우기 */
+				// 등록 모달
+			    document.getElementById("register_btn").onclick = function() {
+			        document.getElementById("modal").style.display="block";
+			    }
+				
+			   
+			    document.getElementById("modal_close_btn").onclick = function() {
+			        document.getElementById("modal").style.display="none";
+			    }
+			    
+			    // 수정 모달
+			    function modifyModal(booth_id, boothName, eventTitle, event_id){
+					document.getElementById("modal_modify").style.display="block";
+					
+// 					var boothName = $("#modify_data").data('boothName');
+// 					var eventTitle = $("#modify_data").data('eventTitle');
+					
+					$("#modal_event_title #booth_id_m").val(booth_id);
+					$("#modal_input_div #booth_name_m").val(boothName);
+					$("#modal_event_title #event_title_m").text(eventTitle);
+					$("#modal_event_title #event_id_m").val(event_id);
+					debugger;
+			    	
+			    }
+			    
+			    document.getElementById("modal_close_btn_m").onclick = function() {
+			        document.getElementById("modal_modify").style.display="none";
+			    }
+			    
+			    /* 부스등록 */
+			    function insertBooth(event_id)  {
+				  var event_id = $("#event_id").val();
+				  var booth_name = $("#booth_name").val();
+				  var counting = $("#counting").val();
+				  var expected_time = $("#expected_time").val();
+				  
+				  $.ajax({
+						url : "/register_booth",
+						type : 'post',
+						data : {
+							event_id:event_id,
+							booth_name:booth_name,
+							counting:counting,
+							expected_time:expected_time
+						},
+						success: function(){
+							location.href="/manage_event_booth?id="+event_id;
+						}
+					});
+				}
+			    
+			    /* 부스수정 */
+			    function updateBooth()  {
+				  var booth_name = $("#booth_name_m").val();
+				  var counting = $("#counting_m").val();
+				  var expected_time = $("#expected_time_m").val();
+				  var booth_id = $("#booth_id_m").val();
+				  var event_id = $("#event_id_m").val();
+				  debugger;
+				  
+				  $.ajax({
+						url : "/modify_booth",
+						type : 'post',
+						data : {
+							event_id:event_id,
+							booth_id:booth_id,
+							booth_name:booth_name,
+							counting:counting,
+							expected_time:expected_time
+						},
+						success: function(){
+							location.href="/manage_event_booth?id="+event_id;
+						}
+					});
+				}
+			</script>
+    </div>
+</body>
+</html>

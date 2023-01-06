@@ -9,104 +9,114 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
-    <div id="wrap">
-        <!-- fixed menu -->
-        <div class="sidebar">
-            <a href="/main" class="logo">
-                <img src="/imgs/logo.png" alt="eventusLAB">
-            </a>
-            <ul class="menu-categories">
-                <li class="menu">
-                    <a href="/main">
-                        <div>
-                            <img src="/imgs/main.svg" alt="main">
-                            <span>메인</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="/manage_event">
-                        <div>
-                            <img src="/imgs/schedule.svg" alt="schedule">
-                            <span>행사관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="/manage_staff">
-                        <div>
-                            <img src="/imgs/stafflist.svg" alt="stafflist">
-                            <span>직원관리</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="/report_work">
-                        <div>
-                            <img src="/imgs/timesheet.svg" alt="timesheet">
-                            <span>근무기록</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- main -->
-        <div class="content">
-            <div class="container">
-                <div class="page-header">
-                    <div class="page-title">
+<div id="wrap">
+    <!-- fixed menu -->
+    <div class="sidebar">
+        <a href="/main" class="logo">
+            <img src="/imgs/logo.png" alt="eventusLAB">
+        </a>
+        <ul class="menu-categories">
+            <li class="menu">
+                <a href="/main">
+                    <div>
+                        <img src="/imgs/main.svg" alt="main">
+                        <span>메인</span>
+                    </div>
+                </a>
+            </li>
+            <li class="menu">
+                <a href="/manage_event">
+                    <div>
+                        <img src="/imgs/schedule.svg" alt="schedule">
+                        <span>행사관리</span>
+                    </div>
+                </a>
+            </li>
+            <li class="menu">
+                <a href="/manage_staff">
+                    <div>
+                        <img src="/imgs/stafflist.svg" alt="stafflist">
+                        <span>직원관리</span>
+                    </div>
+                </a>
+            </li>
+            <li class="menu">
+                <a href="/report_work">
+                    <div>
+                        <img src="/imgs/timesheet.svg" alt="timesheet">
                         <span>근무기록</span>
                     </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- main -->
+    <div class="content">
+        <div class="container">
+            <div class="page-header">
+                <div class="page-title">
+                    <span>근무기록</span>
+                </div>
+            </div>
+
+            <div class="detail_bar">
+                <div class="detail1">
+                    <img src="material-view-list.svg">
+                    <input type="button" value="근무기록">
                 </div>
 
-                <div class="detail_bar">
-                    <div class="detail1">
-                        <img src="material-view-list.svg">
-                        <input type="button" value="근무기록">
-                    </div>
-                    
-                </div>
+            </div>
 
-                <div class="area">
-                    <div class="search_area">
-                        <input type="text" class="calendar">
-                        <input type="text" class="word_search">
-                    </div>
-                    
-
-                    <ul class="list">
-                        <ol>
-                            <li>일자</li>
-                            <li>요일</li>
-                            <li>행사명</li>
-                            <li>이름</li>
-                            <li>연락처</li>
-                            <li>출근</li>
-                            <li>외출</li>
-                            <li>복귀</li>
-                            <li>퇴근</li>
-                            <li>소계시간</li>
-                        </ol>
-                            
-
-                    </ul>
+            <div class="area">
+                <div class="search_area">
+                    <input type="text" class="calendar">
+                    <input type="text" class="word_search">
                 </div>
 
 
-                <!-- 페이징 처리(Unix 참조) -->
-                <div>
-                    <ul>
-                        <!-- 이전 -->
+                <ul class="list">
+                    <ol>
+                        <li>일자</li>
+                        <!--                             <li>요일</li> -->
+                        <li>행사명</li>
+                        <li>이름</li>
+                        <li>연락처</li>
+                        <li>출근</li>
+                        <li>외출</li>
+                        <li>복귀</li>
+                        <li>퇴근</li>
+                        <li>소계시간</li>
+                    </ol>
+                    <ol th:each="report_work : ${report_work_list}" id="list_ol">
+                        <li th:text="${report_work.work_date}"></li>
+                        <li th:text="${report_work.event_title}"></li>
+                        <li th:text="${report_work.user_name}"></li>
+                        <li th:text="${report_work.user_phone}"></li>
+                        <li th:text="${report_work.work_start_time}"></li>
+                        <li th:text="${report_work.work_outing_time}"></li>
+                        <li th:text="${report_work.work_comeback_time}"></li>
+                        <li th:text="${report_work.work_end_time}"></li>
+                        <li th:text="${report_work.work_total_time}"></li>
+                    </ol>
 
-                        <!-- 번호 -->
+                </ul>
+            </div>
 
-                        <!-- 다음 -->
 
-                    </ul>
-                </div>
+            <!-- 페이징 처리(Unix 참조) -->
+            <div>
+                <ul>
+                    <!-- 이전 -->
+
+                    <!-- 번호 -->
+
+                    <!-- 다음 -->
+
+                </ul>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

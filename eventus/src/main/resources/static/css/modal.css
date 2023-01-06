@@ -19,7 +19,7 @@ button{border:none; box-shadow: none;}
 }
 
 .top_div #date{
-	margin-left: 41%;
+	margin-left: 31.5%;
 }
 
 .application_list{
@@ -30,7 +30,6 @@ button{border:none; box-shadow: none;}
 	padding-top: 30px;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 1.5%;
 }
 
 .application_list #list{
@@ -39,11 +38,14 @@ button{border:none; box-shadow: none;}
 	border-radius: 10px;
 	background-color: #FFFFFF;
 	width: 700px;
-/* 	height: 100px; */
+	height: 100px;
 	padding: 15px;
+	margin-bottom: 15px;
+	position: relative;
+	box-sizing: border-box;
 }
 
-.application_list #list .personal_info, .career_info, .address_info, .btn_div{
+.application_list #list .personal_info, .career_info, .address_info{
 	font: 16px;
 	color: #333333;
 	float: left;
@@ -60,12 +62,17 @@ button{border:none; box-shadow: none;}
 	width: 10%;
 }
 
+.application_list #list .career_info .upper_div p{
+	font-weight: 500;
+}
+
 .application_list #list .address_info{
 	width: 18%;
 }
 
 .application_list #list .personal_info p{
 	margin: 3.5% 0;
+	font-weight: 500;
 }
 
 .application_list #list .career_info p{
@@ -74,6 +81,10 @@ button{border:none; box-shadow: none;}
 
 .application_list #list .address_info p{
 	margin: 7% 0;
+}
+
+.application_list #list .address_info .upper_div p{
+	font-weight: 500;
 }
 
 .upper_div{
@@ -87,9 +98,7 @@ button{border:none; box-shadow: none;}
 
 #line{
 	height: 50px;
-	width: 0;
 	border: 0.5px solid #DDDDDD;
-	float: left;
 }
 
 /* .application_list #list div p{ */
@@ -163,8 +172,16 @@ button{border:none; box-shadow: none;}
 #trash_icon{
 	width: 20px;
 	height: auto;
-	float: right;
 	cursor: pointer;
+	position: absolute;
+	right: 17px;
+}
+
+#each_{
+	height: 90%;
+	width: 100%;
+	display: flex;
+	margin-top: 7px;
 }
 
 /* 근무기록 */
@@ -189,7 +206,7 @@ button{border:none; box-shadow: none;}
 	margin-bottom: 1.5%;
 }
 
-.worker_list #list .personal_info, .career_info, .address_info, .btn_div{
+.worker_list #list .personal_info, .career_info, .address_info{
 	font: 16px;
 	color: #333333;
 	float: left;
@@ -204,12 +221,6 @@ button{border:none; box-shadow: none;}
 
 .worker_list #list .personal_info p{
 	margin: 3.5% 0;
-}
-
-#each_{
-	height: 90%;
-	width: 100%;
-	display: flex;
 }
 
 #record_btn{
