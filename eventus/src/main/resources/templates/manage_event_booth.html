@@ -50,30 +50,29 @@
                     
                     <ul class="list">
                         <ol id="top_ol">
-                            <li>No</li>
-                            <li>행사명</li>
-                            <li>행사기간</li>
-                            <li>부스명</li>
-                            <li>카운팅</li>
-                            <li>소요시간</li>
-                            <li>수정</li>
-                            <li>삭제</li>
+                            <div id="index_area"><li>No</li></div>
+                            <div id="title_area"><li>행사명</li></div>
+                            <div id="date_area"><li>행사기간</li></div>
+                            <div id="booth_area"><li>부스명</li></div>
+                            <div id="counting_area"><li>카운팅</li></div>
+                            <div id="time_area"><li>소요시간</li></div>
+                            <div id="icon_area"><li>수정</li></div>
+                            <div id="icon_area"><li>삭제</li></div>
                         </ol>
 						<ol th:each="booth : ${booth_list}" id="list_ol">
 							<input type="hidden" th:value="${booth.id}" id="booth_id">
-							<li th:text="${booth.id}"></li>
-							<li th:text="${booth.event_title}"></li>
-							<li th:text="${booth.event_startDate} + ' - ' + ${booth.event_endDate}"></li>
-							<li th:text="${booth.booth_name}"></li>
-							<li style="color: #DD5067" th:text="${booth.counting} + ' 개'"></li>
-							<li style="color: #DD5067" th:text="${booth.expected_time} + ' 분'"></li>
-<!-- 							<li th:onclick="'modifyModal('+${booth.id}+')'" th:attr="data-boothName=${booth.booth_name}, data-eventTitle=${booth.event_title}" th:id="modify_data"><img src="imgs/pen.svg"></li> -->
-							<li th:attr="onclick=|modifyModal('${booth.id}', '${booth.booth_name}', '${booth.event_title}', '${event_id}' )|"><img src="imgs/pen.svg"></li>
-							<a th:href="@{delete_booth(id=${booth.id})}"><li><img src="imgs/close_btn_black.svg"></li></a>
+							<div id="index_area"><li th:text="${booth.id}"></li></div>
+							<div id="title_area"><li th:text="${booth.event_title}" id="text_over"></li></div>
+							<div id="date_area"><li th:text="${booth.event_startDate} + ' - ' + ${booth.event_endDate}"></li></div>
+							<div id="booth_area"><li th:text="${booth.booth_name}" id="text_over"></li></div>
+							<div id="counting_area"><li style="color: #DD5067" th:text="${booth.counting} + ' 개'"></li></div>
+							<div id="time_area"><li style="color: #DD5067" th:text="${booth.expected_time} + ' 분'"></li></div>
+							<div id="icon_area"><li th:attr="onclick=|modifyModal('${booth.id}', '${booth.booth_name}', '${booth.event_title}', '${event_id}' )|"><img src="imgs/pen.svg"></li></div>
+							<div id="icon_area"><li th:attr="onclick=|deleteModal('${booth.id}', '${event_id}')|"><img src="imgs/close_btn_black.svg"></li></div>
 						</ol>
                     </ul>
 	                <div id="button_">
-	                	<button type="button" id="register_btn">부스등록</button>
+	                	<button type="button" id="register_btn" th:attr="onclick=|registerModal('${event_id}', '${Title}')|">부스등록</button>
 	                </div>
                 </div>
                 
@@ -98,8 +97,8 @@
 				        <img src="imgs/close_btn.svg" id="modal_close_btn">
 				        <div id="modal_content_wrap">
 					        <div id="modal_event_title">
-					        	<p th:text="${event_title}"></p>
-					        	<input type="text" th:value="${event_id}" id="event_id">
+					        	<p id="event_title"></p>
+					        	<input type="hidden" id="event_id">
 					        	<div id="modal_bottom_line"></div>
 					        </div>
 					        <div id="modal_input_div">
@@ -119,7 +118,6 @@
 					        </div>
 				        </div>
 				    </div>
-			   
 			   		<div class="modal_layer"></div>
 				</div>
 				
@@ -151,18 +149,42 @@
 					        </div>
 				        </div>
 				    </div>
-			   
 			   		<div class="modal_layer_m"></div>
+				</div>
+				
+				<!-- 삭제 모달 -->
+				<div id="modal_delete">
+				    <div class="modal_content_d">
+				        <div id="modal_content_wrap">
+					        <input type="hidden" id="booth_id_d">
+					        <input type="hidden" id="event_id_d">
+					        <div id="modal_event_title">
+					        	<p>부스 삭제</p>
+					        </div>
+					        <div id="delete_confirm">
+					        	<p>선택한 부스를 삭제하시겠습니까?</p>
+					        	<p>삭제한 데이터는 복구할 수 없습니다.</p>
+					        </div>
+					        <div id="modal_btn_div">
+					        	<button type="button" id="modal_close_btn_d">취소</button>
+					        	<button type="button" id="modal_delete_btn" th:onclick="deleteBooth()">삭제하기</button>
+					        </div>
+				        </div>
+				    </div>
+			   		<div class="modal_layer_d"></div>
 				</div>
 				
 			<script>
 				/* 모달창 띄우기 */
 				// 등록 모달
-			    document.getElementById("register_btn").onclick = function() {
-			        document.getElementById("modal").style.display="block";
+			    function registerModal(event_id, eventTitle){
+					document.getElementById("modal").style.display="block";
+					
+					$("#modal_event_title #event_title").text(eventTitle);
+					$("#modal_event_title #event_id").val(event_id);
+					debugger;
+			    	
 			    }
-				
-			   
 			    document.getElementById("modal_close_btn").onclick = function() {
 			        document.getElementById("modal").style.display="none";
 			    }
@@ -171,9 +193,6 @@
 			    function modifyModal(booth_id, boothName, eventTitle, event_id){
 					document.getElementById("modal_modify").style.display="block";
 					
-// 					var boothName = $("#modify_data").data('boothName');
-// 					var eventTitle = $("#modify_data").data('eventTitle');
-					
 					$("#modal_event_title #booth_id_m").val(booth_id);
 					$("#modal_input_div #booth_name_m").val(boothName);
 					$("#modal_event_title #event_title_m").text(eventTitle);
@@ -181,9 +200,21 @@
 					debugger;
 			    	
 			    }
-			    
 			    document.getElementById("modal_close_btn_m").onclick = function() {
 			        document.getElementById("modal_modify").style.display="none";
+			    }
+			    
+			 	// 삭제 모달
+			    function deleteModal(booth_id, event_id){
+					document.getElementById("modal_delete").style.display="block";
+					
+					$("#modal_delete #booth_id_d").val(booth_id);
+					$("#modal_delete #event_id_d").val(event_id);
+					debugger;
+			    	
+			    }
+			    document.getElementById("modal_close_btn_d").onclick = function() {
+			        document.getElementById("modal_delete").style.display="none";
 			    }
 			    
 			    /* 부스등록 */
@@ -226,6 +257,25 @@
 							booth_name:booth_name,
 							counting:counting,
 							expected_time:expected_time
+						},
+						success: function(){
+							location.href="/manage_event_booth?id="+event_id;
+						}
+					});
+				}
+			    
+			    /* 부스삭제 */
+			    function deleteBooth()  {
+				  var booth_id = $("#booth_id_d").val();
+				  var event_id = $("#event_id_d").val();
+				  debugger;
+				  
+				  $.ajax({
+						url : "/delete_booth",
+						type : 'post',
+						data : {
+							event_id:event_id,
+							booth_id:booth_id
 						},
 						success: function(){
 							location.href="/manage_event_booth?id="+event_id;

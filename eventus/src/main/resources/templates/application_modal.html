@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/css/modal.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
-<body>
-	<input type="hidden" th:value="${event_id}" id="event_id">
+<body th:fragment="application">
+	<input type="text" th:value="${event_id}" id="event_id">
 	<div class="top_div">
 		<div id="total">총 지원자 수 <span style="color: #DD5067" th:text="${applicant_count}"></span> 명</div>
 	</div>

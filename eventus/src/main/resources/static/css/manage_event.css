@@ -173,12 +173,14 @@ body{
     border-bottom: 2px solid #DDDDDD;
     display: flex;
     flex-direction: row;
+    font-weight: 600;
 }
 
 #top_ol div li {
     display:inline-block;
     margin-top:17.5px;
     margin-bottom:17.5px;
+    color: #666666;
 }
 
 #list_ol{
@@ -186,6 +188,7 @@ body{
 	border-bottom: 1px solid #DDDDDD;
 	line-height: 45px;
 	height: 45px;
+	font-weight: 600;
 }
 
 #index_area{
@@ -219,7 +222,7 @@ body{
 }
 
 #a_count{
-	border: 1px solid #999999;
+	border: 1px solid #DDDDDD;
 	border-radius: 20px;
 	width: 72px;
 	height: 36px;
@@ -228,6 +231,8 @@ body{
 	margin-top: 3.5px;
 	margin-left: auto;
 	margin-right: auto;
+	box-shadow: 0px 3px 10px #99999929;
+	cursor: pointer;
 }
 
 .red{
@@ -238,4 +243,12 @@ body{
 }
 .gray{
 	color: #999999;
+}
+
+/*--------------- 모달 ------------*/
+#application_modal{
+	display:none;
+	width:50%;
+	height:100%;
+	border: 1px solid black;
 }
