@@ -89,12 +89,6 @@ public class EventController {
 	}
 
 	
-//	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
-//	public String eventAdd(@ModelAttribute EventVo eventVo, @RequestAttribute List<MultipartFile> library_file) throws Exception{
-//		int id =eventService.insertEvent(eventVo);
-//		return "redirect:eventDetail?id="+id;
-//	}
-	
 	//행사등록
 	@ResponseBody
 	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
@@ -174,7 +168,7 @@ public class EventController {
 		return "eventDetail?id="+eventVo.getId();
 	}
 	
-	//지원현황(모집중) 모달창
+	//지원현황(모집중) -x
 	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
 	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
 		
@@ -213,25 +207,86 @@ public class EventController {
 		return "application_modal";
 	}
 	
+	
+	//지원현황(모집중) 모달창
+	@ResponseBody
+	@RequestMapping(value="/get_application_list", method=RequestMethod.GET)
+	public Map get_application_list(@RequestParam("id") int event_id) throws Exception{
+		
+//		int applicant_count = eventService.application_count(event_id);
+		
+		Map applicationMap = new HashMap<>();
+		applicationMap.put("event_id", event_id);
+		
+		System.out.println("=============> id:"+event_id);
+		
+		List<MemberVo> application_list = eventService.application_list(event_id);
+		if (application_list != null) {
+			for (MemberVo memberVo : application_list) {
+				//경력 count
+				int staff_career = eventService.staff_career(memberVo.getId());
+				memberVo.setCareer_count(staff_career);
+				
+				//주소 set
+				String user_address = eventService.getAddress(event_id, memberVo.getId());
+				memberVo.setStaff_address(user_address); 
+				
+				//만 나이 계산
+				String staff_age = eventService.getUserAge(memberVo.getUser_birth());
+				memberVo.setStaff_age(staff_age);
+				
+				//휴대폰번호 형태
+				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
+				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
+				memberVo.setStaff_phone(staff_phone);
+				
+				//수락여부(합격/불합격) check
+				String result = eventService.getResult(event_id, memberVo.getId());
+				memberVo.setResult(result);
+			}
+		}
+		applicationMap.put("application_list", application_list);
+		return applicationMap;
+	}
+	
 	// 지원자 수락
+//	@RequestMapping(value="accept_applicant", method=RequestMethod.POST)
+//	public String record_start(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
+//		eventService.accept_applicant(event_id, staff_id);
+//		return "application_modal";
+//	}
+	
+	@ResponseBody
 	@RequestMapping(value="accept_applicant", method=RequestMethod.POST)
 	public String record_start(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
 		eventService.accept_applicant(event_id, staff_id);
-		return "application_modal";
+		return "합격";
 	}
 	
 	// 지원자 수락해제
+//	@RequestMapping(value="accept_applicant_cancel", method=RequestMethod.POST)
+//	public String applicant_accept_cancel(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
+//		eventService.accept_applicant_cancel(event_id, staff_id);
+//		return "application_modal";
+//	}
+	@ResponseBody
 	@RequestMapping(value="accept_applicant_cancel", method=RequestMethod.POST)
 	public String applicant_accept_cancel(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
 		eventService.accept_applicant_cancel(event_id, staff_id);
-		return "application_modal";
+		return "대기중";
 	}
 	
 	// 지원자 불합격처리
+//	@RequestMapping(value="reject_applicant", method=RequestMethod.POST)
+//	public String reject_applicant(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
+//		eventService.reject_applicant(event_id, staff_id);
+//		return "application_modal";
+//	}
+	@ResponseBody
 	@RequestMapping(value="reject_applicant", method=RequestMethod.POST)
 	public String reject_applicant(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
 		eventService.reject_applicant(event_id, staff_id);
-		return "application_modal";
+		return "불합격";
 	}
 	
 	// 지원현황(진행중) 모달창
