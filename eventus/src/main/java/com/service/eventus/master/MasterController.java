@@ -51,6 +51,16 @@ public class MasterController {
         return mav;
     }
 
+    @RequestMapping("/contract_check")
+    public ModelAndView contract_check(@ModelAttribute MasterVo masterVo) {
+
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("/contract_file");
+        mav.addObject("masterVo", masterVo);
+        return mav;
+    }
+
     //근무기록 리스트(관리자)
     @GetMapping(value="/report_work")
     public String report_work(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
