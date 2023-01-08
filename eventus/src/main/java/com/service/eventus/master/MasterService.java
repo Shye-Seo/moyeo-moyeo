@@ -30,13 +30,13 @@ public class MasterService {
         return masterDao.getListUserApp(user_id);
     }
 
-    // pdf 다운로드
-    private Logger logger = LoggerFactory.getLogger(MasterService.class);
+    public List<MasterVo> report_work_list() {
+        return masterDao.report_work_list();
+    }
 
-    @Autowired
-    private TemplateEngine templateEngine;
+    public int update_work_total_time(String total_time, int staff_id) {
+        return masterDao.update_work_total_time(total_time, staff_id);
 
-    @Value("${pdf.directory}")
-    private String pdfDirectory;
+    };
 
 }

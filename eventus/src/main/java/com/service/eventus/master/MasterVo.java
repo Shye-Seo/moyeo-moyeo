@@ -14,4 +14,14 @@ public class MasterVo {
     private String user_birth;
     private String user_phone;
     private String user_date_join;
+
+    //근무기록 리스트(관리자)
+    private String work_date;
+    private String work_start_time;
+    private String work_outing_time;
+    private String work_comeback_time;
+    private String work_end_time;
+    private String work_total_time;
+
+    private int staff_id;
 }
