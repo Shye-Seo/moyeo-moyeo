@@ -16,7 +16,7 @@
 		<div id="date">[(${today})]</div>
 		<input type="hidden" th:value="${work_date}" id="today">
 	</div>
-	<div class="worker_list">
+	<div class="worker_list"  th:fragment="worker_list" >
 		<div id="list" th:each="list : ${workStaff_list}">
 			<input type="hidden" th:value="${list.id}" th:id="'staff_id'+${list.id}" name="staff_id">
 			<div id="each_">
