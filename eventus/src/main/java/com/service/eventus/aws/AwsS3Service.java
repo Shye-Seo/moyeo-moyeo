@@ -126,14 +126,9 @@ public class AwsS3Service {
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
     }
     
-    public String upload_profile(MultipartFile file, String userID) {
-    	//Calendar cal = Calendar.getInstance();
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
-        //String time = dateFormat.format(cal.getTime());
-
-//        String fileName = userID + "-" +file.getOriginalFilename();
+    public String upload_profile(MultipartFile file, String userID, String resumeID) {
     	int pos = file.getOriginalFilename().lastIndexOf( "." );
-        String fileName = userID+file.getOriginalFilename().substring(pos);
+        String fileName = userID + "_" + resumeID + file.getOriginalFilename().substring(pos);
         System.out.println("-----------");
         System.out.println("오리지날파일명 : " + file.getOriginalFilename());
         System.out.println("현재파일명 : " + fileName);
@@ -157,5 +152,8 @@ public class AwsS3Service {
     public void delete_s3event(String fileName) {
     	s3Client.deleteObject(new DeleteObjectRequest(bucket+"/"+eventFolder, fileName));
     }
-
+    
+    public void delete_s3profile(String fileName) {
+    	s3Client.deleteObject(new DeleteObjectRequest(bucket+"/"+profileFolder, fileName));
+    }
 }

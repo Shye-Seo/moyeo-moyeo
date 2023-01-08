@@ -17,4 +17,6 @@ public class ResumeVo {
 	private String staff_career_businessName;
 	private String staff_career_position;
 	private String staff_career_workday;
+	private int staff_resume_flag;
+	private String staff_resume_created_at;
 }

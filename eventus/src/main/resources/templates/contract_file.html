@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
+    <div id="modal_all">
+    <form th:fragment="modal">
     <!-- 근로계약서 -->
-    <div th:fragment="modal1">
+    <div id="modal1">
         <input type="image" src="../imgs/close_btn_black.svg">
         <h2>근로계약서</h2>
         <table>
@@ -30,19 +34,19 @@
             <tr>
                 <td rowspan="4">근 로 자</td>
                 <td>성명</td>
-                <td colspan="3"><input type="text" placeholder="입력란"></td>
+                <td colspan="3" class="user_name"><input type="text" name="user_name" placeholder="입력란"></td>
             </tr>
             <tr>
                 <td>연락처</td>
-                <td colspan="3"><input type="text" placeholder="입력란"></td>
+                <td colspan="3" class="user_phone"><input type="text" name="user_phone" placeholder="입력란"></td>
             </tr>
             <tr>
                 <td>주소</td>
-                <td colspan="3"><input type="text" placeholder="입력란"></td>
+                <td colspan="3" class="staff_address"><input type="text" name="staff_address" placeholder="입력란"></td>
             </tr>
             <tr>
                 <td>주민번호</td>
-                <td colspan="3"><input type="text" placeholder="입력란"></td>
+                <td colspan="3" class="identification_number"><input type="text" name="identification_number" placeholder="입력란"></td>
             </tr>
         </table>
 
@@ -96,14 +100,14 @@
         </div>
 
         <div>
-          <input type="text">년 <input type="text">월 <input type="text">일
+            <span class="year"><input type="text" name="year" placeholder="입력란"></span>년 <span class="month"><input type="text" name="month" placeholder="입력란"></span>월 <span class="day"><input type="text" name="day" placeholder="입력란"></span>일
         </div>
 
         <div>
           <p>사업주 : (주)포유커뮤니케이션즈</p>
           대표이사 박상원 박효정
 
-          근로자 : <input type="text">
+          근로자 : <span class="user_name"><input type="text" placeholder="입력란"></span>
         </div>
         <div>
           <input type="reset" id="reset_btn" value="취소">
@@ -112,7 +116,7 @@
     </div>
 
     <!-- 보안 각서 -->
-    <div th:fragment="modal2">
+    <div id="modal2">
         <input type="image" src="../imgs/close_btn_black.svg">
         <h2>보안각서</h2>
         <table>
@@ -126,15 +130,15 @@
             </tr>
             <tr>
                 <td>성명</td>
-                <td><input type="text"></td>
+                <td class="user_name"><input type="text"></td>
             </tr>
             <tr>
                 <td>주민번호</td>
-                <td><input type="text"></td>
+                <td class="identification_number"><input type="text"></td>
             </tr>
             <tr>
                 <td>주소</td>
-                <td><input type="text"></td>
+                <td class="staff_address"><input type="text"></td>
             </tr>
         </table>
         <div>
@@ -145,15 +149,70 @@
             <p>이의가 없음을 서약하고 본 각서를 제출합니다.</p>
         </div>
         <div>
-            <input type="text">년 <input type="text">월 <input type="text">일
-            <p>서약자 서명 : <input type="text" placeholder="입력란"></p>
+            <span class="year"><input type="text" name="year2" placeholder="입력란"></span>년 <span class="month"><input type="text" name="month2" placeholder="입력란"></span>월 <span class="day"><input type="text" name="day2" placeholder="입력란"></span>일
+            <p>서약자 서명 : <span class="user_name"><input type="text" placeholder="입력란"></span>(인)</p>
         </div>
         <p>(주)포유커뮤니케이션즈 귀하</p>
         <div>
             <input type="button" id="back_btn" value="뒤로">
+            <input type="button" id="confirm_btn" value="확인">
             <input type="button" id="save_btn" value="저장">
         </div>
     </div>
+    </form>
+    </div>
 
+    <style>
+        input[type="image"],
+        #reset_btn,
+        #next_btn,
+        #back_btn,
+        #confirm_btn {
+            display:none;
+        }
+
+    </style>
+    <script>
+        $(function() {
+
+            $('input[name="user_name"]').remove();
+            $('.user_name').text('[[${masterVo.user_name}]]');
+
+            $('input[name="user_phone"]').remove();
+            $('.user_phone').text('[[${masterVo.user_phone}]]');
+
+            $('input[name="staff_address"]').remove();
+            $('.staff_address').text('[[${masterVo.staff_address}]]');
+
+            $('input[name="identification_number"]').remove();
+            $('.identification_number').text('[[${masterVo.identification_number}]]');
+
+            $('input[name="year"]').remove();
+            $('input[name="year2"]').remove();
+            $('.year').text('[[${masterVo.year}]]');
+
+            $('input[name="month"]').remove();
+            $('input[name="month2"]').remove();
+            $('.month').text('[[${masterVo.month}]]');
+
+            $('input[name="day"]').remove();
+            $('input[name="day2"]').remove();
+            $('.day').text('[[${masterVo.day}]]');
+
+            $('#save_btn').click(function() {
+                let element = document.getElementById('modal_all');
+                let opt = {
+                    margin:       0.5,
+                    filename:     '근로계약서.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2 },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+
+                html2pdf().from(element).set(opt).save();
+            });
+        })
+
+    </script>
 </body>
 </html>
