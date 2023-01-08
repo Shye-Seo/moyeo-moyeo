@@ -289,7 +289,7 @@ public class EventController {
 		return "불합격";
 	}
 	
-	// 지원현황(진행중) 모달창
+	// 지원현황(진행중) 모달창 -x
 	@RequestMapping(value="/workRecord_modal", method=RequestMethod.GET)
 	public String workStaff_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
 		
@@ -345,6 +345,69 @@ public class EventController {
 		}
 	    model.addAttribute("workStaff_list", workStaff_list);
 		return "workRecord_modal";
+	}
+	
+	// 지원현황(진행중) 모달창
+	@ResponseBody
+	@RequestMapping(value="/get_workStaff_list", method=RequestMethod.GET)
+	public Map get_workStaff_list(@RequestParam("id") int event_id) throws Exception{
+		
+		Map workRecordMap = new HashMap<>();
+		
+//		int staff_count = eventService.staff_count(event_id);
+		
+		workRecordMap.put("event_id", event_id);
+		
+		// 오늘 날짜
+		LocalDate now = LocalDate.now();
+		int year = now.getYear();
+		int month = now.getMonthValue();
+		int day = now.getDayOfMonth();
+		String today = year + "년 " + month + "월 " + day + "일";
+		
+		workRecordMap.put("today", today);
+	
+		
+		String work_date = year+"-"+month+"-"+day;
+		if(month < 10 && day > 10) {
+			String month_0 = "0" + month;
+			work_date = year+"-"+month_0+"-"+day;
+		}else if(day < 10 && month > 10) {
+			String day_0 = "0" + day;
+			work_date = year+"-"+month+"-"+day_0;
+		}else if(month < 10 && day < 10) {
+			String month_0 = "0" + month;
+			String day_0 = "0" + day;
+			work_date = year+"-"+month_0+"-"+day_0;
+		}else if(month > 10 && day > 10) {
+			work_date = year+"-"+month+"-"+day;
+		}
+		workRecordMap.put("work_date", work_date);
+		
+		List<MemberVo> workStaff_list = eventService.workStaff_list(event_id);
+		if (workStaff_list != null) {
+			for (MemberVo memberVo : workStaff_list) {
+				
+				//만 나이 계산
+				String staff_age = eventService.getUserAge(memberVo.getUser_birth());
+				memberVo.setStaff_age(staff_age);
+				
+				//휴대폰번호 형태
+				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
+				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
+				memberVo.setStaff_phone(staff_phone);
+				
+				//당일 근무기록
+				List<WorkRecordVo> workTime_list = eventService.getWorkTime(memberVo.getId(), event_id, work_date);
+				if(workTime_list != null) {
+					for(WorkRecordVo recordVo : workTime_list) {
+						memberVo.setRecordVo(recordVo);
+					}
+				}
+			}
+		}
+		workRecordMap.put("workStaff_list", workStaff_list);
+		return workRecordMap;
 	}
 	
 	// 근무기록(출근)
