@@ -43,5 +43,44 @@
 			</div>
 		</div>
 	</div>
+	<div id="modal_wrap">
+		<div class="modal_bg"></div>
+		<div class="con_wrap">
+
+			<div id="application_con" th:if="${isResume == 0}">
+	
+				<p id="modal_title" th:text="${event.event_title}"></p>
+				<div class="line"></div>
+				<p>지원부분</p>
+				<div>
+					<input type="text" value="" readonly>
+					<div class="select_box">
+						<div class="select"></div>
+					</div>
+				</div>
+	
+				<button type="button" onclick="">지원완료</button>
+			</div>
+			<div id="resume_con" th:if="${isResume == 1}">
+	
+				<p>안내</p>
+				<div class="line"></div>
+				<p>이력서 등록 후 지원이 가능합니다.<br>
+				<span style="color: #DD5067;">이력서 등록</span>을 하시겠습니까?</p>
+	
+				<div class="modal_btn_wrap">
+					<button type="button" onclick="">취소</button>
+					<button type="button" onclick="location.href='/myresume_forStaff';">이력서 등록하기</button>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<script>
+		function act_modal(){
+
+		}
+	</script>
 </body>
 </html>

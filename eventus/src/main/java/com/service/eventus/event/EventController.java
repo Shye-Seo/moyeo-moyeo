@@ -12,6 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.aws.AwsS3Service;
 import com.service.eventus.member.MemberVo;
+import com.service.eventus.resume.ResumeService;
+import com.service.eventus.resume.ResumeVo;
+
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -34,6 +38,9 @@ public class EventController {
 	  
 	@Inject
     private EventService eventService;
+	
+	@Inject
+	private ResumeService resumeService;
 	
 	@GetMapping(value="/manage_event")
 	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
@@ -58,7 +65,48 @@ public class EventController {
 	     return "manage_event_register";
 	}
 	
-	//행사상세조회
+	//행사상세조회_스테프
+	@RequestMapping(value="/eventDetail_forStaff", method=RequestMethod.GET)
+	public ModelAndView eventDetail_forStaff(@RequestParam("id") int event_id, HttpSession session) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		EventVo detailVo = eventService.viewEventDetail(event_id);
+		
+		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
+		
+		// update랑 똑같이 고치기
+//		포지션별로 잘라 저장
+		Map<String, String> positionMap = new HashMap<>();
+		
+		if(detailVo.getEvent_position() != null) {
+			String[] position = detailVo.getEvent_position().split(",");
+			String[] position_conut = detailVo.getEvent_position_count().split(",");
+			
+			for(int i=0; i<position.length;i++) {
+				positionMap.put(position[i], position_conut[i]);
+			}
+		}
+		
+		//세션의 아이디를 받아온다
+		String id = (String) session.getAttribute("user_id");
+		MemberVo memberVo = resumeService.viewMember_forResume(id);
+		
+		//이력서 조회
+		ResumeVo resumeVo = resumeService.selectMyResume(memberVo.getId());
+		
+		int isResume = 0;
+		if(resumeVo != null) {
+			isResume =1;
+		}
+		
+		mav.addObject("event", detailVo);
+		mav.addObject("positionMap", positionMap);
+		mav.addObject("eventFileList", eventFileList);
+		mav.addObject("isResume",isResume);
+		mav.setViewName("staff_eventDetail");
+		return mav;
+	}
+	
+	//행사상세조회_관리자
 	@RequestMapping(value="/eventDetail", method=RequestMethod.GET)
 	public ModelAndView eventDetail(@RequestParam("id") int event_id) throws Exception{
 		ModelAndView mav = new ModelAndView();
@@ -81,10 +129,9 @@ public class EventController {
 		
 		mav.addObject("event", detailVo);
 		mav.addObject("positionMap", positionMap);
-		mav.addObject("positionMap", positionMap);
 		mav.addObject("eventFileList", eventFileList);
-
-		mav.setViewName("staff_eventDetail");
+		
+		mav.setViewName("manage_eventDetail");
 		return mav;
 	}
 
@@ -168,45 +215,6 @@ public class EventController {
 		return "eventDetail?id="+eventVo.getId();
 	}
 	
-	//지원현황(모집중) -x
-	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
-	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
-		
-		int applicant_count = eventService.application_count(event_id);
-		model.addAttribute("event_id", event_id);
-		model.addAttribute("applicant_count", applicant_count);
-		
-		System.out.println("=============> id:"+event_id);
-		
-		List<MemberVo> application_list = eventService.application_list(event_id);
-		if (application_list != null) {
-			for (MemberVo memberVo : application_list) {
-				//경력 count
-				int staff_career = eventService.staff_career(memberVo.getId());
-				memberVo.setCareer_count(staff_career);
-				
-				//주소 set
-				String user_address = eventService.getAddress(event_id, memberVo.getId());
-				memberVo.setStaff_address(user_address); 
-				
-				//만 나이 계산
-				String staff_age = eventService.getUserAge(memberVo.getUser_birth());
-				memberVo.setStaff_age(staff_age);
-				
-				//휴대폰번호 형태
-				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
-				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
-				memberVo.setStaff_phone(staff_phone);
-				
-				//수락여부(합격/불합격) check
-				String result = eventService.getResult(event_id, memberVo.getId());
-				memberVo.setResult(result);
-			}
-		}
-	    model.addAttribute("application_list", application_list);
-		return "application_modal";
-	}
-	
 	
 	//지원현황(모집중) 모달창
 	@ResponseBody
@@ -271,64 +279,6 @@ public class EventController {
 	public String reject_applicant(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception{
 		eventService.reject_applicant(event_id, staff_id);
 		return "불합격";
-	}
-	
-	// 지원현황(진행중) 모달창 -x
-	@RequestMapping(value="/workRecord_modal", method=RequestMethod.GET)
-	public String workStaff_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
-		
-		int staff_count = eventService.staff_count(event_id);
-		model.addAttribute("event_id", event_id);
-		model.addAttribute("staff_count", staff_count);
-		
-		// 오늘 날짜
-        LocalDate now = LocalDate.now();
-        int year = now.getYear();
-        int month = now.getMonthValue();
-        int day = now.getDayOfMonth();
-        String today = year + "년 " + month + "월 " + day + "일";
-        model.addAttribute("today", today);
-        
-        String work_date = year+"-"+month+"-"+day;
-        if(month < 10 && day > 10) {
-        	String month_0 = "0" + month;
-        	work_date = year+"-"+month_0+"-"+day;
-        }else if(day < 10 && month > 10) {
-        	String day_0 = "0" + day;
-        	work_date = year+"-"+month+"-"+day_0;
-        }else if(month < 10 && day < 10) {
-        	String month_0 = "0" + month;
-        	String day_0 = "0" + day;
-        	work_date = year+"-"+month_0+"-"+day_0;
-        }else if(month > 10 && day > 10) {
-        	work_date = year+"-"+month+"-"+day;
-        }
-        model.addAttribute("work_date", work_date);
- 
-		List<MemberVo> workStaff_list = eventService.workStaff_list(event_id);
-		if (workStaff_list != null) {
-			for (MemberVo memberVo : workStaff_list) {
-				
-				//만 나이 계산
-				String staff_age = eventService.getUserAge(memberVo.getUser_birth());
-				memberVo.setStaff_age(staff_age);
-				
-				//휴대폰번호 형태
-				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
-				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
-				memberVo.setStaff_phone(staff_phone);
-				
-				//당일 근무기록
-				List<WorkRecordVo> workTime_list = eventService.getWorkTime(memberVo.getId(), event_id, work_date);
-				if(workTime_list != null) {
-					for(WorkRecordVo recordVo : workTime_list) {
-						memberVo.setRecordVo(recordVo);
-					}
-				}
-			}
-		}
-	    model.addAttribute("workStaff_list", workStaff_list);
-		return "workRecord_modal";
 	}
 	
 	// 지원현황(진행중) 모달창
