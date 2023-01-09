@@ -9,210 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.12/jsrender.min.js"></script>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="/css/manage_event.css">
-    <!-- <link rel="stylesheet" href="/css/modal.css"> -->
-    <style>
-
-        /* modal */
-        #modal_wrap{
-            width: 100%; height: 100%;
-            position: fixed;
-            top: 0; left: 0;
-            display: none;
-        }
-
-        .modal_bg{
-            width: 100%;
-            height: 100%;
-            background-color: #33333326;
-            position: relative;
-            top: 0; left: 0;
-        }
-
-        .modal_con_R{
-            background-color: #ffffff;
-            width: 45%; height: 100%;
-            max-width: 850px;
-            position: absolute;
-            top: 0; right: 0;
-        }
-
-        .modal_con_L{
-            width: 40%;
-            height: 936px;
-            background-color: #ffffff;
-            display: block;
-            position: absolute;
-            top: calc(50% - 468px);
-            left: 12%;
-            border-radius: 7px;
-            display: none;
-        }
-        
-        #modal_content_wrap{
-            margin-right: 30px;
-            width: calc(100% - 30px);
-            height: 85%;
-            overflow-y: auto;
-            padding: 0 50px 0 65px;
-            box-sizing: border-box;
-        }
-        #modal_content_wrap::-webkit-scrollbar {
-            width: 8px;  
-        }
-
-        #modal_content_wrap::-webkit-scrollbar-thumb {
-            height: 30%; 
-            background: #DDDDDD; 
-            border-radius: 10px;
-            background-clip: padding-box;
-            border: 1px solid transparent;
-        }
-
-        #modal_content_wrap::-webkit-scrollbar-track {
-            background: #ffffff;
-        }
-
-        .R_inact_bt{
-            width: 40px; height: 40px;
-            background-color: #ffffff;
-            background-image: url("/imgs/close_btn.svg");
-            position: absolute;
-            top: 20px; right: 20px;
-            border: 0;
-            cursor: pointer;
-        }
-        .total_wrap{
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            margin: 65px;
-            margin-bottom: 30px;
-        }
-        .total {
-            font-size: 19px;
-            font-weight: 600;
-            
-        }
-
-        .total span{
-            color: #DD5067;
-        }
-
-        .list_wrap{
-            box-shadow: 3px 3px 6px #99999929;
-            border: 1px solid #DDDDDD;
-            border-radius: 10px;
-            background-color: #FFFFFF;
-            /* width: 700px; */
-            width: 100%; height: 100px;
-            padding: 15px;
-            margin-bottom: 15px;
-            position: relative;
-            box-sizing: border-box;
-            margin-bottom: 30px;
-        }
-
-        .list_rejected{
-            background-color: #eee;
-        }
-
-        .list_wrap .each_{
-            width: 100%; height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 30px 0 15px;
-            box-sizing: border-box;
-        }
-
-        .personal_info, .career_info, .address_info, .btn_div{
-            font-size: 16px;
-            color: #333333;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .icon{
-            width: 24px;
-            height: auto;
-            margin-right: 5px;
-        }
-        .trash_icon{
-            width: 20px;
-            height: auto;
-            cursor: pointer;
-            position: absolute;
-            top:10px; right: 10px;
-        }
-
-        .list_wrap .img_div{
-            width: 60px; height: 60px;
-        }
-
-        .personal_info>div, .career_info>div, .address_info>div{
-            height: 24px;
-            display: flex;
-            align-items: center;
-        }
-        .career_info>div, .address_info>div{
-            justify-content: center;
-        }
-
-        .upper_div p, .personal_div p{
-            font-weight: 600;
-        }
-
-        .list_wrap .line{
-            height: 50px;
-            border: 0.5px solid #DDDDDD;
-        }
-
-        .personal_info {
-            width: 25%;
-        }
-
-        .address_info {
-            width: 20%;
-        }
-        
-        .career_info {
-            width: 12%;
-        }
-
-        .btn_div button{
-            width: 70px; height: 25px;
-            font: normal normal 600 14px/30px Pretendard, SemiBold;
-            border-radius: 20px;
-            line-height: 100%;
-            cursor: pointer;
-            color: #FFFFFF;
-            border: 0;
-        }
-
-        .btn_div .accept_btn{
-            background-color: #5B8FD2;
-        }
-
-        .btn_div .complete_btn{
-            background-color: #333333;
-        }
-
-        .btn_div .undo_btn{
-            background-color: #999999;
-        }
-
-        .resume_open{
-            font-size: 11px;
-            color: #999999;
-            text-decoration: underline; 
-            text-underline-position:under;
-            text-align: center;
-            margin-top: 5px;
-        }
-
-
-    </style>
-
+    <script src="/js/manage_event.js"></script>
 </head>
 <body>
     <div id="wrap">
@@ -291,7 +88,8 @@
                             <!-- 							<li th:if="${event.event_status == 0}" th:attr="onclick=|application('${event.id}')|" th:text="${event.application_count} + ' 명'" class="red"></li> -->
 							
                             <!-- 근무기록 -->
-                            <a th:if="${event.event_status == 1}" th:href="@{workRecord_modal(id=${event.id})}"><li th:text="${event.staff_count} + ' 명'" class="black"></li></a>
+                            <!-- <a th:if="${event.event_status == 1}" th:href="@{workRecord_modal(id=${event.id})}"><li th:text="${event.staff_count} + ' 명'" class="black"></li></a> -->
+                            <a th:if="${event.event_status == 1}" th:onclick="'modal_act_workRecord('+${event.id}+')'"><li th:text="${event.staff_count} + ' 명'" class="black"></li></a>
 							<li th:if="${event.event_status == 2}" th:text="${event.staff_count} + ' 명'" class="gray"></li>
 							</div>
 							
@@ -324,7 +122,7 @@
                 <button class="R_inact_bt" type="button" onclick="modal_inact()"></button>
                 <span class="total_wrap">
                     <div class="total"></div>
-                    <div>0000년00월00일</div>
+                    <div class="today"></div>
                 </span>
                 
                 <div id="modal_content_wrap">
@@ -392,164 +190,86 @@
     </script>
 
     <script id="worker_list" type="text/x-jsrender">
+        <div class="list_wrap work_templates" id="work_list_{{:list.id}}">
+			<input type="hidden" value="{{:list.id}}" id="staff_id{{:list.id}}" name="staff_id">
+			<div class="each_">
+			<div class="img_div">
+				<img src="/imgs/profile_none_img.svg" id="profile_img">
+			</div>
+			<div class="personal_info">
+				<div class="personal_div upper_div">
+					<img src="/imgs/personal_icon.svg" class="icon">
+					<p>{{:list.user_name}}({{:list.staff_age}}세)</p>
+				</div>
+				<div class="personal_div">
+					<img src="/imgs/phone_icon.svg" class="icon">
+					<p>{{:list.staff_phone}}</p>
+				</div>
+			</div>
+			<div class="line"></div>
+            {{if time != null}}
+			<div class="record_wrap">
+			    <input type="hidden" value="{{:time.id}}">
+				<div class="record_div">
+					<div class="each_record">
+						<p>출근</p>
+                        {{if time!=null && time.work_start_time == null }}
+						<button type="button" class="record_btn start_btn" onclick="record_Time({{:list.id}},{{:time.id}},this,'/record_start')">기록</button>
+                        {{else time.work_start_time != null }}
+						<button type="button" class="workTime_text" >{{:time.work_start_time}}</button>
+                        {{/if}}
+					</div>
+					<div class="each_record">
+						<p>외출</p>
+                        {{if time!=null && time.work_outing_time == null }}
+						<button type="button" class="record_btn outing_btn" onclick="record_Time({{:list.id}},{{:time.id}},this,'/record_out')" >기록</button>
+                        {{else time.work_outing_time != null }}
+						<button type="button" class="workTime_text">{{:time.work_outing_time}}</button>
+                        {{/if}}
+					</div>
+					<div class="each_record">
+						<p>복귀</p>
+                        {{if time!=null && time.work_comeback_time == null }}
+						<button type="button" class="record_btn comeback_btn" onclick="record_Time({{:list.id}},{{:time.id}},this,'/record_back')" >기록</button>
+                        {{else time.work_comeback_time != null }}
+						<button type="button" class="workTime_text" >{{:time.work_comeback_time}}</button>
+                        {{/if}}
+					</div>
+					<div class="each_record">
+						<p>퇴근</p>
+                        {{if time!=null && time.work_end_time == null }}
+						<button type="button" class="record_btn end_btn" onclick="record_Time({{:list.id}},{{:time.id}},this,'/record_end')" >기록</button>
+                        {{else time.work_end_time != null }}
+						<button type="button" class="workTime_text">{{:time.work_end_time}}</button>
+                        {{/if}}
+					</div>
+				</div>
+			</div>
+            {{else time == null}}
+			<div class="record_wrap">
+				<div class="record_div">
+					<div class="each_record">
+						<p>출근</p>
+						<button type="button" class="record_btn start_btn" onclick="no_record_Time({{:list.id}},this,'/record_start_new')">기록</button>
+					</div>
+					<div class="each_record">
+						<p>외출</p>
+						<button type="button" class="record_btn outing_btn" onclick="no_record_Time({{:list.id}},this,'/record_out_new')">기록</button>
+					</div>
+					<div class="each_record">
+						<p>복귀</p>
+						<button type="button" class="record_btn comeback_btn" onclick="no_record_Time({{:list.id}},this,'/record_back_new')">기록</button>
+					</div>
+					<div class="each_record">
+						<p>퇴근</p>
+						<button type="button" class="record_btn end_btn" onclick="no_record_Time({{:list.id}},this,'/record_end_new')">기록</button>
+					</div>
+				</div>
+			</div>
+            {{/if}}
 
-    </script>
-
-    <script>
-        
-        //현재 열려있는 이벤트 id
-        let now_event_id_for_app = 0;
-        let now_event_id_for_work = 0;
-
-        //모달창 활성화 여부
-        let modal_L_state = false;
-        let modal_R_state = false;
-
-        $(function(){
-            
-        })
-
-
-        
-
-        //지원자 모달
-        function modal_act_application(thisId){
-
-            $.ajax({
-				url : "/get_application_list",
-				type : 'get',
-				data : {id:thisId},
-				success: function(data){
-                    const list = data.application_list;
-                    now_event_id_for_app = data.event_id;
-                    if(list.length <=0){
-                        alert("현재 지원자가 없습니다.");
-                        return false;
-                    }
-
-					$("#modal_wrap").show();
-
-                    
-                    console.log(data)
-                    console.log(list[1].id)
-
-                    let html = "";
-
-                    $('.total').append(`총 지원자 수 <span>${list.length}</span>명`);
-
-                    for(i=0; i<list.length; i++){
-                        let app_list = {list:list[i]};
-                        html += $.templates("#application_list").render(app_list);
-                    }
-                    $('#modal_content_wrap').append(html);
-				}
-			});
-        }
-
-        //모달창 종료 (내용 비우기)
-        function modal_inact(){
-            $('.total').empty();
-            $('#modal_content_wrap').empty();
-            $("#modal_wrap").hide();
-            $('.modal_con_L').hide();
-        }
-
-        
-        function acceptApplicant(staff_id,obj)  { //합격 (수락 > 완료)
-		  $.ajax({
-				url : "/accept_applicant",
-				type : 'post',
-				data : {
-					staff_id:staff_id,
-					event_id:now_event_id_for_app
-				},
-				success: function(){
-                    $(obj).remove();
-                    $(`#app_list_${staff_id} .trash_icon`).hide();
-                    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="complete_btn" onclick="undo(${staff_id},this)">완료</button>`);
-				}
-			});
-		}
-		
-		function undo(staff_id,obj)  { //대기중 (완료,취소 > 수락)
-            var event_id = $("#event_id").val();
-            
-            $.ajax({
-                url : "/accept_applicant_cancel",
-                type : 'post',
-                data : {
-                    staff_id:staff_id,
-                    event_id:now_event_id_for_app
-                },
-                success: function(){
-                    $(obj).remove();
-                    $(`#app_list_${staff_id}`).removeClass('list_rejected');
-                    $(`#app_list_${staff_id} .trash_icon`).show();
-                    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="accept_btn" onclick="acceptApplicant(${staff_id},this)">수락</button>`);
-                }
-            });
-        }
-		
-		function rejectAccept(staff_id,obj)  { //불합격 (쓰레기통 > 취소)
-			  var event_id = $("#event_id").val();
-			  
-			  $.ajax({
-					url : "/reject_applicant",
-					type : 'post',
-					data : {
-						staff_id:staff_id,
-						event_id:now_event_id_for_app
-					},
-					success: function(){
-                        $(obj).hide();
-                        $(`#app_list_${staff_id}`).addClass('list_rejected');
-                        $(`#app_list_${staff_id} .accept_btn`).remove();
-						$(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="undo_btn" onclick="undo(${staff_id},this)">취소</button>`);
-					}
-				});
-			}
-
-            function resume_act(){
-                $('.modal_con_L').show();
-            }
-
-
-        //근무자 모달
-        function modal_act_workRecord(thisId){
-
-            $.ajax({
-                url : "/get_workStaff_list",
-                type : 'get',
-                data : {id:thisId},
-                success: function(data){
-                    const list = data.workStaff_list;
-                    now_event_id_for_work = data.event_id;
-                    if(list.length <=0){
-                        alert("현재 지원자가 없습니다.");
-                        return false;
-                    }
-
-                    $("#modal_wrap").show();
-
-                    
-                    console.log(data)
-                    console.log(list[1].id)
-
-                    let html = "";
-
-                    $('.total').append(`총 지원자 수 <span>${list.length}</span>명`);
-
-                    for(i=0; i<list.length; i++){
-                        let app_list = {list:list[i]};
-                        html += $.templates("#application_list").render(app_list);
-                    }
-                    $('#modal_content_wrap').append(html);
-                }
-            });
-        }
-
-
-
+			</div>
+		</div>
     </script>
 </body>
 </html>
