@@ -26,9 +26,10 @@ public class MasterVo {
     private int staff_id;
     private String staff_address;
 
-    private int year;
-    private int month;
-    private int day;
+    private String year;
+    private String month;
+    private String day;
+    private String contract_date;
     private String identification_number; // 주민등록번호
 
 }

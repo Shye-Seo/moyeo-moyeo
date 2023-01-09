@@ -1,6 +1,7 @@
 package com.service.eventus.mappers;
 
 import com.service.eventus.master.MasterVo;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -23,7 +24,7 @@ public interface MasterDao {
     @Select ("select event_title, event_startDate, event_endDate, application_result from event e\n" +
             "left join staff_application sa on e.id=sa.event_id\n" +
             "left join user u on sa.staff_id=u.id\n" +
-            "where u.user_id='test5'\n" +
+            "where u.user_id='test5' and sa.application_result='합격'\n" +
             "order by e.event_startDate desc;")
     List<MasterVo> getListUserApp(String user_id);
 
@@ -34,5 +35,14 @@ public interface MasterDao {
 
     @Update("update staff_work_record set work_total_time = '${total_time}' where staff_id = ${staff_id}")
     int update_work_total_time(String total_time, int staff_id);
+
+    @Select("select id from user where user_id = #{user_id}")
+    int getUserId(String user_id);
+
+    @Select("select id from event where event_title = #{event_title}")
+    int getEventId(String event_title);
+
+    @Insert("")
+    int addContract(MasterVo masterVo);
 }
 

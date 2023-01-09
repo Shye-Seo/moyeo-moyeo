@@ -34,6 +34,17 @@ public class MasterService {
     public int update_work_total_time(String total_time, int staff_id) {
         return masterDao.update_work_total_time(total_time, staff_id);
 
-    };
+    }
 
+    public int addContract(MasterVo masterVo) {
+        return masterDao.addContract(masterVo);
+    }
+
+    public int getUserId(String user_id) {
+        return masterDao.getUserId(user_id);
+    }
+
+    public int getEventId(String event_title) {
+        return masterDao.getEventId(event_title);
+    }
 }

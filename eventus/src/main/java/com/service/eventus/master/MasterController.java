@@ -50,7 +50,8 @@ public class MasterController {
         mav.addObject("career_num", career_num);
         return mav;
     }
-
+    
+    // 근로계약서 저장 전 확인
     @RequestMapping("/contract_check")
     public ModelAndView contract_check(@ModelAttribute MasterVo masterVo) {
 
@@ -58,6 +59,19 @@ public class MasterController {
 
         mav.setViewName("/contract_file");
         mav.addObject("masterVo", masterVo);
+        return mav;
+    }
+
+    // 근로계약서 관련 데이터 저장
+    @RequestMapping("/add_contract")
+    public ModelAndView add_contract(@ModelAttribute MasterVo masterVo) {
+        ModelAndView mav = new ModelAndView();
+        // session에 저장되어 있는 id를 가져와 masterVo에 저장
+        masterVo.setStaff_id(masterService.getUserId("test5"));
+
+        // event_title을 가지고 event_id를 가져와 masterVo에 저장
+        // masterVo.setEvent_id(masterService.getEventId(masterVo.getEvent_title()));
+        mav.setViewName("/manage_career_forstaff");
         return mav;
     }
 
