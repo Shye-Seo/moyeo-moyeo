@@ -124,14 +124,17 @@ public interface EventDao {
 	String getEndDate(int booth_id); // 끝나는날짜 get
 
 	@Insert("insert into event_booth(event_id, booth_name, counting, expected_time) values(#{event_id}, #{booth_name}, #{counting}, #{expected_time})")
-	boolean register_booth(int event_id, String booth_name, int counting, int expected_time); // 부스등록
+	boolean register_booth(int event_id, String booth_name, String counting, String expected_time); // 부스등록
 
 	@Update("update event_booth set booth_name = #{booth_name}, counting = #{counting}, expected_time = #{expected_time} where id = #{booth_id}")
-	boolean modify_booth(int booth_id, String booth_name, int counting, int expected_time); // 부스수정
+	boolean modify_booth(int booth_id, String booth_name, String counting, String expected_time); // 부스수정
 
 	@Update("update event_booth set flag = 'N' where id = #{booth_id}")
 	boolean delete_booth(int booth_id); // 부스삭제
 
 	@Select("select event_title from event where id = #{event_id}")
-	String getTitle(int event_id);
+	String getTitle(int event_id); 
+
+	@Update("update event set event_status = #{i} where id = #{event_id}")
+	String setEventStatus(int event_id, int i); // 행사상태 set
 }

@@ -115,12 +115,6 @@ body{
 }
 
 .area{
-/*     position:relative; */
-/*     width: 100%; */
-/*     height: 84%; */
-/*     margin-top: 50px; */
-/*     margin-bottom: 85px; */
-/*     background-color: #fff; */
 	position:relative;
     width: 100%; height: auto;
     max-width: 1440px; min-height: 720px;
@@ -206,11 +200,6 @@ body{
 	text-align: center;
 }
 
-#date_top{
-	width: 28%;
-	text-align: center;
-}
-
 #status_area{
 	width: 10%;
 	text-align: center;
@@ -243,6 +232,27 @@ body{
 }
 .gray{
 	color: #999999;
+}
+
+/* 사용자 페이지 */
+#index_area_s{
+	margin-left:4%;
+	width: 5%;
+}
+
+#title_area_s{
+	width: 35%;
+	text-align: center;
+}
+
+#date_area_s{
+	width: 45%;
+	text-align: center;
+}
+
+#status_area_s{
+	width: 10%;
+	text-align: center;
 }
 
 /*--------------- 모달 ------------*/

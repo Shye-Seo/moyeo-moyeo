@@ -172,12 +172,12 @@ public class EventService {
 	}
 
 	// 부스등록
-	public boolean register_booth(int event_id, String booth_name, int counting, int expected_time) {
+	public boolean register_booth(int event_id, String booth_name, String counting, String expected_time) {
 		return eventDao.register_booth(event_id, booth_name, counting, expected_time);
 	}
 	
 	// 부스수정
-	public boolean modify_booth(int booth_id, String booth_name, int counting, int expected_time) {
+	public boolean modify_booth(int booth_id, String booth_name, String counting, String expected_time) {
 		return eventDao.modify_booth(booth_id, booth_name, counting, expected_time);
 	}
 
@@ -189,5 +189,10 @@ public class EventService {
 	// 행사명 get (부스등록시)
 	public String getTitle(int event_id) {
 		return eventDao.getTitle(event_id);
+	}
+
+	// 행사상태 set
+	public String setEventStatus(int event_id, int i) {
+		return eventDao.setEventStatus(event_id, i);
 	}	
 }

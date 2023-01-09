@@ -61,12 +61,13 @@
                         </ol>
 						<ol th:each="booth : ${booth_list}" id="list_ol">
 							<input type="hidden" th:value="${booth.id}" id="booth_id">
-							<div id="index_area"><li th:text="${booth.id}"></li></div>
+<!-- 							<div id="index_area"><li th:text="${booth.id}"></li></div> -->
+							<div id="index_area"><li class="boothlist"></li></div>
 							<div id="title_area"><li th:text="${booth.event_title}" id="text_over"></li></div>
 							<div id="date_area"><li th:text="${booth.event_startDate} + ' - ' + ${booth.event_endDate}"></li></div>
 							<div id="booth_area"><li th:text="${booth.booth_name}" id="text_over"></li></div>
-							<div id="counting_area"><li style="color: #DD5067" th:text="${booth.counting} + ' 개'"></li></div>
-							<div id="time_area"><li style="color: #DD5067" th:text="${booth.expected_time} + ' 분'"></li></div>
+							<div id="counting_area"><li style="color: #DD5067" th:text="${booth.counting} + ' 개'" th:if="${booth.counting != null and booth.counting != ''}"></li><li style="color: #DD5067" th:text="${booth.counting}" th:if="${booth.counting == null or booth.counting == ''}"></li></div>
+							<div id="time_area"><li style="color: #DD5067" th:text="${booth.expected_time} + ' 분'" th:if="${booth.expected_time != null and booth.expected_time != ''}"></li><li style="color: #DD5067" th:text="${booth.expected_time}" th:if="${booth.expected_time == null or booth.expected_time == ''}"></li></div>
 							<div id="icon_area"><li th:attr="onclick=|modifyModal('${booth.id}', '${booth.booth_name}', '${booth.event_title}', '${event_id}' )|"><img src="imgs/pen.svg"></li></div>
 							<div id="icon_area"><li th:attr="onclick=|deleteModal('${booth.id}', '${event_id}')|"><img src="imgs/close_btn_black.svg"></li></div>
 						</ol>
@@ -224,19 +225,25 @@
 				  var counting = $("#counting").val();
 				  var expected_time = $("#expected_time").val();
 				  
-				  $.ajax({
-						url : "/register_booth",
-						type : 'post',
-						data : {
-							event_id:event_id,
-							booth_name:booth_name,
-							counting:counting,
-							expected_time:expected_time
-						},
-						success: function(){
-							location.href="/manage_event_booth?id="+event_id;
-						}
-					});
+				  if(booth_name == null || booth_name == ""){
+					  alert("부스명을 입력해주세요.");
+					  return false;
+				  }else{
+					  $.ajax({
+							url : "/register_booth",
+							type : 'post',
+							data : {
+								event_id:event_id,
+								booth_name:booth_name,
+								counting:counting,
+								expected_time:expected_time
+							},
+							success: function(){
+								location.href="/manage_event_booth?id="+event_id;
+							}
+						});
+				  }
+				  
 				}
 			    
 			    /* 부스수정 */
@@ -246,29 +253,32 @@
 				  var expected_time = $("#expected_time_m").val();
 				  var booth_id = $("#booth_id_m").val();
 				  var event_id = $("#event_id_m").val();
-				  debugger;
 				  
-				  $.ajax({
-						url : "/modify_booth",
-						type : 'post',
-						data : {
-							event_id:event_id,
-							booth_id:booth_id,
-							booth_name:booth_name,
-							counting:counting,
-							expected_time:expected_time
-						},
-						success: function(){
-							location.href="/manage_event_booth?id="+event_id;
-						}
-					});
+				  if(booth_name == null || booth_name == ""){
+					  alert("부스명을 입력해주세요.");
+					  return false;
+				  }else{
+					  $.ajax({
+							url : "/modify_booth",
+							type : 'post',
+							data : {
+								event_id:event_id,
+								booth_id:booth_id,
+								booth_name:booth_name,
+								counting:counting,
+								expected_time:expected_time
+							},
+							success: function(){
+								location.href="/manage_event_booth?id="+event_id;
+							}
+						});
+				   }
 				}
 			    
 			    /* 부스삭제 */
 			    function deleteBooth()  {
 				  var booth_id = $("#booth_id_d").val();
 				  var event_id = $("#event_id_d").val();
-				  debugger;
 				  
 				  $.ajax({
 						url : "/delete_booth",
@@ -283,6 +293,14 @@
 					});
 				}
 			</script>
+			
+			<script>
+		        var num = [[${booth_num}]];
+		        $(".boothlist").each(function(){
+		            $(this).text(num);
+		            num--;
+		        });
+		    </script>
     </div>
 </body>
 </html>
