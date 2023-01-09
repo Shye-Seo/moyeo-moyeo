@@ -130,7 +130,6 @@ public class EventController {
 		mav.addObject("event", detailVo);
 		mav.addObject("positionMap", positionMap);
 		mav.addObject("eventFileList", eventFileList);
-		
 		mav.setViewName("manage_eventDetail");
 		return mav;
 	}
@@ -523,5 +522,12 @@ public class EventController {
 		System.out.println("register ok==============>"+check);
 					
 		return "manage_event_booth?id="+event_id;
+	}
+	
+	//행사 파일 다운로드
+	@RequestMapping({"/event_download"})
+	@ResponseBody
+	public ResponseEntity<byte[]> download(@RequestParam String filename) throws IOException {
+		return s3Service.getObject_event(filename);
 	}
 }

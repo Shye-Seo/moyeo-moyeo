@@ -26,7 +26,7 @@ public interface EventDao {
 	@Select("select * from event where id = #{event_id}")
 	EventVo viewEventDetail (int event_id); // 행사현황 세부페이지
 	
-	@Select("select * from event_file where id = #{event_id}")
+	@Select("select * from event_file where event_id = #{event_id}")
 	List<EventFileVo> viewEventFileDetail (int event_id); // 행사현황 세부페이지 파일
 	
 	@Insert("insert into event (event_title, event_content, event_startDate, event_endDate, event_status, event_position, event_position_count, event_venue, event_deadline, created_at) "
