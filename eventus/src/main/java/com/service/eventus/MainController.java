@@ -73,10 +73,10 @@ public class MainController {
 		return "main_ForStaff";
 	}
 
-	@GetMapping(value="/eventList_ForStaff")
-	public String eventList_ForStaff() {
-		return "eventList_ForStaff";
-	}
+//	@GetMapping(value="/eventList_ForStaff")
+//	public String eventList_ForStaff() {
+//		return "eventList_ForStaff";
+//	}
 
 //	@GetMapping(value="/resume_register")
 //	public String resume_register() {

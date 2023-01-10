@@ -1,5 +1,6 @@
 package com.service.eventus.event;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import com.service.eventus.resume.ResumeVo;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -44,8 +46,13 @@ public class EventController {
 	
 	@GetMapping(value="/manage_event")
 	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
-		 List<EventVo> event_list = eventService.event_list();
-	     model.addAttribute("event_list", event_list);
+		 // 오늘 날짜
+         LocalDate now = LocalDate.now();
+         System.out.println("현재날짜 : "+now);
+         LocalDate todaydate = now.parse("yyyyMMdd");
+		 
+         List<EventVo> event_list = eventService.event_list();
+		 
 	     for(EventVo vo : event_list) {
 	    	 if(vo.getEvent_status() == 0) {
 	    		 vo.setApplication_count(eventService.application_count(vo.getId()));
@@ -55,7 +62,26 @@ public class EventController {
 	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
 	    	 }
 	    	 vo.setBooth_count(eventService.booth_count(vo.getId()));
+	    	 
+	    	 String startdate = vo.getEvent_startDate();
+	    	 String year = startdate.substring(0, 4);
+	    	 String month = startdate.substring(5, 7);
+	    	 String day = startdate.substring(8, 10);
+	    	 String date_s = year+month+day;
+	    	 System.out.println("시작날짜 : "+date_s);
+	    	 
+	    	 LocalDate localdate = LocalDate.parse(date_s, DateTimeFormatter.ofPattern("yyyyMMdd"));
+	    	 System.out.println("날짜 : "+localdate);
+	    	 
+//	    	 if(vo.getEvent_endDate() < now) {
+//	    		 eventService.setEventStatus(vo.getId(), 2); //진행완료
+//	    	 }else if(now < vo.getEvent_startDate()) {
+//	    		 eventService.setEventStatus(vo.getId(), 0); //모집중
+//	    	 }else if(now > vo.getEvent_startDate() && now < vo.getEvent_endDate()) {
+//	    		 eventService.setEventStatus(vo.getId(), 1); //진행중
+//	    	 }
 	     }
+	     model.addAttribute("event_list", event_list);
 	     return "manage_event";
 	}
 	
@@ -485,7 +511,10 @@ public class EventController {
 				vo.setEvent_endDate(endDate);
 			}
 		}
+		
+		int booth_num = booth_list.size();
 		model.addAttribute("booth_list", booth_list);
+		model.addAttribute("booth_num", booth_num);
 	    return "manage_event_booth";
 	}
 	
@@ -493,10 +522,9 @@ public class EventController {
 	@ResponseBody
 	@RequestMapping(value="/register_booth", method=RequestMethod.POST)
 	public String register_booth(@RequestParam("event_id") int event_id, @RequestParam("booth_name") String booth_name, 
-								 @RequestParam("counting") int counting, @RequestParam("expected_time") int expected_time) throws Exception{
+								 @RequestParam("counting") String counting, @RequestParam("expected_time") String expected_time) throws Exception{
 		
-		boolean check = eventService.register_booth(event_id, booth_name, counting, expected_time);
-		System.out.println("register ok==============>"+check);
+		eventService.register_booth(event_id, booth_name, counting, expected_time);
 			
 		return "manage_event_booth?id="+event_id;
 	}
@@ -505,10 +533,9 @@ public class EventController {
 	@ResponseBody
 	@RequestMapping(value="/modify_booth", method=RequestMethod.POST)
 	public String modify_booth(@RequestParam("event_id") int event_id, @RequestParam("booth_id") int booth_id,  @RequestParam("booth_name") String booth_name, 
-							   @RequestParam("counting") int counting, @RequestParam("expected_time") int expected_time) throws Exception{
+							   @RequestParam("counting") String counting, @RequestParam("expected_time") String expected_time) throws Exception{
 			
-		boolean check = eventService.modify_booth(booth_id, booth_name, counting, expected_time);
-		System.out.println("register ok==============>"+check);
+		eventService.modify_booth(booth_id, booth_name, counting, expected_time);
 				
 		return "manage_event_booth?id="+event_id;
 	}
@@ -518,10 +545,30 @@ public class EventController {
 	@RequestMapping(value="/delete_booth", method=RequestMethod.POST)
 	public String delete_booth(@RequestParam("event_id") int event_id, @RequestParam("booth_id") int booth_id) throws Exception{
 				
-		boolean check = eventService.delete_booth(booth_id);
-		System.out.println("register ok==============>"+check);
+		eventService.delete_booth(booth_id);
 					
 		return "manage_event_booth?id="+event_id;
+	}
+	
+	// 사용자 페이지_행사목록
+	@GetMapping(value="/eventList_ForStaff")
+	public String event_list_staff(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
+		 List<EventVo> event_list = eventService.event_list();
+	     model.addAttribute("event_list", event_list);
+	     for(EventVo vo : event_list) {
+	    	 if(vo.getEvent_status() == 0) {
+	    		 vo.setApplication_count(eventService.application_count(vo.getId()));
+	    	 }else if(vo.getEvent_status() == 1) {
+	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
+	    	 }else if(vo.getEvent_status() == 2) {
+	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
+	    	 }
+	    	 vo.setBooth_count(eventService.booth_count(vo.getId()));
+	     }
+	     
+	     int event_num = event_list.size();
+	     model.addAttribute("event_num", event_num);
+	     return "eventList_ForStaff";
 	}
 	
 	//행사 파일 다운로드
