@@ -184,14 +184,49 @@ body{
     font-weight: bold;
     border-top: 1px solid #DDDDDD;
     border-bottom: 1px solid #DDDDDD;
+    
 }
 ol li {
     display:inline-block;
-    margin-top:1.5%;
+    margin-top:2.0%;
     margin-bottom:1.5%;
-    margin-left:7%;
+    margin-left:4%;
+    overflow:hidden;
+
 }
 
 .list ol li:nth-child(1) {
     margin-left:4%;
+}
+
+#date_area {
+	width:8%;
+	text-align:center;
+}
+#event_area {
+	width:12%;
+	text-align:center;
+	white-space: nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	word-break: break-all;
+}
+#name_area {
+	width:5%;
+	text-align:center;
+	color: #5b8fd2;
+}
+#contact_area {
+	width:10%;
+	text-align:center;
+	color: #5b8fd2;
+}
+
+#start_area, #outing_area, #comeback_area, #end_area, #total_time_area {
+	width:5%;
+	text-align:center;
+}
+
+#total_time_area{
+	color: #dd5067;
 }
