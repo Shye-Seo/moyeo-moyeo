@@ -13,6 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.aws.AwsS3Service;
 import com.service.eventus.member.MemberVo;
+import com.service.eventus.resume.ResumeService;
+import com.service.eventus.resume.ResumeVo;
+
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,16 +42,70 @@ public class EventController {
 	@Inject
     private EventService eventService;
 	
+	@Inject
+	private ResumeService resumeService;
+	
 	@GetMapping(value="/manage_event")
 	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
 		 // 오늘 날짜
          LocalDate now = LocalDate.now();
+         Calendar time = Calendar.getInstance();
+         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+         String nowTime = format.format(time.getTime());
          System.out.println("현재날짜 : "+now);
-         LocalDate todaydate = now.parse("yyyyMMdd");
+         System.out.println("현재시간 : "+nowTime);
 		 
          List<EventVo> event_list = eventService.event_list();
 		 
 	     for(EventVo vo : event_list) {
+	    	 String startdate = vo.getEvent_startDate();
+	    	 String year = startdate.substring(0, 4);
+	    	 String month = startdate.substring(5, 7);
+	    	 String day = startdate.substring(8, 10);
+	    	 String date_s = year+month+day;
+	    	 
+	    	 String enddate = vo.getEvent_endDate();
+	    	 String end_year = enddate.substring(0, 4);
+	    	 String end_month = enddate.substring(5, 7);
+	    	 String end_day = enddate.substring(8, 10);
+	    	 String date_e = end_year+end_month+end_day;
+	    	 
+	    	 String deadline = vo.getEvent_deadline();
+	    	 String d_year = deadline.substring(0, 4);
+	    	 String d_month = deadline.substring(5, 7);
+	    	 String d_day = deadline.substring(8, 10);
+	    	 String d_hour = deadline.substring(11, 13);
+	    	 String d_min = deadline.substring(14, 16);
+	    	 String date_d = d_year+d_month+d_day+d_hour+d_min;
+	    	 
+	    	 LocalDate localdate_start = LocalDate.parse(date_s, DateTimeFormatter.ofPattern("yyyyMMdd"));
+	    	 LocalDate localdate_end = LocalDate.parse(date_e, DateTimeFormatter.ofPattern("yyyyMMdd"));
+	    	 LocalDate localdate = LocalDate.parse(date_d, DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+	    	 LocalDate localdate_now = LocalDate.parse(nowTime, DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+	    	 
+	    	 //compareTo메서드를 통한 날짜비교
+	    	 int compare = localdate_start.compareTo(now);
+	    	 int compare_end = localdate_end.compareTo(now);
+	    	 int compare_deadline = localdate.compareTo(localdate_now);
+	    	 
+	    	 //진행현황 check
+	    	 int check = vo.getEvent_check();
+	    	  
+	    	 //현재날짜에 따라 event_status set
+	    	 if(compare_deadline > 0 && check == 0) { //event_event_deadline > today, event_status:0, event_check:0 (모집중)
+//	    		   System.out.println("모집중");
+//	    	  	   eventService.setEventStatus(vo.getId(), 0);
+	    	 }else if(compare > 0 && check == 1) { //event_startDate > today, event_status:9, event_check:1 (모집완료+진행전) -> 확정버튼 누를 때, status set
+//		    	   System.out.println("모집완료+진행전");
+//		    	   eventService.setEventStatus(vo.getId(), 9);
+		     }else if(compare <= 0 && compare_end >= 0 && check == 1) { //event_startDate < today < event_endDate, event_status:1, event_check:1 (모집완료+진행중)
+//		    	   System.out.println("모집완료+진행중");
+		    	   eventService.setEventStatus(vo.getId(), 1);
+	    	 }else if(compare_end < 0) { //event_endDate < today, event_status:2 (진행완료)
+//	    		   System.out.println("진행완료");
+	    		   eventService.setEventStatus(vo.getId(), 2);
+	    	 }
+	    	 
 	    	 if(vo.getEvent_status() == 0) {
 	    		 vo.setApplication_count(eventService.application_count(vo.getId()));
 	    	 }else if(vo.getEvent_status() == 1) {
@@ -55,24 +114,6 @@ public class EventController {
 	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
 	    	 }
 	    	 vo.setBooth_count(eventService.booth_count(vo.getId()));
-	    	 
-	    	 String startdate = vo.getEvent_startDate();
-	    	 String year = startdate.substring(0, 4);
-	    	 String month = startdate.substring(5, 7);
-	    	 String day = startdate.substring(8, 10);
-	    	 String date_s = year+month+day;
-	    	 System.out.println("시작날짜 : "+date_s);
-	    	 
-	    	 LocalDate localdate = LocalDate.parse(date_s, DateTimeFormatter.ofPattern("yyyyMMdd"));
-	    	 System.out.println("날짜 : "+localdate);
-	    	 
-//	    	 if(vo.getEvent_endDate() < now) {
-//	    		 eventService.setEventStatus(vo.getId(), 2); //진행완료
-//	    	 }else if(now < vo.getEvent_startDate()) {
-//	    		 eventService.setEventStatus(vo.getId(), 0); //모집중
-//	    	 }else if(now > vo.getEvent_startDate() && now < vo.getEvent_endDate()) {
-//	    		 eventService.setEventStatus(vo.getId(), 1); //진행중
-//	    	 }
 	     }
 	     model.addAttribute("event_list", event_list);
 	     return "manage_event";
@@ -84,9 +125,9 @@ public class EventController {
 	     return "manage_event_register";
 	}
 	
-	//행사상세조회
-	@RequestMapping(value="/eventDetail", method=RequestMethod.GET)
-	public ModelAndView eventDetail(@RequestParam("id") int event_id) throws Exception{
+	//행사상세조회_스테프
+	@RequestMapping(value="/eventDetail_forStaff", method=RequestMethod.GET)
+	public ModelAndView eventDetail_forStaff(@RequestParam("id") int event_id, HttpSession session) throws Exception{
 		ModelAndView mav = new ModelAndView();
 		EventVo detailVo = eventService.viewEventDetail(event_id);
 		
@@ -105,15 +146,66 @@ public class EventController {
 			}
 		}
 		
+		//세션의 아이디를 받아온다
+		String id = (String) session.getAttribute("user_id");
+		MemberVo memberVo = resumeService.viewMember_forResume(id);
+		
+		//이력서 조회
+		ResumeVo resumeVo = resumeService.selectMyResume(memberVo.getId());
+		
+		int isResume = 0;
+		if(resumeVo != null) {
+			isResume =resumeVo.getId();
+		}
+		
 		mav.addObject("event", detailVo);
 		mav.addObject("positionMap", positionMap);
-		mav.addObject("positionMap", positionMap);
 		mav.addObject("eventFileList", eventFileList);
-
+		mav.addObject("isResume",isResume);
+		mav.addObject("staff_id",memberVo.getId());
 		mav.setViewName("staff_eventDetail");
 		return mav;
 	}
-
+	
+	//행사상세조회_관리자
+	@RequestMapping(value="/eventDetail", method=RequestMethod.GET)
+	public ModelAndView eventDetail(@RequestParam("id") int event_id) throws Exception{
+		ModelAndView mav = new ModelAndView();
+		EventVo detailVo = eventService.viewEventDetail(event_id);
+		
+		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
+		
+		// update랑 똑같이 고치기
+//		포지션별로 잘라 저장
+		Map<String, String> positionMap = new HashMap<>();
+		if(detailVo.getEvent_position() != null) {
+			String[] position = detailVo.getEvent_position().split(",");
+			String[] position_conut = detailVo.getEvent_position_count().split(",");
+			
+			for(int i=0; i<position.length;i++) {
+				positionMap.put(position[i], position_conut[i]);
+			}
+		}
+		
+		mav.addObject("event", detailVo);
+		mav.addObject("positionMap", positionMap);
+		mav.addObject("eventFileList", eventFileList);
+		mav.setViewName("manage_eventDetail");
+		return mav;
+	}
+	
+	//지원자 행사지원
+	@ResponseBody
+	@RequestMapping(value="/application_event", method=RequestMethod.POST)
+	public int application_event (@ModelAttribute ApplicationVo applicationVo) {
+		
+		if(!eventService.isChkApplication(applicationVo)) {
+			eventService.insertApplication(applicationVo);
+		}else {
+			return 1;
+		}
+		return 0;
+	}
 	
 	//행사등록
 	@ResponseBody
@@ -194,45 +286,6 @@ public class EventController {
 		return "eventDetail?id="+eventVo.getId();
 	}
 	
-	//지원현황(모집중) -x
-	@RequestMapping(value="/application_modal", method=RequestMethod.GET)
-	public String application_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
-		
-		int applicant_count = eventService.application_count(event_id);
-		model.addAttribute("event_id", event_id);
-		model.addAttribute("applicant_count", applicant_count);
-		
-		System.out.println("=============> id:"+event_id);
-		
-		List<MemberVo> application_list = eventService.application_list(event_id);
-		if (application_list != null) {
-			for (MemberVo memberVo : application_list) {
-				//경력 count
-				int staff_career = eventService.staff_career(memberVo.getId());
-				memberVo.setCareer_count(staff_career);
-				
-				//주소 set
-				String user_address = eventService.getAddress(event_id, memberVo.getId());
-				memberVo.setStaff_address(user_address); 
-				
-				//만 나이 계산
-				String staff_age = eventService.getUserAge(memberVo.getUser_birth());
-				memberVo.setStaff_age(staff_age);
-				
-				//휴대폰번호 형태
-				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
-				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
-				memberVo.setStaff_phone(staff_phone);
-				
-				//수락여부(합격/불합격) check
-				String result = eventService.getResult(event_id, memberVo.getId());
-				memberVo.setResult(result);
-			}
-		}
-	    model.addAttribute("application_list", application_list);
-		return "application_modal";
-	}
-	
 	
 	//지원현황(모집중) 모달창
 	@ResponseBody
@@ -276,101 +329,27 @@ public class EventController {
 	}
 	
 	// 지원자 수락
-//	@RequestMapping(value="accept_applicant", method=RequestMethod.POST)
-//	public String record_start(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
-//		eventService.accept_applicant(event_id, staff_id);
-//		return "application_modal";
-//	}
-	
 	@ResponseBody
 	@RequestMapping(value="accept_applicant", method=RequestMethod.POST)
-	public String record_start(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
+	public String record_start(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception{
 		eventService.accept_applicant(event_id, staff_id);
 		return "합격";
 	}
 	
 	// 지원자 수락해제
-//	@RequestMapping(value="accept_applicant_cancel", method=RequestMethod.POST)
-//	public String applicant_accept_cancel(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
-//		eventService.accept_applicant_cancel(event_id, staff_id);
-//		return "application_modal";
-//	}
 	@ResponseBody
 	@RequestMapping(value="accept_applicant_cancel", method=RequestMethod.POST)
-	public String applicant_accept_cancel(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
+	public String applicant_accept_cancel(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception{
 		eventService.accept_applicant_cancel(event_id, staff_id);
 		return "대기중";
 	}
 	
 	// 지원자 불합격처리
-//	@RequestMapping(value="reject_applicant", method=RequestMethod.POST)
-//	public String reject_applicant(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
-//		eventService.reject_applicant(event_id, staff_id);
-//		return "application_modal";
-//	}
 	@ResponseBody
 	@RequestMapping(value="reject_applicant", method=RequestMethod.POST)
-	public String reject_applicant(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, ModelMap model) throws Exception{
+	public String reject_applicant(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception{
 		eventService.reject_applicant(event_id, staff_id);
 		return "불합격";
-	}
-	
-	// 지원현황(진행중) 모달창 -x
-	@RequestMapping(value="/workRecord_modal", method=RequestMethod.GET)
-	public String workStaff_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
-		
-		int staff_count = eventService.staff_count(event_id);
-		model.addAttribute("event_id", event_id);
-		model.addAttribute("staff_count", staff_count);
-		
-		// 오늘 날짜
-        LocalDate now = LocalDate.now();
-        int year = now.getYear();
-        int month = now.getMonthValue();
-        int day = now.getDayOfMonth();
-        String today = year + "년 " + month + "월 " + day + "일";
-        model.addAttribute("today", today);
-        
-        String work_date = year+"-"+month+"-"+day;
-        if(month < 10 && day > 10) {
-        	String month_0 = "0" + month;
-        	work_date = year+"-"+month_0+"-"+day;
-        }else if(day < 10 && month > 10) {
-        	String day_0 = "0" + day;
-        	work_date = year+"-"+month+"-"+day_0;
-        }else if(month < 10 && day < 10) {
-        	String month_0 = "0" + month;
-        	String day_0 = "0" + day;
-        	work_date = year+"-"+month_0+"-"+day_0;
-        }else if(month > 10 && day > 10) {
-        	work_date = year+"-"+month+"-"+day;
-        }
-        model.addAttribute("work_date", work_date);
- 
-		List<MemberVo> workStaff_list = eventService.workStaff_list(event_id);
-		if (workStaff_list != null) {
-			for (MemberVo memberVo : workStaff_list) {
-				
-				//만 나이 계산
-				String staff_age = eventService.getUserAge(memberVo.getUser_birth());
-				memberVo.setStaff_age(staff_age);
-				
-				//휴대폰번호 형태
-				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
-				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
-				memberVo.setStaff_phone(staff_phone);
-				
-				//당일 근무기록
-				List<WorkRecordVo> workTime_list = eventService.getWorkTime(memberVo.getId(), event_id, work_date);
-				if(workTime_list != null) {
-					for(WorkRecordVo recordVo : workTime_list) {
-						memberVo.setRecordVo(recordVo);
-					}
-				}
-			}
-		}
-	    model.addAttribute("workStaff_list", workStaff_list);
-		return "workRecord_modal";
 	}
 	
 	// 지원현황(진행중) 모달창
@@ -437,20 +416,22 @@ public class EventController {
 	}
 	
 	// 근무기록(출근)
+	@ResponseBody
 	@RequestMapping(value="/record_start", method=RequestMethod.POST)
 	public String record_startTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
-		@RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
+			@RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id) throws Exception{
 		
 		// 현재 시간
 		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-        String start_time = now.format(formatter);
-        
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+		String start_time = now.format(formatter);
+		
 		eventService.record_startTime(record_id, event_id, staff_id, work_date, start_time);
-		return "workRecord_modal";
+		return start_time;
 	}
 	
 	// 근무기록(외출)
+	@ResponseBody
 	@RequestMapping(value="/record_out", method=RequestMethod.POST)
 	public String record_outTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
 		@RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
@@ -461,10 +442,11 @@ public class EventController {
         String out_time = now.format(formatter);
         
 		eventService.record_outTime(record_id, event_id, staff_id, work_date, out_time);
-		return "workRecord_modal";
+		return out_time;
 	}
 	
 	// 근무기록(복귀)
+	@ResponseBody
 	@RequestMapping(value="/record_back", method=RequestMethod.POST)
 	public String record_backTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
 		@RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
@@ -475,10 +457,11 @@ public class EventController {
         String back_time = now.format(formatter);
         
 		eventService.record_backTime(record_id, event_id, staff_id, work_date, back_time);
-		return "workRecord_modal";
+		return back_time;
 	}
 	
 	// 근무기록(퇴근)
+	@ResponseBody
 	@RequestMapping(value="/record_end", method=RequestMethod.POST)
 	public String record_endTime(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
 		@RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
@@ -489,28 +472,30 @@ public class EventController {
         String end_time = now.format(formatter);
         
 		eventService.record_endTime(record_id, event_id, staff_id, work_date, end_time);
-		return "workRecord_modal";
+		return end_time;
 	}
 	
 	// 당일 근무기록 없을 때,
 	// 근무기록(출근)
+	@ResponseBody
 	@RequestMapping(value="/record_start_new", method=RequestMethod.POST)
 	public String record_startTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
-		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+			@RequestParam("work_date") String work_date) throws Exception{
 		
 		// 현재 시간
 		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-        String start_time = now.format(formatter);
-        
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+		String start_time = now.format(formatter);
+		
 		eventService.record_startTime_new(event_id, staff_id, work_date, start_time);
-		return "workRecord_modal";
+		return start_time;
 	}
 	
 	// 근무기록(외출)
+	@ResponseBody
 	@RequestMapping(value="/record_out_new", method=RequestMethod.POST)
 	public String record_outTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
-		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		@RequestParam("work_date") String work_date) throws Exception{
 		
 		// 현재 시간
 		LocalDateTime now = LocalDateTime.now();
@@ -518,13 +503,14 @@ public class EventController {
         String out_time = now.format(formatter);
         
 		eventService.record_outTime_new(event_id, staff_id, work_date, out_time);
-		return "workRecord_modal";
+		return out_time;
 	}
 	
 	// 근무기록(복귀)
+	@ResponseBody
 	@RequestMapping(value="/record_back_new", method=RequestMethod.POST)
 	public String record_backTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
-		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		@RequestParam("work_date") String work_date) throws Exception{
 		
 		// 현재 시간
 		LocalDateTime now = LocalDateTime.now();
@@ -532,13 +518,14 @@ public class EventController {
         String back_time = now.format(formatter);
         
 		eventService.record_backTime_new(event_id, staff_id, work_date, back_time);
-		return "workRecord_modal";
+		return back_time;
 	}
 	
 	// 근무기록(퇴근)
+	@ResponseBody
 	@RequestMapping(value="/record_end_new", method=RequestMethod.POST)
 	public String record_endTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id, 
-		@RequestParam("work_date") String work_date, ModelMap model) throws Exception{
+		@RequestParam("work_date") String work_date) throws Exception{
 		
 		// 현재 시간
 		LocalDateTime now = LocalDateTime.now();
@@ -546,7 +533,7 @@ public class EventController {
         String end_time = now.format(formatter);
         
 		eventService.record_endTime_new(event_id, staff_id, work_date, end_time);
-		return "workRecord_modal";
+		return end_time;
 	}
 	
 	// 부스현황 리스트
@@ -628,5 +615,12 @@ public class EventController {
 	     int event_num = event_list.size();
 	     model.addAttribute("event_num", event_num);
 	     return "eventList_ForStaff";
+	}
+	
+	//행사 파일 다운로드
+	@RequestMapping({"/event_download"})
+	@ResponseBody
+	public ResponseEntity<byte[]> download(@RequestParam String filename) throws IOException {
+		return s3Service.getObject_event(filename);
 	}
 }

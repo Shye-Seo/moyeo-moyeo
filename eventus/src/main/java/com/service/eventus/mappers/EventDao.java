@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import com.service.eventus.event.ApplicationVo;
 import com.service.eventus.event.BoothVo;
 import com.service.eventus.event.EventFileVo;
 import com.service.eventus.event.EventVo;
@@ -23,10 +24,16 @@ public interface EventDao {
 	@Select("select * from event order by event_status asc, id desc")
 	List<EventVo> event_list();  // 행사현황 리스트
 	
+	@Insert("insert into staff_application (event_id, staff_id, resume_id, staff_position) value (#{event_id}, #{staff_id}, #{resume_id}, #{staff_position})")
+	boolean insertApplication(ApplicationVo applicationVo); // 행사 지원하기
+	
+	@Select("select exists (select * from staff_application where event_id = #{event_id} and staff_id = #{staff_id}) as isChk")
+	boolean isChkApplication (ApplicationVo applicationVo); //행사 지원 이력 여부 체크 (중복방지)
+	
 	@Select("select * from event where id = #{event_id}")
 	EventVo viewEventDetail (int event_id); // 행사현황 세부페이지
 	
-	@Select("select * from event_file where id = #{event_id}")
+	@Select("select * from event_file where event_id = #{event_id}")
 	List<EventFileVo> viewEventFileDetail (int event_id); // 행사현황 세부페이지 파일
 	
 	@Insert("insert into event (event_title, event_content, event_startDate, event_endDate, event_status, event_position, event_position_count, event_venue, event_deadline, created_at) "
@@ -73,10 +80,10 @@ public interface EventDao {
 	@Select("select application_result from staff_application where event_id = ${event_id} and staff_id = ${staff_id}")
 	String getResult(int event_id, int staff_id); // 지원현황 지원자 리스트(모집중) - 지원결과
 
-	@Select("select count(*) from event e inner join staff_application s where e.id = s.event_id and s.application_result = '합격' and e.id = #{event_id}")
+	@Select("select count(*) from staff_passer where event_id = #{event_id}")
 	int staff_count(int event_id); // 근무직원 count
 
-	@Select("select * from user u inner join staff_application s, event e where u.id = s.staff_id and e.id = s.event_id and s.application_result = '합격' and e.id = #{event_id}")
+	@Select("select * from user u inner join staff_passer s where u.id = s.staff_id and s.event_id = #{event_id}")
 	List<MemberVo> workStaff_list(int event_id); // 근무직원 리스트(진행중) - 직원정보(이름, 나이, 휴대폰번호)
 
 	@Select("select * from staff_work_record where staff_id = #{staff_id} and event_id = #{event_id} and work_date = #{work_date}")
@@ -136,5 +143,5 @@ public interface EventDao {
 	String getTitle(int event_id); 
 
 	@Update("update event set event_status = #{i} where id = #{event_id}")
-	String setEventStatus(int event_id, int i); // 행사상태 set
+	boolean setEventStatus(int event_id, int i); // 행사상태 set
 }

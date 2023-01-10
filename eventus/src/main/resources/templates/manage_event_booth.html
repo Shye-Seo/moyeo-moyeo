@@ -66,7 +66,7 @@
 							<div id="title_area"><li th:text="${booth.event_title}" id="text_over"></li></div>
 							<div id="date_area"><li th:text="${booth.event_startDate} + ' - ' + ${booth.event_endDate}"></li></div>
 							<div id="booth_area"><li th:text="${booth.booth_name}" id="text_over"></li></div>
-							<div id="counting_area"><li style="color: #DD5067" th:text="${booth.counting} + ' 개'" th:if="${booth.counting != null and booth.counting != ''}"></li><li style="color: #DD5067" th:text="${booth.counting}" th:if="${booth.counting == null or booth.counting == ''}"></li></div>
+							<div id="counting_area"><li style="color: #DD5067" th:text="${booth.counting} + ' 명'" th:if="${booth.counting != null and booth.counting != ''}"></li><li style="color: #DD5067" th:text="${booth.counting}" th:if="${booth.counting == null or booth.counting == ''}"></li></div>
 							<div id="time_area"><li style="color: #DD5067" th:text="${booth.expected_time} + ' 분'" th:if="${booth.expected_time != null and booth.expected_time != ''}"></li><li style="color: #DD5067" th:text="${booth.expected_time}" th:if="${booth.expected_time == null or booth.expected_time == ''}"></li></div>
 							<div id="icon_area"><li th:attr="onclick=|modifyModal('${booth.id}', '${booth.booth_name}', '${booth.event_title}', '${event_id}' )|"><img src="imgs/pen.svg"></li></div>
 							<div id="icon_area"><li th:attr="onclick=|deleteModal('${booth.id}', '${event_id}')|"><img src="imgs/close_btn_black.svg"></li></div>
@@ -108,7 +108,7 @@
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>카운팅</p>
-					        	<input type="text" placeholder="카운팅" id="counting">
+					        	<input type="text" placeholder="수용가능한 인원수를 입력해주세요." id="counting">
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>소요시간</p>
@@ -139,7 +139,7 @@
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>카운팅</p>
-					        	<input type="text" placeholder="카운팅" id="counting_m">
+					        	<input type="text" placeholder="수용가능한 인원수를 입력해주세요." id="counting_m">
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>소요시간</p>
