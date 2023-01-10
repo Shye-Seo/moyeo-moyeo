@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,12 +42,63 @@ public class EventController {
 	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
 		 // 오늘 날짜
          LocalDate now = LocalDate.now();
+         Calendar time = Calendar.getInstance();
+         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+         String nowTime = format.format(time.getTime());
          System.out.println("현재날짜 : "+now);
-         LocalDate todaydate = now.parse("yyyyMMdd");
+         System.out.println("현재시간 : "+nowTime);
 		 
          List<EventVo> event_list = eventService.event_list();
 		 
 	     for(EventVo vo : event_list) {
+	    	 String startdate = vo.getEvent_startDate();
+	    	 String year = startdate.substring(0, 4);
+	    	 String month = startdate.substring(5, 7);
+	    	 String day = startdate.substring(8, 10);
+	    	 String date_s = year+month+day;
+	    	 
+	    	 String enddate = vo.getEvent_endDate();
+	    	 String end_year = enddate.substring(0, 4);
+	    	 String end_month = enddate.substring(5, 7);
+	    	 String end_day = enddate.substring(8, 10);
+	    	 String date_e = end_year+end_month+end_day;
+	    	 
+	    	 String deadline = vo.getEvent_deadline();
+	    	 String d_year = deadline.substring(0, 4);
+	    	 String d_month = deadline.substring(5, 7);
+	    	 String d_day = deadline.substring(8, 10);
+	    	 String d_hour = deadline.substring(11, 13);
+	    	 String d_min = deadline.substring(14, 16);
+	    	 String date_d = d_year+d_month+d_day+d_hour+d_min;
+	    	 
+	    	 LocalDate localdate_start = LocalDate.parse(date_s, DateTimeFormatter.ofPattern("yyyyMMdd"));
+	    	 LocalDate localdate_end = LocalDate.parse(date_e, DateTimeFormatter.ofPattern("yyyyMMdd"));
+	    	 LocalDate localdate = LocalDate.parse(date_d, DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+	    	 LocalDate localdate_now = LocalDate.parse(nowTime, DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+	    	 
+	    	 //compareTo메서드를 통한 날짜비교
+	    	 int compare = localdate_start.compareTo(now);
+	    	 int compare_end = localdate_end.compareTo(now);
+	    	 int compare_deadline = localdate.compareTo(localdate_now);
+	    	 
+	    	 //진행현황 check
+	    	 int check = vo.getEvent_check();
+	    	  
+	    	 //현재날짜에 따라 event_status set
+	    	 if(compare_deadline > 0 && check == 0) { //event_event_deadline > today, event_status:0, event_check:0 (모집중)
+//	    		   System.out.println("모집중");
+//	    	  	   eventService.setEventStatus(vo.getId(), 0);
+	    	 }else if(compare > 0 && check == 1) { //event_startDate > today, event_status:9, event_check:1 (모집완료+진행전) -> 확정버튼 누를 때, status set
+//		    	   System.out.println("모집완료+진행전");
+//		    	   eventService.setEventStatus(vo.getId(), 9);
+		     }else if(compare <= 0 && compare_end >= 0 && check == 1) { //event_startDate < today < event_endDate, event_status:1, event_check:1 (모집완료+진행중)
+//		    	   System.out.println("모집완료+진행중");
+		    	   eventService.setEventStatus(vo.getId(), 1);
+	    	 }else if(compare_end < 0) { //event_endDate < today, event_status:2 (진행완료)
+//	    		   System.out.println("진행완료");
+	    		   eventService.setEventStatus(vo.getId(), 2);
+	    	 }
+	    	 
 	    	 if(vo.getEvent_status() == 0) {
 	    		 vo.setApplication_count(eventService.application_count(vo.getId()));
 	    	 }else if(vo.getEvent_status() == 1) {
@@ -55,24 +107,6 @@ public class EventController {
 	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
 	    	 }
 	    	 vo.setBooth_count(eventService.booth_count(vo.getId()));
-	    	 
-	    	 String startdate = vo.getEvent_startDate();
-	    	 String year = startdate.substring(0, 4);
-	    	 String month = startdate.substring(5, 7);
-	    	 String day = startdate.substring(8, 10);
-	    	 String date_s = year+month+day;
-	    	 System.out.println("시작날짜 : "+date_s);
-	    	 
-	    	 LocalDate localdate = LocalDate.parse(date_s, DateTimeFormatter.ofPattern("yyyyMMdd"));
-	    	 System.out.println("날짜 : "+localdate);
-	    	 
-//	    	 if(vo.getEvent_endDate() < now) {
-//	    		 eventService.setEventStatus(vo.getId(), 2); //진행완료
-//	    	 }else if(now < vo.getEvent_startDate()) {
-//	    		 eventService.setEventStatus(vo.getId(), 0); //모집중
-//	    	 }else if(now > vo.getEvent_startDate() && now < vo.getEvent_endDate()) {
-//	    		 eventService.setEventStatus(vo.getId(), 1); //진행중
-//	    	 }
 	     }
 	     model.addAttribute("event_list", event_list);
 	     return "manage_event";

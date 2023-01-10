@@ -136,5 +136,5 @@ public interface EventDao {
 	String getTitle(int event_id); 
 
 	@Update("update event set event_status = #{i} where id = #{event_id}")
-	String setEventStatus(int event_id, int i); // 행사상태 set
+	boolean setEventStatus(int event_id, int i); // 행사상태 set
 }
