@@ -643,7 +643,7 @@ public class EventController {
 		return "manage_event_booth?id="+event_id;
 	}
 	
-	// 사용자 페이지_행사목록
+	//사용자 페이지_행사목록
 	@GetMapping(value="/eventList_ForStaff")
 	public String event_list_staff(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
 		 List<EventVo> event_list = eventService.event_list();
@@ -662,5 +662,11 @@ public class EventController {
 	     int event_num = event_list.size();
 	     model.addAttribute("event_num", event_num);
 	     return "eventList_ForStaff";
+	}
+	
+	//이력서 form
+	@GetMapping(value="/resume_file")
+	public String resume_file(ModelMap model) throws Exception{
+		return "resume_file";
 	}
 }
