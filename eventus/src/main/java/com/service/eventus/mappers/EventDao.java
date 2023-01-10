@@ -24,8 +24,11 @@ public interface EventDao {
 	@Select("select * from event order by event_status asc, id desc")
 	List<EventVo> event_list();  // 행사현황 리스트
 	
-	@Insert("insert into staff_application (event_id, staff_id, resume_id) value (#{event_id}, #{staff_id}, #{resume_id})")
+	@Insert("insert into staff_application (event_id, staff_id, resume_id, staff_position) value (#{event_id}, #{staff_id}, #{resume_id}, #{staff_position})")
 	boolean insertApplication(ApplicationVo applicationVo); // 행사 지원하기
+	
+	@Select("select exists (select * from staff_application where event_id = #{event_id} and staff_id = #{staff_id}) as isChk")
+	boolean isChkApplication (ApplicationVo applicationVo); //행사 지원 이력 여부 체크 (중복방지)
 	
 	@Select("select * from event where id = #{event_id}")
 	EventVo viewEventDetail (int event_id); // 행사현황 세부페이지

@@ -195,13 +195,16 @@ public class EventController {
 	}
 	
 	//지원자 행사지원
+	@ResponseBody
 	@RequestMapping(value="/application_event", method=RequestMethod.POST)
-	public String application_event (@ModelAttribute ApplicationVo applicationVo) {
+	public int application_event (@ModelAttribute ApplicationVo applicationVo) {
 		
-		
-		
-		return null;
-		
+		if(!eventService.isChkApplication(applicationVo)) {
+			eventService.insertApplication(applicationVo);
+		}else {
+			return 1;
+		}
+		return 0;
 	}
 	
 	//행사등록
