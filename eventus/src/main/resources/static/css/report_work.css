@@ -230,3 +230,15 @@ ol li {
 #total_time_area{
 	color: #dd5067;
 }
+
+#date_area_staff {
+	width:20%;
+	text-align:center;
+}
+
+#start_area_staff, #outing_area_staff, #comeback_area_staff, #end_area_staff {
+	width:13%;
+	text-align:center;
+	
+}
+

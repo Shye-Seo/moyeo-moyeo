@@ -136,7 +136,11 @@ public class MasterController {
     }
     
     @GetMapping(value="/report_work_ForStaff")
-	public String report_work_ForStaff() {
+	public String report_work_ForStaff(ModelMap model) {
+    	
+    	 List<MasterVo> report_work_list = masterService.report_work_list();
+    	 model.addAttribute("report_work_list", report_work_list);
+    	 
 		return "report_work_ForStaff";
 	}
 }
