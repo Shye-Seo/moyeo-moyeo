@@ -1,6 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-  <g id="그룹_2424" data-name="그룹 2424" transform="translate(0 0.214)">
-    <rect id="사각형_7547" data-name="사각형 7547" width="24" height="24" transform="translate(0 -0.214)" fill="#fff"/>
-    <path id="Icon_ionic-ios-phone-portrait" data-name="Icon ionic-ios-phone-portrait" d="M15.26,2.25H11.012a.881.881,0,0,0-.887.881V13.337a.907.907,0,0,0,.887.913h4.246a.89.89,0,0,0,.865-.913V3.131A.859.859,0,0,0,15.26,2.25Zm-2.537.616h.8a.107.107,0,1,1,0,.214h-.8a.107.107,0,1,1,0-.214Zm.415,10.982a.466.466,0,1,1,.466-.466A.466.466,0,0,1,13.138,13.848Zm2.5-1.312H10.607a.054.054,0,0,1-.054-.054V3.67a.054.054,0,0,1,.054-.054h5.036a.054.054,0,0,1,.054.054v8.813A.054.054,0,0,1,15.643,12.536Z" transform="translate(-1.125 3.75)" fill="#333"/>
-  </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#333333;}
+</style>
+<g id="그룹_2424" transform="translate(0 0.214)">
+	<path id="Icon_ionic-ios-phone-portrait" class="st0" d="M14.1,6H9.9C9.4,6,9,6.4,9,6.9c0,0,0,0,0,0v10.2C9,17.6,9.4,18,9.9,18h4.2
+		c0.5,0,0.9-0.4,0.9-0.9V6.9C15,6.4,14.6,6,14.1,6C14.2,6,14.1,6,14.1,6z M11.6,6.6h0.8c0.1,0,0.1,0,0.1,0.1c0,0.1,0,0.1-0.1,0.1
+		c0,0,0,0,0,0h-0.8c-0.1,0-0.1,0-0.1-0.1C11.5,6.7,11.5,6.6,11.6,6.6C11.6,6.6,11.6,6.6,11.6,6.6z M12,17.6c-0.3,0-0.5-0.2-0.5-0.5
+		s0.2-0.5,0.5-0.5c0.3,0,0.5,0.2,0.5,0.5v0C12.5,17.4,12.3,17.6,12,17.6z M14.5,16.3h-5c0,0-0.1,0-0.1-0.1V7.4c0,0,0-0.1,0.1-0.1h5
+		c0,0,0.1,0,0.1,0.1L14.5,16.3C14.6,16.3,14.5,16.3,14.5,16.3L14.5,16.3z"/>
+</g>
 </svg>

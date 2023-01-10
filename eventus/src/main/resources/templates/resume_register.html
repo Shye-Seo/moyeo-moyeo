@@ -69,18 +69,18 @@
                             </div>
                             <div>
                                 <span>
-                                    <p>이메일</p>
-                                    <input type="text" name="staff_email" placeholder="example@foryou.com" th:value="${memberInfo.user_email}" >
+                                    <p class="red_star">이메일</p>
+                                    <input type="text" name="staff_email" placeholder="example@foryou.com" th:value="${memberInfo.user_email}" class="required">
                                 </span>
                                 <span class="w-all">
-                                    <p>거주지</p>
-                                    <input type="text" name="staff_address" th:value="${#strings.defaultString(resumeInfo.staff_address, '')}" placeholder="직접 입력해주세요." >
+                                    <p class="red_star">거주지</p>
+                                    <input type="text" name="staff_address" th:value="${#strings.defaultString(resumeInfo.staff_address, '')}" placeholder="직접 입력해주세요." class="required">
                                 </span>
                             </div>
                         </div>
                         <div class="profile_wrap">
                             <label for="profile_img_file" id="insert_profile_bt"></label>
-                            <!-- <div id="update_profile_bt">수정하기</div> -->
+                            <div th:if="${resume_id != 0}" id="update_profile_bt">수정하기</div>
                             <img id="preview" class="in_profile" th:src="@{'https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/' +${profile}}" alt="profile_img" onerror="this.src='/imgs/profile_box.png'; this.classList.remove('in_profile');">
                             <input type="file" name="profile_img"  id="profile_img_file" onchange="readURL(this);" hidden/>
                         </div>

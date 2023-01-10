@@ -141,7 +141,7 @@ public class ResumeController {
 			resumeService.insertProfile(resumeVo.getStaff_id(), resumeID, OldProfile);
 		}
 		
-		return "manage_career_forstaff";
+		return "myresume_forStaff";
 	}
 
 	@GetMapping(value="/test_download")

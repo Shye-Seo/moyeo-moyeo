@@ -120,6 +120,10 @@
     padding-top: 15px;
     width: 100%;
 }
+
+.area input::placeholder{
+    color: #999999;
+}
 .area select{
     padding-left: 6px;
 }
@@ -238,6 +242,27 @@
     top: 0; left: 0;
     cursor: pointer;
 }
+#update_profile_bt{
+    position: absolute;
+    top: 0;  left: 0;
+    background-color: #33333380;
+    width: 100px;  height: 120px;
+    margin: 4px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    pointer-events : none;
+    cursor: pointer;
+}
+.profile_wrap:hover #update_profile_bt{
+    display: flex;
+}
+
 .school_info:first-child{
     margin-bottom: 10px;
 }
