@@ -27,8 +27,20 @@ public class MasterService {
         return masterDao.getListUserApp(user_id);
     }
 
-    // pdf 다운로드
-    private Logger logger = LoggerFactory.getLogger(MasterService.class);
+    public MasterVo getEventInfo(int id) {
+        return masterDao.getEventInfo(id);
+    }
 
+    public void insert_contract(MasterVo masterVo) {
+        masterDao.insert_contract(masterVo);
+    }
+
+    public int checkStaffPasser(MasterVo masterVo) {
+        return masterDao.checkStaffPasser(masterVo);
+    }
+
+    public int checkContractFile(MasterVo masterVo) {
+        return masterDao.checkContractFile(masterVo);
+    }
 
 }

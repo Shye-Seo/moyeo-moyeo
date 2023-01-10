@@ -10,7 +10,7 @@ $(function() {
     var year = data.getFullYear();
     var month = data.getMonth() + 1;
     var day = data.getDate();
-    var today = year + "-" + month + "-" + day;
+    var today = year + "." + month + "." + day;
     var id_checked = "0"; // 아이디 중복확인 여부
     var pw_checked = "0" // 비밀번호 확인 여부
     var email_checked = "0"; // 이메일 중복 확인 여부
@@ -266,7 +266,7 @@ $(function() {
                     user_pw: $('#member input[name=user_pw]').val(),
                     user_name: $('#member input[name=user_name]').val(),
                     user_email: $('#member input[name=user_email]').val(),
-                    user_birth: $('#member #birth_year').val() + '-' + $('#member #birth_month').val() + '-' + $('#member #birth_day').val(),
+                    user_birth: $('#member #birth_year').val() + '.' + $('#member #birth_month').val() + '.' + $('#member #birth_day').val(),
                     user_gender: $("#member input[name=user_gender]:checked").val(),
                     user_phone: $('#member input[name=user_phone]').val(),
                     user_date_join: today,
