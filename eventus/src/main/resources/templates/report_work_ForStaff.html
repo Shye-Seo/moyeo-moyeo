@@ -1,69 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이벤터즈랩(eventusLAB)</title>
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이벤터즈랩(eventusLAB)</title>
+<link rel="stylesheet" href="/css/report_work.css">
+<link rel="stylesheet" as="style" crossorigin
+	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
 </head>
 <body>
-    <div id="wrap">
-        <div th:replace="~{common/sideforstaff :: sidebar_manage ('report_Work_ForStaff')}"></div>
+	<div id="wrap">
+		<div
+			th:replace="~{common/sideforstaff :: sidebar_manage ('report_Work_ForStaff')}"></div>
 
-        <!-- main -->
-        <div class="content">
-            <div class="container">
-                <div class="page-header">
-                    <div class="page-title">
-                        <span>근무기록</span>
-                    </div>
-                </div>
+		<!-- main -->
+		<div class="content">
+			<div class="container">
+				<div class="page-header">
+					<div class="page-title">
+						<span>근무기록</span>
+					</div>
+				</div>
 
-                <div class="detail_bar">
-                    <div class="detail1">
-                        <img src="material-view-list.svg">
-                        <input type="button" value="내근무기록">
-                    </div>
+				<div class="detail_bar">
+					<div class="detail1">
+						<img src="material-view-list.svg"> <input type="button"
+							value="내근무기록">
+					</div>
 
-                </div>
+				</div>
 
-                <div class="area">
-                    <div class="search_area">
-                        <input type="text" class="calendar">
-                        <input type="text" class="word_search">
-                    </div>
-
-
-                    <ul class="list">
-                        <ol>
-                            <li>일자</li>
-                            <li>요일</li>
-                            <li>출근</li>
-                            <li>외출</li>
-                            <li>복귀</li>
-                            <li>퇴근</li>
-                        </ol>
+				<div class="area">
+					<div class="search_area">
+						<input type="text" class="calendar"> <input type="text"
+							class="word_search">
+					</div>
 
 
-                    </ul>
-                </div>
+					<ul class="list">
+						<ol>
+							<li id="date_area_staff">일자</li>
+							<!--                             <li>요일</li> -->
+							<li id="start_area_staff">출근</li>
+							<li id="outing_area_staff">외출</li>
+							<li id="comeback_area_staff">복귀</li>
+							<li id="end_area_staff">퇴근</li>
+						</ol>
+						<ol th:each="report_work : ${report_work_list}" id="list_ol">
+							<li th:text="${report_work.work_date}" id="date_area_staff"></li>
+							<li th:text="${report_work.work_start_time}" id="start_area_staff"></li>
+							<li th:text="${report_work.work_outing_time}" id="outing_area_staff"></li>
+							<li th:text="${report_work.work_comeback_time}"
+								id="comeback_area_staff"></li>
+							<li th:text="${report_work.work_end_time}" id="end_area_staff"></li>
+						</ol>
+
+					</ul>
+				</div>
 
 
-                <!-- 페이징 처리(Unix 참조) -->
-                <div>
-                    <ul>
-                        <!-- 이전 -->
+				<!-- 페이징 처리(Unix 참조) -->
+				<div>
+					<ul>
+						<!-- 이전 -->
 
-                        <!-- 번호 -->
+						<!-- 번호 -->
 
-                        <!-- 다음 -->
+						<!-- 다음 -->
 
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

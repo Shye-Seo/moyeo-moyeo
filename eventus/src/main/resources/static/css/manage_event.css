@@ -262,3 +262,240 @@ body{
 	height:100%;
 	border: 1px solid black;
 }
+
+ /* modal */
+ #modal_wrap{
+    width: 100%; height: 100%;
+    position: fixed;
+    top: 0; left: 0;
+    display: none;
+}
+
+.modal_bg{
+    width: 100%;
+    height: 100%;
+    background-color: #33333326;
+    position: relative;
+    top: 0; left: 0;
+}
+
+.modal_con_R{
+    background-color: #ffffff;
+    width: 45%; height: 100%;
+    max-width: 850px;
+    position: absolute;
+    top: 0; right: 0;
+}
+
+.modal_con_L{
+    width: 39%;
+    max-width: 800px;
+    height: 900px;
+    background-color: #ffffff;
+    display: block;
+    position: absolute;
+    top: calc(50% - 450px);
+    right: 47%;
+    border-radius: 7px;
+    display: none;
+}
+
+#modal_content_wrap{
+    margin-right: 30px;
+    width: calc(100% - 30px);
+    height: 85%;
+    overflow-y: auto;
+    padding: 0 50px 0 65px;
+    box-sizing: border-box;
+}
+#modal_content_wrap::-webkit-scrollbar {
+    width: 8px;  
+}
+
+#modal_content_wrap::-webkit-scrollbar-thumb {
+    height: 30%; 
+    background: #DDDDDD; 
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+}
+
+#modal_content_wrap::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.R_inact_bt{
+    width: 40px; height: 40px;
+    background-color: #ffffff;
+    background-image: url("/imgs/close_btn.svg");
+    position: absolute;
+    top: 20px; right: 20px;
+    border: 0;
+    cursor: pointer;
+}
+.total_wrap{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 65px 80px 30px 65px;
+
+}
+.total, .today {
+    font-size: 19px;
+    font-weight: 600;
+}
+.total span{
+    color: #DD5067;
+}
+
+.list_wrap{
+    box-shadow: 3px 3px 6px #99999929;
+    border: 1px solid #DDDDDD;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    /* width: 700px; */
+    width: 100%; height: 100px;
+    padding: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+
+.list_rejected{
+    background-color: #eee;
+}
+
+.list_wrap .each_{
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px 0 15px;
+    box-sizing: border-box;
+}
+/* 지원현황 */
+.personal_info, .career_info, .address_info, .btn_div{
+    font-size: 16px;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.icon{
+    width: 24px;
+    height: auto;
+    margin-right: 5px;
+}
+.trash_icon{
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+    position: absolute;
+    top:10px; right: 10px;
+}
+
+.list_wrap .img_div{
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.personal_info>div, .career_info>div, .address_info>div{
+    height: 24px;
+    display: flex;
+    align-items: center;
+}
+.career_info>div, .address_info>div{
+    justify-content: center;
+}
+
+.upper_div p, .personal_div p{
+    font-weight: 600;
+}
+
+.list_wrap .line{
+    height: 50px;
+    border: 0.5px solid #DDDDDD;
+}
+
+.personal_info {
+    width: 25%;
+}
+
+.address_info {
+    width: 20%;
+}
+
+.career_info {
+    width: 12%;
+}
+
+.btn_div button{
+    width: 70px; height: 25px;
+    font: normal normal 600 14px/30px Pretendard, SemiBold;
+    border-radius: 20px;
+    line-height: 100%;
+    cursor: pointer;
+    color: #FFFFFF;
+    border: 0;
+}
+
+.btn_div .accept_btn{
+    background-color: #5B8FD2;
+}
+
+.btn_div .complete_btn{
+    background-color: #333333;
+}
+
+.btn_div .undo_btn{
+    background-color: #999999;
+}
+
+.resume_open{
+    font-size: 11px;
+    color: #999999;
+    text-decoration: underline; 
+    text-underline-position:under;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* 근무기록 */
+.record_wrap {
+    width: 50%;
+}
+.record_div {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.each_record {
+    text-align: center;
+    width: 25%;
+}
+.each_record p {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.workTime_text{
+    color: #DD5067;
+    font-size: 14px;
+    background-color: #FFFFFF;
+    border: 0;
+    height: 22px;
+}
+.record_btn{
+    background-color: #DD5067;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 50px;
+    width: 50px; height: 20px;
+    color: #FFFFFF;
+    font-size: 12px;
+    border: 0;
+    cursor: pointer;
+}

@@ -29,6 +29,16 @@ public class EventService {
 		return eventDao.viewEventFileDetail(event_id);
 	}
 	
+	//행사지원
+	public boolean insertApplication(ApplicationVo applicationVo) {
+		return eventDao.insertApplication(applicationVo);
+	} 
+	
+	//행사 지원 이력 여부 체크 (중복방지)
+	boolean isChkApplication (ApplicationVo applicationVo) {
+		return eventDao.isChkApplication(applicationVo);
+	}
+	
 	//행사등록
 	public int insertEvent(EventVo eventVo) {
 		eventDao.insertEvent(eventVo);
