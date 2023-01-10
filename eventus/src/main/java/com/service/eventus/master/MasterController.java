@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,19 +21,20 @@ public class MasterController {
     private MasterService masterService;
 
     @RequestMapping("/manage_staff")
-    public ModelAndView manage_staff(@RequestParam(value="page", defaultValue = "1") int page) {
+    public ModelAndView manage_staff(@RequestParam(value="page", required=false, defaultValue = "1") int page) {
         // 세션에 저장된 user_id를 가져온다.
+        int staff_size=0; // 페이지 개수 세기(페이징 처리)
         String user_id = "cdcd05g";
-        int staff_num;
+        int staff_num; // 페이지 개수 세기(번호 붙히는 용도)
         ModelAndView mav = new ModelAndView();
         List<MasterVo> staff_list = masterService.getListMemberApp(user_id);
-        List<MasterVo> staff_list_forview = null;
-        staff_num = staff_list.size();
+        List<MasterVo> staff_list_forview = new ArrayList<>();
+        staff_num=staff_list.size();
         // list 객체인 staff_list를 반복문 돌려서 근로계약서 등록했는지 확인
         for(MasterVo staff: staff_list) {
-            int i=1;
-            staff.setList_no(i);
-            i++;
+            staff.setList_no(staff_num);
+            staff_num--;
+            staff_size++;
             int pass_check = masterService.checkStaffPasser(staff);
             if(pass_check == 1) {
                 int contract_check = masterService.checkContractFile(staff);
@@ -50,13 +52,26 @@ public class MasterController {
         // 페이징 처리
         // String 형인 변수 page를 int형으로 변환하여 page_str에 저장
         int page_str = Integer.parseInt(String.valueOf(page));
-        for(int j=(page_str*10)-9;j<page_str*10;j++) { // 하나의 게시물에 10개의 정보가 들어간다.
-            // staff_list의 no가 j인 객체를 staff_list_forview에 넣는다.
-            staff_list_forview.add(staff_list.get(j));
+        // totalPage는 staff_list의 크기를 10으로 나눈 몫에 1을 더한 값
+        int totalPage = (staff_size / 10) + 1;
+
+        if(page_str*10>=staff_size) {
+            for(int j=(page_str*10)-9;j<=staff_size;j++) { // 하나의 게시물에 10개의 정보가 들어간다.
+                // 자료형이 MasterVo인 리스트 staff_list에서 j번째 요소를 자료형이 MasterVo인 리스트 staff_list_forview에 추가
+                staff_list_forview.add(staff_list.get(j-1));
+            }
+        }
+        else {
+            for(int j=(page_str*10)-9;j<=page_str*10;j++) { // 하나의 게시물에 10개의 정보가 들어간다.
+                // 자료형이 MasterVo인 리스트 staff_list에서 j번째 요소를 자료형이 MasterVo인 리스트 staff_list_forview에 추가
+                staff_list_forview.add(staff_list.get(j-1));
+            }
         }
 
+
         mav.addObject("staff_list", staff_list_forview);
-        mav.addObject("staff_num", staff_num);
+        mav.addObject("totalPage", totalPage);
+        mav.addObject("page", page_str);
         return mav;
     }
 

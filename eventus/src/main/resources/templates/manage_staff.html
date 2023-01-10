@@ -51,7 +51,7 @@
                         </ol>
                         <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
                         <ol th:block th:each="staff : ${staff_list}">
-                            <li class="stafflist"></li>
+                            <li th:text="${staff.list_no}"></li>
                             <li th:text="${staff.event_title}"></li>
                             <li th:text="${staff.user_name}"></li>
                             <li th:text="${staff.user_gender}"></li>
@@ -69,20 +69,20 @@
                 <!-- 페이징 처리 -->
                 <div>
                     <ul>
-                        <li th:if="${page > 1}">
-                            <a th:href="@{/manage_staff/1}">처음</a>
+                        <li th:if="${page <= 1}">
+                            <a th:href="@{/manage_staff(page=1)}">&lt;</a>
                         </li>
                         <li th:if="${page > 1}">
-                            <a th:href="@{/manage_staff/{page}(page=${page-1})}">이전</a>
+                            <a th:href="@{/manage_staff(page=${page - 1})}">&lt;</a>
                         </li>
                         <li th:each="i : ${#numbers.sequence(1, totalPage)}">
-                            <a th:href="@{/manage_staff/{page}(page=${i})}" th:text="${i}"></a>
+                            <a th:href="@{/manage_staff(page=${i})}" th:text="${i}"></a>
                         </li>
                         <li th:if="${page < totalPage}">
-                            <a th:href="@{/manage_staff/{page}(page=${page+1})}">다음</a>
+                            <a th:href="@{/manage_staff(page=${page+1})}">&gt;</a>
                         </li>
-                        <li th:if="${page < totalPage}">
-                            <a th:href="@{/manage_staff/{page}(page=${totalPage})}">마지막</a>
+                        <li th:if="${page >= totalPage}">
+                            <a th:href="@{/manage_staff(page=${totalPage})}">&gt;</a>
                         </li>
                     </ul>
                 </div>
