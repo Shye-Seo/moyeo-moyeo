@@ -121,13 +121,14 @@ public class EventController {
 		
 		int isResume = 0;
 		if(resumeVo != null) {
-			isResume =1;
+			isResume =resumeVo.getId();
 		}
 		
 		mav.addObject("event", detailVo);
 		mav.addObject("positionMap", positionMap);
 		mav.addObject("eventFileList", eventFileList);
 		mav.addObject("isResume",isResume);
+		mav.addObject("staff_id",memberVo.getId());
 		mav.setViewName("staff_eventDetail");
 		return mav;
 	}
@@ -143,7 +144,6 @@ public class EventController {
 		// update랑 똑같이 고치기
 //		포지션별로 잘라 저장
 		Map<String, String> positionMap = new HashMap<>();
-		
 		if(detailVo.getEvent_position() != null) {
 			String[] position = detailVo.getEvent_position().split(",");
 			String[] position_conut = detailVo.getEvent_position_count().split(",");
@@ -159,7 +159,16 @@ public class EventController {
 		mav.setViewName("manage_eventDetail");
 		return mav;
 	}
-
+	
+	//지원자 행사지원
+	@RequestMapping(value="/application_event", method=RequestMethod.POST)
+	public String application_event (@ModelAttribute ApplicationVo applicationVo) {
+		
+		
+		
+		return null;
+		
+	}
 	
 	//행사등록
 	@ResponseBody

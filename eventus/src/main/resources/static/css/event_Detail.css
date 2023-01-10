@@ -278,25 +278,123 @@
 #resume_con, #application_con{
     position: absolute;
     background-color: #ffffff;
-}
-
-#application_con{
-    width: 540px; height: 390px;
     padding: 45px;
     box-sizing: border-box;
+    width: 540px;
     border-radius: 20px;
 }
 
-#application_con p{
+.line{
+    height: 1px;
+    width: 100%;
+    background-color: #DDDDDD;
+    margin: 10px 0 30px 0;
+}
+
+#application_con{
+    height: 390px;
+}
+
+#application_con p, #resume_con p{
     font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+#application_con p{
     font-weight: 600;
 }
 
 #modal_title {
     font-size: 20px;
     margin-bottom: 40px;
-    margin-top: 20px;
+    font-weight: 600;
 }
+
+#application_con .select_box{
+    width: 450px; height: 50px;
+    border: 0.5px solid #ccc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 180px;
+    overflow: hidden;
+    transition: 0.5s height;
+    box-sizing: border-box;
+}
+.select_box input, .select_box .select{
+    width: 100%; height: 50px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    line-height: 50px;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+.select_box input{
+    border-bottom: 0.5px solid #ccc;
+}
+.select_box .select{
+    color: #999999;
+}
+.select_box .select:hover{
+    background-color: #eee;
+    color: #333333;
+}
+.select_box::after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 19px;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    background-image: url(/imgs/join_arrow.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotate(180deg);
+    background-size: contain;
+}
+
+#resume_con {
+    height: 310px;
+}
+
+#resume_con p:first-child{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.modal_btn_wrap{
+    width: 100%; height: 50px;
+    display: flex;
+    gap: 20px;
+}
+.modal_btn_wrap{
+    margin-top: 60px;
+}
+.modal_btn_wrap button, #application_con button{
+    width: 270px; height: 50px;
+    border-radius: 10px;
+    border: 0;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #5B8FD2;
+    cursor: pointer;
+}
+#application_con button{
+    width: 200px;
+    margin-top: 120px;
+    margin-left: calc(50% - 100px);
+}
+.modal_btn_wrap button:first-child{
+    width: 160px;
+    background-color: #DDDDDD;
+}
+
 
 
 

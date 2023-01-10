@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import com.service.eventus.event.ApplicationVo;
 import com.service.eventus.event.BoothVo;
 import com.service.eventus.event.EventFileVo;
 import com.service.eventus.event.EventVo;
@@ -22,6 +23,9 @@ public interface EventDao {
 
 	@Select("select * from event order by event_status asc, id desc")
 	List<EventVo> event_list();  // 행사현황 리스트
+	
+	@Insert("insert into staff_application (event_id, staff_id, resume_id) value (#{event_id}, #{staff_id}, #{resume_id})")
+	boolean insertApplication(ApplicationVo applicationVo); // 행사 지원하기
 	
 	@Select("select * from event where id = #{event_id}")
 	EventVo viewEventDetail (int event_id); // 행사현황 세부페이지

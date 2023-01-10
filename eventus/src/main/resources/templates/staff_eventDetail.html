@@ -6,6 +6,9 @@
 	<title>이벤터즈랩(eventusLAB)</title>
 	<link rel="stylesheet" href="/css/reset.css">
 	<link rel="stylesheet" href="/css/event_Detail.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 </head>
 <body>
 	
@@ -38,7 +41,7 @@
 
 				<div class="btn_wrap">
 					<button type="button" onclick="location.href='manage_event'">목록으로</button>
-					<button type="button" th:onclick="">지원하기</button>
+					<button type="button" onclick="$('#modal_wrap').show();">지원하기</button>
 				</div>
 			</div>
 		</div>
@@ -47,29 +50,31 @@
 		<div class="modal_bg"></div>
 		<div class="con_wrap">
 
-			<div id="application_con" th:if="${isResume == 0}">
-	
-				<p id="modal_title" th:text="${event.event_title}"></p>
-				<div class="line"></div>
-				<p>지원부분</p>
-				<div>
-					<input type="text" value="" readonly>
+			<div id="application_con" class="modal_con" th:if="${isResume != 0}">
+				<form name="application_form" action="/application_event" method="post">
+					<p id="modal_title" th:text="${event.event_title}"></p>
+					<div class="line"></div>
+					<p>지원부분</p>
 					<div class="select_box">
-						<div class="select"></div>
+						<input type="text" name="staff_position" readonly onclick="on_select()">
+						<div class="select_con">
+							<div th:each="positions : ${positionMap}" class="select" onclick="click_position(this)">[[${positions.key}]]</div>
+						</div>
 					</div>
-				</div>
-	
-				<button type="button" onclick="">지원완료</button>
+					<input type="text" name="staff_id" th:value="${staff_id}" hidden>
+					<input type="text" name="resume_id" th:value="${isResume}" hidden>
+					<input type="text" name="event_id" th:value="${event.id}" hidden>
+					<button type="button" onclick="submit_application()">지원완료</button>
+				</form>
 			</div>
-			<div id="resume_con" th:if="${isResume == 1}">
-	
+			<div id="resume_con" class="modal_con" th:if="${isResume == 0}">
 				<p>안내</p>
 				<div class="line"></div>
 				<p>이력서 등록 후 지원이 가능합니다.<br>
 				<span style="color: #DD5067;">이력서 등록</span>을 하시겠습니까?</p>
 	
 				<div class="modal_btn_wrap">
-					<button type="button" onclick="">취소</button>
+					<button type="button" onclick="$('#modal_wrap').hide();">취소</button>
 					<button type="button" onclick="location.href='/myresume_forStaff';">이력서 등록하기</button>
 				</div>
 			</div>
@@ -78,8 +83,40 @@
 	</div>
 
 	<script>
-		function act_modal(){
+		$(function(){
+			let select_position = $('.select:first-child').text();
 
+			$('input[name="staff_position"]').val(select_position);
+
+			$('html').click(function(e) {
+				if($(e.target).hasClass("con_wrap")) {
+					$('#modal_wrap').hide();
+					off_select();
+					modal_flag = false;
+				}
+			});  
+		})
+
+		function on_select(){
+			const select_count = $('.select').length;
+			$(".select_box").css("height", 50 *(select_count+1));
+		}
+
+		function off_select(){
+			$(".select_box").css("height", 50);
+		}
+
+		function click_position(obj){
+			const position_text = $(obj).text();
+			$('input[name="staff_position"]').val(position_text);
+			off_select();
+		}
+
+		function submit_application(){
+			if (confirm("정말 지원하시겠습니까?* 지원 후 이력서를 수정하셔도 반영되지 않습니다.")) {
+				$('form[name="application_form"]').submit();
+			} else {
+			}
 		}
 	</script>
 </body>
