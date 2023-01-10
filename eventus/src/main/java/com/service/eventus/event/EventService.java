@@ -192,7 +192,7 @@ public class EventService {
 	}
 
 	// 행사상태 set
-	public String setEventStatus(int event_id, int i) {
+	public boolean setEventStatus(int event_id, int i) {
 		return eventDao.setEventStatus(event_id, i);
 	}	
 }
