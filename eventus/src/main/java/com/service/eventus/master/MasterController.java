@@ -134,4 +134,9 @@ public class MasterController {
         model.addAttribute("report_work_list", report_work_list);
         return "report_work";
     }
+    
+    @GetMapping(value="/report_work_ForStaff")
+	public String report_work_ForStaff() {
+		return "report_work_ForStaff";
+	}
 }

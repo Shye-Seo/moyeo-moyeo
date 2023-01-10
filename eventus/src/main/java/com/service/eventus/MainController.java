@@ -83,10 +83,10 @@ public class MainController {
 //		return "resume_register";
 //	}
 
-	@GetMapping(value="/report_work_ForStaff")
-	public String report_work_ForStaff() {
-		return "report_work_ForStaff";
-	}
+//	@GetMapping(value="/report_work_ForStaff")
+//	public String report_work_ForStaff() {
+//		return "report_work_ForStaff";
+//	}
 
 	@GetMapping(value="/contract_file")
 	public String contract_file() {
