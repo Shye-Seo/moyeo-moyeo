@@ -77,10 +77,10 @@ public interface EventDao {
 	@Select("select application_result from staff_application where event_id = ${event_id} and staff_id = ${staff_id}")
 	String getResult(int event_id, int staff_id); // 지원현황 지원자 리스트(모집중) - 지원결과
 
-	@Select("select count(*) from event e inner join staff_application s where e.id = s.event_id and s.application_result = '합격' and e.id = #{event_id}")
+	@Select("select count(*) from staff_passer where event_id = #{event_id}")
 	int staff_count(int event_id); // 근무직원 count
 
-	@Select("select * from user u inner join staff_application s, event e where u.id = s.staff_id and e.id = s.event_id and s.application_result = '합격' and e.id = #{event_id}")
+	@Select("select * from user u inner join staff_passer s where u.id = s.staff_id and s.event_id = #{event_id}")
 	List<MemberVo> workStaff_list(int event_id); // 근무직원 리스트(진행중) - 직원정보(이름, 나이, 휴대폰번호)
 
 	@Select("select * from staff_work_record where staff_id = #{staff_id} and event_id = #{event_id} and work_date = #{work_date}")
