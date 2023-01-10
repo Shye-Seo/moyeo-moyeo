@@ -319,9 +319,9 @@ public class EventController {
 				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
 				memberVo.setStaff_phone(staff_phone);
 				
-				//수락여부(합격/불합격) check
-				String result = eventService.getResult(event_id, memberVo.getId());
-				memberVo.setResult(result);
+//				//수락여부(합격/불합격) check
+//				String result = eventService.getResult(event_id, memberVo.getId());
+//				memberVo.setResult(result);
 			}
 		}
 		applicationMap.put("application_list", application_list);

@@ -77,6 +77,7 @@ public interface EventDao {
 	@Update("update staff_application set application_result = '불합격' where event_id = ${event_id} and staff_id = ${staff_id}")
 	int reject_applicant(int event_id, int staff_id); // 지원자 불합격처리
 	
+	//xxx
 	@Select("select application_result from staff_application where event_id = ${event_id} and staff_id = ${staff_id}")
 	String getResult(int event_id, int staff_id); // 지원현황 지원자 리스트(모집중) - 지원결과
 

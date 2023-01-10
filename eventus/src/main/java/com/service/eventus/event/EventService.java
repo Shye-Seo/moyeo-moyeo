@@ -101,7 +101,7 @@ public class EventService {
 		return eventDao.reject_applicant(event_id, staff_id);
 	}
 	
-	// 지원결과
+	// 지원결과 XXX
 	public String getResult(int event_id, int staff_id) {
 		return eventDao.getResult(event_id, staff_id);
 	}
