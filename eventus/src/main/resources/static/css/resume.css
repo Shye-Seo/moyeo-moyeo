@@ -2,6 +2,9 @@
     margin: 0;
     padding: 0;
 }
+ul,ol,li{
+    list-style: none;
+}
 a{
     text-decoration: none;
     color: black;
@@ -17,29 +20,48 @@ body{
     padding: 15px;
 }
 
-.download_area {
-    display: flex;
-    position: absolute;
-    top: 0;
+.modal_download_area{
+	display: flex;
 }
 
-#pdf {
+.download_area {
+    display: flex;
+    margin-right: 450px;
+}
+
+.download_area #pdf {
     margin-top: 20px;
     position: relative;
 }
 
-#close_btn {
-    margin-left: 480px;
+.download_area #pdf_text {
+    margin-top: 18px;
+    position: relative;
+    margin-left: 5px;
+}
+
+.download_area #pdf_text #pdf_text_ {
+    color: #333333;
+    font-size: 14px;
+    font: normal normal 300 14px/17px Pretendard;
+    letter-spacing: -0.28px;
+}
+
+.modal_download_area #close_btn {
+/*     margin-left: 480px; */
 }
 
 .line {
     border: 1px solid;
-    width: 90%;
+    width: 590px;
     position: relative;
-    margin: 30px 0;
 }
 
-#title_text {
+#resume_content{
+	width: 590px;
+}
+
+#resume_content .title #title_text {
     text-align: center;
     font: normal normal 600 20px/24px Pretendard;
     letter-spacing: 40px;
@@ -47,11 +69,11 @@ body{
     margin: 30px 0;
 }
 
-.profile_img{
+#resume_content .info .profile_top{
 	display: flex;
 }
 
-#img_file {
+.profile_top #img_file {
     width: 160px;
     height: 160px;
     display: flex;
@@ -60,22 +82,173 @@ body{
     border: 1px solid red;
 }
 
-#img {
+.profile_top #img_file #img {
     border: 1px solid black;
     width: 100px;
     height: 100px;
     margin: 0 auto;
 }
 
-#pdf_text {
-    margin-top: 18px;
-    position: relative;
-    margin-left: 5px;
+.profile_top #info_area{
+	margin-top: 25px;
 }
 
-#pdf_text_ {
+.profile_top #info_area #top_area{
+	display: flex;
+}
+
+.profile_top #info_area #top_area #staff_name{
+	text-align: left;
+    font: normal normal 600 20px/24px Pretendard;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.profile_top #info_area #top_area #staff_age{
+	text-align: left;
+    font: normal normal 600 16px/19px Pretendard;
+    letter-spacing: 0px;
+    color: #000000;
+    margin-left: 10px;
+}
+
+.profile_top #info_area #top_area #div_line {
+    border: 1px solid #707070;
+    height: 20px;
+    width: 0;
+    margin: 0 10.5px;
+}
+
+.profile_top #info_area #top_area #staff_gender {
+    text-align: left;
+    font: normal normal 600 16px/19px Pretendard;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.profile_top #info_area #top_area #profile_wrap{
+	display: flex;
+	margin-top: 2px;
+}
+
+.profile_top #info_area #first_info, #second_info, #third_info{
+	display: flex;
+    font: normal normal 600 14px/17px Pretendard;
+    color: #000000;
+}
+
+.profile_top #info_area #first_info{
+	margin-top: 15px;
+}
+
+.profile_top #info_area #second_info{
+	margin-top: 10px;
+}
+
+.profile_top #info_area #third_info{
+	margin-top: 10px;
+}
+
+.profile_top #info_area #first_info #staff_birth{
+	display: flex;
+}
+
+.profile_top #info_area #first_info #staff_phone{
+	display: flex;
+	margin-left: 40px;
+}
+
+#icon {
+    width: 17px;
+    height: 17px;
+    border: 1px solid;
+    margin-right: 7px;
+}
+
+.school_info{
+	margin-top: 40px;
+}
+
+.table_title{
+	text-align: left;
+    font: normal normal 600 18px/21px Pretendard;
+    letter-spacing: 0px;
     color: #333333;
-    font-size: 14px;
-    font: normal normal 300 14px/17px Pretendard;
-    letter-spacing: -0.28px;
+    margin-bottom: 7px;
+}
+
+.school_info .table_school .table_row{
+	display: flex;
+	font-size: 12px;
+}
+
+.school_info .table_school #table_top li{
+	color: #999999;
+	background-color: #F2F8FF;
+	border-top: 1px solid #5B8FD2;
+}
+
+.school_info .table_school .table_row li{
+	border-bottom: 1px solid #DDDDDD;
+	padding: 15px 10px;
+}
+
+.school_info .table_school .table_row li:first-child{
+	width: 35%;
+}
+
+.school_info .table_school .table_row li:nth-child(2){
+	width: 35%;
+}
+
+.school_info .table_school .table_row li:nth-child(3){
+	width: 10%;
+	text-align: center;
+}
+
+.school_info .table_school .table_row li:nth-child(4){
+	width: 10%;
+	text-align: center;
+}
+
+.school_info .table_school .table_row li:nth-child(5){
+	width: 10%;
+	text-align: center;
+}
+
+.career_info{
+	margin-top: 60px;
+}
+
+.career_info .table_career .table_row{
+	display: flex;
+	font-size: 12px;
+}
+
+.career_info .table_career #table_top li{
+	color: #999999;
+	background-color: #F2F8FF;
+	border-top: 1px solid #5B8FD2;
+}
+
+.career_info .table_career .table_row li{
+	border-bottom: 1px solid #DDDDDD;
+	padding: 15px 10px;
+}
+
+.career_info .table_career .table_row li:first-child{
+	width: 30%;
+}
+
+.career_info .table_career .table_row li:nth-child(2){
+	width: 30%;
+}
+
+.career_info .table_career .table_row li:nth-child(3){
+	width: 30%;
+}
+
+.career_info .table_career .table_row li:nth-child(4){
+	width: 10%;
+	text-align: right;
 }
