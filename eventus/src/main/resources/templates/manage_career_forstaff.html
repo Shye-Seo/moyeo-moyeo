@@ -54,7 +54,7 @@
                         </ol>
                         <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
                         <ol th:block th:each="career : ${career_list}">
-                            <li class="applicationList"></li>
+                            <li th:text="${career.list_no}"></li>
                             <li th:text="${career.event_title}"></li>
                             <li th:text="${career.event_startDate} + ' - ' + ${career.event_endDate}"></li>
                             <li th:if="${career.event_check == 0}">모집 중</li>
@@ -72,15 +72,33 @@
                 </div>
 
 
-                <!-- 페이징 처리(Unix 참조) -->
+                <!-- 페이징 처리 -->
                 <div>
                     <ul>
                         <!-- 이전 -->
+                        <li th:if="${page <= 1}">
+                            <a th:href="@{/manage_career_forstaff(page=1)}">&lt;</a>
+                        </li>
+                        <li th:if="${page > 1}">
+                            <a th:href="@{/manage_career_forstaff(page=${page - 1})}">&lt;</a>
+                        </li>
 
-                        <!-- 번호 -->
+                        <!-- 번호 10개씩 -->
+                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage * 10)}">
+                            <a th:href="@{/manage_career_forstaff(page=${i})}" th:text="${i}"></a>
+                        </li>
+
+                        <li th:if="${startPage*10 > totalPage}" th:each="i : ${#numbers.sequence(startPage, totalPage)}">
+                            <a th:href="@{/manage_career_forstaff(page=${i})}" th:text="${i}"></a>
+                        </li>
 
                         <!-- 다음 -->
-
+                        <li th:if="${page < totalPage}">
+                            <a th:href="@{/manage_career_forstaff(page=${page+1})}">&gt;</a>
+                        </li>
+                        <li th:if="${page >= totalPage}">
+                            <a th:href="@{/manage_career_forstaff(page=${totalPage})}">&gt;</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -108,12 +126,6 @@
 
     </style>
     <script>
-        var num = [[${career_num}]];
-        // class="applicationList"에 num값을 넣어줌
-        $(".applicationList").each(function(){
-            $(this).text(num);
-            num--;
-        });
 
         // 근로계약서 미등록 클릭시 모달창 띄우기
         $(function() {
