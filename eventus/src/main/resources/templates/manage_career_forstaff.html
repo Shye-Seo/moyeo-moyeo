@@ -54,27 +54,51 @@
                         </ol>
                         <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
                         <ol th:block th:each="career : ${career_list}">
-                            <li class="applicationList"></li>
+                            <li th:text="${career.list_no}"></li>
                             <li th:text="${career.event_title}"></li>
                             <li th:text="${career.event_startDate} + ' - ' + ${career.event_endDate}"></li>
-                            <li th:text="${career.application_result}"></li>
-                            <li><input type="button" value="미등록"></li>
-                        </ol>
-                            
+                            <li th:if="${career.event_check == 0}">모집 중</li>
 
+                            <li th:if="${career.pass_check == 0}">불합격</li>
+                            <li th:if="${career.pass_check == 1}">합격</li>
+
+
+                            <li th:if="${career.contract_check == 1}">등록완료</li>
+                            <li th:if="${career.contract_check == 0}">
+                                <input th:name="${career.event_id}" type="button" class="contract_add" value="미등록">
+                            </li>
+                        </ol>
                     </ul>
                 </div>
 
 
-                <!-- 페이징 처리(Unix 참조) -->
+                <!-- 페이징 처리 -->
                 <div>
                     <ul>
                         <!-- 이전 -->
+                        <li th:if="${page <= 1}">
+                            <a th:href="@{/manage_career_forstaff(page=1)}">&lt;</a>
+                        </li>
+                        <li th:if="${page > 1}">
+                            <a th:href="@{/manage_career_forstaff(page=${page - 1})}">&lt;</a>
+                        </li>
 
-                        <!-- 번호 -->
+                        <!-- 번호 10개씩 -->
+                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage * 10)}">
+                            <a th:href="@{/manage_career_forstaff(page=${i})}" th:text="${i}"></a>
+                        </li>
+
+                        <li th:if="${startPage*10 > totalPage}" th:each="i : ${#numbers.sequence(startPage, totalPage)}">
+                            <a th:href="@{/manage_career_forstaff(page=${i})}" th:text="${i}"></a>
+                        </li>
 
                         <!-- 다음 -->
-
+                        <li th:if="${page < totalPage}">
+                            <a th:href="@{/manage_career_forstaff(page=${page+1})}">&gt;</a>
+                        </li>
+                        <li th:if="${page >= totalPage}">
+                            <a th:href="@{/manage_career_forstaff(page=${totalPage})}">&gt;</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -102,20 +126,47 @@
 
     </style>
     <script>
-        var num = [[${career_num}]];
-        // class="applicationList"에 num값을 넣어줌
-        $(".applicationList").each(function(){
-            $(this).text(num);
-            num--;
-        });
 
         // 근로계약서 미등록 클릭시 모달창 띄우기
         $(function() {
 
             // 근로계약서 등록 버튼 클릭 시
-            $("input[name=${career.event_title}]").click(function(){
+            $(".contract_add").click(function() {
                 $("#modal1").css("display", "block");
+                var event_id = $(this).attr("name");
+                // name이 event_id인 input에 event_id값을 넣어주어 전송 시 같이 전달
+                $("input[type=hidden]").val(event_id);
+                $.ajax({
+                    url: "/getEventInfo",
+                    type: "GET",
+                    data: {
+                        id: event_id
+                    },
+                    dataType: "json",
+                })
+                // 서버로부터 가져온 데이터를 변수에 저장
+                .done(function(eventInfo) {
+                    var event_startDate = eventInfo.event_startDate;
+                    var event_endDate = eventInfo.event_endDate;
+                    var event_position_pay = eventInfo.event_position_pay;
+                    var event_venue = eventInfo.event_venue;
+                    // startDate와 endDate의 날짜 차이 계산
+                    var date1 = new Date(event_startDate);
+                    var date2 = new Date(event_endDate);
+                    var diff = date2.getTime() - date1.getTime();
+                    var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+                    var work_date = diffDays;
+
+                    // id가 event_venue인 태그에 event_venue값을 넣어줌
+                    $("#event_venue").text(event_venue);
+                    $("#event_startDate").text(event_startDate);
+                    $("#event_endDate").text(event_endDate);
+                    $("#work_date").text(work_date);
+                    $("#event_position_pay").text(event_position_pay);
+
+                })
             });
+
 
             // X 버튼 클릭 시 모달창 닫기
             $("#cancel1").click(function() {
@@ -185,6 +236,7 @@
 
 
                     if(check) {
+                        // form을 submit할 때 event_id값을 넘겨줌
                         $("#contract").submit();
                     }
                 });

@@ -55,7 +55,7 @@
           계약 당사자인 근로자와 사업주는 위와 같이 근로계약을 체결하며, 상호 성실히 이행할 것을 서약한다.
 
           제 1 조【근무장소】
-          1) “근로자”의 근로장소는 (행사명) 행사장 전역 으로 한다.
+              1) “근로자”의 근로장소는 <span id="event_venue"></span> 행사장 전역 으로 한다.
           2) “사업주”는 “근로자”의 근무지를 업무 형편에 따라 변경 조정 할 수 있으며 “근로자”는 이에 응한다.
 
           제 2 조【근무내용】
@@ -63,11 +63,11 @@
           2) “사업주”는 “근로자”의 근무내용을 “사업주”의 사정에 따라 변경할 수 있으며 “근로자”는 이에 응한다.
 
           제 3 조【계약기간】
-          1) 본 계약기간은 (    )부터 (    )까지 (  )일간으로 하되 당사자간의 합의에 의하여 연장할 수 있다.
+          1) 본 계약기간은 <span id="event_startDate"></span>부터 <span id=event_endDate></span>까지 <span id="work_date"></span>일간으로 하되 당사자간의 합의에 의하여 연장할 수 있다.
           2) “사업주”의 회사 경영상 필요에 의해 인원 감소사유 발생하여 감원대상으로 선정되거나, 회사 내외적 사유에 의하여 작업이 사실상 중단되거나 작업 중단이 예상되면 “근로자”의 계약기간을 단축할 수 있다.
 
           제 4 조【임금조건】
-          1) 기본시급 : (     )원
+          1) 기본시급 : <span id="event_position_pay"></span>원
           ※ 연장근무 시 발생하는 초과근무임금은 행사 후 근무기록 근거에 따라 추가지급
           - 8시간 이상 초과 근무 시 기본시급의 50%를 가산하여 지급
           - 22시~06시 사이의 야간 근로 시 기본시급의 50%를 가산하여 지급
@@ -157,6 +157,7 @@
             <input type="button" id="back_btn" value="뒤로">
             <input type="button" id="confirm_btn" value="확인">
             <input type="button" id="save_btn" value="저장">
+            <input type="hidden" name="event_id" value="">
         </div>
     </div>
     </form>
@@ -174,7 +175,11 @@
     </style>
     <script>
         $(function() {
+            // thymeleaf masterVo의 event_id 값을 event_id 변수에 저장
+            var event_id = [[${masterVo.event_id}]];
+            var staff_id = [[${masterVo.staff_id}]];
 
+            // 필요없는 버튼 삭제 및 텍스트 추가
             $('input[name="user_name"]').remove();
             $('.user_name').text('[[${masterVo.user_name}]]');
 
@@ -199,32 +204,77 @@
             $('#day2').remove();
             $('.day').text('[[${masterVo.day}]]');
 
-            $('#save_btn').click(function() {
+            // 페이지 최초로 로딩되면 ajax 호출
+            $.ajax({
+                url: '/getEventInfo',
+                type: "GET",
+                data: {
+                    id: event_id
+                },
+                dataType: "json",
+            })
+            // 서버로부터 가져온 데이터를 변수에 저장
+            .done(function(eventInfo) {
+                var event_startDate = eventInfo.event_startDate;
+                var event_endDate = eventInfo.event_endDate;
+                var event_position_pay = eventInfo.event_position_pay;
+                var event_venue = eventInfo.event_venue;
+                // startDate와 endDate의 날짜 차이 계산
+                var date1 = new Date(event_startDate);
+                var date2 = new Date(event_endDate);
+                var diff = date2.getTime() - date1.getTime();
+                var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+                var work_date = diffDays;
 
+                // id가 event_venue인 태그에 event_venue값을 넣어줌
+                $("#event_venue").text(event_venue);
+                $("#event_startDate").text(event_startDate);
+                $("#event_endDate").text(event_endDate);
+                $("#work_date").text(work_date);
+                $("#event_position_pay").text(event_position_pay);
+            });
+
+            $('#save_btn').click(function() {
+                $('#save_btn').css('display', 'none');
                 // pdf 다운로드
                 let element = document.getElementById('modal_all');
                 let opt = {
                     margin:       0.5,
                     filename:     '근로계약서.pdf',
                     image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2 },
+                    html2canvas: { // html2canvas 옵션
+                        useCORS: true, // 영역 안에 로컬 이미지를 삽입 할 때 옵션 필요
+                        scrollY: 0, // 스크롤 이슈 때문에 필수
+                        scale: 1, // browsers device pixel ratio
+                        dpi: 300,
+                        letterRendering: true,
+                        allowTaint: false, //useCORS를 true로 설정 시 반드시 allowTaint를 false처리 해주어야함
+                    },
                     jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
                 };
-
                 html2pdf().from(element).set(opt).save();
 
-                // 관련 정보들을 DB에 저장
+                // 서버에 근로계약서 등록 데이터 저장
                 $.ajax({
-                    url: '/add_contract',
-                    type: 'GET',
+                    url: '/insert_contract',
+                    type: "GET",
                     data: {
-                        user_name: $('#user_name1').val(),
-                        user_phone: $('#user_phone1').val(),
-                        staff_address: $('#staff_address1').val(),
-                        identification_number: $('#identification_number1').val(),
-                        contract_date: $('#year1').val() + '-' + $('#month1').val() + '-' + $('#day1').val(),
+                        event_id: event_id,
+                        staff_id: staff_id,
+                        user_name: [[${masterVo.user_name}]],
+                        user_phone: [[${masterVo.user_phone}]],
+                        staff_address: [[${masterVo.staff_address}]],
+                        identification_number: [[${masterVo.identification_number}]],
+                        contract_date: [[${masterVo.year}]] + '-' + [[${masterVo.month}]] + '-' + [[${masterVo.day}]],
                     }
                 });
+
+                // 5초 뒤에 location.href로 이동
+                alert("다운로드 후 자동으로 페이지 이동됩니다.\n확인 버튼 클릭 후, 조금만 기다려주세요!");
+
+                setTimeout(function() {
+                    location.href = '/manage_career_forstaff';
+                }, 3000);
             });
 
 
