@@ -10,6 +10,9 @@ let modal_R_state = false;
 //오늘날짜
 let today_for_work = "";
 
+//
+let accept_staff_list = [];
+
 $(function(){
     
 })
@@ -48,7 +51,6 @@ function modal_act_application(thisId){
             $('.total').append(`총 지원자 수 <span>${list.length}</span>명`);
 
             for(i=0; i<positions.length; i++){
-                
                 let position_wrap = $("<div>");
                 position_wrap.addClass("position_wrap");
                 position_wrap.append(`<div class="position_title"><p>${positions[i]}</p><div></div></div>`)
@@ -64,6 +66,13 @@ function modal_act_application(thisId){
 	});
 }
 
+function accept_staff(staff_id,obj){
+    accept_staff_list.push(staff_id);
+    console.log(accept_staff_list)
+    $(obj).remove();
+    $(`#app_list_${staff_id} .trash_icon`).hide();
+    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="complete_btn" onclick="undo(${staff_id},this)">완료</button>`);
+}
 
 
 // application

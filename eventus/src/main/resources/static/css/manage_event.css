@@ -401,6 +401,7 @@ body{
     height: 1px;
     background-color: #ddd;
     flex: 1 0;
+    align-items: center;
 }
 
 .personal_info, .career_info, .address_info, .btn_div{
@@ -427,6 +428,10 @@ body{
     width: 60px; height: 60px;
     border-radius: 50%;
     overflow: hidden;
+}
+.profile_img{
+    width: 100%; height: 100%;
+    object-fit: cover;
 }
 
 .personal_info>div, .career_info>div, .address_info>div{

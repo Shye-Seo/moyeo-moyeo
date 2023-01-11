@@ -320,6 +320,10 @@ public class EventController {
 				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
 				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
 				memberVo.setStaff_phone(staff_phone);
+				
+				//프로필이미지
+				String resumeProfile = resumeService.selectProfile(memberVo.getResume_id());
+				memberVo.setResume_profile(resumeProfile);
 			}
 		}
 		List<String> position_list = eventService.application_position_count(event_id);
@@ -404,6 +408,10 @@ public class EventController {
 				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
 				memberVo.setStaff_phone(staff_phone);
 				
+				//프로필이미지
+				String resumeProfile = resumeService.selectProfile(memberVo.getResume_id());
+				memberVo.setResume_profile(resumeProfile);
+				
 				//당일 근무기록
 				List<WorkRecordVo> workTime_list = eventService.getWorkTime(memberVo.getId(), event_id, work_date);
 				if(workTime_list != null) {
@@ -411,6 +419,8 @@ public class EventController {
 						memberVo.setRecordVo(recordVo);
 					}
 				}
+				
+				
 			}
 		}
 		workRecordMap.put("workStaff_list", workStaff_list);

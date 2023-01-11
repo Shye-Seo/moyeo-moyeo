@@ -144,10 +144,10 @@
     <script id="application_list" type="text/x-jsrender">
         <div class="list_wrap app_templates" id="app_list_{{:list.id}}">
 			<input type="hidden" value="{{:list.id}}" class="staff_id">
-			<img src="/imgs/trash_can.svg" class="trash_icon" onclick="rejectAccept({{:list.id}},this)">
+			<img  onerror="this.src='/imgs/trash_can.svg'" class="trash_icon" onclick="rejectAccept({{:list.id}},this)">
             <div class="each_">
 				<div class="img_div">
-					<img src="/imgs/profile_none_img.svg" class="profile_img">
+					<img src="https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/{{:list.resume_profile}}" onerror="this.src='/imgs/profile_none_img.svg'" class="profile_img">
 				</div>
 				<div class="personal_info">
 					<div class="personal_div upper_div">
@@ -171,7 +171,7 @@
 				</div>
 				<div class="line"></div>
 				<div class="btn_div">
-					<button type="button" class="accept_btn" onclick="acceptApplicant({{:list.id}},this)">수락</button>
+					<button type="button" class="accept_btn" onclick="accept_staff({{:list.id}},this)">수락</button>
 					<span class="resume_open" onclick="resume_act()">이력서보기</span>
 				</div>
 			</div>
@@ -183,7 +183,7 @@
 			<input type="hidden" value="{{:list.id}}" id="staff_id{{:list.id}}" name="staff_id">
 			<div class="each_">
 			<div class="img_div">
-				<img src="/imgs/profile_none_img.svg" id="profile_img">
+				<img src="https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/{{:list.resume_profile}}" onerror="this.src='/imgs/profile_none_img.svg'" class="profile_img">
 			</div>
 			<div class="personal_info">
 				<div class="personal_div upper_div">
