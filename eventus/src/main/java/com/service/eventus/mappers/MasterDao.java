@@ -14,16 +14,16 @@ public interface MasterDao {
 
     // 주최한 행사에 지원해서 합격한 근로자들 목록 전부 출력
     @Select("select event_id, staff_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join from event e" +
-            "    left join staff_application sa on e.id = sa.event_id" +
-            "    left join user u on sa.staff_id = u.id" +
+            "    inner join staff_application sa on e.id = sa.event_id" +
+            "    inner join user u on sa.staff_id = u.id" +
             "    where e.user_id = #{user_id}" +
             "    order by e.event_startDate desc")
     List<MasterVo> getListMemberApp(String user_id);
 
     // 이력관리 - 지원현황 : 유저 아이디를 가지고 지원한 이벤트 목록 가져오기
     @Select ("select staff_id, event_id, event_title, event_startDate, event_endDate, event_check from event e\n" +
-            "left join staff_application sa on e.id=sa.event_id\n" +
-            "left join user u on sa.staff_id=u.id\n" +
+            "inner join staff_application sa on e.id=sa.event_id\n" +
+            "inner join user u on sa.staff_id=u.id\n" +
             "where u.user_id='test5'\n" +
             "order by e.event_startDate desc;")
     List<MasterVo> getListUserApp(String user_id);

@@ -23,13 +23,14 @@ public class MasterController {
     @RequestMapping("/manage_staff")
     public ModelAndView manage_staff(@RequestParam(value="page", required=false, defaultValue = "1") int page) {
         // 세션에 저장된 user_id를 가져온다.
-        int staff_size=0; // 페이지 개수 세기(페이징 처리)
         String user_id = "cdcd05g";
+        int staff_size=0; // 페이지 개수 세기(페이징 처리)
         int staff_num; // 페이지 개수 세기(번호 붙히는 용도)
         ModelAndView mav = new ModelAndView();
         List<MasterVo> staff_list = masterService.getListMemberApp(user_id);
         List<MasterVo> staff_list_forview = new ArrayList<>();
         staff_num=staff_list.size();
+
         // list 객체인 staff_list를 반복문 돌려서 근로계약서 등록했는지 확인
         for(MasterVo staff: staff_list) {
             staff.setList_no(staff_num);
@@ -54,6 +55,13 @@ public class MasterController {
         int page_str = Integer.parseInt(String.valueOf(page));
         // totalPage는 staff_list의 크기를 10으로 나눈 몫에 1을 더한 값
         int totalPage = (staff_size / 10) + 1;
+        // 시작 페이지
+        int startPage;
+
+        // 보이는 페이지 번호 변경
+        if(page % 10 != 0) { startPage = (page / 10) * 10 + 1; }
+        else { startPage = ((page / 10) - 1) * 10 + 1; }
+
 
         if(page_str*10>=staff_size) {
             for(int j=(page_str*10)-9;j<=staff_size;j++) { // 하나의 게시물에 10개의 정보가 들어간다.
@@ -72,6 +80,8 @@ public class MasterController {
         mav.addObject("staff_list", staff_list_forview);
         mav.addObject("totalPage", totalPage);
         mav.addObject("page", page_str);
+        mav.addObject("startPage", startPage);
+
         return mav;
     }
 
@@ -84,9 +94,6 @@ public class MasterController {
         List<MasterVo> career_list = masterService.getListUserApp(user_id);
         // list 객체인 career_list를 반복문 돌려서 행사 모집중 | 합격, 불합격 | 이력서 등록, 미등록 여부 확인
         for (MasterVo career : career_list) {
-            int i=1;
-            career.setList_no(i);
-            i++;
 
             if(career.getEvent_check() == 1) {
                 int pass_check = masterService.checkStaffPasser(career);
