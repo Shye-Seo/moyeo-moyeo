@@ -55,34 +55,8 @@
             html2canvas:  { scale: 2 },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
-        
-        var form = $('form[name="aa"]');
-        var formData = new FormData(form[0]);
-        var url =""
-        html2pdf().from(element).toPdf().output('datauristring').then(function (pdfAsString) {
-            // The PDF has been converted to a Data URI string and passed to this function.
-            // Use pdfAsString however you like (send as email, etc)! For instance:
-            url=pdfAsString;
-            console.log(url)
-            
-        });
-
-        const a = new File(url, 'file');
-            console.log(a);
-            formData.append('file', a);
-            $.ajax({
-                        url : '/download',
-                        data : formData,
-                        type : 'POST',
-                        enctype : 'multipart/form-data',
-                        processData : false,
-                        contentType : false,
-            //                dataType : 'json',
-                        cache : false,
-                        success : function (result) {
-                            window.location.href= result;
-                        }
-            });
+        html2pdf().from(element).save();
+       
 
     </script>
         

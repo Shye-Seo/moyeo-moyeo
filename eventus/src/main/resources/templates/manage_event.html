@@ -124,10 +124,13 @@
                     <div class="total"></div>
                     <div class="today"></div>
                 </span>
-                
                 <div id="modal_content_wrap">
                     <!-- 지원자 리스트 or 근무기록 리스트 -->
                 </div>
+				<div class="confirm_wrap">
+					<p>모집종료시, 수락한 지원자는 <span>합격</span> 처리되며 <br>그 외 지원자는 <span>불합격</span> 처리로 확정됩니다.</p>
+					<button type="button">모집종료</button>
+				</div>
             </div>
             <div class="modal_con_L">
                 <div id="resume_wrap">
@@ -143,34 +146,34 @@
 			<input type="hidden" value="{{:list.id}}" class="staff_id">
 			<img src="/imgs/trash_can.svg" class="trash_icon" onclick="rejectAccept({{:list.id}},this)">
             <div class="each_">
-			<div class="img_div">
-				<img src="/imgs/profile_none_img.svg" class="profile_img">
-			</div>
-			<div class="personal_info">
-				<div class="personal_div upper_div">
-					<img src="/imgs/personal_icon.svg" class="icon">
-					<p>{{:list.user_name}}({{:list.staff_age}}세)</p>
+				<div class="img_div">
+					<img src="/imgs/profile_none_img.svg" class="profile_img">
 				</div>
-				<div class="personal_div">
-					<img src="/imgs/phone_icon.svg" class="icon">
-					<p>{{:list.staff_phone}}</p>
+				<div class="personal_info">
+					<div class="personal_div upper_div">
+						<img src="/imgs/personal_icon.svg" class="icon">
+						<p>{{:list.user_name}}({{:list.staff_age}}세)</p>
+					</div>
+					<div class="personal_div">
+						<img src="/imgs/phone_icon.svg" class="icon">
+						<p>{{:list.staff_phone}}</p>
+					</div>
 				</div>
-			</div>
-			<div class="line"></div>
-			<div class="career_info">
-				<div class="upper_div"><p>행사경력</p></div>
-				<div><p>{{:list.career_count}}회</p></div>
-			</div>
-			<div class="line"></div>
-			<div class="address_info">
-				<div class="upper_div"><p>거주지</p></div>
-				<div><p>{{:list.staff_address}}</p></div>
-			</div>
-			<div class="line"></div>
-			<div class="btn_div">
-				<button type="button" class="accept_btn" onclick="acceptApplicant({{:list.id}},this)">수락</button>
-                <span class="resume_open" onclick="resume_act()">이력서보기</span>
-			</div>
+				<div class="line"></div>
+				<div class="career_info">
+					<div class="upper_div"><p>행사경력</p></div>
+					<div><p>{{:list.career_count}}회</p></div>
+				</div>
+				<div class="line"></div>
+				<div class="address_info">
+					<div class="upper_div"><p>거주지</p></div>
+					<div><p>{{:list.staff_address}}</p></div>
+				</div>
+				<div class="line"></div>
+				<div class="btn_div">
+					<button type="button" class="accept_btn" onclick="acceptApplicant({{:list.id}},this)">수락</button>
+					<span class="resume_open" onclick="resume_act()">이력서보기</span>
+				</div>
 			</div>
 		</div>
     </script>

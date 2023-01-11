@@ -110,14 +110,15 @@
 
 		function submit_application(event_id, staff_id, isResume){
 			if (confirm("정말 지원하시겠습니까? \n* 지원 후 이력서를 수정하셔도 반영되지 않습니다.")) {
-
+				const input_staff_position = $('input[name="staff_position"]').val();
 				$.ajax({
 					url : "/application_event",
 					type : 'post',
 					data : {
 						event_id:event_id,
 						staff_id:staff_id,
-						resume_id:isResume
+						resume_id:isResume,
+						staff_position:input_staff_position
 					},
 					success: function(data){
 						if(data === 1){

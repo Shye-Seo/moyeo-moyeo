@@ -20,8 +20,10 @@ function modal_inact(){
     $('.total').empty();
     $('.today').empty();
     $('#modal_content_wrap').empty();
+    $('#modal_content_wrap').removeClass("app_Con");
     $("#modal_wrap").hide();
     $('.modal_con_L').hide();
+    $(".confirm_wrap").hide();
 }
 
 //지원자 모달 act
@@ -33,6 +35,7 @@ function modal_act_application(thisId){
 		data : {id:thisId},
 		success: function(data){
             const list = data.application_list;
+            const positions = data.position_list;
             now_event_id_for_app = data.event_id;
             if(list.length <=0){
                 alert("현재 지원자가 없습니다.");
@@ -40,16 +43,23 @@ function modal_act_application(thisId){
             }
 
 			$("#modal_wrap").show();
-
-            let html = "";
-
+            $(".confirm_wrap").css('display','flex');
+            $('#modal_content_wrap').addClass("app_Con");
             $('.total').append(`총 지원자 수 <span>${list.length}</span>명`);
 
-            for(i=0; i<list.length; i++){
-                let app_list = {list:list[i]};
-                html += $.templates("#application_list").render(app_list);
+            for(i=0; i<positions.length; i++){
+                
+                let position_wrap = $("<div>");
+                position_wrap.addClass("position_wrap");
+                position_wrap.append(`<div class="position_title"><p>${positions[i]}</p><div></div></div>`)
+                for(j=0; j<list.length; j++){
+                    if(list[j].staff_position == positions[i]){
+                        let app_list = {list:list[j]};
+                        position_wrap.append($.templates("#application_list").render(app_list)) ;
+                    }
+                }
+                $('#modal_content_wrap').append(position_wrap);
             }
-            $('#modal_content_wrap').append(html);
 		}
 	});
 }

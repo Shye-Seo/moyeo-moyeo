@@ -24,7 +24,7 @@ public class MemberVo {
     private int career_count; //경력 count
     private String staff_age; //만 나이 set
     private String staff_phone; //휴대폰번호 형태 set
-    private String result; //지원자 합격여부
+    private String staff_position; //지원자 포지션
     
     private WorkRecordVo recordVo; //당일 근무기록 불러오기위함
 }

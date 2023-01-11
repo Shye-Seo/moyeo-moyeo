@@ -60,7 +60,15 @@ public class EventService {
 	public boolean deleteFile (int event_id, String file_name) {
 		return eventDao.deleteFile(event_id, file_name);
 	}
-
+	
+	//지원현황
+	List<ApplicationVo> selectApplication (int event_id) {
+		return eventDao.selectApplication(event_id);
+	}
+	//지원현황 - 포지션 종류 
+	List<String> application_position_count (int event_id){
+		return eventDao.application_position_count(event_id);
+	}
 	// 지원현황 count
 	public int application_count(int event_id) throws Exception {
 		return eventDao.application_count(event_id);

@@ -299,6 +299,8 @@ public class EventController {
 		
 		System.out.println("=============> id:"+event_id);
 		
+		//List<ApplicationVo> applications = eventService.selectApplication(event_id);
+		
 		List<MemberVo> application_list = eventService.application_list(event_id);
 		if (application_list != null) {
 			for (MemberVo memberVo : application_list) {
@@ -318,13 +320,13 @@ public class EventController {
 				String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
 				String staff_phone = memberVo.getUser_phone().replaceAll(regEx, "$1-$2-$3");
 				memberVo.setStaff_phone(staff_phone);
-				
-//				//수락여부(합격/불합격) check
-//				String result = eventService.getResult(event_id, memberVo.getId());
-//				memberVo.setResult(result);
 			}
 		}
+		List<String> position_list = eventService.application_position_count(event_id);
+		
 		applicationMap.put("application_list", application_list);
+		applicationMap.put("position_list", position_list);
+		
 		return applicationMap;
 	}
 	
