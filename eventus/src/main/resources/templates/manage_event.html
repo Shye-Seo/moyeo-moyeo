@@ -129,7 +129,7 @@
                 </div>
 				<div class="confirm_wrap">
 					<p>모집종료시, 수락한 지원자는 <span>합격</span> 처리되며 <br>그 외 지원자는 <span>불합격</span> 처리로 확정됩니다.</p>
-					<button type="button">모집종료</button>
+					<button type="button" onclick="application_send()">모집종료</button>
 				</div>
             </div>
             <div class="modal_con_L">
@@ -144,7 +144,7 @@
     <script id="application_list" type="text/x-jsrender">
         <div class="list_wrap app_templates" id="app_list_{{:list.id}}">
 			<input type="hidden" value="{{:list.id}}" class="staff_id">
-			<img  onerror="this.src='/imgs/trash_can.svg'" class="trash_icon" onclick="rejectAccept({{:list.id}},this)">
+			<img src="/imgs/trash_can.svg" class="trash_icon" onclick="reject_staff({{:list.id}},this)">
             <div class="each_">
 				<div class="img_div">
 					<img src="https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/{{:list.resume_profile}}" onerror="this.src='/imgs/profile_none_img.svg'" class="profile_img">

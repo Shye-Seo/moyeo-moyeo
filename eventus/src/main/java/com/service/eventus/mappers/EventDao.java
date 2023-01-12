@@ -46,7 +46,7 @@ public interface EventDao {
 	@Select("select max(id) from event")
 	int maxEventId (); //마지막 추가 행사 id
 	
-	@Update("update eventusdb.event set event_title = #{event_title}, event_content = #{event_content}, event_startDate = #{event_startDate}, event_endDate = #{event_endDate}, event_venue = #{event_venue}, "
+	@Update("update event set event_title = #{event_title}, event_content = #{event_content}, event_startDate = #{event_startDate}, event_endDate = #{event_endDate}, event_venue = #{event_venue}, "
 			+ "event_deadline = #{event_deadline}, event_position = #{event_position}, event_position_count = #{event_position_count}, updated_at = sysdate() where id = #{id}")
 	boolean updateEvent (EventVo eventVo); //행사 수정
 	
@@ -62,6 +62,12 @@ public interface EventDao {
 	@Select("select * from user u inner join staff_application s, event e where u.id = s.staff_id and e.id = s.event_id and e.id = #{event_id}")
 	List<MemberVo> application_list(int event_id); // 지원현황 지원자 리스트(모집중) - 지원자 정보(이름, 나이, 휴대폰번호)
 	
+	@Select("select distinct * from user u inner join staff_application s, event e, (SELECT A.event_id, A.staff_id, coalesce(B.staff_id, 0) as passState , A.staff_position "
+			+ "FROM staff_application A "
+			+ "LEFT OUTER JOIN staff_passer B "
+			+ "ON A.staff_id=B.staff_id and A.event_id = B.event_id) c where u.id = c.staff_id and s.staff_id = c.staff_id and u.id = s.staff_id and e.id = c.event_id and e.id = s.event_id and e.id = #{event_id}")
+	List<MemberVo> application_complete_list(int event_id); // 지원현황 지원자 리스트(모집완료) - 지원자 정보(이름, 나이, 휴대폰번호)
+	
 	@Select("select (length(staff_career_eventName) - length(replace(staff_career_eventName, ',', ''))) + 1 as count from staff_resume r inner join staff_application s where s.resume_id = r.id and s.staff_id = #{staff_id}")
 	int staff_career(int staff_id); // 지원현황 지원자 리스트(모집중) - 행사경력 count
 
@@ -74,23 +80,19 @@ public interface EventDao {
 	@Select("select distinct staff_position as position_count  from staff_application where event_id = #{event_id}")
 	List<String> application_position_count (int event_id); //지원자 포지션 조회
 	
-	@Update("update staff_application set application_result = '합격' where event_id = ${event_id} and staff_id = ${staff_id}")
-	int accept_applicant(int event_id, int staff_id); // 지원자 수락
+	@Insert("<script>insert into staff_passer (event_id, staff_id) value "
+			+ "<foreach collection=\"passer_list\" item=\"staff_id\" separator=\",\" >"
+			+ "(#{event_id},#{staff_id})</foreach></script>")
+	boolean insertPasser(int event_id ,List passer_list); //합격자 등록
 	
-	@Update("update staff_application set application_result = '대기중' where event_id = ${event_id} and staff_id = ${staff_id}")
-	int accept_applicant_cancel(int event_id, int staff_id); // 지원자 수락해제
-	
-	@Update("update staff_application set application_result = '불합격' where event_id = ${event_id} and staff_id = ${staff_id}")
-	int reject_applicant(int event_id, int staff_id); // 지원자 불합격처리
-	
-	//xxx
+	//xx
 	@Select("select application_result from staff_application where event_id = ${event_id} and staff_id = ${staff_id}")
 	String getResult(int event_id, int staff_id); // 지원현황 지원자 리스트(모집중) - 지원결과
 
 	@Select("select count(*) from staff_passer where event_id = #{event_id}")
 	int staff_count(int event_id); // 근무직원 count
 
-	@Select("select * from user u inner join staff_passer s where u.id = s.staff_id and s.event_id = #{event_id}")
+	@Select("select * from user u inner join staff_application a, staff_passer s, staff_resume r where u.id = s.staff_id and s.staff_id = a.staff_id and s.event_id = a.event_id and s.staff_id = r.staff_id and s.event_id = #{event_id}")
 	List<MemberVo> workStaff_list(int event_id); // 근무직원 리스트(진행중) - 직원정보(이름, 나이, 휴대폰번호)
 
 	@Select("select * from staff_work_record where staff_id = #{staff_id} and event_id = #{event_id} and work_date = #{work_date}")

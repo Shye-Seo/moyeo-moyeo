@@ -27,6 +27,7 @@ function modal_inact(){
     $("#modal_wrap").hide();
     $('.modal_con_L').hide();
     $(".confirm_wrap").hide();
+    accept_staff_list = [];
 }
 
 //지원자 모달 act
@@ -66,69 +67,63 @@ function modal_act_application(thisId){
 	});
 }
 
+
+// application
+//수락 누를 시
 function accept_staff(staff_id,obj){
     accept_staff_list.push(staff_id);
     console.log(accept_staff_list)
     $(obj).remove();
     $(`#app_list_${staff_id} .trash_icon`).hide();
-    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="complete_btn" onclick="undo(${staff_id},this)">완료</button>`);
+    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="complete_btn" onclick="undo_staff(${staff_id},this)">완료</button>`);
 }
 
+//쓰레기통 누를 시
+function reject_staff(staff_id,obj){
+    remove_num(staff_id);
+    console.log(accept_staff_list)
+    $(obj).hide();
+    $(`#app_list_${staff_id}`).addClass('list_rejected');
+    $(`#app_list_${staff_id} .accept_btn`).remove();
+    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="undo_btn" onclick="undo_staff(${staff_id},this)">취소</button>`);
+}
 
-// application
-function acceptApplicant(staff_id,obj)  { //합격 (수락 > 완료)
-  $.ajax({
-		url : "/accept_applicant",
+//완료,취소 누를 시(되돌리기)
+function undo_staff(staff_id,obj){
+    remove_num(staff_id);
+    console.log(accept_staff_list)
+    $(obj).remove();
+    $(`#app_list_${staff_id}`).removeClass('list_rejected');
+    $(`#app_list_${staff_id} .trash_icon`).show();
+    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="accept_btn" onclick="accept_staff(${staff_id},this)">수락</button>`);
+}
+
+//배열에 번호빼기
+function remove_num(num){
+    for(let i = 0; i < accept_staff_list.length; i++){ 
+        if (accept_staff_list[i] === num) { 
+            accept_staff_list.splice(i, 1);
+            i--;
+        }
+    }
+}
+
+//모집완료
+function application_send(){
+    $.ajax({
+		url : "/set_application",
 		type : 'post',
 		data : {
-			staff_id:staff_id,
-			event_id:now_event_id_for_app
-		},
-		success: function(){
-            $(obj).remove();
-            $(`#app_list_${staff_id} .trash_icon`).hide();
-            $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="complete_btn" onclick="undo(${staff_id},this)">완료</button>`);
-		}
-	});
-}
-
-function undo(staff_id,obj)  { //대기중 (완료,취소 > 수락)
-    var event_id = $("#event_id").val();
-    
-    $.ajax({
-        url : "/accept_applicant_cancel",
-        type : 'post',
-        data : {
-            staff_id:staff_id,
-            event_id:now_event_id_for_app
+            event_id:now_event_id_for_app,
+            passer_list:accept_staff_list
         },
-        success: function(){
-            $(obj).remove();
-            $(`#app_list_${staff_id}`).removeClass('list_rejected');
-            $(`#app_list_${staff_id} .trash_icon`).show();
-            $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="accept_btn" onclick="acceptApplicant(${staff_id},this)">수락</button>`);
-        }
-    });
+		success: function(data){
+            alert(`총 ${data}명의 지원자를 합격처리 하셨습니다.`);
+            // 합불합 표시
+        }});
 }
 
-function rejectAccept(staff_id,obj)  { //불합격 (쓰레기통 > 취소)
-	  var event_id = $("#event_id").val();
-	  
-	  $.ajax({
-			url : "/reject_applicant",
-			type : 'post',
-			data : {
-				staff_id:staff_id,
-				event_id:now_event_id_for_app
-			},
-			success: function(){
-                $(obj).hide();
-                $(`#app_list_${staff_id}`).addClass('list_rejected');
-                $(`#app_list_${staff_id} .accept_btn`).remove();
-				$(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="undo_btn" onclick="undo(${staff_id},this)">취소</button>`);
-			}
-		});
-	}
+
 
     //이력서 예정
     function resume_act(){
@@ -151,7 +146,7 @@ function modal_act_workRecord(thisId){
             today_for_work = data.work_date;
 
             if(list.length <=0){
-                alert("현재 지원자가 없습니다.");
+                alert("현재 근무자가 없습니다.");
                 return false;
             }
 

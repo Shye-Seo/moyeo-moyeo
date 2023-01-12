@@ -197,7 +197,7 @@ public class EventController {
 	//지원자 행사지원
 	@ResponseBody
 	@RequestMapping(value="/application_event", method=RequestMethod.POST)
-	public int application_event (@ModelAttribute ApplicationVo applicationVo) {
+	public int application_event (@ModelAttribute ApplicationVo applicationVo) throws Exception {
 		
 		if(!eventService.isChkApplication(applicationVo)) {
 			eventService.insertApplication(applicationVo);
@@ -334,29 +334,16 @@ public class EventController {
 		return applicationMap;
 	}
 	
-	// 지원자 수락
+	//지원자 합불합 등록
 	@ResponseBody
-	@RequestMapping(value="accept_applicant", method=RequestMethod.POST)
-	public String record_start(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception{
-		eventService.accept_applicant(event_id, staff_id);
-		return "합격";
+	@RequestMapping(value="/set_application", method=RequestMethod.POST)
+	public String set_application (@RequestParam("event_id") int event_id, @RequestParam(name = "passer_list[]", required = false) List<Integer> passer_list) throws Exception{
+		
+		eventService.insertPasser(event_id, passer_list);
+		
+		return passer_list.size()+"";
 	}
 	
-	// 지원자 수락해제
-	@ResponseBody
-	@RequestMapping(value="accept_applicant_cancel", method=RequestMethod.POST)
-	public String applicant_accept_cancel(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception{
-		eventService.accept_applicant_cancel(event_id, staff_id);
-		return "대기중";
-	}
-	
-	// 지원자 불합격처리
-	@ResponseBody
-	@RequestMapping(value="reject_applicant", method=RequestMethod.POST)
-	public String reject_applicant(@RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception{
-		eventService.reject_applicant(event_id, staff_id);
-		return "불합격";
-	}
 	
 	// 지원현황(진행중) 모달창
 	@ResponseBody
@@ -419,8 +406,6 @@ public class EventController {
 						memberVo.setRecordVo(recordVo);
 					}
 				}
-				
-				
 			}
 		}
 		workRecordMap.put("workStaff_list", workStaff_list);
