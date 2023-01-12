@@ -40,4 +40,7 @@ public interface ResumeDao {
 	
 	@Select("select * from staff_resume where staff_id = #{staff_id} and staff_resume_flag = 1")
 	ResumeVo getStaffResume(int staff_id); // 지원자 이력서 조회 모달(이메일, 주소, 학력, 경력)
+	
+	@Select("select staff_id from staff_resume where id = #{resume_id}")
+	int selectStaffId(int resume_id);
 }

@@ -175,7 +175,7 @@
 				<div class="line"></div>
 				<div class="btn_div">
 					<button type="button" class="accept_btn" onclick="acceptApplicant({{:list.id}},this)">수락</button>
-					<span class="resume_open" onclick="resume_act({{:list.id}},this)">이력서보기</span>
+					<span class="resume_open" onclick="resume_act({{:list.resume_id}},this)">이력서보기</span>
 				</div>
 			</div>
 		</div>
@@ -289,7 +289,7 @@
 			<div class="resume_staff_info">
 				<div class="profile_top">
 					<div id="resume_img_file">
-						<img id="resume_profile_img">
+						<img src="https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/{{:info.resume_profile}}" onerror="this.src='/imgs/profile_none_img.svg'" id="resume_profile_img">
 					</div>
 					<div id="resume_info_area">
 						<div id="resume_top_area">

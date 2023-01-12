@@ -87,7 +87,7 @@ body {background:#F8F9FB;}
 .side_info{
     width: 100%; 
     position: absolute;
-    bottom: 60px;
+    bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
