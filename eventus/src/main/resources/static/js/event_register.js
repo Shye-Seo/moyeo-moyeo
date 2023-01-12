@@ -3,11 +3,6 @@
             $(".datepicker").datepicker({ dateFormat: "yy.mm.dd" });
             $(".datetimepicker").datetimepicker({ format: "Y.m.d H:i"});
 
-            // 모집인원 숫자만 입력받기
-            // $('.input_pn').on("input", function() {
-            //     $(this).val($(this).val().replace(/[^0-9]/g,""));
-            // });
-
             $("#input_file").bind('change', function() {
                 selectFile(this.files);
 
@@ -17,6 +12,20 @@
                     $('.area3 label').css({'background-color':'#eee', 'cursor':'unset'});
                 }
             });
+
+            //필수값 체크
+            $('#submit_bt').click(function(){
+                let result = true;
+                $('.required').each(function(){
+                    if($(this).val() == ""){
+                        $(this).focus();
+                        result = false;
+                        return false;
+                    }
+                })
+                if(!result) return false;
+                submitDate('/eventAdd');
+            })
             
         });
 
@@ -40,26 +49,33 @@
 
         function add_position(){
             $(".area4_pn:first").clone(true).appendTo($(".position_wrap"));
-            $('.area4_pn:last input[name="input_event_position"]').val('');
-            $('.area4_pn:last input[name="input_event_position"]').attr('name','input_event_position'+position_num);
-            $('.area4_pn:last input[name="input_event_position_count"]').val('');
-            $('.area4_pn:last input[name="input_event_position_count"]').attr('name','input_event_position_count'+position_num);
-            $('.area4_pn:last').append('<div class="remove_position"  style="--i :'+position_num+' ;" onclick="remove_position(this)"></div>');
 
+            $('.area4_pn:last input').val('');
+            $('.area4_pn:last input').each(function(){
+                let name =  $(this).attr('name');
+                $(this).attr('name',name+position_num)
+            })
+            
+            $('.area4_pn:last').append('<div class="remove_position"  style="--i :'+position_num+' ;" onclick="remove_position(this)"></div>');
             position_num++;
             if(position_num == max_num){
                 $("#add_position").hide();
             }
         }
 
-        function add_position_forUpdate(position, position_count){
+        function add_position_forUpdate(position, position_count, position_startTime, position_endTime, position_pay){
             $(".area4_pn:first").clone(true).appendTo($(".position_wrap"));
             $('.area4_pn:last input[name="input_event_position"]').val(position);
-            $('.area4_pn:last input[name="input_event_position"]').attr('name','input_event_position'+position_num);
             $('.area4_pn:last input[name="input_event_position_count"]').val(position_count);
-            $('.area4_pn:last input[name="input_event_position_count"]').attr('name','input_event_position_count'+position_num);
-            $('.area4_pn:last').append('<div class="remove_position"  style="--i :'+position_num+' ;" onclick="remove_position(this)"></div>');
+            $('.area4_pn:last input[name="input_event_position_startTime"]').val(position_startTime);
+            $('.area4_pn:last input[name="input_event_position_endTime"]').val(position_endTime);
+            $('.area4_pn:last input[name="input_event_position_pay"]').val(position_pay);
 
+            $('.area4_pn:last input').each(function(){
+                let name =  $(this).attr('name');
+                $(this).attr('name',name+position_num)
+            })
+            $('.area4_pn:last').append('<div class="remove_position"  style="--i :'+position_num+' ;" onclick="remove_position(this)"></div>');
             position_num++;
             if(position_num == max_num){
                 $("#add_position").hide();
@@ -83,6 +99,24 @@
                         $(this).attr('name','input_event_position_count'+ (i-1));
                     }
                 })
+                $('.input_st').each(function(){
+                    let i = $(this).attr('name').charAt($(this).attr('name').length-1);
+                    if(i>remove_num){
+                        $(this).attr('name','input_event_position_startTime'+ (i-1));
+                    }
+                })
+                $('.input_et').each(function(){
+                    let i = $(this).attr('name').charAt($(this).attr('name').length-1);
+                    if(i>remove_num){
+                        $(this).attr('name','input_event_position_endTime'+ (i-1));
+                    }
+                })
+                $('.input_pp').each(function(){
+                    let i = $(this).attr('name').charAt($(this).attr('name').length-1);
+                    if(i>remove_num){
+                        $(this).attr('name','input_event_position_pay'+ (i-1));
+                    }
+                })
                 $('.remove_position').each(function(){
                     let i = $(this).css('--i')*1;
                     if(i>remove_num){
@@ -104,28 +138,39 @@
 
                 let event_position = $('input[name="input_event_position"]').val();
                 let event_position_count = $('input[name="input_event_position_count"]').val();
+                let event_position_startTime = $('input[name="input_event_position_startTime"]').val();
+                let event_position_endTime = $('input[name="input_event_position_endTime"]').val();
+                let event_position_pay = $('input[name="input_event_position_pay"]').val();
 
                 $('.area4').append('<input type="text" name="event_position" hidden/>')
                 $('.area4').append('<input type="text" name="event_position_count" hidden/>')
+                $('.area4').append('<input type="text" name="event_position_startTime" hidden/>')
+                $('.area4').append('<input type="text" name="event_position_endTime" hidden/>')
+                $('.area4').append('<input type="text" name="event_position_pay" hidden/>')
 
 
                 if(position_num>1){ //추가 없을시 바로 submit
                     for(let i=1;position_num>i;i++){ 
                         event_position += ','+$('input[name="input_event_position'+i+'"]').val();
                         event_position_count += ','+$('input[name="input_event_position_count'+i+'"]').val();
+                        event_position_startTime += ','+$('input[name="input_event_position_startTime'+i+'"]').val();
+                        event_position_endTime += ','+$('input[name="input_event_position_endTime'+i+'"]').val();
+                        event_position_pay += ','+$('input[name="input_event_position_pay'+i+'"]').val();
                     }
-                    
                 }
 
                 // hidden input요소에 합친 값을 저장
                 $('input[name="event_position"]').val(event_position);
                 $('input[name="event_position_count"]').val(event_position_count);
+                $('input[name="event_position_startTime"]').val(event_position_startTime);
+                $('input[name="event_position_endTime"]').val(event_position_endTime);
+                $('input[name="event_position_pay"]').val(event_position_pay);
 
                 for(let i = 0; i < deleteFileNameList.length; i++){
                     $('form[name="eventAddForm"]').append("<input type='hidden' name='deleteFileNameList' value='"+deleteFileNameList[i]+"'/>")
                 }
 
-                var uploadFileList = Object.keys(fileList);
+                // var uploadFileList = Object.keys(fileList);
                 var form = $('form[name="eventAddForm"]');
                 var formData = new FormData(form[0]);
                 for (var i = 0; i < fileList.length; i++) {
@@ -133,11 +178,6 @@
                     console.log(formData.get('event_file')) 
                     console.log(fileList[i]) 
                 }
-                // for(let i = 0; i < deleteFileNameList.length; i++){
-                //     formData.append('deleteFileNameList', String(deleteFileNameList[i]));
-                //     console.log(formData.get('deleteFileNameList['+i+']')) 
-                //     console.log(deleteFileNameList[i]) 
-                // }
 
                 $.ajax({
                     url : actionUrl,
@@ -146,7 +186,6 @@
                     enctype : 'multipart/form-data',
                     processData : false,
                     contentType : false,
-        //                dataType : 'json',
                     cache : false,
                     success : function (result) {
                         window.location.href= result;
@@ -155,7 +194,6 @@
                 } else {
                     return false;
                 }
-                //$('form[name="eventAddForm"]').submit();
         }
 
            // 파일 리스트 번호
@@ -305,5 +343,21 @@
 	   }
 	   
 	}
+
+    function chkTime(obj){
+        let timeData = "";
+        let text = $(obj).val();
+    
+        if(!text.includes('.')){
+            if(text.length<3){
+                $(obj).val(text);
+            }else if(text.length<6){
+                timeData += text.substr(0, 2);
+                timeData += ":"
+                timeData += text.substr(2);
+                $(obj).val(timeData.substr(0,5));
+            }
+        }
+    }
 
 

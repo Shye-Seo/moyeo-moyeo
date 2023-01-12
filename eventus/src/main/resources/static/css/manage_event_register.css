@@ -256,6 +256,9 @@
     padding: 0;
     margin-left: 10px;
 }
+.area4_pn span:nth-child(3){
+    margin-right: 10px;
+}
 .area4 .area4_pn p, .date_wrap p{
     position: absolute;
 }
@@ -282,7 +285,7 @@
 }
 .area4_pn .input_st, .area4_pn .input_et{
     padding-top: 15px;
-    width: 70px;
+    width: 80px;
 }
 .position_wrap{
     position: relative;

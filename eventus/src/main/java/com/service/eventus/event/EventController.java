@@ -210,7 +210,10 @@ public class EventController {
 	//행사등록
 	@ResponseBody
 	@RequestMapping(value="/eventAdd", method=RequestMethod.POST)
-	public String eventAdd(@ModelAttribute EventVo eventVo, @RequestAttribute List<MultipartFile> event_file) throws Exception{
+	public String eventAdd(HttpSession session,@ModelAttribute EventVo eventVo, @RequestAttribute List<MultipartFile> event_file) throws Exception{
+		
+		String user_id = (String) session.getAttribute("user_id");
+		eventVo.setUser_id(user_id);
 		
 		int id =eventService.insertEvent(eventVo);
 		
@@ -240,15 +243,24 @@ public class EventController {
 		
 		String[] positions =null;
 		String[] positions_conut =null;
+		String[] position_startTime =null;
+		String[] position_endTime =null;
+		String[] position_pay =null;
 		if(detailVo.getEvent_position() != null) {
 			positions = detailVo.getEvent_position().split(",");
 			positions_conut = detailVo.getEvent_position_count().split(",");
+			position_startTime = detailVo.getEvent_position_startTime().split(",");
+			position_endTime = detailVo.getEvent_position_endTime().split(",");
+			position_pay = detailVo.getEvent_position_pay().split(",");
 		}
 		
 		
 		mav.addObject("event", detailVo);
 		mav.addObject("positions", positions);
 		mav.addObject("positions_conut", positions_conut);
+		mav.addObject("position_startTime", position_startTime);
+		mav.addObject("position_endTime", position_endTime);
+		mav.addObject("position_pay", position_pay);
 		mav.addObject("eventFileList", eventFileList);
 
 		mav.setViewName("manage_event_update");

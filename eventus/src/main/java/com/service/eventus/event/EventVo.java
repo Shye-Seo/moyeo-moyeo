@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class EventVo {
 	private int id;
+	private String user_id;
     private String event_title;
     private String event_content;
     private String event_startDate;
@@ -15,6 +16,9 @@ public class EventVo {
     private String event_deadline;
     private String event_position;
     private String event_position_count;
+    private String event_position_pay;
+    private String event_position_startTime;
+    private String event_position_endTime;
     private int event_status;
     private int event_check;
     private Date created_at;

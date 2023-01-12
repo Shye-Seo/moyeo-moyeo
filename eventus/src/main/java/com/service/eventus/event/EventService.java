@@ -102,6 +102,7 @@ public class EventService {
 	// 합격자 등록
 	public boolean insertPasser(int event_id ,List passer_list) throws Exception {
 		eventDao.update_event_status(1, event_id);
+		eventDao.update_event_check(1, event_id);
 		return eventDao.insertPasser(event_id, passer_list);
 	}
 	

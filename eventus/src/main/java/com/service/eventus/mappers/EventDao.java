@@ -36,8 +36,8 @@ public interface EventDao {
 	@Select("select * from event_file where event_id = #{event_id}")
 	List<EventFileVo> viewEventFileDetail (int event_id); // 행사현황 세부페이지 파일
 	
-	@Insert("insert into event (event_title, event_content, event_startDate, event_endDate, event_status, event_position, event_position_count, event_venue, event_deadline, created_at) "
-			+ "values(#{event_title}, #{event_content}, #{event_startDate}, #{event_endDate}, 0, #{event_position}, #{event_position_count}, #{event_venue}, #{event_deadline}, sysdate())")
+	@Insert("insert into event (user_id, event_title, event_content, event_startDate, event_endDate, event_status, event_position, event_position_count, event_position_pay, event_position_startTime, event_position_endTime, event_venue, event_deadline, created_at) "
+			+ "values(#{user_id}, #{event_title}, #{event_content}, #{event_startDate}, #{event_endDate}, 0, #{event_position}, #{event_position_count}, #{event_position_pay}, #{event_position_startTime}, #{event_position_endTime}, #{event_venue}, #{event_deadline}, sysdate())")
 	boolean insertEvent (EventVo eventVo); //행사 추가
 	
 	@Insert("insert into event_file (event_id, file_name) value (#{event_id}, #{file_name})")
@@ -46,8 +46,8 @@ public interface EventDao {
 	@Select("select max(id) from event")
 	int maxEventId (); //마지막 추가 행사 id
 	
-	@Update("update event set event_title = #{event_title}, event_content = #{event_content}, event_startDate = #{event_startDate}, event_endDate = #{event_endDate}, event_venue = #{event_venue}, "
-			+ "event_deadline = #{event_deadline}, event_position = #{event_position}, event_position_count = #{event_position_count}, updated_at = sysdate() where id = #{id}")
+	@Update("update event set event_title = #{event_title}, event_content = #{event_content}, event_startDate = #{event_startDate}, event_endDate = #{event_endDate}, event_venue = #{event_venue}, event_deadline = #{event_deadline}, "
+			+ "event_position = #{event_position}, event_position_count = #{event_position_count}, event_position_pay = #{event_position_pay}, event_position_startTime = #{event_position_startTime}, event_position_endTime = #{event_position_endTime}, updated_at = sysdate() where id = #{id}")
 	boolean updateEvent (EventVo eventVo); //행사 수정
 	
 	@Delete("delete from event_file where event_id = #{event_id} and file_name = #{file_name}")
@@ -87,6 +87,9 @@ public interface EventDao {
 	
 	@Update("update event set event_status = #{status} where id = #{event_id}")
 	public boolean update_event_status(int status, int event_id); //이벤트 상태 변경
+	
+	@Update("update event set event_check = #{status} where id = #{event_id}")
+	public boolean update_event_check(int status, int event_id); //이벤트 체크 변경
 	
 	@Select("select count(*) from staff_passer where event_id = #{event_id}")
 	int staff_count(int event_id); // 근무직원 count

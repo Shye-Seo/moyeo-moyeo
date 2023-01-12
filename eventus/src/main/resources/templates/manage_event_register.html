@@ -53,28 +53,28 @@
                 	<form name="eventAddForm" action="/eventAdd" enctype="multipart/form-data" method="post" onsubmit="return false">
                     <div class="area1">
                         <span>행사명</span>
-                        <input type="text" name="event_title" placeholder="행사명을 입력해주세요." >
+                        <input type="text" name="event_title" class="required" placeholder="행사명을 입력해주세요." >
                         <div class="date_wrap">
                             <span>
                                 <p>시작기간</p>
                                 <!-- <input type="date" name="event_startDate" data-placeholder="YYYY.MM.DD" required> -->
-                                <input type="text" name="event_startDate" class="datepicker date_input" placeholder="YYYY.MM.DD" autocomplete='off'>
+                                <input type="text" name="event_startDate" class="datepicker date_input required" placeholder="YYYY.MM.DD" autocomplete='off'>
                             </span>
                             -
                             <span>
                                 <p>종료기간</p>
                                 <!-- <input type="date" name="event_endDate" data-placeholder="YYYY.MM.DD" required> -->
-                                <input type="text" name="event_endDate" class="datepicker date_input" placeholder="YYYY.MM.DD" autocomplete='off'>
+                                <input type="text" name="event_endDate" class="datepicker date_input required" placeholder="YYYY.MM.DD" autocomplete='off'>
                             </span>
                         </div>
                         
                     </div>
                     <div class="area5">
                         <span>행사장소 <br>및 접수마감</span>
-                        <input type="text" name="event_venue" placeholder="행사장소를 입력해주세요." >
+                        <input type="text" class="required" name="event_venue" placeholder="행사장소를 입력해주세요." >
                         <div class="date_wrap">
                             <p>접수마감기한</p>
-                            <input type="text" name="event_deadline" class="datetimepicker date_input" placeholder="YYYY.MM.DD 00:00" autocomplete='off'>
+                            <input type="text" name="event_deadline" class="datetimepicker date_input required" placeholder="YYYY.MM.DD 00:00" autocomplete='off'>
                         </div>
                     </div>
 
@@ -97,25 +97,25 @@
                         <span>담당업무 <br>및 모집인원</span>
                         <div class="position_wrap">
                             <div class="area4_pn">
-                                <input type="text" class="input_po" name="input_event_position" placeholder="포지션명을 입력해주세요." />
+                                <input type="text" class="input_po required" name="input_event_position" placeholder="포지션명을 입력해주세요." />
                                 <span>
                                     <p>모집인원</p>
                                     <p>명</p>
-                                    <input type="text" class="input_pn onlyNum" name="input_event_position_count" placeholder="숫자입력">
+                                    <input type="text" class="input_pn onlyNum required" name="input_event_position_count" placeholder="숫자입력">
                                 </span>
                                 <span>
                                     <p>근무시작시간</p>
-                                    <input type="text" class="input_st" name="event_position_startTime" placeholder="00:00">
+                                    <input type="text" class="input_st onlyNum required" name="input_event_position_startTime" placeholder="00:00" onkeyup="chkTime($(this))">
                                 </span>
                                  ~
                                 <span>
                                     <p>종료시간</p>
-                                    <input type="text" class="input_et" name="event_position_endTime" placeholder="00:00">
+                                    <input type="text" class="input_et onlyNum required" name="input_event_position_endTime" placeholder="00:00" onkeyup="chkTime($(this))">
                                 </span>
                                 <span>
                                     <p>시간 당 임금</p>
                                     <p>원</p>
-                                    <input type="text" class="input_pp onlyNum" name="event_position_pay" placeholder="숫자입력">
+                                    <input type="text" class="input_pp onlyNum required" name="input_event_position_pay" placeholder="숫자입력">
                                 </span>
                             </div>
                             <div id="add_position" onclick="add_position()"></div>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="btn_wrap">
                         <button type="button" onclick="location.href='manage_event'">취소</button>
-                        <button type="button" onclick="submitDate('/eventAdd')">저장</button>
+                        <button type="button" id="submit_bt">저장</button>
                     </div>
                     </form>
                 </div>
