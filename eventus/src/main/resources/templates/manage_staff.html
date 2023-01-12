@@ -40,40 +40,59 @@
 
                     <ul class="list">
                         <ol>
-                            <li>No</li>
-                            <li>행사명</li>
-                            <li>이름</li>
-                            <li>성별</li>
-                            <li>생년월일</li>
-                            <li>연락처</li>
-                            <li>가입일자</li>
+                            <li id="no_area">No</li>
+                            <li id="event_area">행사명</li>
+                            <li id="name_area">이름</li>
+                            <li id="gender_area">성별</li>
+                            <li id="birth_area">생년월일</li>
+                            <li id="contact_area">연락처</li>
+                            <li id="join_date">가입일자</li>
                             <li>근로계약서</li>
                         </ol>
                         <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
-                        <ol th:block th:each="staff : ${staff_list}" name="">
-                            <li class="stafflist"></li>
-                            <li th:text="${staff.event_title}"></li>
-                            <li th:text="${staff.user_name}"></li>
-                            <li th:text="${staff.user_gender}"></li>
-                            <li th:text="${staff.user_birth}"></li>
-                            <li th:text="${staff.user_phone}"></li>
-                            <li th:text="${staff.user_date_join}"></li>
+                        <ol th:block th:each="staff : ${staff_list}">
+                            <li th:text="${staff.list_no}" id="no_area"></li>
+                            <li th:text="${staff.event_title}" id="event_area"></li>
+                            <li th:text="${staff.user_name}" id="name_area"></li>
+                            <li th:text="${staff.user_gender}" id="gender_area"></li>
+                            <li th:text="${staff.user_birth}" id="birth_area"></li>
+                            <li th:text="${staff.user_phone}" id="contact_area"></li>
+                            <li th:text="${staff.user_date_join}" id="join_date"></li>
+                            <li th:if="${staff.contract_check == 0}">미등록</li>
+                            <li th:if="${staff.contract_check == 1}">등록완료</li>
                         </ol>
 
 
                     </ul>
                 </div>
 
-
-                <!-- 페이징 처리(Unix 참조) -->
+                <!-- 페이징 처리 -->
                 <div>
                     <ul>
                         <!-- 이전 -->
+                        <li th:if="${page <= 1}">
+                            <a th:href="@{/manage_staff(page=1)}">&lt;</a>
+                        </li>
+                        <li th:if="${page > 1}">
+                            <a th:href="@{/manage_staff(page=${page - 1})}">&lt;</a>
+                        </li>
 
-                        <!-- 번호 -->
+                        <!-- 번호 10개씩 -->
+                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage * 10)}">
+                            <a th:href="@{/manage_staff(page=${i})}" th:text="${i}"></a>
+                        </li>
+
+                        <li th:if="${startPage*10 > totalPage}" th:each="i : ${#numbers.sequence(startPage, totalPage)}">
+                            <a th:href="@{/manage_staff(page=${i})}" th:text="${i}"></a>
+                        </li>
 
                         <!-- 다음 -->
-
+                        <li th:if="${page < totalPage}">
+                            <a th:href="@{/manage_staff(page=${page+1})}">&gt;</a>
+                        </li>
+                        <li th:if="${page >= totalPage}">
+                            <a th:href="@{/manage_staff(page=${totalPage})}">&gt;</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -81,12 +100,7 @@
     </div>
     <script type="text/javascript" src="/js/manage_staff.js"></script>
     <script>
-        var num = [[${staff_num}]];
-        // class="stafflist"에 num값을 넣어줌
-        $(".stafflist").each(function(){
-            $(this).text(num);
-            num--;
-        });
+
     </script>
 </body>
 </html>

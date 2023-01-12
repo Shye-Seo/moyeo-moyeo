@@ -33,8 +33,28 @@ public class MasterService {
 
     public int update_work_total_time(String total_time, int staff_id) {
         return masterDao.update_work_total_time(total_time, staff_id);
-
+    } 
+    
+    public List<MasterVo> report_work_list_Staff(int staff_id) {
+        return masterDao.report_work_list_Staff(staff_id);
     }
+    
+    public MasterVo getEventInfo(int id) {
+        return masterDao.getEventInfo(id);
+    }
+
+    public void insert_contract(MasterVo masterVo) {
+        masterDao.insert_contract(masterVo);
+    }
+
+    public int checkStaffPasser(MasterVo masterVo) {
+        return masterDao.checkStaffPasser(masterVo);
+    }
+
+    public int checkContractFile(MasterVo masterVo) {
+        return masterDao.checkContractFile(masterVo);
+    }
+
 
     public int addContract(MasterVo masterVo) {
         return masterDao.addContract(masterVo);

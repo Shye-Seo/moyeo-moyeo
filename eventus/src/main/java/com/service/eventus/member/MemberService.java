@@ -40,6 +40,7 @@ public class MemberService {
             MemberVo memberVo1 = viewMember(memberVo);
 
             session.setAttribute("user_id", memberVo1.getUser_id());
+            session.setAttribute("id", memberVo1.getId());
 
         }
         return result;
