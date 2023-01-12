@@ -207,7 +207,7 @@ public class MasterController {
             String outing_time = report_work_list.get(i).getWork_outing_time();
             String comeback_time = report_work_list.get(i).getWork_comeback_time();
             String end_time = report_work_list.get(i).getWork_end_time();
-            int staff_id = report_work_list.get(i).getStaff_id();
+            int staff_id = report_work_list.get(i).getId();
 
 
             if(start_time != null && end_time != null) {
@@ -250,6 +250,9 @@ public class MasterController {
                     String total = hour + " : "+ minute;
                     masterService.update_work_total_time(total, staff_id);
                 }
+            } else {
+            	 String total = 0 + " : "+ 0;
+                 masterService.update_work_total_time(total, staff_id);
             }
 
         }
