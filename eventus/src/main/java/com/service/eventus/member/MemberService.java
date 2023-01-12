@@ -38,9 +38,14 @@ public class MemberService {
 
         if(result==1) { // true일 경우 세션에 등록
             MemberVo memberVo1 = viewMember(memberVo);
-
+            
+            int id = memberVo1.getId();
+            String myProfile = memberDao.select_myProfile(id);
+            
             session.setAttribute("user_id", memberVo1.getUser_id());
-            session.setAttribute("id", memberVo1.getId());
+            session.setAttribute("user_name", memberVo1.getUser_name());
+            session.setAttribute("id",id);
+            session.setAttribute("myProfile", myProfile);
 
         }
         return result;
