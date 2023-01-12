@@ -636,15 +636,24 @@ public class EventController {
 	//이력서 모달창
 	@ResponseBody
 	@RequestMapping(value="/get_resume_file", method=RequestMethod.GET)
-	public Map get_resume_file(@RequestParam("id") int staff_id) throws Exception{
+	public Map get_resume_file(@RequestParam("id") int resume_id) throws Exception{
 		
 		Map resumeMap = new HashMap<>();
+		resumeMap.put("resume_id", resume_id);
+		
+		int staff_id = resumeService.selectStaffId(resume_id);
 		resumeMap.put("staff_id", staff_id);
 		
 		System.out.println("=============> staff_id:"+staff_id);
+		System.out.println("=============> resume_id:"+resume_id);
 		
 		MemberVo staff_info = resumeService.getStaffInfo(staff_id);
 		ResumeVo staff_resume = resumeService.getStaffResume(staff_id);
+		
+		//프로필이미지
+		String resumeProfile = resumeService.selectProfile(staff_resume.getId());
+		staff_info.setResume_profile(resumeProfile);
+		System.out.println("=============> staff_id:"+resumeProfile);
 		
 		//만 나이 계산
 		String staff_age = eventService.getUserAge(staff_info.getUser_birth());
