@@ -26,6 +26,12 @@ function modal_inact(){
     $(".confirm_wrap").hide();
 }
 
+//모달창 종료_이력서만
+function modal_inact_resume(){
+	$('#resume_wrap').empty();
+    $('.modal_con_L').hide();
+}
+
 //지원자 모달 act
 function modal_act_application(thisId){
 
@@ -121,10 +127,27 @@ function rejectAccept(staff_id,obj)  { //불합격 (쓰레기통 > 취소)
 		});
 	}
 
-    //이력서 예정
-    function resume_act(){
-        $('.modal_con_L').show();
-    }
+//이력서 모달
+function resume_act(thisId){
+	
+	 $.ajax({
+		url : "/get_resume_file",
+		type : 'get',
+		data : {id:thisId},
+		success: function(data){
+            const info = data.staff_info;
+            const resume = data.staff_resume;
+            const school = data.school_info;
+            const career = data.career_info;
+//            now_event_id_for_app = data.event_id;
+
+			$("#modal_wrap").show();
+			$('.modal_con_L').show();
+			let app_list = {info:info, resume:resume, school:school, career:career};
+			$('#resume_wrap').append($.templates("#resume_file").render(app_list));
+		}
+	});
+}
 // applicant end
 
 

@@ -27,13 +27,11 @@ public class MasterVo {
     private int staff_id;
     private String staff_address;
 
-    private int staff_id;
     private String event_position_pay;
     private String event_venue;
     private int event_check;
     private int contract_check;
     private int pass_check; // 스태프 합격 여부
-    private String work_date;
     private int list_no; // 페이징 처리할 때 list 번호 미리 저장
 
     private int year;
