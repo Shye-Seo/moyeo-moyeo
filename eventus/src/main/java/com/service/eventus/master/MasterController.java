@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.event.EventVo;
 
+import jakarta.servlet.http.HttpSession;
 
 import javax.inject.Inject;
 
@@ -261,10 +262,11 @@ public class MasterController {
     }
     
     @GetMapping(value="/report_work_ForStaff")
-	public String report_work_ForStaff(ModelMap model) {
-    	
-    	 List<MasterVo> report_work_list = masterService.report_work_list();
-    	 model.addAttribute("report_work_list", report_work_list);
+	public String report_work_ForStaff(ModelMap model, HttpSession session) {
+    	 int id = (int)session.getAttribute("id");
+    	 List<MasterVo> report_work_list_Staff = masterService.report_work_list_Staff(id);
+    	 
+    	 model.addAttribute("report_work_list", report_work_list_Staff);
     	 
 		return "report_work_ForStaff";
 	}

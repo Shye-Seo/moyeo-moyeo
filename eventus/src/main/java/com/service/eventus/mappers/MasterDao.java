@@ -29,14 +29,20 @@ public interface MasterDao {
             "order by e.event_startDate desc;")
     List<MasterVo> getListUserApp(String user_id);
 
+    //근무기록 리스트(관리자)
     @Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time,"
             + " work_comeback_time, work_end_time, work_total_time from staff_work_record a "
             + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id;")
     List<MasterVo> report_work_list();
 
+    //근무기록 소계시간(관리자)
     @Update("update staff_work_record set work_total_time = '${total_time}' where id = ${staff_id}")
     int update_work_total_time(String total_time, int staff_id);
 
+    //근무기록 리스트(스태프)
+    @Select("select * from staff_work_record where staff_id = ${staff_id}")
+    List<MasterVo> report_work_list_Staff(int staff_id);
+    
     @Select("select id from user where user_id = #{user_id}")
     int getUserId(String user_id);
 

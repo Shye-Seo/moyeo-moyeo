@@ -238,12 +238,12 @@ ol li {
 }
 
 #date_area_staff {
-	width: 20%;
+	width: 15%;
 	text-align: center;
 }
 
 #start_area_staff, #outing_area_staff, #comeback_area_staff,
 	#end_area_staff {
-	width: 13%;
+	width: 15%;
 	text-align: center;
 }
