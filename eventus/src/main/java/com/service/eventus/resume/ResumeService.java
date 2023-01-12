@@ -43,4 +43,13 @@ public class ResumeService {
 		return resumeDao.disabledPreResume(staff_id);
 	}
 	
+	// 지원자 이력서 조회 모달(이름, 나이, 성별, 생년월일, 전화번호)
+	public MemberVo getStaffInfo(int staff_id) {
+		return resumeDao.getStaffInfo(staff_id);
+	}
+	
+	// 지원자 이력서 조회 모달(이메일, 주소, 학력, 경력)
+	public ResumeVo getStaffResume(int staff_id) {
+		return resumeDao.getStaffResume(staff_id);
+	}
 }

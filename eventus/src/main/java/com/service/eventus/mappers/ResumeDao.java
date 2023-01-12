@@ -35,5 +35,9 @@ public interface ResumeDao {
 	@Update("update staff_resume set staff_resume_flag = 0 where staff_id =#{staff_id}")
 	boolean disabledPreResume(int staff_id); //이전 이력서 비활성화
 	
-
+	@Select("select * from user where id = #{staff_id}")
+	MemberVo getStaffInfo(int staff_id); // 지원자 이력서 조회 모달(이름, 나이, 성별, 생년월일, 전화번호)
+	
+	@Select("select * from staff_resume where staff_id = #{staff_id} and staff_resume_flag = 1")
+	ResumeVo getStaffResume(int staff_id); // 지원자 이력서 조회 모달(이메일, 주소, 학력, 경력)
 }

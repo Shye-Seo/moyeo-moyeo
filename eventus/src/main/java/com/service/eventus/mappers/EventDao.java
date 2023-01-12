@@ -13,7 +13,6 @@ import com.service.eventus.event.ApplicationVo;
 import com.service.eventus.event.BoothVo;
 import com.service.eventus.event.EventFileVo;
 import com.service.eventus.event.EventVo;
-import com.service.eventus.event.ResumeVo;
 import com.service.eventus.event.WorkRecordVo;
 import com.service.eventus.member.MemberVo;
 

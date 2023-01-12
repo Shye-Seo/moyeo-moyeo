@@ -100,10 +100,10 @@ public class EventController {
 //		    	   eventService.setEventStatus(vo.getId(), 9);
 		     }else if(compare <= 0 && compare_end >= 0 && check == 1) { //event_startDate < today < event_endDate, event_status:1, event_check:1 (모집완료+진행중)
 //		    	   System.out.println("모집완료+진행중");
-		    	   eventService.setEventStatus(vo.getId(), 1);
+		    	   eventService.setEventStatus(vo.getId(), 2);
 	    	 }else if(compare_end < 0) { //event_endDate < today, event_status:2 (진행완료)
 //	    		   System.out.println("진행완료");
-	    		   eventService.setEventStatus(vo.getId(), 2);
+	    		   eventService.setEventStatus(vo.getId(), 3);
 	    	 }
 	    	 
 	    	 if(vo.getEvent_status() == 0) {
@@ -631,5 +631,94 @@ public class EventController {
 	@ResponseBody
 	public ResponseEntity<byte[]> download(@RequestParam String filename) throws IOException {
 		return s3Service.getObject_event(filename);
+	}
+	
+	//이력서 모달창
+	@ResponseBody
+	@RequestMapping(value="/get_resume_file", method=RequestMethod.GET)
+	public Map get_resume_file(@RequestParam("id") int staff_id) throws Exception{
+		
+		Map resumeMap = new HashMap<>();
+		resumeMap.put("staff_id", staff_id);
+		
+		System.out.println("=============> staff_id:"+staff_id);
+		
+		MemberVo staff_info = resumeService.getStaffInfo(staff_id);
+		ResumeVo staff_resume = resumeService.getStaffResume(staff_id);
+		
+		//만 나이 계산
+		String staff_age = eventService.getUserAge(staff_info.getUser_birth());
+		staff_info.setStaff_age(staff_age);
+		
+		//휴대폰번호 형태
+		String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
+		String staff_phone = staff_info.getUser_phone().replaceAll(regEx, "$1-$2-$3");
+		staff_info.setStaff_phone(staff_phone);
+		
+		//생년월일 형태
+		String staff_birth = staff_info.getUser_birth();
+		String birth[] = staff_birth.split("-");
+		String birth_replace = birth[0]+"."+birth[1]+"."+birth[2];
+		staff_info.setUser_birth(birth_replace);
+		
+		//학교처리..
+		String[] nullArray = {"",""} ;
+				
+		Map<String, String[]> school_info = new HashMap<>();
+		school_info.put("school", nullArray);
+		school_info.put("major", nullArray);
+		school_info.put("start", nullArray);
+		school_info.put("end", nullArray);
+		school_info.put("state", nullArray);
+				
+		if(staff_resume.getStaff_school() != null) {
+			if(staff_resume.getStaff_school().split(",").length <2) {
+				String[] school = {staff_resume.getStaff_school(), ""};
+				school_info.put("school", school);
+			}else {
+				school_info.put("school", staff_resume.getStaff_school().split(","));
+			}
+			if(staff_resume.getStaff_major().split(",").length <2) {
+				String[] major = {staff_resume.getStaff_major(), ""};
+				school_info.put("major", major);
+			}else {
+				school_info.put("major", staff_resume.getStaff_major().split(","));
+			}
+			if(staff_resume.getStaff_school_start().split(",").length <2) {
+				String[] start = {staff_resume.getStaff_school_start(), ""};
+				school_info.put("start", start);
+			}else {
+				school_info.put("start", staff_resume.getStaff_school_start().split(","));
+			}
+			if(staff_resume.getStaff_school_end().split(",").length <2) {
+				String[] end = {staff_resume.getStaff_school_end(), ""};
+				school_info.put("end", end);
+			}else {
+				school_info.put("end", staff_resume.getStaff_school_end().split(","));
+			}
+			if(staff_resume.getStaff_major().split(",").length <2) {
+				String[] state = {staff_resume.getStaff_school_state(), ""};
+				school_info.put("state", state);
+			}else {
+				school_info.put("state", staff_resume.getStaff_school_state().split(","));
+			}
+		}
+		
+		//행사처리
+		Map<String, String[]> career_info = new HashMap<>();
+				
+		if(staff_resume.getStaff_career_eventName() != null) {
+			career_info.put("eventName", staff_resume.getStaff_career_eventName().split(","));
+			career_info.put("businessName",staff_resume.getStaff_career_businessName().split(","));
+			career_info.put("positions",staff_resume.getStaff_career_position().split(","));
+			career_info.put("workday",staff_resume.getStaff_career_workday().split(","));
+		}
+
+		resumeMap.put("staff_info", staff_info);
+		resumeMap.put("staff_resume", staff_resume);
+		resumeMap.put("school_info", school_info);
+		resumeMap.put("career_info", career_info);
+		
+		return resumeMap;
 	}
 }

@@ -16,6 +16,11 @@ img{
     border: 0;
     width: 100%;
 }
+
+body{
+    font-family: 'pretendard';
+}
+
 /* main */
 .content{
     position:relative;
@@ -493,6 +498,7 @@ body{
     text-underline-position:under;
     text-align: center;
     margin-top: 5px;
+    cursor: pointer;
 }
 
 .confirm_wrap {
@@ -563,4 +569,258 @@ body{
     font-size: 12px;
     border: 0;
     cursor: pointer;
+}
+
+/* 이력서 */
+.resume_wrapper{
+	display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.modal_download_area{
+	display: flex;
+}
+
+.download_area {
+    display: flex;
+    margin-right: 450px;
+}
+
+.download_area #pdf {
+    margin-top: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.download_area #pdf_text {
+    margin-top: 18px;
+    position: relative;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.download_area #pdf_text #pdf_text_ {
+    color: #333333;
+    font-size: 14px;
+    font: normal normal 300 14px/17px Pretendard;
+    letter-spacing: -0.28px;
+}
+
+.resume_close {
+    width: 40px;
+}
+
+.resume_close #close_btn{
+	margin-left: 15px;
+	cursor: pointer;
+}
+
+.resume_line {
+    border: 1px solid;
+    width: 590px;
+    position: relative;
+}
+
+#resume_content{
+	width: 590px;
+}
+
+#resume_content .resume_title #resume_title_text {
+    text-align: center;
+    font: normal normal 600 20px/24px Pretendard;
+    letter-spacing: 40px;
+    color: #333333;
+    margin: 30px 0;
+}
+
+#resume_content .resume_staff_info .profile_top{
+	display: flex;
+}
+
+.profile_top #resume_img_file {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    border: 1px solid red;
+}
+
+.profile_top #resume_img_file #resume_profile_img {
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.profile_top #resume_info_area{
+	margin-top: 25px;
+}
+
+.profile_top #resume_info_area #resume_top_area{
+	display: flex;
+}
+
+.profile_top #resume_info_area #resume_top_area #staff_name{
+	text-align: left;
+    font: normal normal 600 20px/24px Pretendard;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.profile_top #resume_info_area #resume_top_area #staff_age{
+	text-align: left;
+    font: normal normal 600 16px/19px Pretendard;
+    letter-spacing: 0px;
+    color: #000000;
+    margin-left: 10px;
+}
+
+.profile_top #resume_info_area #resume_top_area #div_line {
+    border: 1px solid #707070;
+    height: 20px;
+    width: 0;
+    margin: 0 10.5px;
+}
+
+.profile_top #resume_info_area #resume_top_area #staff_gender {
+    text-align: left;
+    font: normal normal 600 16px/19px Pretendard;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.profile_top #resume_info_area #resume_top_area #profile_wrap{
+	display: flex;
+	margin-top: 2px;
+}
+
+.profile_top #resume_info_area #first_info, #second_info, #third_info{
+	display: flex;
+    font: normal normal 600 14px/17px Pretendard;
+    color: #000000;
+}
+
+.profile_top #resume_info_area #first_info{
+	margin-top: 15px;
+}
+
+.profile_top #resume_info_area #second_info{
+	margin-top: 10px;
+}
+
+.profile_top #resume_info_area #third_info{
+	margin-top: 10px;
+}
+
+.profile_top #resume_info_area #first_info #staff_birth{
+	display: flex;
+}
+
+.profile_top #resume_info_area #first_info #staff_phone{
+	display: flex;
+	margin-left: 40px;
+}
+
+#resume_icon {
+    width: 17px;
+    height: 17px;
+    border: 1px solid;
+    margin-right: 7px;
+}
+
+#resume_info_text{
+	margin-top: 2px;
+}
+
+.resume_school_info{
+	margin-top: 40px;
+}
+
+.resume_table_title{
+	text-align: left;
+    font: normal normal 600 18px/21px Pretendard;
+    letter-spacing: 0px;
+    color: #333333;
+    margin-bottom: 7px;
+}
+
+.resume_school_info .resume_table_school .table_row{
+	display: flex;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.resume_school_info .resume_table_school #table_top li{
+	color: #999999;
+	background-color: #F2F8FF;
+	border-top: 1px solid #5B8FD2;
+}
+
+.resume_school_info .resume_table_school .table_row li{
+	border-bottom: 1px solid #DDDDDD;
+	padding: 15px 10px;
+}
+
+.resume_school_info .resume_table_school .table_row li:first-child{
+	width: 35%;
+}
+
+.resume_school_info .resume_table_school .table_row li:nth-child(2){
+	width: 35%;
+}
+
+.resume_school_info .resume_table_school .table_row li:nth-child(3){
+	width: 10%;
+	text-align: center;
+}
+
+.resume_school_info .resume_table_school .table_row li:nth-child(4){
+	width: 10%;
+	text-align: center;
+}
+
+.resume_school_info .resume_table_school .table_row li:nth-child(5){
+	width: 10%;
+	text-align: center;
+}
+
+.resume_career_info{
+	margin-top: 60px;
+}
+
+.resume_career_info .resume_table_career .table_row{
+	display: flex;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.resume_career_info .resume_table_career #table_top li{
+	color: #999999;
+	background-color: #F2F8FF;
+	border-top: 1px solid #5B8FD2;
+}
+
+.resume_career_info .resume_table_career .table_row li{
+	border-bottom: 1px solid #DDDDDD;
+	padding: 15px 10px;
+}
+
+.resume_career_info .resume_table_career .table_row li:first-child{
+	width: 30%;
+}
+
+.resume_career_info .resume_table_career .table_row li:nth-child(2){
+	width: 30%;
+}
+
+.resume_career_info .resume_table_career .table_row li:nth-child(3){
+	width: 30%;
+}
+
+.resume_career_info .resume_table_career .table_row li:nth-child(4){
+	width: 10%;
+	text-align: right;
 }
