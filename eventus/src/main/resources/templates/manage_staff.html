@@ -21,6 +21,9 @@
                     <div class="page-title">
                         <span>직원관리</span>
                     </div>
+                    <div class="excel_download">
+                        엑셀 데이터 다운로드
+                    </div>
                 </div>
 
                 <div class="detail_bar">
@@ -78,7 +81,7 @@
                         </li>
 
                         <!-- 번호 10개씩 -->
-                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage * 10)}">
+                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage + 10)}">
                             <a th:href="@{/manage_staff(page=${i})}" th:text="${i}"></a>
                         </li>
 
@@ -98,9 +101,18 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="/js/manage_staff.js"></script>
     <script>
-
+        $(function() {
+            $(".excel_download").click(function() {
+                // download to excel
+                $.ajax({
+                    url: "/staff_excel12",
+                    method: "GET"
+                }).done(function() {
+                    alert("엑셀 파일을 다운로드합니다.");
+                });
+            });
+        })
     </script>
 </body>
 </html>

@@ -84,7 +84,7 @@
                         </li>
 
                         <!-- 번호 10개씩 -->
-                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage * 10)}">
+                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage + 10)}">
                             <a th:href="@{/manage_career_forstaff(page=${i})}" th:text="${i}"></a>
                         </li>
 

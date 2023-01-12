@@ -172,13 +172,24 @@
 		    <version>1.1.1</version>
 		</dependency>
 
-		<!-- pdf 관련 라이브러리 -->
+		<!-- 엑셀 관련 라이브러리 -->
 		<dependency>
-			<groupId>org.xhtmlrenderer</groupId>
-			<artifactId>flying-saucer-pdf</artifactId>
-			<version>9.1.22</version>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.2</version>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+    </dependencies>
 	
 
 	<build>
