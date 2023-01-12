@@ -52,4 +52,8 @@ public class ResumeService {
 	public ResumeVo getStaffResume(int staff_id) {
 		return resumeDao.getStaffResume(staff_id);
 	}
+
+	public int selectStaffId(int resume_id) {
+		return resumeDao.selectStaffId(resume_id);
+	}
 }
