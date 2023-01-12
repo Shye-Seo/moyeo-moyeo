@@ -64,37 +64,39 @@
 
 
                     </ul>
-                </div>
-
-                <!-- 페이징 처리 -->
-                <div>
+                    
+                     <!-- 페이징 처리 -->
+                <div class="paging_area">
                     <ul>
                         <!-- 이전 -->
-                        <li th:if="${page <= 1}">
+                        <li th:if="${page <= 1}" id="prev">
                             <a th:href="@{/manage_staff(page=1)}">&lt;</a>
                         </li>
-                        <li th:if="${page > 1}">
+                        <li th:if="${page > 1}" id="prev">
                             <a th:href="@{/manage_staff(page=${page - 1})}">&lt;</a>
                         </li>
 
                         <!-- 번호 10개씩 -->
-                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage * 10)}">
-                            <a th:href="@{/manage_staff(page=${i})}" th:text="${i}"></a>
+                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage * 10)}" id="page_num">
+                            <a th:href="@{/manage_staff(page=${i})}" th:text="${i}" ></a>
                         </li>
 
-                        <li th:if="${startPage*10 > totalPage}" th:each="i : ${#numbers.sequence(startPage, totalPage)}">
+                        <li th:if="${startPage*10 > totalPage}" th:each="i : ${#numbers.sequence(startPage, totalPage)}" id="page_num">
                             <a th:href="@{/manage_staff(page=${i})}" th:text="${i}"></a>
                         </li>
 
                         <!-- 다음 -->
-                        <li th:if="${page < totalPage}">
+                        <li th:if="${page < totalPage}" id="next">
                             <a th:href="@{/manage_staff(page=${page+1})}">&gt;</a>
                         </li>
-                        <li th:if="${page >= totalPage}">
+                        <li th:if="${page >= totalPage}" id="next">
                             <a th:href="@{/manage_staff(page=${totalPage})}">&gt;</a>
                         </li>
                     </ul>
                 </div>
+                </div>
+
+               
             </div>
         </div>
     </div>
