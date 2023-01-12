@@ -292,14 +292,10 @@ public class EventController {
 	@RequestMapping(value="/get_application_list", method=RequestMethod.GET)
 	public Map get_application_list(@RequestParam("id") int event_id) throws Exception{
 		
-//		int applicant_count = eventService.application_count(event_id);
-		
 		Map applicationMap = new HashMap<>();
 		applicationMap.put("event_id", event_id);
 		
 		System.out.println("=============> id:"+event_id);
-		
-		//List<ApplicationVo> applications = eventService.selectApplication(event_id);
 		
 		List<MemberVo> application_list = eventService.application_list(event_id);
 		if (application_list != null) {
@@ -351,8 +347,6 @@ public class EventController {
 	public Map get_workStaff_list(@RequestParam("id") int event_id) throws Exception{
 		
 		Map workRecordMap = new HashMap<>();
-		
-//		int staff_count = eventService.staff_count(event_id);
 		
 		workRecordMap.put("event_id", event_id);
 		

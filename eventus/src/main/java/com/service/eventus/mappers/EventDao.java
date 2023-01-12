@@ -85,10 +85,9 @@ public interface EventDao {
 			+ "(#{event_id},#{staff_id})</foreach></script>")
 	boolean insertPasser(int event_id ,List passer_list); //합격자 등록
 	
-	//xx
-	@Select("select application_result from staff_application where event_id = ${event_id} and staff_id = ${staff_id}")
-	String getResult(int event_id, int staff_id); // 지원현황 지원자 리스트(모집중) - 지원결과
-
+	@Update("update event set event_status = #{status} where id = #{event_id}")
+	public boolean update_event_status(int status, int event_id); //이벤트 상태 변경
+	
 	@Select("select count(*) from staff_passer where event_id = #{event_id}")
 	int staff_count(int event_id); // 근무직원 count
 
