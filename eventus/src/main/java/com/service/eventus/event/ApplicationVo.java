@@ -9,4 +9,5 @@ public class ApplicationVo {
 	private int staff_id;
 	private int resume_id;
 	private String staff_position;
+	private int staff_result;
 }	
