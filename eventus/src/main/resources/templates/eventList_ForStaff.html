@@ -56,10 +56,10 @@
 							</div>
 							
 							<div id="title_area_s">
-							<a th:href="@{eventDetail(id=${event.id})}" th:if="${event.event_status == 0}"><li th:text="${event.event_title}" class="red"></li></a>
-							<a th:href="@{eventDetail(id=${event.id})}" th:if="${event.event_status == 1}"><li th:text="${event.event_title}" class="black"></li></a>
-							<a th:href="@{eventDetail(id=${event.id})}" th:if="${event.event_status == 2}"><li th:text="${event.event_title}" class="black"></li></a>
-							<a th:href="@{eventDetail(id=${event.id})}" th:if="${event.event_status == 3}"><li th:text="${event.event_title}" class="gray"></li></a>
+							<a th:href="@{eventDetail_forStaff(id=${event.id})}" th:if="${event.event_status == 0}"><li th:text="${event.event_title}" class="red"></li></a>
+							<a th:href="@{eventDetail_forStaff(id=${event.id})}" th:if="${event.event_status == 1}"><li th:text="${event.event_title}" class="black"></li></a>
+							<a th:href="@{eventDetail_forStaff(id=${event.id})}" th:if="${event.event_status == 2}"><li th:text="${event.event_title}" class="black"></li></a>
+							<a th:href="@{eventDetail_forStaff(id=${event.id})}" th:if="${event.event_status == 3}"><li th:text="${event.event_title}" class="gray"></li></a>
 							</div>
 							
 							<div id="date_area_s">

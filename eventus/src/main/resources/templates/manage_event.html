@@ -268,10 +268,10 @@
 	    <div class="resume_wrapper">
 		<div class="modal_download_area">
 			<div class="download_area">
-				<div id="pdf">
+				<div id="pdf" onclick="resume_download({{:resume.id}},this)">
 					<img src="imgs/event_download.svg" id="download_btn">
 				</div>
-				<div id="pdf_text">
+				<div id="pdf_text" onclick="resume_download({{:resume.id}},this)">
 					<span id="pdf_text_">PDF 저장하기</span>
 				</div>
 			</div>

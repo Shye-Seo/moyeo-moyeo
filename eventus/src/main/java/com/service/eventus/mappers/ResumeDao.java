@@ -38,8 +38,8 @@ public interface ResumeDao {
 	@Select("select * from user where id = #{staff_id}")
 	MemberVo getStaffInfo(int staff_id); // 지원자 이력서 조회 모달(이름, 나이, 성별, 생년월일, 전화번호)
 	
-	@Select("select * from staff_resume where staff_id = #{staff_id} and staff_resume_flag = 1")
-	ResumeVo getStaffResume(int staff_id); // 지원자 이력서 조회 모달(이메일, 주소, 학력, 경력)
+	@Select("select * from staff_resume where id = #{resume_id}")
+	ResumeVo getStaffResume(int resume_id); // 지원자 이력서 조회 모달(이메일, 주소, 학력, 경력)
 	
 	@Select("select staff_id from staff_resume where id = #{resume_id}")
 	int selectStaffId(int resume_id);

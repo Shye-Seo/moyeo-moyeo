@@ -645,14 +645,13 @@ body{
     display: flex;
     align-items: center;
     margin-right: 30px;
-    border: 1px solid red;
 }
 
 .profile_top #resume_img_file #resume_profile_img {
-    border: 1px solid black;
     width: 100px;
     height: 100px;
     margin: 0 auto;
+    border-radius: 50px;
 }
 
 .profile_top #resume_info_area{

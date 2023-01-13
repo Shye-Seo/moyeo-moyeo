@@ -52,8 +52,6 @@ public class EventController {
          Calendar time = Calendar.getInstance();
          SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
          String nowTime = format.format(time.getTime());
-         System.out.println("현재날짜 : "+now);
-         System.out.println("현재시간 : "+nowTime);
 		 
          List<EventVo> event_list = eventService.event_list();
 		 
@@ -603,8 +601,6 @@ public class EventController {
         Calendar time = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
         String nowTime = format.format(time.getTime());
-        System.out.println("현재날짜 : "+now);
-        System.out.println("현재시간 : "+nowTime);
 		 
         List<EventVo> event_list = eventService.event_list();
 		 
@@ -680,20 +676,18 @@ public class EventController {
 		
 		Map resumeMap = new HashMap<>();
 		resumeMap.put("resume_id", resume_id);
+		System.out.println("resume_id : "+resume_id);
 		
 		int staff_id = resumeService.selectStaffId(resume_id);
 		resumeMap.put("staff_id", staff_id);
 		
-		System.out.println("=============> staff_id:"+staff_id);
-		System.out.println("=============> resume_id:"+resume_id);
 		
 		MemberVo staff_info = resumeService.getStaffInfo(staff_id);
-		ResumeVo staff_resume = resumeService.getStaffResume(staff_id);
+		ResumeVo staff_resume = resumeService.getStaffResume(resume_id);
 		
 		//프로필이미지
-		String resumeProfile = resumeService.selectProfile(staff_resume.getId());
+		String resumeProfile = resumeService.selectProfile(resume_id);
 		staff_info.setResume_profile(resumeProfile);
-		System.out.println("=============> staff_id:"+resumeProfile);
 		
 		//만 나이 계산
 		String staff_age = eventService.getUserAge(staff_info.getUser_birth());
