@@ -116,7 +116,7 @@ function application_send(){
         },
 		success: function(data){
             alert(`총 ${data}명의 지원자를 합격처리 하셨습니다.`);
-            // 합불합 표시
+            modal_act_application(now_event_id_for_app,1);
         }});
 }
 
