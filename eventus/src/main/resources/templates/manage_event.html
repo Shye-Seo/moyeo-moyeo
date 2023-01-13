@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="/css/manage_event.css">
     <script src="/js/manage_event.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div id="wrap">
@@ -287,7 +288,7 @@
     </script>
     
     <script id="resume_file" type="text/x-jsrender">
-	    <div class="resume_wrapper">
+	    <div id="resume_wrapper">
 		<div class="modal_download_area">
 			<div class="download_area">
 				<div id="pdf" onclick="resume_download({{:resume.id}},this)">

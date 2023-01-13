@@ -572,7 +572,7 @@ body{
 }
 
 /* 이력서 */
-.resume_wrapper{
+#resume_wrapper{
 	display: flex;
     align-items: center;
     flex-direction: column;
@@ -651,7 +651,7 @@ body{
     width: 100px;
     height: 100px;
     margin: 0 auto;
-    border-radius: 50px;
+/*     border-radius: 50px; */
 }
 
 .profile_top #resume_info_area{
