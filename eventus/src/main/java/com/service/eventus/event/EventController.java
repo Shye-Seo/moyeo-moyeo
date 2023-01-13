@@ -307,7 +307,7 @@ public class EventController {
 		if (application_list != null) {
 			for (MemberVo memberVo : application_list) {
 				//경력 count
-				int staff_career = eventService.staff_career(memberVo.getId());
+				int staff_career = eventService.staff_career(memberVo.getId(), event_id);
 				memberVo.setCareer_count(staff_career);
 				
 				//주소 set
@@ -336,10 +336,23 @@ public class EventController {
 		return applicationMap;
 	}
 	
+	
+	
+	//지원자 임시 합불합 상태 저장
+	@ResponseBody
+	@RequestMapping(value="/set_application_status", method=RequestMethod.POST)
+	public String set_application_status(@RequestParam("status") int status, @RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception {
+		
+		eventService.updateStaffResult(status, event_id, staff_id);
+		return staff_id+"";
+	}
+	
 	//지원자 합불합 등록
 	@ResponseBody
 	@RequestMapping(value="/set_application", method=RequestMethod.POST)
-	public String set_application (@RequestParam("event_id") int event_id, @RequestParam(name = "passer_list[]", required = false) List<Integer> passer_list) throws Exception{
+	public String set_application (@RequestParam("event_id") int event_id) throws Exception{
+		
+		List<Integer> passer_list = eventService.selectStatusPasser(event_id);
 		
 		eventService.insertPasser(event_id, passer_list);
 		
