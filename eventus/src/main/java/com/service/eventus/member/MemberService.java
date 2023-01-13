@@ -46,10 +46,13 @@ public class MemberService {
             session.setAttribute("user_name", memberVo1.getUser_name());
             session.setAttribute("id",id);
             session.setAttribute("myProfile", myProfile);
+            session.setAttribute("authority", memberVo1.getUser_authority());
 
         }
         return result;
     }
+    
+    
 
     // 아이디 찾기(user_id 반환)
     public Map findId(MemberVo memberVo) throws Exception {

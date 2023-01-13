@@ -36,7 +36,6 @@ function modal_inact_resume(){
 
 //지원자 모달 act
 function modal_act_application(thisId,chk){
-
     $.ajax({
 		url : "/get_application_list",
 		type : 'get',
@@ -116,7 +115,7 @@ function application_send(){
         },
 		success: function(data){
             alert(`총 ${data}명의 지원자를 합격처리 하셨습니다.`);
-            modal_act_application(now_event_id_for_app,1);
+            window.location.href = "/manage_event";
         }});
 }
 
