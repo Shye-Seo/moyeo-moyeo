@@ -1,6 +1,7 @@
 package com.service.eventus.master;
 
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -10,14 +11,10 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -193,22 +190,24 @@ public class MasterController {
     public void insert_contract(@ModelAttribute MasterVo masterVo) {
         masterService.insert_contract(masterVo);
     }
+    
+    // 행사관리 엑셀 다운로드
 
     // 직원관리 엑셀 다운로드
-    @RequestMapping("/staff_excel12")
+    @RequestMapping(value="/staff_excel", method= RequestMethod.GET)
     @ResponseBody
     public void staff_excel(HttpServletResponse response) throws IOException {
-        System.out.println("실행 여부 확인");
+
         String user_id = "cdcd05g";
         // 엑셀 파일명
         String filename = "staff_list.xlsx";
         // 엑셀 파일 내용
         List<MasterVo> staff_list = masterService.getListMemberApp(user_id);
         // 엑셀 파일 생성(xlsx 확장자)
-        XSSFWorkbook workbook = new XSSFWorkbook();
+        Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("staff_list");
-        Row row = null;
-        Cell cell = null;
+        Row row;
+        Cell cell;
         int rowNo = 0;
 
         // 헤더 정보 구성
@@ -262,4 +261,6 @@ public class MasterController {
         workbook.write(response.getOutputStream());
         workbook.close();
     }
+    
+    // 근무기록 엑셀 다운로드
 }
