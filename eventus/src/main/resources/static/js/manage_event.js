@@ -144,16 +144,17 @@ function resume_act(thisId){
 }
 
 function resume_download(thisId){
-	
-	 let element = document.getElementById('resume_wrapper');
+	 
+	 let userName = thisId;
+	 let element = document.getElementById('resume_content');
      let opt = {
-            margin:       0.5,
-            filename:     '이력서.pdf',
+            margin:       1,
+            filename:     userName+'_이력서.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas: { // html2canvas 옵션
                 useCORS: true, // 영역 안에 로컬 이미지를 삽입 할 때 옵션 필요
                 scrollY: 0, // 스크롤 이슈 때문에 필수
-                scale: 1, // browsers device pixel ratio
+                scale: 2, // browsers device pixel ratio
                 dpi: 300,
                 letterRendering: true,
                 allowTaint: false, //useCORS를 true로 설정 시 반드시 allowTaint를 false처리 해주어야함
@@ -165,9 +166,9 @@ function resume_download(thisId){
      // 5초 뒤에 location.href로 이동
      alert("다운로드 후 자동으로 페이지 이동됩니다.\n확인 버튼 클릭 후, 조금만 기다려주세요!");
 
-     setTimeout(function() {
-     	window.close();
-     }, 3000);
+//     setTimeout(function() {
+//     	resume_file.close();
+//     }, 3000);
 }
 // applicant end
 
