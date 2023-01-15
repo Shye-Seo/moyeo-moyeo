@@ -1,5 +1,11 @@
 package com.service.eventus.event;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +50,8 @@ public class EventController {
 	
 	@Inject
 	private ResumeService resumeService;
+
+	List<EventVo> event_list;
 	
 	@GetMapping(value="/manage_event")
 	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
@@ -53,7 +61,7 @@ public class EventController {
          SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
          String nowTime = format.format(time.getTime());
 		 
-         List<EventVo> event_list = eventService.event_list();
+         event_list = eventService.event_list();
 		 
 	     for(EventVo vo : event_list) {
 	    	 String startdate = vo.getEvent_startDate();
@@ -776,5 +784,73 @@ public class EventController {
 		resumeMap.put("career_info", career_info);
 		
 		return resumeMap;
+	}
+
+
+	// 행사관리 엑셀 다운로드
+	@RequestMapping(value="/event_excel", method= RequestMethod.GET)
+	@ResponseBody
+	public void event_excel(HttpServletResponse response) throws IOException {
+		// 엑셀 파일명
+		String filename = "event_excel.xlsx";
+
+		Workbook workbook = new XSSFWorkbook();
+		Sheet sheet = workbook.createSheet("event_list");
+		Row row;
+		Cell cell;
+		int rowNo = 0;
+
+		// 헤더 정보 구성
+		row = sheet.createRow(rowNo++);
+		cell = row.createCell(0);
+		cell.setCellValue("행사명");
+		cell = row.createCell(1);
+		cell.setCellValue("행사기간");
+		cell = row.createCell(2);
+		cell.setCellValue("진행현황");
+		cell = row.createCell(3);
+		cell.setCellValue("지원현황");
+		cell = row.createCell(4);
+		cell.setCellValue("부스현황");
+
+		for(EventVo event : event_list) {
+			row = sheet.createRow(rowNo++);
+			cell = row.createCell(0);
+			cell.setCellValue(event.getEvent_title());
+			cell = row.createCell(1);
+			cell.setCellValue(event.getEvent_startDate() + " - " + event.getEvent_endDate());
+			cell = row.createCell(2);
+			if(event.getEvent_status()==0 || event.getEvent_status()==1) {
+
+				if(event.getEvent_status()==0) {
+					cell.setCellValue("모집중");
+				}
+				else {
+					cell.setCellValue("모집완료");
+				}
+				cell = row.createCell(3);
+				cell.setCellValue(event.getApplication_count());
+			}
+			else if(event.getEvent_status()==2 || event.getEvent_status()==3) {
+
+				if(event.getEvent_status()==2) {
+					cell.setCellValue("진행중");
+				} else {
+					cell.setCellValue("진행완료");
+				}
+				cell = row.createCell(3);
+				cell.setCellValue(event.getStaff_count());
+			}
+			cell = row.createCell(4);
+			cell.setCellValue(event.getBooth_count());
+		}
+
+		// 컨텐트 타입과 파일명 지정
+		response.setContentType("ms-vnd/excel");
+		response.setHeader("Content-Disposition", "attachment;filename="+filename);
+
+		// 엑셀 출력
+		workbook.write(response.getOutputStream());
+		workbook.close();
 	}
 }

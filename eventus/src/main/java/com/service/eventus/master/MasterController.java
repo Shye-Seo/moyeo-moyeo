@@ -12,11 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.event.EventVo;
@@ -38,6 +34,9 @@ public class MasterController {
     @Inject
     private MasterService masterService;
 
+    List<MasterVo> staff_list;
+    List<MasterVo> report_work_list;
+
     @RequestMapping("/manage_staff")
     public ModelAndView manage_staff(@RequestParam(value="page", required=false, defaultValue = "1") int page) {
         // 세션에 저장된 user_id를 가져온다.
@@ -45,7 +44,7 @@ public class MasterController {
         int staff_size=0; // 페이지 개수 세기(페이징 처리)
         int staff_num; // 페이지 개수 세기(번호 붙히는 용도)
         ModelAndView mav = new ModelAndView();
-        List<MasterVo> staff_list = masterService.getListMemberApp(user_id);
+        staff_list = masterService.getListMemberApp(user_id);
         List<MasterVo> staff_list_forview = new ArrayList<>();
         staff_num=staff_list.size();
 
@@ -211,7 +210,7 @@ public class MasterController {
     //근무기록 리스트(관리자)
     @GetMapping(value="/report_work")
     public String report_work(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
-        List<MasterVo> report_work_list = masterService.report_work_list();
+        report_work_list = masterService.report_work_list();
 
         for(int i = 0; i<=report_work_list.size()-1; i++) {
             String start_time = report_work_list.get(i).getWork_start_time();
@@ -286,19 +285,14 @@ public class MasterController {
     public void insert_contract(@ModelAttribute MasterVo masterVo) {
         masterService.insert_contract(masterVo);
     }
-    
-    // 행사관리 엑셀 다운로드
 
     // 직원관리 엑셀 다운로드
     @RequestMapping(value="/staff_excel", method= RequestMethod.GET)
     @ResponseBody
     public void staff_excel(HttpServletResponse response) throws IOException {
 
-        String user_id = "cdcd05g";
         // 엑셀 파일명
         String filename = "staff_list.xlsx";
-        // 엑셀 파일 내용
-        List<MasterVo> staff_list = masterService.getListMemberApp(user_id);
         // 엑셀 파일 생성(xlsx 확장자)
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("staff_list");
@@ -359,4 +353,70 @@ public class MasterController {
     }
     
     // 근무기록 엑셀 다운로드
+    @RequestMapping(value="/report_work_excel", method= RequestMethod.GET)
+    @ResponseBody
+    public void report_excel_excel(HttpServletResponse response) throws IOException {
+        // 엑셀 파일명
+        String filename = "report_excel_list.xlsx";
+        // 엑셀 파일 내용
+        List<MasterVo> report_work_list = masterService.report_work_list();
+        // 엑셀 파일 생성(xlsx 확장자)
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("report_work_list");
+        Row row;
+        Cell cell;
+        int rowNo = 0;
+
+        // 헤더 정보 구성
+        row = sheet.createRow(rowNo++);
+        cell = row.createCell(0);
+        cell.setCellValue("일자");
+        cell = row.createCell(1);
+        cell.setCellValue("행사명");
+        cell = row.createCell(2);
+        cell.setCellValue("이름");
+        cell = row.createCell(3);
+        cell.setCellValue("연락처");
+        cell = row.createCell(4);
+        cell.setCellValue("출근");
+        cell = row.createCell(5);
+        cell.setCellValue("외출");
+        cell = row.createCell(6);
+        cell.setCellValue("복귀");
+        cell = row.createCell(7);
+        cell.setCellValue("퇴근");
+        cell = row.createCell(8);
+        cell.setCellValue("소계시간");
+
+        // 데이터 부분 생성
+        for(MasterVo report_work : report_work_list) {
+            row = sheet.createRow(rowNo++);
+            cell = row.createCell(0);
+            cell.setCellValue(report_work.getWork_date());
+            cell = row.createCell(1);
+            cell.setCellValue(report_work.getEvent_title());
+            cell = row.createCell(2);
+            cell.setCellValue(report_work.getUser_name());
+            cell = row.createCell(3);
+            cell.setCellValue(report_work.getUser_phone());
+            cell = row.createCell(4);
+            cell.setCellValue(report_work.getWork_start_time());
+            cell = row.createCell(5);
+            cell.setCellValue(report_work.getWork_outing_time());
+            cell = row.createCell(6);
+            cell.setCellValue(report_work.getWork_comeback_time());
+            cell = row.createCell(7);
+            cell.setCellValue(report_work.getWork_end_time());
+            cell = row.createCell(8);
+            cell.setCellValue(report_work.getWork_total_time());
+        }
+
+        // 컨텐트 타입과 파일명 지정
+        response.setContentType("ms-vnd/excel");
+        response.setHeader("Content-Disposition", "attachment;filename="+filename);
+
+        // 엑셀 출력
+        workbook.write(response.getOutputStream());
+        workbook.close();
+    }
 }
