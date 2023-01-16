@@ -17,6 +17,16 @@ img {
 	width: 100%;
 }
 
+pre {
+	height: 300px;
+	overflow-y: scroll;
+}
+
+form {
+	position: fixed;
+	top: 0;
+}
+
 body {
 	font-family: 'pretendard';
 	background-color: #F8F9FB;
@@ -97,10 +107,13 @@ body {
 	height: auto;
 }
 
-.page-header {
-	width: 100%;
+.page-header{
+	width: 100%; max-width: 1440px;
 	height: 120px;
 	line-height: 120px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .page-header span {
@@ -112,17 +125,44 @@ body {
 .detail_bar {
 	width: 100%;
 	border-bottom: 1px solid #DDDDDD;
+	display: flex;
 }
 
-.detail_bar .detail1 {
-	border-bottom: 3px solid #5B8FD2;
-	width: fit-content;
+.detail_bar .detail1, .detail_bar .detail2{
+    width: 80px;
+    display: flex; gap: 10px;
+    align-items: center;
+    height: 30px;
+    cursor: pointer;
+    border-bottom: 3px solid #00000000;
+    margin-right: 40px;
+}
+.detail_bar .detail2{
+    width: 95px;
+}
+.detail_bar .this_bar, .detail_bar>div:hover{
+    border-bottom: 3px solid #5B8FD2;
 }
 
 .detail_bar img {
-	width: 14px;
-	height: 13px;
+    width:14px;
+    height:14px;
 }
+
+.detail_bar p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #999999;
+}
+
+.detail_bar .detail1 p {
+    color:#333333;
+}
+
+/* .detail_bar .detail1 { */
+/* 	border-bottom: 3px solid #5B8FD2; */
+/* 	width: fit-content; */
+/* } */
 
 .detail_bar input {
 	position: relative;
@@ -132,7 +172,11 @@ body {
 	cursor: pointer;
 	font-size: 16px;
 	font-weight: 500;
-	padding-left: 5px;
+	color: #999999;
+}
+
+.detail_bar .detail1 p {
+	color:#333333;
 }
 
 .area {
@@ -198,6 +242,11 @@ ol li {
 	margin-left: 4%;
 }
 
+.list ol:nth-child(1) li:nth-child(8) {
+	margin-left: 5.8%;
+}
+
+
 #no_area {
 	width: 2%;
 	text-align: center;
@@ -219,6 +268,35 @@ ol li {
 
 #birth_area, #contact_area, #join_date {
 	width: 7%;
+	text-align: center;
+}
+
+#last_arrange {
+	margin-left: 6.3%;
+}
+
+.no_area {
+	width: 2%;
+	text-align: center;
+}
+
+.title_area {
+	width:18%;
+	text-align: center;
+}
+
+.date_area {
+	width:27%;
+	text-align: center;
+}
+
+.pass_area {
+	width:9%;
+	text-align: center;
+}
+
+.contrac_area {
+	width:9%;
 	text-align: center;
 }
 
@@ -256,4 +334,19 @@ ol li {
 #page_num a:hover, #page_num a:focus{
 	border:1px solid #dddddd;
 	color: black;
+}
+
+/* 모달창 */
+#modal1,
+#modal2 {
+	display:none;
+	position:fixed;
+	right:0;
+	width:50%;
+	height:100%;
+	background-color:#FFFFFF;
+	border:1px solid #DDDDDD;
+	border-radius: 3px;
+	opacity: 1;
+	z-index:1;
 }

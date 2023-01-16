@@ -51,22 +51,31 @@ $(function() {
     // 회원정보 입력
     // 아이디 입력했을 때 중복확인
     $("#member input[name=user_id]").keyup(function() {
-        $.ajax({
-            type: "GET",
-            url: "/idchk",
-            data: {user_id: $(this).val()},
-        }).done(function(data) {
-            if(data == 1) {
-                id_checked = "0";
-                $("#id_check").text("이미 사용중인 아이디입니다.");
-                $("#id_check").css("color", "red");
-            }
-            else {
-                id_checked = "1";
-                $("#id_check").text("사용 가능한 아이디입니다.");
-                $("#id_check").css("color", "#5B8FD2");
-            }
-        });
+
+        // 공백 아이디 입력 방지
+        if($(this).val().indexOf(" ") >= 0) {
+            id_checked = "0";
+            $("#id_check").text("공백 없이 입력해주세요.");
+            $("#id_check").css("color", "red");
+        }
+        else {
+            $.ajax({
+                type: "GET",
+                url: "/idchk",
+                data: {user_id: $(this).val()},
+            }).done(function(data) {
+                if(data == 1) {
+                    id_checked = "0";
+                    $("#id_check").text("이미 사용중인 아이디입니다.");
+                    $("#id_check").css("color", "red");
+                }
+                else {
+                    id_checked = "1";
+                    $("#id_check").text("사용 가능한 아이디입니다.");
+                    $("#id_check").css("color", "#5B8FD2");
+                }
+            });
+        }
     });
 
     // 비밀번호가 영문, 숫자 특수기호 중 2가지 이상 조합, 10자~16자 인지 확인

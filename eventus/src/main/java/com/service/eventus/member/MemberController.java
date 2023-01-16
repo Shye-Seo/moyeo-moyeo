@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +39,7 @@ public class MemberController {
 
     // 로그인 처리
     @RequestMapping("/LoginProc")
-    public ModelAndView loginCheck(@ModelAttribute MemberVo memberVo, HttpSession session) throws Exception {
+    public ModelAndView loginCheck(HttpServletResponse response, @ModelAttribute MemberVo memberVo, HttpSession session) throws Exception {
         int result = memberService.loginCheck(memberVo, session);
         MemberVo memberVo2 = memberService.viewMember(memberVo);
         ModelAndView mav = new ModelAndView();
@@ -53,9 +55,21 @@ public class MemberController {
                 mav.setViewName("/main_ForStaff");
             }
         }
+        else {
+            // 로그인 실패
+            mav.setViewName("/login");
+            mav.addObject("msg", "failure");
+        }
 
         return mav;
     }
+    
+    @RequestMapping("/LogoutProc")
+    public String Logout (HttpSession session) throws Exception{
+    	session.invalidate();
+    	return "/login";
+    }
+    
 
     // 아이디 찾기
     @RequestMapping("/findId")

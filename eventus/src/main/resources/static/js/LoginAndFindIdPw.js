@@ -45,6 +45,23 @@ $(function() {
         }
         $("#loginform").submit();
     });
+    
+    //enter로 로그인하기
+    $(".id_pw_text").on("keyup",function(key){
+        if(key.keyCode==13) {
+            if($("#loginform input[name=user_id]").val() == ""){
+                alert("아이디를 입력해주세요.");
+                $("#loginform input[name=user_id]").focus();
+                return false;
+            }
+            if($("#loginform input[name=user_pw]").val() == ""){
+                alert("비밀번호를 입력해주세요.");
+                $("#loginform input[name=user_pw]").focus();
+                return false;
+            }
+            $("#loginform").submit();
+        }
+    });
 
     // 쿠키 설정
     // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.

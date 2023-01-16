@@ -142,8 +142,6 @@ body{
     width: 34%;
     height: 40px;
     /* UI Properties */
-    background: var(--unnamed-color-fafafa) 0% 0% no-repeat padding-box;
-    border: 0.5px solid var(--unnamed-color-999999);
     background: #FAFAFA 0% 0% no-repeat padding-box;
     border: 0.5px solid #999999;
     border-radius: 3px;
@@ -154,8 +152,6 @@ body{
     width: 42%;
     height: 40px;
     /* UI Properties */
-    background: var(--unnamed-color-fafafa) 0% 0% no-repeat padding-box;
-    border: 0.5px solid var(--unnamed-color-999999);
     background: #FAFAFA 0% 0% no-repeat padding-box;
     border: 0.5px solid #999999;
     border-radius: 3px;
@@ -294,15 +290,16 @@ body{
 
 .modal_con_L{
     width: 39%;
-    max-width: 800px;
+    max-width: 670px;
     height: 900px;
     background-color: #ffffff;
     display: block;
     position: absolute;
     top: calc(50% - 450px);
-    right: 47%;
+    right: 48%;
     border-radius: 7px;
     display: none;
+    box-shadow: 3px 3px 6px #99999929;
 }
 
 #modal_content_wrap{
@@ -310,7 +307,7 @@ body{
     width: calc(100% - 30px);
     height: 85%;
     overflow-y: auto;
-    padding: 0 50px 0 65px;
+    padding: 0 50px 0 55px;
     box-sizing: border-box;
 }
 
@@ -337,7 +334,7 @@ body{
 .R_inact_bt{
     width: 40px; height: 40px;
     background-color: #ffffff;
-    background-image: url("/imgs/close_btn.svg");
+    background-image: url("../imgs/close_btn.svg");
     position: absolute;
     top: 20px; right: 20px;
     border: 0;
@@ -348,7 +345,7 @@ body{
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 65px 80px 30px 65px;
+    padding: 65px 80px 30px 55px;
 
 }
 .total, .today {
@@ -462,11 +459,11 @@ body{
 }
 
 .address_info {
-    width: 20%;
+    width: 30%;
 }
 
 .career_info {
-    width: 12%;
+    width: 9%;
 }
 
 .btn_div button{
@@ -572,7 +569,7 @@ body{
 }
 
 /* 이력서 */
-.resume_wrapper{
+#resume_wrapper{
 	display: flex;
     align-items: center;
     flex-direction: column;
@@ -628,35 +625,34 @@ body{
 }
 
 #resume_content .resume_title #resume_title_text {
-    text-align: center;
+    text-align: right;
     font: normal normal 600 20px/24px Pretendard;
-    letter-spacing: 40px;
+    letter-spacing: 5px;
     color: #333333;
-    margin: 30px 0;
+    margin: 10px 0 50px 0;
 }
 
 #resume_content .resume_staff_info .profile_top{
 	display: flex;
+	margin-bottom: 70px;
 }
 
 .profile_top #resume_img_file {
-    width: 160px;
-    height: 160px;
     display: flex;
     align-items: center;
-    margin-right: 30px;
-    border: 1px solid red;
+    margin-right: 100px;
 }
 
 .profile_top #resume_img_file #resume_profile_img {
-    border: 1px solid black;
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
     margin: 0 auto;
+    object-fit: cover;
+    border-radius: 65px;
 }
 
 .profile_top #resume_info_area{
-	margin-top: 25px;
+/* 	margin-top: 25px; */
 }
 
 .profile_top #resume_info_area #resume_top_area{
@@ -679,8 +675,8 @@ body{
 }
 
 .profile_top #resume_info_area #resume_top_area #div_line {
-    border: 1px solid #707070;
-    height: 20px;
+    border-left: 1px solid #707070;
+    height: 19px;
     width: 0;
     margin: 0 10.5px;
 }
@@ -694,7 +690,7 @@ body{
 
 .profile_top #resume_info_area #resume_top_area #profile_wrap{
 	display: flex;
-	margin-top: 2px;
+	margin-top: 4px;
 }
 
 .profile_top #resume_info_area #first_info, #second_info, #third_info{
@@ -704,15 +700,15 @@ body{
 }
 
 .profile_top #resume_info_area #first_info{
-	margin-top: 15px;
+	margin-top: 25px;
 }
 
 .profile_top #resume_info_area #second_info{
-	margin-top: 10px;
+	margin-top: 15px;
 }
 
 .profile_top #resume_info_area #third_info{
-	margin-top: 10px;
+	margin-top: 15px;
 }
 
 .profile_top #resume_info_area #first_info #staff_birth{
@@ -725,10 +721,9 @@ body{
 }
 
 #resume_icon {
-    width: 17px;
-    height: 17px;
-    border: 1px solid;
-    margin-right: 7px;
+/*     width: 17px; */
+/*     height: 17px; */
+    margin-right: 5px;
 }
 
 #resume_info_text{
@@ -736,7 +731,7 @@ body{
 }
 
 .resume_school_info{
-	margin-top: 40px;
+/* 	margin-top: 40px; */
 }
 
 .resume_table_title{
@@ -789,6 +784,7 @@ body{
 
 .resume_career_info{
 	margin-top: 60px;
+	margin-bottom: 300px;
 }
 
 .resume_career_info .resume_table_career .table_row{

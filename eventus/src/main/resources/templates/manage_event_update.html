@@ -110,6 +110,20 @@
                                     <p>명</p>
                                     <input type="text" class="input_pn onlyNum" name="input_event_position_count" placeholder="숫자입력">
                                 </span>
+                                <span>
+                                    <p>근무시작시간</p>
+                                    <input type="text" class="input_st onlyNum required" name="input_event_position_startTime" placeholder="00:00" onkeyup="chkTime($(this))">
+                                </span>
+                                 ~
+                                <span>
+                                    <p>종료시간</p>
+                                    <input type="text" class="input_et onlyNum required" name="input_event_position_endTime" placeholder="00:00" onkeyup="chkTime($(this))">
+                                </span>
+                                <span>
+                                    <p>시간 당 임금</p>
+                                    <p>원</p>
+                                    <input type="text" class="input_pp onlyNum required" name="input_event_position_pay" placeholder="숫자입력">
+                                </span>
                             </div>
                             <div id="add_position" onclick="add_position()"></div>
                         </div>
@@ -127,16 +141,20 @@
                         /*<![CDATA[*/
                         $(function(){
                             let positions = /*[[${positions}]]*/
-                            console.log();
                             let positions_conut = /*[[${positions_conut}]]*/
-                            console.log();
+                            let position_startTime = /*[[${position_startTime}]]*/
+                            let position_endTime = /*[[${position_endTime}]]*/
+                            let position_pay = /*[[${position_pay}]]*/
                             let eventFileList = /*[[${eventFileList}]]*/
 
                             $('input[name="input_event_position"]').val(positions[0])
                             $('input[name="input_event_position_count"]').val(positions_conut[0])
+                            $('input[name="input_event_position_startTime"]').val(position_startTime[0])
+                            $('input[name="input_event_position_endTime"]').val(position_endTime[0])
+                            $('input[name="input_event_position_pay"]').val(position_pay[0])
 
                             for(i =1; i<positions.length;i++){
-                                add_position_forUpdate(positions[i],positions_conut[i]);
+                                add_position_forUpdate(positions[i],positions_conut[i],position_startTime[i],position_endTime[i],position_pay[i]);
                             }
 
                             fileIndex=eventFileList.length;

@@ -14,7 +14,6 @@
 
     <div id="wrap">
         <div th:replace="~{common/sideforstaff :: sidebar_manage ('stafflist')}"></div>
-        <form th:insert="~{contract_file :: modal}" action="contract_check" id="contract" class="contract"></form>
 
         <!-- main -->
         <div class="content">
@@ -26,15 +25,14 @@
                 </div>
 
                 <div class="detail_bar">
-                    <div class="detail1">
-                        <img src="material-view-list.svg">
-                        <input type="button" value="직원현황">
+                    <div class="detail1 this_bar" onclick="location.href='manage_career_forstaff'">
+                        <img src="imgs/Icon material-view-list.svg">
+                        <p>지원현황</p>
                     </div>
-                    <div class="detail2">
-                        <img src="material-view-list.svg">
-                        <input type="button" value="나의이력서">
+                    <div class="detail2" onclick="location.href='myresume_forStaff'">
+                        <img src="imgs/myresume_icon.svg">
+                        <p>나의이력서</p>
                     </div>
-                    
                 </div>
 
                 <div class="area">
@@ -46,70 +44,65 @@
 
                     <ul class="list">
                         <ol>
-                            <li>No</li>
-                            <li>행사명</li>
-                            <li>행사기간</li>
-                            <li>합격여부</li>
-                            <li>근로계약서</li>
+                            <li class="no_area">No</li>
+                            <li class="title_area">행사명</li>
+                            <li class="date_area">행사기간</li>
+                            <li class="pass_area">합격여부</li>
+                            <li class="contrac_area">근로계약서</li>
                         </ol>
                         <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
                         <ol th:block th:each="career : ${career_list}">
-                            <li th:text="${career.list_no}"></li>
-                            <li th:text="${career.event_title}"></li>
-                            <li th:text="${career.event_startDate} + ' - ' + ${career.event_endDate}"></li>
-                            <li th:if="${career.event_check == 0}">모집 중</li>
+                            <li th:text="${career.list_no}" class="no_area"></li>
+                            <li th:text="${career.event_title}" class="title_area"></li>
+                            <li th:text="${career.event_startDate} + ' - ' + ${career.event_endDate}" class="date_area"></li>
+                            <li th:if="${career.event_check == 0}" class="pass_area">모집 중</li>
 
-                            <li th:if="${career.pass_check == 0}">불합격</li>
-                            <li th:if="${career.pass_check == 1}">합격</li>
+                            <li th:if="${career.pass_check == 0}" class="pass_area">불합격</li>
+                            <li th:if="${career.pass_check == 1}" class="pass_area">합격</li>
 
 
-                            <li th:if="${career.contract_check == 1}">등록완료</li>
-                            <li th:if="${career.contract_check == 0}">
+                            <li th:if="${career.contract_check == 1}" class="contrac_area">등록완료</li>
+                            <li th:if="${career.contract_check == 0}" class="contrac_area">
                                 <input th:name="${career.event_id}" type="button" class="contract_add" value="미등록">
                             </li>
                         </ol>
                     </ul>
-                </div>
 
+                    <!-- 페이징 처리 -->
+                    <div class="paging_area">
+                        <ul>
+                            <!-- 이전 -->
+                            <li th:if="${page <= 1}" id="prev">
+                                <a th:href="@{/manage_career_forstaff(page=1)}">&lt;</a>
+                            </li>
+                            <li th:if="${page > 1}" id="prev">
+                                <a th:href="@{/manage_career_forstaff(page=${page - 1})}">&lt;</a>
+                            </li>
 
-                <!-- 페이징 처리 -->
-                <div>
-                    <ul>
-                        <!-- 이전 -->
-                        <li th:if="${page <= 1}">
-                            <a th:href="@{/manage_career_forstaff(page=1)}">&lt;</a>
-                        </li>
-                        <li th:if="${page > 1}">
-                            <a th:href="@{/manage_career_forstaff(page=${page - 1})}">&lt;</a>
-                        </li>
+                            <!-- 번호 10개씩 -->
+                            <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage + 9)}" id="page_num">
+                                <a th:href="@{/manage_career_forstaff(page=${i})}" th:text="${i}" ></a>
+                            </li>
 
-                        <!-- 번호 10개씩 -->
-                        <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage + 9)}">
-                            <a th:href="@{/manage_career_forstaff(page=${i})}" th:text="${i}"></a>
-                        </li>
+                            <li th:if="${startPage*10 > totalPage}" th:each="i : ${#numbers.sequence(startPage, totalPage)}" id="page_num">
+                                <a th:href="@{/manage_career_forstaff(page=${i})}" th:text="${i}"></a>
+                            </li>
 
-                        <li th:if="${startPage*10 > totalPage}" th:each="i : ${#numbers.sequence(startPage, totalPage)}">
-                            <a th:href="@{/manage_career_forstaff(page=${i})}" th:text="${i}"></a>
-                        </li>
-
-                        <!-- 다음 -->
-                        <li th:if="${page < totalPage}">
-                            <a th:href="@{/manage_career_forstaff(page=${page+1})}">&gt;</a>
-                        </li>
-                        <li th:if="${page >= totalPage}">
-                            <a th:href="@{/manage_career_forstaff(page=${totalPage})}">&gt;</a>
-                        </li>
-                    </ul>
+                            <!-- 다음 -->
+                            <li th:if="${page < totalPage}" id="next">
+                                <a th:href="@{/manage_career_forstaff(page=${page+1})}">&gt;</a>
+                            </li>
+                            <li th:if="${page >= totalPage}" id="next">
+                                <a th:href="@{/manage_career_forstaff(page=${totalPage})}">&gt;</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <form th:insert="~{contract_file :: modal}" action="contract_check" id="contract" class="contract"></form>
     <style>
-        pre {
-            height: 300px;
-            overflow-y: scroll;
-        }
-
         #modal1,
         #modal2 {
             display:none;
@@ -129,7 +122,6 @@
 
         // 근로계약서 미등록 클릭시 모달창 띄우기
         $(function() {
-
             // 근로계약서 등록 버튼 클릭 시
             $(".contract_add").click(function() {
                 $("#modal1").css("display", "block");
