@@ -310,7 +310,7 @@ body{
     width: calc(100% - 30px);
     height: 85%;
     overflow-y: auto;
-    padding: 0 50px 0 65px;
+    padding: 0 50px 0 55px;
     box-sizing: border-box;
 }
 
@@ -348,7 +348,7 @@ body{
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 65px 80px 30px 65px;
+    padding: 65px 80px 30px 55px;
 
 }
 .total, .today {
@@ -462,11 +462,11 @@ body{
 }
 
 .address_info {
-    width: 20%;
+    width: 30%;
 }
 
 .career_info {
-    width: 12%;
+    width: 9%;
 }
 
 .btn_div button{

@@ -12,7 +12,7 @@ public class WebInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String requestURI = request.getRequestURI();
-		System.out.println("[interceptor] requestURI : " + requestURI);
+//		System.out.println("[interceptor] requestURI : " + requestURI);
 		
 		return true;  // false -> 이후에 진행을 하지 않는다.
 	}
@@ -20,13 +20,13 @@ public class WebInterceptor implements HandlerInterceptor{
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		System.out.println("[interceptor] postHandle");
+//		System.out.println("[interceptor] postHandle");
 	}
 	
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		System.out.println("[interceptor] afterCompletion");
+//		System.out.println("[interceptor] afterCompletion");
 	}
 }
 	

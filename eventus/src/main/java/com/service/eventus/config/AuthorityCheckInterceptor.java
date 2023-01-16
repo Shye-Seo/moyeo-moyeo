@@ -15,13 +15,13 @@ public class AuthorityCheckInterceptor implements HandlerInterceptor{
 			throws Exception {
 
 		String requestURI = request.getRequestURI();
-		System.out.println("[interceptor] : " + requestURI);
+//		System.out.println("[interceptor] : " + requestURI);
 		HttpSession session = request.getSession(false);
 		int authority = (int) session.getAttribute("authority");
 		
 		if(authority != 0) {
        		// 사용자 권한부족
-			System.out.println("[권한부족 사용자 요청]");
+			System.out.println("[권한부족 사용자 요청] - "+session.getAttribute("user_id")+":"+requestURI);
 			
 			//main_ForStaff redirect
 			//response.sendRedirect("/main_ForStaff");

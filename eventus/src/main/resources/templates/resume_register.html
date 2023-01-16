@@ -192,7 +192,7 @@
                 if(school_state[0] != ""){ $('select[name="staff_school_state1"]').val(school_state[0]); }
                 if(school_state[1] != ""){ $('select[name="staff_school_state2"]').val(school_state[1]); }
                 
-                if(career_info.length != 0){
+                if(Object.keys(career_info).length != 0 ){
                     $('input[name="input_staff_career_eventName"]').val(career_info.eventName[0]);
                     $('input[name="input_staff_career_businessName"]').val(career_info.businessName[0]);
                     $('input[name="input_staff_career_position"]').val(career_info.positions[0]);
@@ -204,6 +204,7 @@
                         $('.remove_career').hide();
                     }
                 }
+
             })
         /*]]>*/
     </script>

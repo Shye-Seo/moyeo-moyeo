@@ -15,12 +15,12 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 			throws Exception {
 
 		String requestURI = request.getRequestURI();
-		System.out.println("[interceptor] : " + requestURI);
+//		System.out.println("[interceptor] : " + requestURI);
 		HttpSession session = request.getSession(false);
 		
 		if(session == null || session.getAttribute("user_id") == null) {
        		// 로그인 되지 않음
-			System.out.println("[미인증 사용자 요청]");
+			System.out.println("[미인증 사용자 요청] : "+ requestURI);
 			
 			//로그인으로 redirect
 			//response.sendRedirect("/");
