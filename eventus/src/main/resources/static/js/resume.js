@@ -224,6 +224,7 @@ if (confirm("등록 하시겠습니까?") == true){
 
     if($('input[name="staff_school2"]').val()!="" ){//학교명2 없음 바로 submit
         staff_school += ',' + $('input[name="staff_school2"]').val();
+        staff_school_state += ',' + $('select[name="staff_school_state2"]').val();//졸업여부는 학교이름에 따라서 저장
     }
     if($('input[name="staff_major2"]').val()!=""){
         staff_major += ',' + $('input[name="staff_major2"]').val();
@@ -233,9 +234,6 @@ if (confirm("등록 하시겠습니까?") == true){
     }
     if($('input[name="staff_school_end2"]').val()!=""){
         staff_school_end += ',' + $('input[name="staff_school_end2"]').val();
-    }
-    if($('select[name="staff_school_state2"]').val()!=""){
-        staff_school_state += ',' + $('select[name="staff_school_state2"]').val();
     }
 
 
