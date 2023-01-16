@@ -54,15 +54,9 @@ public class MemberController {
                 // 스태프 페이지 이동
                 mav.setViewName("/main_ForStaff");
             }
-        }else {
-        	response.setContentType("text/html; charset=UTF-8");
-        	PrintWriter out = response.getWriter();
-        	out.println("<script>alert('아이디 또는 비밀번호가 다릅니다.'); location.href='/login';</script>");
-        	out.flush();
-        	return null;
         }
         else {
-// 로그인 실패
+            // 로그인 실패
             mav.setViewName("/login");
             mav.addObject("msg", "failure");
         }
