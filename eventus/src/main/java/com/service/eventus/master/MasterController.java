@@ -6,9 +6,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -38,9 +34,9 @@ public class MasterController {
     List<MasterVo> report_work_list;
 
     @RequestMapping("/manage_staff")
-    public ModelAndView manage_staff(@RequestParam(value="page", required=false, defaultValue = "1") int page) {
+    public ModelAndView manage_staff(@RequestParam(value="page", required=false, defaultValue = "1") int page, HttpSession session) throws Exception {
         // 세션에 저장된 user_id를 가져온다.
-        String user_id = "cdcd05g";
+        String user_id = (String) session.getAttribute("user_id");
         int staff_size=0; // 페이지 개수 세기(페이징 처리)
         int staff_num; // 페이지 개수 세기(번호 붙히는 용도)
         ModelAndView mav = new ModelAndView();
@@ -103,9 +99,9 @@ public class MasterController {
     }
 
     @RequestMapping("/manage_career_forstaff")
-    public ModelAndView manage_career_ForStaff(@RequestParam(value="page", required=false, defaultValue = "1") int page) {
+    public ModelAndView manage_career_ForStaff(@RequestParam(value="page", required=false, defaultValue = "1") int page, HttpSession session) {
         // 세션에 저장된 user_id를 가져온다.
-        String user_id = "test5";
+        String user_id = (String) session.getAttribute("user_id");
         int career_size=0; // 페이지 개수 세기(페이징 처리)
         int career_num; // 페이지 개수 세기(번호 붙히는 용도)
         ModelAndView mav = new ModelAndView();
@@ -196,10 +192,11 @@ public class MasterController {
 
     // 근로계약서 관련 데이터 저장
     @RequestMapping("/add_contract")
-    public ModelAndView add_contract(@ModelAttribute MasterVo masterVo) {
+    public ModelAndView add_contract(@ModelAttribute MasterVo masterVo, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         // session에 저장되어 있는 id를 가져와 masterVo에 저장
-        masterVo.setStaff_id(masterService.getUserId("test5"));
+        String user_id = (String) session.getAttribute("user_id");
+        masterVo.setStaff_id(masterService.getUserId(user_id));
 
         // event_title을 가지고 event_id를 가져와 masterVo에 저장
         // masterVo.setEvent_id(masterService.getEventId(masterVo.getEvent_title()));

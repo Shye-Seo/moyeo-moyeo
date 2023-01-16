@@ -151,7 +151,12 @@ body {background:#F8F9FB;}
     background-position-x: 25px;
 }
 
-
+.excel_submit {
+    border:0;
+    background-color:white;
+    font-size:16px;
+    cursor:pointer;
+}
 
 
 /* datepicker UI수정 */

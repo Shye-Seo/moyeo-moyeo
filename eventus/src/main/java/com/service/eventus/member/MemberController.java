@@ -53,6 +53,11 @@ public class MemberController {
                 mav.setViewName("/main_ForStaff");
             }
         }
+        else {
+// 로그인 실패
+            mav.setViewName("/login");
+            mav.addObject("msg", "failure");
+        }
 
         return mav;
     }

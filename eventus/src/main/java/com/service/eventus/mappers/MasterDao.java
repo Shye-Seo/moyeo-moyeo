@@ -25,7 +25,7 @@ public interface MasterDao {
     @Select ("select staff_id, event_id, event_title, event_startDate, event_endDate, event_check from event e\n" +
             "inner join staff_application sa on e.id=sa.event_id\n" +
             "inner join user u on sa.staff_id=u.id\n" +
-            "where u.user_id='test5'\n" +
+            "where u.user_id=#{user_id}\n" +
             "order by e.event_startDate desc;")
     List<MasterVo> getListUserApp(String user_id);
 
