@@ -38,5 +38,8 @@ public interface MemberDao {
 
     @Update("update user set user_pw = #{user_pw} where user_id = #{user_id}")
     int updatePw(MemberVo memberVo); // 비밀번호 변경
+    
+    @Select("select file_name from staff_file where staff_id =#{user_id} order by id desc limit 1")
+    String select_myProfile (int user_id);
 
 }

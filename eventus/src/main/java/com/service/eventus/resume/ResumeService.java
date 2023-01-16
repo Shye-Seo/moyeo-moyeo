@@ -49,8 +49,8 @@ public class ResumeService {
 	}
 	
 	// 지원자 이력서 조회 모달(이메일, 주소, 학력, 경력)
-	public ResumeVo getStaffResume(int staff_id) {
-		return resumeDao.getStaffResume(staff_id);
+	public ResumeVo getStaffResume(int resume_id) {
+		return resumeDao.getStaffResume(resume_id);
 	}
 
 	public int selectStaffId(int resume_id) {

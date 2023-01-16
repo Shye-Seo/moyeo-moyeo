@@ -10,8 +10,6 @@ let modal_R_state = false;
 //오늘날짜
 let today_for_work = "";
 
-//
-let accept_staff_list = [];
 
 $(function(){
     
@@ -37,8 +35,7 @@ function modal_inact_resume(){
 }
 
 //지원자 모달 act
-function modal_act_application(thisId){
-
+function modal_act_application(thisId,chk){
     $.ajax({
 		url : "/get_application_list",
 		type : 'get',
@@ -53,8 +50,10 @@ function modal_act_application(thisId){
             }
 
 			$("#modal_wrap").show();
-            $(".confirm_wrap").css('display','flex');
-            $('#modal_content_wrap').addClass("app_Con");
+            if(chk == 0){
+                $(".confirm_wrap").css('display','flex');
+                $('#modal_content_wrap').addClass("app_Con");
+            }
             $('.total').append(`총 지원자 수 <span>${list.length}</span>명`);
 
             for(i=0; i<positions.length; i++){
@@ -63,7 +62,7 @@ function modal_act_application(thisId){
                 position_wrap.append(`<div class="position_title"><p>${positions[i]}</p><div></div></div>`)
                 for(j=0; j<list.length; j++){
                     if(list[j].staff_position == positions[i]){
-                        let app_list = {list:list[j]};
+                        let app_list = {list:list[j], chk:chk};
                         position_wrap.append($.templates("#application_list").render(app_list)) ;
                     }
                 }
@@ -74,45 +73,37 @@ function modal_act_application(thisId){
 }
 
 
-// application
-//수락 누를 시
-function accept_staff(staff_id,obj){
-    accept_staff_list.push(staff_id);
-    console.log(accept_staff_list)
-    $(obj).remove();
-    $(`#app_list_${staff_id} .trash_icon`).hide();
-    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="complete_btn" onclick="undo_staff(${staff_id},this)">완료</button>`);
+function app_btn(status,staff_id,obj){
+
+    $.ajax({
+		url : "/set_application_status",
+		type : 'POST',
+		data : {
+            status:status,
+            staff_id:staff_id,
+            event_id:now_event_id_for_app
+        },
+		success: function(data){
+
+            if(status === 0){// 완료,취소 > 대기중
+                $(obj).remove();
+                $(`#app_list_${staff_id}`).removeClass('list_rejected');
+                $(`#app_list_${staff_id} .trash_icon`).show();
+                $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="accept_btn actbtn" onclick="app_btn(1,${staff_id},this)">수락</button>`);
+            }else if(status === 1){ //대기중 > 완료
+                $(obj).remove();
+                $(`#app_list_${staff_id} .trash_icon`).hide();
+                $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="complete_btn actbtn" onclick="app_btn(0,${staff_id},this)">완료</button>`);
+            }else if(status === 2){ //쓰레기통 > 취소
+                $(obj).hide();
+                $(`#app_list_${staff_id}`).addClass('list_rejected');
+                $(`#app_list_${staff_id} .actbtn`).remove();
+                $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="undo_btn actbtn" onclick="app_btn(0,${staff_id},this)">취소</button>`);
+            }
+
+        }});
 }
 
-//쓰레기통 누를 시
-function reject_staff(staff_id,obj){
-    remove_num(staff_id);
-    console.log(accept_staff_list)
-    $(obj).hide();
-    $(`#app_list_${staff_id}`).addClass('list_rejected');
-    $(`#app_list_${staff_id} .accept_btn`).remove();
-    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="undo_btn" onclick="undo_staff(${staff_id},this)">취소</button>`);
-}
-
-//완료,취소 누를 시(되돌리기)
-function undo_staff(staff_id,obj){
-    remove_num(staff_id);
-    console.log(accept_staff_list)
-    $(obj).remove();
-    $(`#app_list_${staff_id}`).removeClass('list_rejected');
-    $(`#app_list_${staff_id} .trash_icon`).show();
-    $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="accept_btn" onclick="accept_staff(${staff_id},this)">수락</button>`);
-}
-
-//배열에 번호빼기
-function remove_num(num){
-    for(let i = 0; i < accept_staff_list.length; i++){ 
-        if (accept_staff_list[i] === num) { 
-            accept_staff_list.splice(i, 1);
-            i--;
-        }
-    }
-}
 
 //모집완료
 function application_send(){
@@ -120,12 +111,11 @@ function application_send(){
 		url : "/set_application",
 		type : 'post',
 		data : {
-            event_id:now_event_id_for_app,
-            passer_list:accept_staff_list
+            event_id:now_event_id_for_app
         },
 		success: function(data){
             alert(`총 ${data}명의 지원자를 합격처리 하셨습니다.`);
-            // 합불합 표시
+            window.location.href = "/manage_event";
         }});
 }
 
@@ -151,6 +141,26 @@ function resume_act(thisId){
 			$('#resume_wrap').append($.templates("#resume_file").render(app_list));
 		}
 	});
+}
+
+function resume_download(thisId){
+	 let userName = thisId;
+	 let element = document.getElementById('resume_content');
+     let opt = {
+            margin:       1,
+            filename:     userName+'_이력서.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas: { // html2canvas 옵션
+                useCORS: true, // 영역 안에 로컬 이미지를 삽입 할 때 옵션 필요
+                scrollY: 0, // 스크롤 이슈 때문에 필수
+                scale: 2, // browsers device pixel ratio
+                dpi: 300,
+                letterRendering: true,
+                allowTaint: false, //useCORS를 true로 설정 시 반드시 allowTaint를 false처리 해주어야함
+            },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+     };
+     html2pdf().from(element).set(opt).save();
 }
 // applicant end
 

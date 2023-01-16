@@ -147,6 +147,20 @@ public class AwsS3Service {
 
         return fileName;
     }
+    
+    public ResponseEntity<byte[]> getObject_profile(String storedFileName) throws IOException {
+    	S3Object o = s3Client.getObject(new GetObjectRequest(bucket+"/"+profileFolder, storedFileName));
+    	S3ObjectInputStream objectInputStream = ((S3Object) o).getObjectContent();
+    	byte[] bytes = IOUtils.toByteArray(objectInputStream);
+    	
+    	String fileName = URLEncoder.encode(storedFileName, "UTF-8").replaceAll("\\+", "%20").replaceAll("\\[", "%5B").replaceAll("\\]", "%5D");
+    	HttpHeaders httpHeaders = new HttpHeaders();
+    	httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+    	httpHeaders.setContentLength(bytes.length);
+    	httpHeaders.setContentDispositionFormData("attachment", fileName);
+    	
+    	return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
+    }
 
 
     public void delete_s3event(String fileName) {

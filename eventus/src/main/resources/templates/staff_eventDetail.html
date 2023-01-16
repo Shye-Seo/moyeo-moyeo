@@ -25,21 +25,17 @@
 				</div>
 			</div>
 			<div class="detail_bar">
-				<div class="detail1 this_bar" onclick="location.href='manage_event'">
+				<div class="detail1 this_bar" onclick="location.href='eventList_ForStaff'">
 					<img src="imgs/material-view-list.svg">
 					<p>행사현황</p>
 				</div>
-				<!-- <div class="detail2" onclick="location.href='manage_event_register'">
-					<img src="imgs/pen_gray.svg">
-					<p>행사등록</p>
-				</div> -->
 			</div>
 			<div class="area">
 				<h2>행사 정보</h2>
 				<span th:replace="~{manage_eventDetail :: event_detail}"></span>
 					
 				<div class="btn_wrap">
-					<button type="button" onclick="location.href='manage_event'">목록으로</button>
+					<button type="button" onclick="location.href='eventList_ForStaff'">목록으로</button>
 					<button type="button" th:if = "${event.event_status == 0}" onclick="$('#modal_wrap').show();">지원하기</button>
 					<button type="button" th:if = "${event.event_status != 0}" class="unwork">지원하기</button>
 				</div>
@@ -51,6 +47,7 @@
 		<div class="con_wrap">
 
 			<div id="application_con" class="modal_con" th:if="${isResume != 0}">
+				<div class="app_modal_close" onclick="$('#modal_wrap').hide();"></div>
 				<p id="modal_title" th:text="${event.event_title}"></p>
 				<div class="line"></div>
 				<p>지원부분</p>

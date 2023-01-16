@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="/css/manage_event.css">
     <script src="/js/manage_event.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div id="wrap">
@@ -89,8 +90,8 @@
 							<div id="a_count">
 
                             <!-- 지원현황 -->
-							<a th:if="${event.event_status == 0}" th:onclick="'modal_act_application('+${event.id}+')'"><li th:text="${event.application_count} + ' 명'" class="red"></li></a>
-							<a th:if="${event.event_status == 1}" th:onclick="'modal_act_application('+${event.id}+')'"><li th:text="${event.application_count} + ' 명'" class="black"></li></a>
+							<a th:if="${event.event_status == 0}" th:onclick="'modal_act_application('+${event.id}+','+${event.event_check}+')'"><li th:text="${event.application_count} + ' 명'" class="red"></li></a>
+							<a th:if="${event.event_status == 1}" th:onclick="'modal_act_application('+${event.id}+','+${event.event_check}+')'"><li th:text="${event.application_count} + ' 명'" class="black"></li></a>
 							
                             <!-- 근무기록 -->
                             <a th:if="${event.event_status == 2}" th:onclick="'modal_act_workRecord('+${event.id}+')'"><li th:text="${event.staff_count} + ' 명'" class="black"></li></a>
@@ -147,9 +148,17 @@
 
     <!-- jsrender api사용 -->
     <script id="application_list" type="text/x-jsrender">
-        <div class="list_wrap app_templates" id="app_list_{{:list.id}}">
+		{{if (chk==1 && list.staff_result == 0 && list.staff_result == 1) || list.staff_result == 2 }}
+        <div class="list_wrap app_templates list_rejected" id="app_list_{{:list.id}}">
+		{{else}}
+		<div class="list_wrap app_templates" id="app_list_{{:list.id}}">
+		{{/if}}
 			<input type="hidden" value="{{:list.id}}" class="staff_id">
-			<img src="/imgs/trash_can.svg" class="trash_icon" onclick="reject_staff({{:list.id}},this)">
+			{{if chk==0 && list.staff_result == 0}}
+			<img src="/imgs/trash_can.svg" class="trash_icon" onclick="app_btn(2,{{:list.id}},this)">
+			{{else}}
+			<img src="/imgs/trash_can.svg" class="trash_icon" onclick="app_btn(2,{{:list.id}},this)" style="display: none;">
+			{{/if}}
             <div class="each_">
 				<div class="img_div">
 					<img src="https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/{{:list.resume_profile}}" onerror="this.src='/imgs/profile_none_img.svg'" class="profile_img">
@@ -176,7 +185,21 @@
 				</div>
 				<div class="line"></div>
 				<div class="btn_div">
-					<button type="button" class="accept_btn" onclick="acceptApplicant({{:list.id}},this)">수락</button>
+					{{if chk == 0}}
+						{{if list.staff_result == 0}}
+						<button type="button" class="accept_btn actbtn" onclick="app_btn(1,{{:list.id}},this)">수락</button>
+						{{else list.staff_result == 1}}
+						<button type="button" class="complete_btn actbtn" onclick="app_btn(0,{{:list.id}},this)">완료</button>
+						{{else list.staff_result == 2}}
+						<button type="button" class="undo_btn actbtn" onclick="app_btn(0,${staff_id},this)">취소</button>
+						{{/if}}
+					{{else}}
+						{{if list.staff_result == 1}}
+						<button type="button" class="complete_btn actbtn">합격</button>
+						{{else}}
+						<button type="button" class="undo_btn actbtn">불합격</button>
+						{{/if}}
+					{{/if}}
 					<span class="resume_open" onclick="resume_act({{:list.resume_id}},this)">이력서보기</span>
 				</div>
 			</div>
@@ -267,13 +290,13 @@
     </script>
     
     <script id="resume_file" type="text/x-jsrender">
-	    <div class="resume_wrapper">
+	    <div id="resume_wrapper">
 		<div class="modal_download_area">
 			<div class="download_area">
-				<div id="pdf">
+				<div id="pdf" onclick="resume_download({{:resume.id}},this)">
 					<img src="imgs/event_download.svg" id="download_btn">
 				</div>
-				<div id="pdf_text">
+				<div id="pdf_text" onclick="resume_download({{:resume.id}},this)">
 					<span id="pdf_text_">PDF 저장하기</span>
 				</div>
 			</div>
@@ -291,7 +314,7 @@
 			<div class="resume_staff_info">
 				<div class="profile_top">
 					<div id="resume_img_file">
-						<img src="https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/{{:info.resume_profile}}" onerror="this.src='/imgs/profile_none_img.svg'" id="resume_profile_img">
+						<img src="/profile_download?filename={{:info.resume_profile}}" onerror="this.src='/imgs/profile_none_img.svg'" id="resume_profile_img">
 					</div>
 					<div id="resume_info_area">
 						<div id="resume_top_area">
@@ -304,20 +327,20 @@
 						</div>
 						<div id="first_info">
 							<div id="staff_birth">
-								<div id="resume_icon"><img id="resume_icon_"></div>
+								<div id="resume_icon"><img src="imgs/resume_calendar.svg" id="resume_icon_"></div>
 								<div id="resume_info_text">{{:info.user_birth}}</div>
 							</div>
 							<div id="staff_phone">
-								<div id="resume_icon"><img id="resume_icon_"></div>
+								<div id="resume_icon"><img src="imgs/resume_phone.svg" id="resume_icon_"></div>
 								<div id="resume_info_text">{{:info.staff_phone}}</div>
 							</div>
 						</div>
 						<div id="second_info">
-							<div id="resume_icon"><img id="resume_icon_"></div>
+							<div id="resume_icon"><img src="imgs/resume_mail.svg" id="resume_icon_"></div>
 							<div id="resume_info_text">{{:resume.staff_email}}</div>
 						</div>
 						<div id="third_info">
-							<div id="resume_icon"><img id="resume_icon_"></div>
+							<div id="resume_icon"><img src="imgs/resume_address.svg" id="resume_icon_"></div>
 							<div id="resume_info_text">{{:resume.staff_address}}</div>
 						</div>
 					</div>

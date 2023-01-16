@@ -61,6 +61,13 @@ public class MemberController {
 
         return mav;
     }
+    
+    @RequestMapping("/LogoutProc")
+    public String Logout (HttpSession session) throws Exception{
+    	session.invalidate();
+    	return "/";
+    }
+    
 
     // 아이디 찾기
     @RequestMapping("/findId")

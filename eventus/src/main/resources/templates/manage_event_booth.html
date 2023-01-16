@@ -294,8 +294,9 @@
 				}
 			</script>
 			
-			<script>
+			<script th:inline="javascript">
 		        var num = /*[[${booth_num}]]*/
+		        console.log(num);
 		        $(".boothlist").each(function(){
 		            $(this).text(num);
 		            num--;

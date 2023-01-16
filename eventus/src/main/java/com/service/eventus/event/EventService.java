@@ -85,8 +85,8 @@ public class EventService {
 	}
 	
 	// 지원현황 지원자 행사경력
-	public int staff_career(int staff_id) throws Exception {
-		return eventDao.staff_career(staff_id);
+	public int staff_career(int staff_id, int event_id) throws Exception {
+		return eventDao.staff_career(staff_id, event_id);
 	}
 
 	// 지원현황 지원자 거주지
@@ -99,6 +99,15 @@ public class EventService {
 		return eventDao.getUserAge(user_birth);
 	}
 
+	// 합불합 임시 상태 변경
+	public boolean updateStaffResult(int staff_result, int event_id, int staff_id) throws Exception {
+		return eventDao.updateStaffResult(staff_result, event_id, staff_id);
+	}
+	
+	public List<Integer> selectStatusPasser (int event_id) throws Exception{
+		return eventDao.selectStatusPasser(event_id);
+	}
+	
 	// 합격자 등록
 	public boolean insertPasser(int event_id ,List passer_list) throws Exception {
 		eventDao.update_event_status(1, event_id);

@@ -60,8 +60,6 @@ public class EventController {
          Calendar time = Calendar.getInstance();
          SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
          String nowTime = format.format(time.getTime());
-         System.out.println("현재날짜 : "+now);
-         System.out.println("현재시간 : "+nowTime);
 		 
          event_list = eventService.event_list();
 		 
@@ -102,8 +100,8 @@ public class EventController {
 	    	 //현재날짜에 따라 event_status set
 	    	 if(compare_deadline > 0 && check == 0) { //event_event_deadline > today, event_status:0, event_check:0 (모집중)
 //	    	  	   eventService.setEventStatus(vo.getId(), 0);
-	    	 }else if(compare > 0 && check == 1) { //event_startDate > today, event_status:9, event_check:1 (모집완료+진행전) -> 확정버튼 누를 때, status set
-//		    	   eventService.setEventStatus(vo.getId(), 9);
+	    	 }else if((compare > 0 && check == 1) || (compare > 0 && compare_deadline <= 0)) { //event_startDate > today, event_status:9, event_check:1 (모집완료+진행전) -> 확정버튼 누를 때, status set
+		    	   eventService.setEventStatus(vo.getId(), 1);
 		     }else if(compare <= 0 && compare_end >= 0 && check == 1) { //event_startDate < today < event_endDate, event_status:1, event_check:1 (모집완료+진행중)
 		    	   eventService.setEventStatus(vo.getId(), 2);
 	    	 }else if(compare_end < 0) { //event_endDate < today, event_status:2 (진행완료)
@@ -113,8 +111,10 @@ public class EventController {
 	    	 if(vo.getEvent_status() == 0) {
 	    		 vo.setApplication_count(eventService.application_count(vo.getId()));
 	    	 }else if(vo.getEvent_status() == 1) {
-	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
+	    		 vo.setApplication_count(eventService.application_count(vo.getId()));
 	    	 }else if(vo.getEvent_status() == 2) {
+	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
+	    	 }else if(vo.getEvent_status() == 3) {
 	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
 	    	 }
 	    	 vo.setBooth_count(eventService.booth_count(vo.getId()));
@@ -317,7 +317,7 @@ public class EventController {
 		if (application_list != null) {
 			for (MemberVo memberVo : application_list) {
 				//경력 count
-				int staff_career = eventService.staff_career(memberVo.getId());
+				int staff_career = eventService.staff_career(memberVo.getId(), event_id);
 				memberVo.setCareer_count(staff_career);
 				
 				//주소 set
@@ -346,10 +346,23 @@ public class EventController {
 		return applicationMap;
 	}
 	
+	
+	
+	//지원자 임시 합불합 상태 저장
+	@ResponseBody
+	@RequestMapping(value="/set_application_status", method=RequestMethod.POST)
+	public String set_application_status(@RequestParam("status") int status, @RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception {
+		
+		eventService.updateStaffResult(status, event_id, staff_id);
+		return staff_id+"";
+	}
+	
 	//지원자 합불합 등록
 	@ResponseBody
 	@RequestMapping(value="/set_application", method=RequestMethod.POST)
-	public String set_application (@RequestParam("event_id") int event_id, @RequestParam(name = "passer_list[]", required = false) List<Integer> passer_list) throws Exception{
+	public String set_application (@RequestParam("event_id") int event_id) throws Exception{
+		
+		List<Integer> passer_list = eventService.selectStatusPasser(event_id);
 		
 		eventService.insertPasser(event_id, passer_list);
 		
@@ -611,8 +624,6 @@ public class EventController {
         Calendar time = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
         String nowTime = format.format(time.getTime());
-        System.out.println("현재날짜 : "+now);
-        System.out.println("현재시간 : "+nowTime);
 		 
         List<EventVo> event_list = eventService.event_list();
 		 
@@ -681,6 +692,13 @@ public class EventController {
 		return s3Service.getObject_event(filename);
 	}
 	
+	//이력서 프로필 이미지
+	@RequestMapping({"/profile_download"})
+	@ResponseBody
+	public ResponseEntity<byte[]> profile_download(@RequestParam String filename) throws IOException {
+		return s3Service.getObject_profile(filename);
+	}
+	
 	//이력서 모달창
 	@ResponseBody
 	@RequestMapping(value="/get_resume_file", method=RequestMethod.GET)
@@ -688,20 +706,18 @@ public class EventController {
 		
 		Map resumeMap = new HashMap<>();
 		resumeMap.put("resume_id", resume_id);
+		System.out.println("resume_id : "+resume_id);
 		
 		int staff_id = resumeService.selectStaffId(resume_id);
 		resumeMap.put("staff_id", staff_id);
 		
-		System.out.println("=============> staff_id:"+staff_id);
-		System.out.println("=============> resume_id:"+resume_id);
 		
 		MemberVo staff_info = resumeService.getStaffInfo(staff_id);
-		ResumeVo staff_resume = resumeService.getStaffResume(staff_id);
+		ResumeVo staff_resume = resumeService.getStaffResume(resume_id);
 		
 		//프로필이미지
-		String resumeProfile = resumeService.selectProfile(staff_resume.getId());
+		String resumeProfile = resumeService.selectProfile(resume_id);
 		staff_info.setResume_profile(resumeProfile);
-		System.out.println("=============> staff_id:"+resumeProfile);
 		
 		//만 나이 계산
 		String staff_age = eventService.getUserAge(staff_info.getUser_birth());
