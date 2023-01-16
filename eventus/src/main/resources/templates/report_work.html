@@ -6,9 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
     <link rel="stylesheet" href="/css/report_work.css">
+    <link rel="stylesheet" href="/css/date.css">
     <link rel="stylesheet" href="css/reset.css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+    <script src="/js/date.js"></script>
 </head>
+<script>
+
+  </script>
 <body>
 <div id="wrap">
     <!-- fixed menu -->
@@ -74,10 +82,13 @@
             </div>
 
             <div class="area">
+            <form action="Search">
                 <div class="search_area">
-                    <input type="text" class="calendar">
+                    <input type="text" id="s_calendar">
+                    <input type="text" id="e_calendar">
                     <input type="text" class="word_search">
                 </div>
+                </form>
 
 
                 <ul class="list">
@@ -92,6 +103,7 @@
                         <li id="comeback_area">복귀</li>
                         <li id="end_area">퇴근</li>
                         <li id="total_time_area">소계시간</li>
+                        <li>수정</li>
                     </ol>
                     <ol th:each="report_work : ${report_work_list}" id="list_ol">
                         <li th:text="${report_work.work_date}" id="date_area"></li>
