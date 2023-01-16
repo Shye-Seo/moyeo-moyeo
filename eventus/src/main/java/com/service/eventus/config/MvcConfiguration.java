@@ -29,11 +29,11 @@ public class MvcConfiguration implements WebMvcConfigurer {
 		registry.addInterceptor(new LoginCheckInterceptor()) //LoginCheckInterceptor 등록
 				.order(2)
 				.addPathPatterns("/**")
-				.excludePathPatterns("/", "/*Proc", "/idchk", "/find*" , "/join*", "/insertUser", "/idchk", "/updatePw", "/phoneCheck", "/imgs/**", "/js/**", "/css/**");
+				.excludePathPatterns("/", "/login", "/*Proc", "/idchk", "/find*" , "/join*", "/insertUser", "/idchk", "/updatePw", "/phoneCheck", "/imgs/**", "/js/**", "/css/**");
 		
 		registry.addInterceptor(new AuthorityCheckInterceptor()) //LoginCheckInterceptor 등록
-		.order(2)
-		.addPathPatterns("/manage_*", "/report_*")
-		.excludePathPatterns("/*_ForStaff","/*_Forstaff","/*_forstaff");
+		.order(3)
+		.addPathPatterns("/manage_*", "/report_*","/main","/eventDetail*")
+		.excludePathPatterns("/*_ForStaff","/*_Forstaff","/*_forstaff","/eventDetail_forStaff*");
 	}
 }

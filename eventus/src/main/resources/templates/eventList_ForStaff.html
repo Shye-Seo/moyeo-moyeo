@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="wrap">
-        <div th:replace="~{common/sideforstaff :: sidebar_manage ('main_ForStaff')}"></div>
+        <div th:replace="~{common/sideforstaff :: sidebar_manage ('schedule')}"></div>
 
         <!-- main -->
         <div class="content">
@@ -47,10 +47,10 @@
 						<ol th:each="event : ${event_list}" id="list_ol">
 							<!-- status 따라서 color 변경  -->
 							<div id="index_area_s">
-								<li th:text="${event.id}" th:if="${event.event_status == 0}" class="red"></li>
-							<li th:text="${event.id}" th:if="${event.event_status == 1}" class="black"></li>
-							<li th:text="${event.id}" th:if="${event.event_status == 2}" class="black"></li>
-							<li th:text="${event.id}" th:if="${event.event_status == 3}" class="gray"></li>
+                                <li th:text="${eventStat.size - eventStat.index}" th:if="${event.event_status == 0}" class="red"></li>
+                                <li th:text="${eventStat.size - eventStat.index}" th:if="${event.event_status == 1}" class="black"></li>
+                                <li th:text="${eventStat.size - eventStat.index}" th:if="${event.event_status == 2}" class="black"></li>
+                                <li th:text="${eventStat.size - eventStat.index}" th:if="${event.event_status == 3}" class="gray"></li>
 
 <!-- 								<li class="eventlist"></li> -->
 							</div>

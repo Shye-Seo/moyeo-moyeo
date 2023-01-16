@@ -67,7 +67,7 @@ public interface EventDao {
 			+ "ON A.staff_id=B.staff_id and A.event_id = B.event_id) c where u.id = c.staff_id and s.staff_id = c.staff_id and u.id = s.staff_id and e.id = c.event_id and e.id = s.event_id and e.id = #{event_id}")
 	List<MemberVo> application_complete_list(int event_id); // 지원현황 지원자 리스트(모집완료) - 지원자 정보(이름, 나이, 휴대폰번호)
 	
-	@Select("select (length(staff_career_eventName) - length(replace(staff_career_eventName, ',', ''))) + 1 as count from staff_resume r inner join staff_application s where s.resume_id = r.id and s.staff_id = #{staff_id} and s.event_id = #{event_id}")
+	@Select("select if(staff_career_eventName = \"\", 0, (length(staff_career_eventName) - length(replace(staff_career_eventName, ',', ''))) + 1) as count from staff_resume r inner join staff_application s where s.resume_id = r.id and s.staff_id = #{staff_id} and s.event_id = #{event_id}")
 	int staff_career(int staff_id, int event_id); // 지원현황 지원자 리스트(모집중) - 행사경력 count
 
 	@Select("select staff_address from staff_resume r inner join staff_application s where s.resume_id = r.id and  s.staff_id = #{staff_id} and s.event_id = #{event_id}")

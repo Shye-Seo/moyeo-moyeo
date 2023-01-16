@@ -696,6 +696,9 @@ public class EventController {
 	@RequestMapping({"/profile_download"})
 	@ResponseBody
 	public ResponseEntity<byte[]> profile_download(@RequestParam String filename) throws IOException {
+		if(filename.isEmpty() || filename.length()==0 || filename==null) {
+			return null;
+		}
 		return s3Service.getObject_profile(filename);
 	}
 	
