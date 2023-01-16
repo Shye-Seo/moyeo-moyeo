@@ -1,5 +1,7 @@
 package com.service.eventus.config;
 
+import java.io.PrintWriter;
+
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +23,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor{
 			System.out.println("[미인증 사용자 요청]");
 			
 			//로그인으로 redirect
-			response.sendRedirect("/");
+			//response.sendRedirect("/");
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('로그인 후 이용가능합니다.'); location.href='/login';</script>");
+			out.flush();
 			return false;
 		}
 		
