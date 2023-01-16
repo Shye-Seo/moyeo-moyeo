@@ -144,7 +144,6 @@ function resume_act(thisId){
 }
 
 function resume_download(thisId){
-//	 var resume_file = window.open('/resume_file', '_blank');
 	 let userName = thisId;
 	 let element = document.getElementById('resume_content');
      let opt = {
@@ -162,13 +161,6 @@ function resume_download(thisId){
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
      };
      html2pdf().from(element).set(opt).save();
-     
-     // 5초 뒤에 location.href로 이동
-     alert("다운로드 후 자동으로 페이지 이동됩니다.\n확인 버튼 클릭 후, 조금만 기다려주세요!");
-
-//     setTimeout(function() {
-//     	resume_file.close();
-//     }, 3000);
 }
 // applicant end
 
