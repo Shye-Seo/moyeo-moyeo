@@ -690,6 +690,13 @@ public class EventController {
 		return s3Service.getObject_event(filename);
 	}
 	
+	//이력서 프로필 이미지
+	@RequestMapping({"/profile_download"})
+	@ResponseBody
+	public ResponseEntity<byte[]> profile_download(@RequestParam String filename) throws IOException {
+		return s3Service.getObject_profile(filename);
+	}
+	
 	//이력서 모달창
 	@ResponseBody
 	@RequestMapping(value="/get_resume_file", method=RequestMethod.GET)

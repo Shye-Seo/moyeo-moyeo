@@ -29,10 +29,6 @@
 					<img src="imgs/material-view-list.svg">
 					<p>행사현황</p>
 				</div>
-				<!-- <div class="detail2" onclick="location.href='manage_event_register'">
-					<img src="imgs/pen_gray.svg">
-					<p>행사등록</p>
-				</div> -->
 			</div>
 			<div class="area">
 				<h2>행사 정보</h2>
@@ -51,6 +47,7 @@
 		<div class="con_wrap">
 
 			<div id="application_con" class="modal_con" th:if="${isResume != 0}">
+				<div class="app_modal_close" onclick="$('#modal_wrap').hide();"></div>
 				<p id="modal_title" th:text="${event.event_title}"></p>
 				<div class="line"></div>
 				<p>지원부분</p>

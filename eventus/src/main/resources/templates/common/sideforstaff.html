@@ -88,7 +88,7 @@
                     <img th:src="@{'https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/' +${session.myProfile}}" alt="my_profile" onerror="this.src='/imgs/no_profile.png';">
                 </div>
                 <p><b >[[${session.user_name}]] 님</b></p>
-                <button type="button"> <img src="/imgs/logout-power.svg" alt="logout"> 로그아웃</button>
+                <button type="button" onclick="location.href='/LogoutProc'"> <img src="/imgs/logout-power.svg" alt="logout"> 로그아웃</button>
             </div>
 
         </div>
