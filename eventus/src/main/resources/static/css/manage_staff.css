@@ -133,6 +133,7 @@ body {
 
 .detail_bar img {
     width:14px;
+    height:14px;
 }
 
 .detail_bar p {
@@ -149,11 +150,6 @@ body {
 /* 	border-bottom: 3px solid #5B8FD2; */
 /* 	width: fit-content; */
 /* } */
-
-.detail_bar img {
-	width: 14px;
-	height: 13px;
-}
 
 .detail_bar input {
 	position: relative;

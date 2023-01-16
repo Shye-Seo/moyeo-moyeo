@@ -100,8 +100,8 @@ public class EventController {
 	    	 //현재날짜에 따라 event_status set
 	    	 if(compare_deadline > 0 && check == 0) { //event_event_deadline > today, event_status:0, event_check:0 (모집중)
 //	    	  	   eventService.setEventStatus(vo.getId(), 0);
-	    	 }else if(compare > 0 && check == 1) { //event_startDate > today, event_status:9, event_check:1 (모집완료+진행전) -> 확정버튼 누를 때, status set
-//		    	   eventService.setEventStatus(vo.getId(), 9);
+	    	 }else if((compare > 0 && check == 1) || (compare > 0 && compare_deadline <= 0)) { //event_startDate > today, event_status:9, event_check:1 (모집완료+진행전) -> 확정버튼 누를 때, status set
+		    	   eventService.setEventStatus(vo.getId(), 1);
 		     }else if(compare <= 0 && compare_end >= 0 && check == 1) { //event_startDate < today < event_endDate, event_status:1, event_check:1 (모집완료+진행중)
 		    	   eventService.setEventStatus(vo.getId(), 2);
 	    	 }else if(compare_end < 0) { //event_endDate < today, event_status:2 (진행완료)
