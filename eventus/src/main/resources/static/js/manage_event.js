@@ -145,7 +145,7 @@ function resume_act(thisId){
 }
 
 function resume_download(thisId){
-	 
+//	 var resume_file = window.open('/resume_file', '_blank');
 	 let userName = thisId;
 	 let element = document.getElementById('resume_content');
      let opt = {

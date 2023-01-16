@@ -25,7 +25,7 @@
 				</div>
 			</div>
 			<div class="detail_bar">
-				<div class="detail1 this_bar" onclick="location.href='manage_event'">
+				<div class="detail1 this_bar" onclick="location.href='eventList_ForStaff'">
 					<img src="imgs/material-view-list.svg">
 					<p>행사현황</p>
 				</div>
@@ -39,7 +39,7 @@
 				<span th:replace="~{manage_eventDetail :: event_detail}"></span>
 					
 				<div class="btn_wrap">
-					<button type="button" onclick="location.href='manage_event'">목록으로</button>
+					<button type="button" onclick="location.href='eventList_ForStaff'">목록으로</button>
 					<button type="button" th:if = "${event.event_status == 0}" onclick="$('#modal_wrap').show();">지원하기</button>
 					<button type="button" th:if = "${event.event_status != 0}" class="unwork">지원하기</button>
 				</div>
