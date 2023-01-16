@@ -111,8 +111,10 @@ public class EventController {
 	    	 if(vo.getEvent_status() == 0) {
 	    		 vo.setApplication_count(eventService.application_count(vo.getId()));
 	    	 }else if(vo.getEvent_status() == 1) {
-	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
+	    		 vo.setApplication_count(eventService.application_count(vo.getId()));
 	    	 }else if(vo.getEvent_status() == 2) {
+	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
+	    	 }else if(vo.getEvent_status() == 3) {
 	    		 vo.setStaff_count(eventService.staff_count(vo.getId()));
 	    	 }
 	    	 vo.setBooth_count(eventService.booth_count(vo.getId()));
