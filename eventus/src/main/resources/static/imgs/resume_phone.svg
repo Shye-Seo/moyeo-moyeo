@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+  <g id="그룹_2500" data-name="그룹 2500" transform="translate(15546 16021)">
+    <rect id="사각형_7617" data-name="사각형 7617" width="18" height="18" transform="translate(-15546 -16021)" fill="rgba(255,255,255,0)"/>
+    <g id="Icon_feather-smartphone" data-name="Icon feather-smartphone" transform="translate(-15543.053 -16020.264)">
+      <path id="패스_9121" data-name="패스 9121" d="M8.21,1.5h7.367a2.213,2.213,0,0,1,2.21,2.21V15.5a2.213,2.213,0,0,1-2.21,2.21H8.21A2.213,2.213,0,0,1,6,15.5V3.71A2.213,2.213,0,0,1,8.21,1.5Zm7.367,14.734a.738.738,0,0,0,.737-.737V3.71a.738.738,0,0,0-.737-.737H8.21a.738.738,0,0,0-.737.737V15.5a.738.738,0,0,0,.737.737Z" transform="translate(-6 -1.5)"/>
+      <circle id="타원_86" data-name="타원 86" cx="0.943" cy="0.943" r="0.943" transform="translate(5.186 11.316)"/>
+    </g>
+  </g>
+</svg>
