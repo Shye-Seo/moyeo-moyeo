@@ -21,6 +21,11 @@ body{
     font-family: 'pretendard';
 }
 
+button{
+	border:none;
+	background:none;
+}
+
 /* main */
 .content{
     position:relative;
@@ -149,17 +154,19 @@ body{
 }
 
 .word_search {
-    width: 42%;
+    width: 40%;
     height: 40px;
     /* UI Properties */
     background: #FAFAFA 0% 0% no-repeat padding-box;
     border: 0.5px solid #999999;
     border-radius: 3px;
     opacity: 1;
+    padding-left: 15px;
 }
 
 .list {
     margin-top:20px;
+    min-height: 518px;
 }
 
 .list #top_ol {
@@ -819,4 +826,44 @@ body{
 .resume_career_info .resume_table_career .table_row li:nth-child(4){
 	width: 10%;
 	text-align: right;
+}
+
+.pagewrap{
+	display: flex;
+	position: absolute;
+	right: 40px;
+	margin-top: 30px;
+}
+
+.pagewrap li{
+	margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+/*     border: 1px solid #DDDDDD; */
+}
+
+.pagewrap #page_icon{
+	border: 1px solid #DDDDDD;
+}
+
+.pagewrap li a{
+	line-height: 30px;
+	color: #999999;
+}
+
+.pagewrap img{
+	width: 10px;
+	height: 10px;
+}
+
+.page-link{
+	display:block;
+}
+
+.icon_right{
+	padding-right:10px;
+}
+.icon_left{
+	padding-left:10px;
 }

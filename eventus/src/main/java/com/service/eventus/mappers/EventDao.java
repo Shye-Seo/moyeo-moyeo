@@ -160,4 +160,17 @@ public interface EventDao {
 
 	@Update("update event set event_status = #{i} where id = #{event_id}")
 	boolean setEventStatus(int event_id, int i); // 행사상태 set
+
+	/*--------- 페이징 및 검색 ---------*/
+	@Select("select count(*) from event")
+	int findAllCnt();
+
+	@Select("select * from event order by event_status asc, id desc limit #{startIndex}, #{pageSize}")
+	List<EventVo> findListPaging(int startIndex, int pageSize);
+
+	@Select("select * from event where event_title like concat('%','${searchKeyword}','%') order by event_status asc, id desc limit #{startIndex}, #{pageSize}")
+	List<EventVo> event_searchList(String searchKeyword, int startIndex, int pageSize);
+
+	@Select("select count(*) from event where event_title like concat('%','${searchKeyword}','%')")
+	int searchCnt(String searchKeyword);
 }

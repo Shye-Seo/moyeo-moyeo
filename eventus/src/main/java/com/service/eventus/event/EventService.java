@@ -13,7 +13,7 @@ public class EventService {
 
 	@Autowired
 	private EventDao eventDao;
-	 
+	
 	// 행사현황 리스트
 	public List<EventVo> event_list() throws Exception {
 		return eventDao.event_list();
@@ -213,5 +213,21 @@ public class EventService {
 	// 행사상태 set
 	public boolean setEventStatus(int event_id, int i) throws Exception {
 		return eventDao.setEventStatus(event_id, i);
+	}
+
+	public int findAllCnt() {
+		return eventDao.findAllCnt();
+	}
+
+	public List<EventVo> findListPaging(int startIndex, int pageSize) {
+		return eventDao.findListPaging(startIndex, pageSize);
+	}
+
+	public List<EventVo> event_searchList(String searchKeyword, int startIndex, int pageSize) {
+		return eventDao.event_searchList(searchKeyword, startIndex, pageSize);
+	}
+
+	public int searchCnt(String searchKeyword) {
+		return eventDao.searchCnt(searchKeyword);
 	}	
 }

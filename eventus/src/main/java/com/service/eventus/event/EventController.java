@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.aws.AwsS3Service;
+import com.service.eventus.master.PagingVo;
 import com.service.eventus.member.MemberVo;
 import com.service.eventus.resume.ResumeService;
 import com.service.eventus.resume.ResumeVo;
@@ -54,14 +55,14 @@ public class EventController {
 	List<EventVo> event_list;
 	
 	@GetMapping(value="/manage_event")
-	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
-		 // 오늘 날짜
-         LocalDate now = LocalDate.now();
-         Calendar time = Calendar.getInstance();
-         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
-         String nowTime = format.format(time.getTime());
+	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model, @RequestParam(defaultValue = "1") int page, String searchKeyword) throws Exception{
+		// 오늘 날짜
+      LocalDate now = LocalDate.now();
+      Calendar time = Calendar.getInstance();
+      SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+      String nowTime = format.format(time.getTime());
 		 
-         event_list = eventService.event_list();
+      event_list = eventService.event_list();
 		 
 	     for(EventVo vo : event_list) {
 	    	 String startdate = vo.getEvent_startDate();
@@ -119,7 +120,34 @@ public class EventController {
 	    	 }
 	    	 vo.setBooth_count(eventService.booth_count(vo.getId()));
 	     }
-	     model.addAttribute("event_list", event_list);
+	     
+		// 총 게시물 수 
+	    int totalListCnt = eventService.findAllCnt();
+
+	    // 생성인자로  총 게시물 수, 현재 페이지를 전달
+	    PagingVo pagination = new PagingVo(totalListCnt, page);
+
+	    // DB select start index
+	    int startIndex = pagination.getStartIndex();
+	    // 페이지 당 보여지는 게시글의 최대 개수
+	    int pageSize = pagination.getPageSize();
+
+	    List<EventVo> event_list_paging = eventService.findListPaging(startIndex, pageSize);
+	    
+	    if(searchKeyword == null) {
+	    	event_list_paging = eventService.findListPaging(startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    }else {
+	    	totalListCnt = eventService.searchCnt(searchKeyword);
+	    	pagination = new PagingVo(totalListCnt, page);
+	    	startIndex = pagination.getStartIndex();
+	    	pageSize = pagination.getPageSize();
+	    	event_list_paging = eventService.event_searchList(searchKeyword, startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    	model.addAttribute("searchKeyword", searchKeyword);
+	    }
+
+		 model.addAttribute("event_list", event_list_paging);
 	     return "manage_event";
 	}
 	
