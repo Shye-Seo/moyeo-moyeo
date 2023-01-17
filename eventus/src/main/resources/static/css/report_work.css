@@ -97,8 +97,9 @@ body {
 	height: auto;
 }
 
-.page-header{
-	width: 100%; max-width: 1440px;
+.page-header {
+	width: 100%;
+	max-width: 1440px;
 	height: 120px;
 	line-height: 120px;
 	display: flex;
@@ -112,8 +113,9 @@ body {
 	color: #333;
 }
 
-.excel_download{
-	width: 250px; height: 50px;
+.excel_download {
+	width: 250px;
+	height: 50px;
 	background-color: #ffffff;
 	box-shadow: 0px 0px 10px #0000000D;
 	border-radius: 50px;
@@ -148,7 +150,7 @@ body {
 	cursor: pointer;
 	font-size: 16px;
 	font-weight: 500;
-	padding-left:5px;
+	padding-left: 5px;
 }
 
 .area {
@@ -196,7 +198,7 @@ body {
 .list {
 	margin: auto;
 	margin-top: 1%;
-	width: 91%;
+	width: 95%;
 	padding-bottom: 50px;
 }
 
@@ -215,16 +217,16 @@ ol li {
 }
 
 .list ol li:nth-child(1) {
-	margin-left: 4%;
+	margin-left: 3%;
 }
 
 #date_area {
-	width: 8%;
+	width: 7%;
 	text-align: center;
 }
 
 #event_area {
-	width: 12%;
+	width: 10%;
 	text-align: center;
 	white-space: nowrap;
 	overflow: hidden;
@@ -233,13 +235,13 @@ ol li {
 }
 
 #name_area {
-	width: 5%;
+	width: 4%;
 	text-align: center;
 	color: #5b8fd2;
 }
 
 #contact_area {
-	width: 10%;
+	width: 8%;
 	text-align: center;
 	color: #5b8fd2;
 }
@@ -253,6 +255,22 @@ ol li {
 	color: #dd5067;
 }
 
+#new_update {
+	width: 4%;
+}
+
+#update_btn, #close_btn, #close_btn {
+	border: none;
+	background-color:transparent;
+	cursor:pointer;
+}
+.time_update {
+	display:none;
+}
+
+.time_update input{
+	width:3%;
+}
 #date_area_staff {
 	width: 15%;
 	text-align: center;
@@ -262,4 +280,19 @@ ol li {
 	#end_area_staff {
 	width: 15%;
 	text-align: center;
+}
+
+.btns_div {
+	display:flex;
+}
+.pen_btn {
+/* 	width:50%; */
+}
+#check_btn, #close_btn {
+/* 	width:50%; */
+	display:none;
+}
+
+.input_wrap {
+display:none;	
 }
