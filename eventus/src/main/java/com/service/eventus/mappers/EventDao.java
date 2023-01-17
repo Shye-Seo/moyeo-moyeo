@@ -1,6 +1,7 @@
 package com.service.eventus.mappers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -85,10 +86,19 @@ public interface EventDao {
 	@Select("select staff_id from staff_application where event_id = #{event_id} and staff_result = 1")
 	List<Integer> selectStatusPasser (int event_id); // 지원현황 임시 합불합 중 합격상태 조회
 	
-	@Insert("<script>insert into staff_passer (event_id, staff_id) value "
-			+ "<foreach collection=\"passer_list\" item=\"staff_id\" separator=\",\" >"
-			+ "(#{event_id},#{staff_id})</foreach></script>")
-	boolean insertPasser(int event_id ,List passer_list); //합격자 확정 등록
+//	@Insert("<script>insert into staff_passer (event_id, staff_id) value "
+//			+ "<foreach collection=\"passer_list\" item=\"staff_id\" separator=\",\" >"
+//			+ "(#{event_id},#{staff_id})</foreach></script>")
+//	boolean insertPasser(int event_id ,List passer_list); //합격자 확정 등록(리스트형식
+	
+	@Insert("insert into staff_passer (event_id, staff_id) value (#{event_id}, #{staff_id})")
+	boolean insertOnePasser(int event_id ,int staff_id); //합격자 확정 등록
+	
+	@Select("SELECT e.event_title, a.staff_position, u.user_name, u.user_phone FROM staff_application a join user u , event e where a.staff_id= u.id and e.id = a.event_id and a.staff_id = #{staff_id} and a.event_id = #{event_id};")
+	Map passerInfo(int event_id, int staff_id); //합격자 정보 조회
+	
+	@Select("SELECT count(*) FROM staff_passer where event_id = #{event_id}")
+	int countPasser(int event_id); //합격자 수 조회
 	
 	@Update("update event set event_status = #{status} where id = #{event_id}")
 	public boolean update_event_status(int status, int event_id); //이벤트 상태 변경

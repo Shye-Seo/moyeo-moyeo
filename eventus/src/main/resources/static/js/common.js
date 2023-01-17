@@ -63,9 +63,16 @@ function chkDate(in_birth){
     return `${births[0]}.${births[1]}.${births[2]}`;
 }
 
+let flag = 0;
 //textarea 글 작성시 자동 크기조정 
-//조정할 textarea에 onkeydown="resize(this)" 넣기
-function resize(obj) {
-    obj.style.height = '1px';
-    obj.style.height = (15 + obj.scrollHeight) + 'px';
+//조정할 textarea에 onkeydown="resize(font_size, min_size,this)" 넣기
+function resize(font_size, min_size, obj) {
+    resizeHeight = ((font_size*flag) + obj.scrollHeight);
+    if(resizeHeight>(min_size + font_size)){
+        obj.style.height = '1px';
+        obj.style.height =((font_size*flag) + obj.scrollHeight)+ 'px';
+    }else{
+        obj.style.height = '100px';
+        flag=1
+    }
 }
