@@ -376,25 +376,27 @@ public class EventController {
 	
 	
 	
-	//지원자 임시 합불합 상태 저장
+	//지원자 임시 합불합 상태 저장 + 지원자 합불합 등록
 	@ResponseBody
 	@RequestMapping(value="/set_application_status", method=RequestMethod.POST)
 	public String set_application_status(@RequestParam("status") int status, @RequestParam("staff_id") int staff_id, @RequestParam("event_id") int event_id) throws Exception {
 		
 		eventService.updateStaffResult(status, event_id, staff_id);
+		
+		if(status == 1) {
+			Map info = eventService.insertOnePasser(event_id, staff_id);
+			//문자보내기
+			eventService.sendSms_forPasser((String)info.get("user_phone"), (String)info.get("user_name"), (String)info.get("event_title"), (String)info.get("staff_position"));
+		}
 		return staff_id+"";
 	}
 	
-	//지원자 합불합 등록
+	//모집종료
 	@ResponseBody
 	@RequestMapping(value="/set_application", method=RequestMethod.POST)
-	public String set_application (@RequestParam("event_id") int event_id) throws Exception{
+	public int set_application (@RequestParam("event_id") int event_id) throws Exception{
 		
-		List<Integer> passer_list = eventService.selectStatusPasser(event_id);
-		
-		eventService.insertPasser(event_id, passer_list);
-		
-		return passer_list.size()+"";
+		return eventService.end_hire(event_id);
 	}
 	
 	

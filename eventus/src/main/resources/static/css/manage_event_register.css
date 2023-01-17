@@ -182,6 +182,7 @@
     border: 0.5px solid #DDDDDD;
     box-sizing: border-box;
     font-size: 15px;
+    overflow: hidden;
 }
 .area5 input[name="event_deadline"]{
     width: 60%;

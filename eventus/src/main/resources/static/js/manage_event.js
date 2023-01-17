@@ -72,6 +72,14 @@ function modal_act_application(thisId,chk){
 	});
 }
 
+function pass_staff(status,staff_id,obj){
+    const userName = $(".profile_img").attr('alt');
+    if (confirm(`${userName}님을 합격시키시겠습니까?\n합격 시 지원자에게 합격 문자가 전송되며, 취소할 수 없습니다.`) == true){
+        app_btn(status,staff_id,obj)
+    } else {
+        return false;
+    }
+}
 
 function app_btn(status,staff_id,obj){
 
@@ -83,7 +91,7 @@ function app_btn(status,staff_id,obj){
             staff_id:staff_id,
             event_id:now_event_id_for_app
         },
-		success: function(data){
+		success: function(data){confirm
 
             if(status === 0){// 완료,취소 > 대기중
                 $(obj).remove();
@@ -93,7 +101,7 @@ function app_btn(status,staff_id,obj){
             }else if(status === 1){ //대기중 > 완료
                 $(obj).remove();
                 $(`#app_list_${staff_id} .trash_icon`).hide();
-                $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="complete_btn actbtn" onclick="app_btn(0,${staff_id},this)">완료</button>`);
+                $(`#app_list_${staff_id} .btn_div`).prepend(`<button type="button" class="complete_btn actbtn">완료</button>`);
             }else if(status === 2){ //쓰레기통 > 취소
                 $(obj).hide();
                 $(`#app_list_${staff_id}`).addClass('list_rejected');
@@ -107,7 +115,8 @@ function app_btn(status,staff_id,obj){
 
 //모집완료
 function application_send(){
-    $.ajax({
+    if (confirm(`모집을 종료하시겠습니까?\n모집종료 후 지원자들은 행사에 지원 할 수 없습니다.`) == true){
+        $.ajax({
 		url : "/set_application",
 		type : 'post',
 		data : {
@@ -117,6 +126,8 @@ function application_send(){
             alert(`총 ${data}명의 지원자를 합격처리 하셨습니다.`);
             window.location.href = "/manage_event";
         }});
+    }
+    
 }
 
 
