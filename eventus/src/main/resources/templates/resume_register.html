@@ -78,7 +78,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="profile_wrap">
+                        <div class="profile_wrap pointer_none">
                             <label for="profile_img_file" id="insert_profile_bt"></label>
                             <div th:if="${resume_id != 0}" id="update_profile_bt">수정하기</div>
                             <img id="preview" class="in_profile" th:src="@{'https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/' +${profile}}" alt="profile_img" onerror="this.src='/imgs/profile_box.png'; this.classList.remove('in_profile');">

@@ -227,6 +227,10 @@
     box-sizing: border-box;
 }
 
+.pointer_none{
+    pointer-events: none;
+}
+
 .profile_wrap .in_profile{
     width: 100px;
     height: 120px;
