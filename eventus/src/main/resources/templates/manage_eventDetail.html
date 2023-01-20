@@ -10,6 +10,11 @@
     <script src="/js/common.js"></script>
 	<link rel="stylesheet" href="/css/reset.css">
 	<link rel="stylesheet" href="/css/event_Detail.css">
+	<script>
+		$(function(){
+			$('#event_content').height( this.scrollHeight );
+		})
+	</script>
 </head>
 <body>
 	
@@ -37,56 +42,59 @@
 			</div>
 
 			<div class="area">
-				<h2>행사 정보</h2>
 				<span th:fragment="event_detail">
 					<div class="event_table event_table_L">
-						<ul>
-							<li class="t_title">행사명</li>
-							<!-- <li id="event_title" th:text="'['+${event.event_venue}+'] '+${event.event_title}" th:if="${event.event_venue ne null}"></li>
-							<li id="event_title" th:text="${event.event_title}" th:unless="${event.event_venue ne null}"></li> -->
-							<li id="event_title" th:text="${event.event_title}" ></li>
-						</ul>
-						<ul>
-							<li class="t_title">행사기간</li>
-							<li id="event_date">[(${event.event_startDate})] ~ [(${event.event_endDate})]</li>
-						</ul>
-						<ul>
-							<li class="t_title">접수마감</li>
-							<li id="event_date">[(${event.event_deadline})]</li>
-						</ul>
-						<ul>
-							<li class="t_title">행사장소</li>
-							<li id="event_date">[(${event.event_venue})]</li>
-						</ul>
-						<ul class="position_tab">
-							<li class="t_title">모집부문</li>
-							<li>
-								<div class="position_table">
-									<div th:each="positions : ${positionMap}" class="position">
-										<div th:text="${positions.key}"></div>
-										<div th:text="${positions.value}+'명'"></div>
+						<p class="con_title">행사 정보</p>
+						<div class="event_con event_info">
+							<div class="event_line">
+								<div class="li_title">행사명:</div>
+								<div id="event_title" th:text="${event.event_title}"></div>
+							</div>
+							<div class="event_line">
+								<div class="li_title">행사기간:</div>
+								<div>[(${event.event_startDate})] ~ [(${event.event_endDate})]</div>
+							</div>
+							<div class="event_line">
+								<div class="li_title">접수마감:</div>
+								<div>[(${event.event_deadline})]</div>
+							</div>
+							<div class="event_line">
+								<div class="li_title">행사장소:</div>
+								<div>[(${event.event_venue})]</div>
+							</div>
+							<div class="event_line">
+								<div class="li_title">첨부파일:</div>
+								<div class="event_file">
+									<div th:each="FileList : ${eventFileList}" >
+										<a th:href="@{event_download(filename=${FileList.file_name})}">
+											<div><img src="imgs/event_download.svg" alt="event_download"></div>
+											<div th:text="${FileList.file_name}"></div>
+										</a>
 									</div>
 								</div>
-							</li>
-						</ul>
-
-						<ul class="file_tab">
-							<li class="t_title">첨부파일</li>
-							<li id="event_file">
-								<div th:each="FileList : ${eventFileList}" >
-									<a th:href="@{event_download(filename=${FileList.file_name})}">
-										<div><img src="imgs/event_download.svg" alt="event_download"></div>
-										<div th:text="${FileList.file_name}"></div>
-									</a>
-								</div>
-							</li>
-						</ul>
+							</div>
+						</div>
+						<p class="con_title">담당업무</p>
+						<div class="event_con event_position">
+							<div class="table_line">
+								<div>모집부분</div>
+								<div>모집인원</div>
+								<div>임금</div>
+								<div>근무시간</div>
+							</div>
+							<div class="table_line">
+								<div>운영요원</div>
+								<div>00명</div>
+								<div>10,000원/시간</div>
+								<div>09:00 ~ 18:00</div>
+							</div>
+						</div>
 					</div>
 					<div class="event_table event_table_R">
-						<ul>
-							<li class="t_title">행사 상세내용</li>
-							<textarea name="event_content" id="event_content" cols="30" rows="10" spellcheck="false" disabled>[(${event.event_content})]</textarea>
-						</ul>
+						<p class="con_title">행사 상세내용</p>
+						<div class="event_con event_content">
+							<textarea name="event_content" id="event_content" spellcheck="false" disabled>[(${event.event_content})]</textarea>
+						</div>
 					</div>
 				</span>
 
