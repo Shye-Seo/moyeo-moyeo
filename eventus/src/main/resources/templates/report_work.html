@@ -116,12 +116,11 @@
                         <li th:text="${report_work.work_comeback_time}" id="comeback_area" class="list_comeback_area"></li>
                         <li th:text="${report_work.work_end_time}" id="end_area" class="list_end_area"></li>
                         
-<!--                         <div class="input_wrap"> -->
+<!--                         근무기록 시간 수정 -->
                         <li class="time_update"><input th:value="${report_work.work_start_time}" id="start_area_input" /></li>
                         <li class="time_update"><input th:value="${report_work.work_outing_time}" id="outing_area_input" /></li>
                         <li class="time_update"><input th:value="${report_work.work_comeback_time}" id="comeback_area_input" /></li>
                         <li class="time_update"><input th:value="${report_work.work_end_time}" id="end_area_input" /></li>
-<!--                         </div> -->
                         
                         <li th:text="${report_work.work_total_time}" id="total_time_area"></li>
                         <li id="new_update" th:class="${report_work.id}"> 
@@ -130,7 +129,7 @@
                         <img src="imgs/pen.svg" class="pen_btn" >
                       </div>
                         </button>
-                         <button id="close_btn" th:value="${report_work.id}"><img src="imgs/Icon_material_check.svg" class="check_btn" ></button>
+                         <button id="check_btn" th:value="${report_work.id}"><img src="imgs/Icon_material_check.svg" class="check_btn" ></button>
                          <button id="close_btn" th:value="${report_work.id}"><img src="imgs/Icon_material_close.svg" class="close_btn" ></button></li>
 <!--                         <input type="button" th:value="${report_work.id}" id="list_id"/> -->
                     </ol>

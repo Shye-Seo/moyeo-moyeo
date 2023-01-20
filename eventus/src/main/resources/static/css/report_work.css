@@ -259,7 +259,7 @@ ol li {
 	width: 4%;
 }
 
-#update_btn, #close_btn, #close_btn {
+#update_btn, #check_btn, #close_btn {
 	border: none;
 	background-color:transparent;
 	cursor:pointer;
