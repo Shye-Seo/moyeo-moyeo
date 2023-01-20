@@ -648,7 +648,7 @@ public class EventController {
 	
 	//사용자 페이지_행사목록
 	@GetMapping(value="/eventList_ForStaff")
-	public String event_list_staff(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
+	public String event_list_staff(@ModelAttribute EventVo eventVo, ModelMap model, @RequestParam(defaultValue = "1") int page, String searchKeyword) throws Exception{
 		// 오늘 날짜
         LocalDate now = LocalDate.now();
         Calendar time = Calendar.getInstance();
@@ -703,9 +703,35 @@ public class EventController {
 	    	 }
 	     }
 	     
+	  // 총 게시물 수 
+		    int totalListCnt = eventService.findAllCnt();
+
+		    // 생성인자로  총 게시물 수, 현재 페이지를 전달
+		    PagingVo pagination = new PagingVo(totalListCnt, page);
+
+		    // DB select start index
+		    int startIndex = pagination.getStartIndex();
+		    // 페이지 당 보여지는 게시글의 최대 개수
+		    int pageSize = pagination.getPageSize();
+
+		    List<EventVo> event_list_paging = eventService.findListPaging(startIndex, pageSize);
+		    
+		    if(searchKeyword == null) {
+		    	event_list_paging = eventService.findListPaging(startIndex, pageSize);
+		    	model.addAttribute("pagination", pagination);
+		    }else {
+		    	totalListCnt = eventService.searchCnt(searchKeyword);
+		    	pagination = new PagingVo(totalListCnt, page);
+		    	startIndex = pagination.getStartIndex();
+		    	pageSize = pagination.getPageSize();
+		    	event_list_paging = eventService.event_searchList(searchKeyword, startIndex, pageSize);
+		    	model.addAttribute("pagination", pagination);
+		    	model.addAttribute("searchKeyword", searchKeyword);
+		    }
+	     
 	     int event_num = event_list.size();
 	     model.addAttribute("event_num", event_num);
-	     model.addAttribute("event_list", event_list);
+	     model.addAttribute("event_list", event_list_paging);
 	     return "eventList_ForStaff";
 	}
 	
