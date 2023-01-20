@@ -214,3 +214,11 @@ body {background:#F8F9FB;}
 .xdsoft_datetimepicker .xdsoft_calendar td, .xdsoft_datetimepicker .xdsoft_calendar th{
     background: #fff;
 }
+
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+    width: 45%;
+    font-family: 'pretendard';
+    font-weight: 800;
+    border: 0;
+    outline: none;
+}

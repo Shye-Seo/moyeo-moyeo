@@ -26,6 +26,18 @@
                 if(!result) return false;
                 submitDate('/eventAdd');
             })
+            $('#update_bt').click(function(){
+                let result = true;
+                $('.required').each(function(){
+                    if($(this).val() == ""){
+                        $(this).focus();
+                        result = false;
+                        return false;
+                    }
+                })
+                if(!result) return false;
+                submitDate('/eventUpdate');
+            })
             
         });
 
@@ -41,6 +53,8 @@
             //dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
             showMonthAfterYear: true,
             //yearSuffix: '년'
+            changeMonth: true,
+            changeYear: true
         });
         
         // 포지션 추가

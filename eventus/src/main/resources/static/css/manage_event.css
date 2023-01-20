@@ -648,14 +648,14 @@ body{
     display: flex;
     align-items: center;
     margin-right: 100px;
+    width: 130px;
+    height: 130px;
+    border-radius: 65px;
+    overflow: hidden;
 }
 
 .profile_top #resume_img_file #resume_profile_img {
     width: 130px;
-    height: 130px;
-    margin: 0 auto;
-    object-fit: cover;
-    border-radius: 65px;
 }
 
 .profile_top #resume_info_area{
