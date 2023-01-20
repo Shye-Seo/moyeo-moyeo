@@ -123,7 +123,7 @@
                             	<a class="page-link" id="page_icon" th:href="@{manage_event?page=1}"><img src="imgs/page_start_btn.svg"></a>
                             </li>
                             <li class="icon_right">
-                            	<a class="page-link" id="page_icon" th:href="@{manage_event?page={page} (page = ${pagination.prevBlock})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link" id="page_icon" th:href="@{manage_event?page={page} (page = ${#numbers.formatInteger(param.page,2)})}"><img src="imgs/page_back_btn.svg"></a>
                             </li>
                              <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
 							    <li class="page-item" 
@@ -133,7 +133,7 @@
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link" id="page_icon" th:href="@{manage_event?page={page} (page = ${pagination.nextBlock})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link" id="page_icon" th:href="@{manage_event?page={page} (page = ${#numbers.formatInteger(param.page,2)})}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
                             	<a class="page-link" id="page_icon" th:href="@{manage_event?page={page} (page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
@@ -141,7 +141,7 @@
                         </ul>
                     </div>
                     
-                    <!-- 검색했을 때  -->
+                    <!-- 검색했을 때  --> <!-- 현재페이지를 파라미터로 이용해서 한칸씩 이동하기  -->
                     <div th:if="${searchKeyword != null}" class="notnull">
                         <ul class="pagewrap">
                             <li>
@@ -165,6 +165,12 @@
                             </li>
                         </ul>
                     </div>
+                    
+                    <script th:inline="javascript">
+                    	var searchWord = /*[[${searchKeyword}]]*/
+                    	var page = /*[[${nowpage}]]*/
+                    	console.log(page);
+                    </script>
                 </div>
             </div>
         </div>

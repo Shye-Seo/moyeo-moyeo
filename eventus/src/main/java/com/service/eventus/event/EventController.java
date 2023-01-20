@@ -62,7 +62,34 @@ public class EventController {
       SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
       String nowTime = format.format(time.getTime());
 		 
-      event_list = eventService.event_list();
+   // 총 게시물 수 
+	    int totalListCnt = eventService.findAllCnt();
+
+	    // 생성인자로  총 게시물 수, 현재 페이지를 전달
+	    PagingVo pagination = new PagingVo(totalListCnt, page);
+
+	    // DB select start index
+	    int startIndex = pagination.getStartIndex();
+	    // 페이지 당 보여지는 게시글의 최대 개수
+	    int pageSize = pagination.getPageSize();
+
+	    event_list = eventService.findListPaging(startIndex, pageSize);
+	    
+	    if(searchKeyword == null) {
+	    	event_list = eventService.findListPaging(startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    }else {
+	    	totalListCnt = eventService.searchCnt(searchKeyword);
+	    	pagination = new PagingVo(totalListCnt, page);
+	    	startIndex = pagination.getStartIndex();
+	    	pageSize = pagination.getPageSize();
+	    	event_list = eventService.event_searchList(searchKeyword, startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    	model.addAttribute("searchKeyword", searchKeyword);
+	    }
+	    System.out.println("nowpage : "+page);
+	    
+//      event_list = eventService.event_list();
 		 
 	     for(EventVo vo : event_list) {
 	    	 String startdate = vo.getEvent_startDate();
@@ -121,33 +148,34 @@ public class EventController {
 	    	 vo.setBooth_count(eventService.booth_count(vo.getId()));
 	     }
 	     
-		// 총 게시물 수 
-	    int totalListCnt = eventService.findAllCnt();
-
-	    // 생성인자로  총 게시물 수, 현재 페이지를 전달
-	    PagingVo pagination = new PagingVo(totalListCnt, page);
-
-	    // DB select start index
-	    int startIndex = pagination.getStartIndex();
-	    // 페이지 당 보여지는 게시글의 최대 개수
-	    int pageSize = pagination.getPageSize();
-
-	    List<EventVo> event_list_paging = eventService.findListPaging(startIndex, pageSize);
-	    
-	    if(searchKeyword == null) {
-	    	event_list_paging = eventService.findListPaging(startIndex, pageSize);
-	    	model.addAttribute("pagination", pagination);
-	    }else {
-	    	totalListCnt = eventService.searchCnt(searchKeyword);
-	    	pagination = new PagingVo(totalListCnt, page);
-	    	startIndex = pagination.getStartIndex();
-	    	pageSize = pagination.getPageSize();
-	    	event_list_paging = eventService.event_searchList(searchKeyword, startIndex, pageSize);
-	    	model.addAttribute("pagination", pagination);
-	    	model.addAttribute("searchKeyword", searchKeyword);
-	    }
-
-		 model.addAttribute("event_list", event_list_paging);
+//		// 총 게시물 수 
+//	    int totalListCnt = eventService.findAllCnt();
+//
+//	    // 생성인자로  총 게시물 수, 현재 페이지를 전달
+//	    PagingVo pagination = new PagingVo(totalListCnt, page);
+//
+//	    // DB select start index
+//	    int startIndex = pagination.getStartIndex();
+//	    // 페이지 당 보여지는 게시글의 최대 개수
+//	    int pageSize = pagination.getPageSize();
+//
+//	    List<EventVo> event_list_paging = eventService.findListPaging(startIndex, pageSize);
+//	    
+//	    if(searchKeyword == null) {
+//	    	event_list_paging = eventService.findListPaging(startIndex, pageSize);
+//	    	model.addAttribute("pagination", pagination);
+//	    }else {
+//	    	totalListCnt = eventService.searchCnt(searchKeyword);
+//	    	pagination = new PagingVo(totalListCnt, page);
+//	    	startIndex = pagination.getStartIndex();
+//	    	pageSize = pagination.getPageSize();
+//	    	event_list_paging = eventService.event_searchList(searchKeyword, startIndex, pageSize);
+//	    	model.addAttribute("pagination", pagination);
+//	    	model.addAttribute("searchKeyword", searchKeyword);
+//	    }
+//	    System.out.println("nowpage : "+page);
+		 model.addAttribute("event_list", event_list);
+		 model.addAttribute("nowpage", page);
 	     return "manage_event";
 	}
 	
@@ -654,8 +682,33 @@ public class EventController {
         Calendar time = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
         String nowTime = format.format(time.getTime());
-		 
-        List<EventVo> event_list = eventService.event_list();
+        
+     // 총 게시물 수 
+	    int totalListCnt = eventService.findAllCnt();
+
+	    // 생성인자로  총 게시물 수, 현재 페이지를 전달
+	    PagingVo pagination = new PagingVo(totalListCnt, page);
+
+	    // DB select start index
+	    int startIndex = pagination.getStartIndex();
+	    // 페이지 당 보여지는 게시글의 최대 개수
+	    int pageSize = pagination.getPageSize();
+
+	    event_list = eventService.findListPaging(startIndex, pageSize);
+	    
+	    if(searchKeyword == null) {
+	    	event_list = eventService.findListPaging(startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    }else {
+	    	totalListCnt = eventService.searchCnt(searchKeyword);
+	    	pagination = new PagingVo(totalListCnt, page);
+	    	startIndex = pagination.getStartIndex();
+	    	pageSize = pagination.getPageSize();
+	    	event_list = eventService.event_searchList(searchKeyword, startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    	model.addAttribute("searchKeyword", searchKeyword);
+	    }
+	    System.out.println("nowpage : "+page);
 		 
 	     for(EventVo vo : event_list) {
 	    	 String startdate = vo.getEvent_startDate();
@@ -693,45 +746,45 @@ public class EventController {
 	    	  
 	    	 //현재날짜에 따라 event_status set
 	    	 if(compare_deadline > 0 && check == 0) { //event_event_deadline > today, event_status:0, event_check:0 (모집중)
-//	    	  	   eventService.setEventStatus(vo.getId(), 0);
-	    	 }else if(compare > 0 && check == 1) { //event_startDate > today, event_status:9, event_check:1 (모집완료+진행전) -> 확정버튼 누를 때, status set
-//		    	   eventService.setEventStatus(vo.getId(), 9);
-		     }else if(compare <= 0 && compare_end >= 0 && check == 1) { //event_startDate < today < event_endDate, event_status:1, event_check:1 (모집완료+진행중)
+	    	  	   eventService.setEventStatus(vo.getId(), 0);
+	    	 }else if(compare > 0 && check == 1) { //event_startDate > today, event_status:1, event_check:1 (모집완료+진행전) -> 확정버튼 누를 때, status set
+		    	   eventService.setEventStatus(vo.getId(), 1);
+		     }else if(compare <= 0 && compare_end >= 0 && check == 1) { //event_startDate < today < event_endDate, event_status:2, event_check:1 (모집완료+진행중)
 		    	   eventService.setEventStatus(vo.getId(), 2);
-	    	 }else if(compare_end < 0) { //event_endDate < today, event_status:2 (진행완료)
+	    	 }else if(compare_end < 0) { //event_endDate < today, event_status:3 (진행완료)
 	    		   eventService.setEventStatus(vo.getId(), 3);
 	    	 }
 	     }
 	     
-	  // 총 게시물 수 
-		    int totalListCnt = eventService.findAllCnt();
-
-		    // 생성인자로  총 게시물 수, 현재 페이지를 전달
-		    PagingVo pagination = new PagingVo(totalListCnt, page);
-
-		    // DB select start index
-		    int startIndex = pagination.getStartIndex();
-		    // 페이지 당 보여지는 게시글의 최대 개수
-		    int pageSize = pagination.getPageSize();
-
-		    List<EventVo> event_list_paging = eventService.findListPaging(startIndex, pageSize);
-		    
-		    if(searchKeyword == null) {
-		    	event_list_paging = eventService.findListPaging(startIndex, pageSize);
-		    	model.addAttribute("pagination", pagination);
-		    }else {
-		    	totalListCnt = eventService.searchCnt(searchKeyword);
-		    	pagination = new PagingVo(totalListCnt, page);
-		    	startIndex = pagination.getStartIndex();
-		    	pageSize = pagination.getPageSize();
-		    	event_list_paging = eventService.event_searchList(searchKeyword, startIndex, pageSize);
-		    	model.addAttribute("pagination", pagination);
-		    	model.addAttribute("searchKeyword", searchKeyword);
-		    }
+//	  // 총 게시물 수 
+//		    int totalListCnt = eventService.findAllCnt();
+//
+//		    // 생성인자로  총 게시물 수, 현재 페이지를 전달
+//		    PagingVo pagination = new PagingVo(totalListCnt, page);
+//
+//		    // DB select start index
+//		    int startIndex = pagination.getStartIndex();
+//		    // 페이지 당 보여지는 게시글의 최대 개수
+//		    int pageSize = pagination.getPageSize();
+//
+//		    List<EventVo> event_list_paging = eventService.findListPaging(startIndex, pageSize);
+//		    
+//		    if(searchKeyword == null) {
+//		    	event_list_paging = eventService.findListPaging(startIndex, pageSize);
+//		    	model.addAttribute("pagination", pagination);
+//		    }else {
+//		    	totalListCnt = eventService.searchCnt(searchKeyword);
+//		    	pagination = new PagingVo(totalListCnt, page);
+//		    	startIndex = pagination.getStartIndex();
+//		    	pageSize = pagination.getPageSize();
+//		    	event_list_paging = eventService.event_searchList(searchKeyword, startIndex, pageSize);
+//		    	model.addAttribute("pagination", pagination);
+//		    	model.addAttribute("searchKeyword", searchKeyword);
+//		    }
 	     
 	     int event_num = event_list.size();
 	     model.addAttribute("event_num", event_num);
-	     model.addAttribute("event_list", event_list_paging);
+	     model.addAttribute("event_list", event_list);
 	     return "eventList_ForStaff";
 	}
 	
