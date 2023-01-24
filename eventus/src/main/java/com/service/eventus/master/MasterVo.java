@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MasterVo {
     private int id;
-    private String event_id;
+    private int event_id;
     private String event_title;
     private String event_startDate;
     private String event_endDate;
