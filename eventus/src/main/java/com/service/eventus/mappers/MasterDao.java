@@ -73,4 +73,8 @@ public interface MasterDao {
     // 근로계약서 등록되어 있는지 확인
     @Select("select count(*) from contract_file where event_id=#{event_id} and staff_id=#{staff_id}")
     int checkContractFile(MasterVo masterVo);
+
+    // 근로계약서 정보 가져오기
+    @Select("select * from contract_file where event_id=#{event_id} and staff_id=#{staff_id}")
+    MasterVo getContractInfo(MasterVo masterVo);
 }
