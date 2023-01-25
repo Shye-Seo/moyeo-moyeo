@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.12/jsrender.min.js"></script>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/main.css">
 </head>
@@ -37,7 +39,7 @@
                         <span>(주)포유커뮤니케이션즈</span>
                     </div>
                 </div>
-                <div class="area">
+                <!-- <div class="area">
                     <div class="area1">
                         <div class="area1_1"><p class="area_title">최근 행사</p></div>
                         <div class="area1_2"><p class="area_title">대기 중인 지원</p></div>
@@ -45,9 +47,151 @@
                     <div class="area2">
                         <p class="area_title">직원 근무 기록</p>
                     </div>
+                </div> -->
+                <div class="main_area">
+                    <div class="L_area">
+                        <div class="L_con1">
+                            <p class="area_title">최근 행사</p>
+                            <div class="event_btn">
+                                <button type="button" onclick="list_pre()"><</button>
+                                <button type="button" onclick="list_next()">></button>
+                            </div>
+                            <div class="event_box_wrap">
+                                <div class="event_box_in">
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat recruiting"></div>
+                                        <p>1홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat completed"></div>
+                                        <p>2홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat ongoing"></div>
+                                        <p>3홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat ongoing"></div>
+                                        <p>4홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat recruiting"></div>
+                                        <p>5홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat completed"></div>
+                                        <p>6홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat ongoing"></div>
+                                        <p>7홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat ongoing"></div>
+                                        <p>8홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat ongoing"></div>
+                                        <p>9홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                    <a href="#" class="event_box">
+                                        <div class="eventStat ongoing"></div>
+                                        <p>0홈/테이블데코페어(벡스코)</p>
+                                        <p>부산 벡스코</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="area1_2">
+                            <p class="area_title">대기 중인 지원</p>
+                            <div class="app_list">
+                                <div class="app_line">
+                                    <a class="app_title" href="#">부산 건축박람회&사인엑스포</a>
+                                    <div class="profile_wrap">
+                                        <div style="background-color: aqua;"></div>
+                                        <div style="background-color: brown;"></div>
+                                        <div style="background-color: aquamarine;"></div>
+                                        <div class="last_num">+5</div>
+                                    </div>
+                                    <div class="app_date">2022.08.01</div>
+                                </div>
+                                <div class="app_line">
+                                    <a class="app_title" href="#">부산 건축박람회&사인엑스포</a>
+                                    <div class="profile_wrap">
+                                        <div style="background-color: aqua;"></div>
+                                        <div style="background-color: brown;"></div>
+                                        <div style="background-color: aquamarine;"></div>
+                                        <div class="last_num">+5</div>
+                                    </div>
+                                    <div class="app_date">2022.08.01</div>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="R_area">
+                        <div class="area2">
+                            <p class="area_title">직원 근무 기록</p>
+                            <div class="staff_list">
+                                <div class="staff_date">
+                                    <p>2022.08.01 (수)</p>
+                                    <div></div>
+                                </div>
+                                <div class="staff_line">
+                                    <div class="profile_img" style="background-color: brown;"></div>
+                                    <div class="staff_info">
+                                        <p>김포유</p>
+                                        <p>부산 건축박람회&사인엑스포</p>
+                                    </div>
+                                    <div class="staff_time">08:00 AM</div>
+                                    <div class="staff_btn">출근</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+
+        // 최근행사 버튼
+        function list_next(){
+            let left_num = $('.event_box_in').position().left;
+            const box_count =  $(".event_box_in").children().length;
+            const inbox_width = box_count * 250 - 800;
+            if(left_num > -inbox_width){
+                left_num -= 750;
+                if(left_num < -inbox_width){
+                    left_num = -inbox_width
+                }
+            }else{
+                return false;
+            }
+            $('.event_box_in').css('left',left_num+'px');
+        }
+        function list_pre(){
+            let left_num = $('.event_box_in').position().left;
+            if(left_num < 0){
+                left_num += 750;
+                if(left_num > 0){
+                    left_num = 0;
+                }
+            }else{
+                return false;
+            }
+            $('.event_box_in').css('left',left_num+'px');
+        }
+    </script>
 </body>
 </html>
