@@ -52,7 +52,7 @@
 				<div class="select_box">
 					<input type="text" name="staff_position" readonly onclick="on_select()">
 					<div class="select_con">
-						<div th:each="positions : ${positionMap}" class="select" onclick="click_position(this)">[[${positions.key}]]</div>
+						<div th:each="position : ${positions}" class="select" onclick="click_position(this)">[[${position}]]</div>
 					</div>
 				</div>
 				<button type="button" th:onclick="'submit_application('+${event.id}+','+${staff_id}+','+${isResume}+')'">지원완료</button>
@@ -74,6 +74,10 @@
 
 	<script>
 		$(function(){
+			$('#event_content').height( $('#event_content').prop('scrollHeight') );
+			$('.position_pay').each(function() {
+				costText(this);
+			});
 
 			let select_position = $('.select:first-child').text();
 

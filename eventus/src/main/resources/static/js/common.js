@@ -76,3 +76,12 @@ function resize(font_size, min_size, obj) {
         flag=1
     }
 }
+
+//금액 콤마찍기
+//costText(적용할 클래스,아이디);
+function costText(obj){
+	cost = obj.innerText;
+	let costtext = cost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	console.log(costtext)
+	obj.innerHTML =costtext;
+}

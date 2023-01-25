@@ -12,7 +12,10 @@
 	<link rel="stylesheet" href="/css/event_Detail.css">
 	<script>
 		$(function(){
-			$('#event_content').height( this.scrollHeight );
+			$('#event_content').height( $('#event_content').prop('scrollHeight') );
+			$('.position_pay').each(function() {
+				costText(this);
+			});
 		})
 	</script>
 </head>
@@ -82,11 +85,11 @@
 								<div>임금</div>
 								<div>근무시간</div>
 							</div>
-							<div class="table_line">
-								<div>운영요원</div>
-								<div>00명</div>
-								<div>10,000원/시간</div>
-								<div>09:00 ~ 18:00</div>
+							<div class="table_line" th:each="position : ${positions}">
+								<div th:text="${position}">포지션명</div>
+								<div th:text="${positions_conut[positionStat.index]} + '명'">00명</div>
+								<div class="position_pay" th:text="${position_pay[positionStat.index]} + '원/시간'">0원/시간</div>
+								<div th:text="${position_startTime[positionStat.index]} + ' ~ ' + ${position_endTime[positionStat.index]}" >00:00 ~ 00:00</div>
 							</div>
 						</div>
 					</div>

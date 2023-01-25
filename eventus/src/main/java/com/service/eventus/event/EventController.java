@@ -165,17 +165,17 @@ public class EventController {
 		
 		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
 		
-		// update랑 똑같이 고치기
-//		포지션별로 잘라 저장
-		Map<String, String> positionMap = new HashMap<>();
-		
+		String[] positions =null;
+		String[] positions_conut =null;
+		String[] position_startTime =null;
+		String[] position_endTime =null;
+		String[] position_pay =null;
 		if(detailVo.getEvent_position() != null) {
-			String[] position = detailVo.getEvent_position().split(",");
-			String[] position_conut = detailVo.getEvent_position_count().split(",");
-			
-			for(int i=0; i<position.length;i++) {
-				positionMap.put(position[i], position_conut[i]);
-			}
+			positions = detailVo.getEvent_position().split(",");
+			positions_conut = detailVo.getEvent_position_count().split(",");
+			position_startTime = detailVo.getEvent_position_startTime().split(",");
+			position_endTime = detailVo.getEvent_position_endTime().split(",");
+			position_pay = detailVo.getEvent_position_pay().split(",");
 		}
 		
 		//세션의 아이디를 받아온다
@@ -191,7 +191,11 @@ public class EventController {
 		}
 		
 		mav.addObject("event", detailVo);
-		mav.addObject("positionMap", positionMap);
+		mav.addObject("positions", positions);
+		mav.addObject("positions_conut", positions_conut);
+		mav.addObject("position_startTime", position_startTime);
+		mav.addObject("position_endTime", position_endTime);
+		mav.addObject("position_pay", position_pay);
 		mav.addObject("eventFileList", eventFileList);
 		mav.addObject("isResume",isResume);
 		mav.addObject("staff_id",memberVo.getId());
@@ -207,20 +211,25 @@ public class EventController {
 		
 		List<EventFileVo> eventFileList = eventService.viewEventFileDetail(event_id);
 		
-		// update랑 똑같이 고치기
-//		포지션별로 잘라 저장
-		Map<String, String> positionMap = new HashMap<>();
+		String[] positions =null;
+		String[] positions_conut =null;
+		String[] position_startTime =null;
+		String[] position_endTime =null;
+		String[] position_pay =null;
 		if(detailVo.getEvent_position() != null) {
-			String[] position = detailVo.getEvent_position().split(",");
-			String[] position_conut = detailVo.getEvent_position_count().split(",");
-			
-			for(int i=0; i<position.length;i++) {
-				positionMap.put(position[i], position_conut[i]);
-			}
+			positions = detailVo.getEvent_position().split(",");
+			positions_conut = detailVo.getEvent_position_count().split(",");
+			position_startTime = detailVo.getEvent_position_startTime().split(",");
+			position_endTime = detailVo.getEvent_position_endTime().split(",");
+			position_pay = detailVo.getEvent_position_pay().split(",");
 		}
 		
 		mav.addObject("event", detailVo);
-		mav.addObject("positionMap", positionMap);
+		mav.addObject("positions", positions);
+		mav.addObject("positions_conut", positions_conut);
+		mav.addObject("position_startTime", position_startTime);
+		mav.addObject("position_endTime", position_endTime);
+		mav.addObject("position_pay", position_pay);
 		mav.addObject("eventFileList", eventFileList);
 		mav.setViewName("manage_eventDetail");
 		return mav;
