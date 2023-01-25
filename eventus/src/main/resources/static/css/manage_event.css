@@ -724,7 +724,7 @@ button{
 	width: 10%;
 	text-align: right;
 }
-.null{
+.null, .notnull{
     width: 100%;
     height: 80px;
     position: relative;
