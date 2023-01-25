@@ -176,7 +176,6 @@
     </style>
     <script>
         $(function() {
-            // thymeleaf masterVo의 event_id 값을 event_id 변수에 저장
             var event_id = [[${masterVo.event_id}]];
             var staff_id = [[${masterVo.staff_id}]];
 
@@ -277,8 +276,6 @@
                     location.href = '/manage_career_forstaff';
                 }, 3000);
             });
-
-
         })
 
     </script>

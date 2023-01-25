@@ -69,6 +69,6 @@ public interface MasterDao {
     int checkContractFile(MasterVo masterVo);
 
     // 근로계약서 정보 가져오기
-    @Select("select * from contract_file where event_id=#{event_id} and staff_id=#{staff_id}")
+    @Select("select * from contract_file cf inner join event e on cf.event_id=e.id where event_id=#{event_id} and staff_id=#{staff_id}")
     MasterVo getContractInfo(MasterVo masterVo);
 }
