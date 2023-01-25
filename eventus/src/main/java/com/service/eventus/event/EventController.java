@@ -794,6 +794,7 @@ public class EventController {
 	     int event_num = event_list.size();
 	     model.addAttribute("event_num", event_num);
 	     model.addAttribute("event_list", event_list);
+	     model.addAttribute("nowpage", page);
 	     return "eventList_ForStaff";
 	}
 	
