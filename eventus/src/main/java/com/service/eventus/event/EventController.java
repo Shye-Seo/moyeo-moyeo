@@ -62,7 +62,7 @@ public class EventController {
       SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
       String nowTime = format.format(time.getTime());
 		 
-   // 총 게시물 수 
+      	// 총 게시물 수 
 	    int totalListCnt = eventService.findAllCnt();
 
 	    // 생성인자로  총 게시물 수, 현재 페이지를 전달
