@@ -71,7 +71,7 @@
 									<div th:each="FileList : ${eventFileList}" >
 										<a th:href="@{event_download(filename=${FileList.file_name})}">
 											<div><img src="imgs/event_download.svg" alt="event_download"></div>
-											<div th:text="${FileList.file_name}"></div>
+											<div class="file_name" th:text="${FileList.file_name}"></div>
 										</a>
 									</div>
 								</div>
