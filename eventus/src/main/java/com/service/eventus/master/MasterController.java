@@ -183,10 +183,19 @@ public class MasterController {
     @RequestMapping("/contract_check")
     public ModelAndView contract_check(@ModelAttribute MasterVo masterVo) {
         ModelAndView mav = new ModelAndView();
+        System.out.println(masterVo.getStaff_id());
         // 세션에 저장되어 있는 유저 아이디의 id값을 masterVo에 저장
-        masterVo.setStaff_id(18);
-        mav.setViewName("/contract_file");
-        mav.addObject("masterVo", masterVo);
+        if(masterVo.getStaff_id() == 0) {
+            masterVo.setStaff_id(18);
+            mav.addObject("masterVo", masterVo);
+            mav.setViewName("/contract_file");
+        }
+        else {
+            MasterVo masterVo1 = masterService.getContractInfo(masterVo);
+            mav.addObject("masterVo", masterVo1);
+            mav.setViewName("/contract_file_forview");
+        }
+
         return mav;
     }
 

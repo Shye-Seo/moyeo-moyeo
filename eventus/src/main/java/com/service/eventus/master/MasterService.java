@@ -64,4 +64,6 @@ public class MasterService {
     public int getEventId(String event_title) {
         return masterDao.getEventId(event_title);
     }
+
+    public MasterVo getContractInfo(MasterVo masterVo) { return masterDao.getContractInfo(masterVo); }
 }

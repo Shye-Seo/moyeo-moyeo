@@ -52,4 +52,9 @@ public class MainController {
 	public String contract_file() {
 		return "contract_file";
 	}
+
+	@GetMapping(value="/contract_file_fowview")
+	public String contract_file_fowview() {
+		return "contract_file_forview";
+	}
 }

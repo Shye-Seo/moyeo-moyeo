@@ -51,7 +51,7 @@
                             <li id="gender_area">성별</li>
                             <li id="birth_area">생년월일</li>
                             <li id="contact_area">연락처</li>
-                            <li id="join_date">가입일자</li>
+                            <li id="join_date">이력서</li>
                             <li>근로계약서</li>
                         </ol>
                         <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
@@ -64,13 +64,20 @@
                             <li th:text="${staff.user_phone}" id="contact_area"></li>
                             <li th:text="${staff.user_date_join}" id="join_date"></li>
                             <li th:if="${staff.contract_check == 0}">미등록</li>
-                            <li th:if="${staff.contract_check == 1}" id="last_arrange">보기</li>
+                            <li th:if="${staff.contract_check == 1}" id="last_arrange">
+                                <a th:href="@{/contract_check(event_id=${staff.event_id}, staff_id=${staff.staff_id})}">보기</a>
+                            </li>
                         </ol>
                     </ul>
                     
                     <!-- 페이징 처리 -->
                     <div class="paging_area">
                         <ul>
+                            <!-- 처음 -->
+                            <li id="prev">
+                                <a th:href="@{/manage_staff(page=1)}">&lt;&lt;</a>
+                            </li>
+
                             <!-- 이전 -->
                             <li th:if="${page <= 1}" id="prev">
                                 <a th:href="@{/manage_staff(page=1)}">&lt;</a>
@@ -95,11 +102,197 @@
                             <li th:if="${page >= totalPage}" id="next">
                                 <a th:href="@{/manage_staff(page=${totalPage})}">&gt;</a>
                             </li>
+
+                            <!-- 마지막 -->
+                            <li id="next">
+                                <a th:href="@{/manage_staff(page=${totalPage})}">&gt;&gt;</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <form th:insert="~{contract_file :: modal}" action="contract_check" id="contract" class="contract"></form>
+    <style>
+        .contrac_area .contract_add {
+            width: 72px;
+            height: 36px;
+
+            font: normal normal 600 14px/17px Pretendard;
+            color:#333333;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 3px 10px #99999929;
+            border: 0.5px solid #999999;
+            border-radius: 20px;
+            cursor:pointer;
+        }
+
+        input[type=image] {
+            float: right;
+            margin: 2%;
+        }
+
+        h2 {
+            margin: 5%;
+            text-align: center;
+        }
+
+        pre {
+            width: 68%;
+            height:410px;
+            margin: auto;
+            margin-bottom: 5%;
+            white-space: pre-wrap;
+        }
+
+        table {
+            width: 68%;
+            margin: auto;
+            margin-bottom: 2%;
+            border: 2px solid #999999;
+            border-collapse: collapse;
+            border-left:0;
+            border-right: 0;
+        }
+
+        td {
+            border-left: 2px solid #999999;
+            border-bottom: 2px solid #999999;
+        }
+
+        .table_title {
+            background: #E8E8E8 0% 0% no-repeat padding-box;
+        }
+
+        .security_content {
+            width: 80%;
+            margin: auto;
+            margin-top: 10%;
+            margin-bottom: 15%;
+            text-align:center;
+            line-height: 25px;
+        }
+
+        .security_content p {
+
+        }
+
+        .contrac_date_area {
+            width: 80%;
+            margin: auto;
+            margin-bottom: 4%;
+            text-align: center;
+        }
+
+        .contrac_date_area2 {
+            width: 80%;
+            margin: auto;
+            margin-bottom: 5%;
+            text-align: center;
+        }
+
+        #reset_btn, #back_btn {
+            width: 100px;
+            height: 40px;
+
+            font: normal normal 600 16px/19px Pretendard;
+            color: #333333;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 0.5px solid #999999;
+            border-shadow: 0px 3px 10px #99999929;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #next_btn, #confirm_btn, #save_btn {
+            width: 100px;
+            height: 40px;
+
+            font: normal normal 600 16px/19px Pretendard;
+            color: #5D91D0;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 0.5px solid #5D91D0;
+            border-shadow: 0px 3px 10px #5D91D0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #next_btn, #confirm_btn {
+            margin-left: 10%;
+        }
+
+
+        .year {
+            margin-right: 1%;
+        }
+
+        .month, .day {
+            margin-left: 3%;
+            margin-right: 1%;
+        }
+
+        #year1, #year2 {
+            width: 105px;
+            height: 30px;
+
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 0.5px solid #999999;
+            border-radius: 5px;
+        }
+
+        #month1, #month2, #day1, #day2 {
+            width: 43px;
+            height: 30px;
+
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 0.5px solid #999999;
+            border-radius: 5px;
+        }
+
+        .info_area {
+            width:68%;
+            margin:auto;
+            display:flex;
+            justify-content: space-around;
+        }
+
+        .staff_sign {
+            margin-left:23%;
+        }
+
+        .staff_sign2 {
+            text-align: center;
+        }
+
+        #user_name2, #user_name4 {
+            width: 240px;
+            height:30px;
+
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            border: 0.5px solid #999999;
+            border-radius: 5px;
+        }
+
+        .business_name {
+            width: 68%;
+            margin-top: 13.8%;
+            margin-left: 15%;
+        }
+
+        .button_collection {
+            width: 300px;
+            margin: auto;
+            margin-top: 3%;
+        }
+
+        #user_name1, #user_phone1, #staff_address1, #identification_number1, #user_name3, #identification_number2, #staff_address2 {
+            border:0;
+        }
+
+    </style>
+    <script>
+
+    </script>
 </body>
 </html>
