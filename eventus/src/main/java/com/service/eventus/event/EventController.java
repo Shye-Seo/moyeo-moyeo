@@ -61,6 +61,30 @@ public class EventController {
       Calendar time = Calendar.getInstance();
       SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
       String nowTime = format.format(time.getTime());
+      
+      Calendar cal = Calendar.getInstance();
+      int year_ = now.getYear();
+      int month_ = now.getMonthValue();
+      int day_ = now.getDayOfMonth();
+      cal.set(year_, month_-1, day_);
+      
+      String firstDate = "";
+      String lastDate = "";
+      
+      if((cal.get(Calendar.MONTH)+1) < 10) {
+    	  firstDate = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.getMinimum(Calendar.DAY_OF_MONTH);
+      }else {
+    	  firstDate = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.getMinimum(Calendar.DAY_OF_MONTH);
+      }
+      
+      if((cal.get(Calendar.MONTH)+1) < 10) {
+    	  lastDate = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+      }else {
+    	  lastDate = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+      }
+      
+      model.addAttribute("firstDate", firstDate);
+      model.addAttribute("lastDate", lastDate);
 		 
       	// 총 게시물 수 
 	    int totalListCnt = eventService.findAllCnt();
