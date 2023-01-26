@@ -148,32 +148,6 @@ public class EventController {
 	    	 vo.setBooth_count(eventService.booth_count(vo.getId()));
 	     }
 	     
-//		// 총 게시물 수 
-//	    int totalListCnt = eventService.findAllCnt();
-//
-//	    // 생성인자로  총 게시물 수, 현재 페이지를 전달
-//	    PagingVo pagination = new PagingVo(totalListCnt, page);
-//
-//	    // DB select start index
-//	    int startIndex = pagination.getStartIndex();
-//	    // 페이지 당 보여지는 게시글의 최대 개수
-//	    int pageSize = pagination.getPageSize();
-//
-//	    List<EventVo> event_list_paging = eventService.findListPaging(startIndex, pageSize);
-//	    
-//	    if(searchKeyword == null) {
-//	    	event_list_paging = eventService.findListPaging(startIndex, pageSize);
-//	    	model.addAttribute("pagination", pagination);
-//	    }else {
-//	    	totalListCnt = eventService.searchCnt(searchKeyword);
-//	    	pagination = new PagingVo(totalListCnt, page);
-//	    	startIndex = pagination.getStartIndex();
-//	    	pageSize = pagination.getPageSize();
-//	    	event_list_paging = eventService.event_searchList(searchKeyword, startIndex, pageSize);
-//	    	model.addAttribute("pagination", pagination);
-//	    	model.addAttribute("searchKeyword", searchKeyword);
-//	    }
-//	    System.out.println("nowpage : "+page);
 		 model.addAttribute("event_list", event_list);
 		 model.addAttribute("nowpage", page);
 	     return "manage_event";
@@ -692,7 +666,7 @@ public class EventController {
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
         String nowTime = format.format(time.getTime());
         
-     // 총 게시물 수 
+        // 총 게시물 수 
 	    int totalListCnt = eventService.findAllCnt();
 
 	    // 생성인자로  총 게시물 수, 현재 페이지를 전달
@@ -764,32 +738,6 @@ public class EventController {
 	    		   eventService.setEventStatus(vo.getId(), 3);
 	    	 }
 	     }
-	     
-//	  // 총 게시물 수 
-//		    int totalListCnt = eventService.findAllCnt();
-//
-//		    // 생성인자로  총 게시물 수, 현재 페이지를 전달
-//		    PagingVo pagination = new PagingVo(totalListCnt, page);
-//
-//		    // DB select start index
-//		    int startIndex = pagination.getStartIndex();
-//		    // 페이지 당 보여지는 게시글의 최대 개수
-//		    int pageSize = pagination.getPageSize();
-//
-//		    List<EventVo> event_list_paging = eventService.findListPaging(startIndex, pageSize);
-//		    
-//		    if(searchKeyword == null) {
-//		    	event_list_paging = eventService.findListPaging(startIndex, pageSize);
-//		    	model.addAttribute("pagination", pagination);
-//		    }else {
-//		    	totalListCnt = eventService.searchCnt(searchKeyword);
-//		    	pagination = new PagingVo(totalListCnt, page);
-//		    	startIndex = pagination.getStartIndex();
-//		    	pageSize = pagination.getPageSize();
-//		    	event_list_paging = eventService.event_searchList(searchKeyword, startIndex, pageSize);
-//		    	model.addAttribute("pagination", pagination);
-//		    	model.addAttribute("searchKeyword", searchKeyword);
-//		    }
 	     
 	     int event_num = event_list.size();
 	     model.addAttribute("event_num", event_num);
