@@ -41,13 +41,6 @@ public class MainController {
 	}
 
 
-	// 사용자 페이지 링크
-	@GetMapping(value="/main_ForStaff")
-	public String Main_ForStaff() {
-		return "main_ForStaff";
-	}
-
-
 	@GetMapping(value="/contract_file")
 	public String contract_file() {
 		return "contract_file";

@@ -48,11 +48,11 @@ public class MemberController {
             // main으로 이동
             if(memberVo2.getUser_authority()==0) {
                 // 관리자 페이지 이동
-                mav.setViewName("/main");
+                mav.setViewName("redirect:/main");
             }
             else {
                 // 스태프 페이지 이동
-                mav.setViewName("/main_ForStaff");
+                mav.setViewName("redirect:/main_ForStaff");
             }
         }
         else {

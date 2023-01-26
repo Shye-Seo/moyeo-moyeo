@@ -902,27 +902,32 @@ public class EventController {
 		Row row;
 		Cell cell;
 		int rowNo = 0;
+		int i=1;
 
 		// 헤더 정보 구성
 		row = sheet.createRow(rowNo++);
 		cell = row.createCell(0);
-		cell.setCellValue("행사명");
+		cell.setCellValue("No");
 		cell = row.createCell(1);
-		cell.setCellValue("행사기간");
+		cell.setCellValue("행사명");
 		cell = row.createCell(2);
-		cell.setCellValue("진행현황");
+		cell.setCellValue("행사기간");
 		cell = row.createCell(3);
-		cell.setCellValue("지원현황");
+		cell.setCellValue("진행현황");
 		cell = row.createCell(4);
+		cell.setCellValue("지원현황");
+		cell = row.createCell(5);
 		cell.setCellValue("부스현황");
 
 		for(EventVo event : event_list) {
 			row = sheet.createRow(rowNo++);
 			cell = row.createCell(0);
-			cell.setCellValue(event.getEvent_title());
+			cell.setCellValue(i++);
 			cell = row.createCell(1);
-			cell.setCellValue(event.getEvent_startDate() + " - " + event.getEvent_endDate());
+			cell.setCellValue(event.getEvent_title());
 			cell = row.createCell(2);
+			cell.setCellValue(event.getEvent_startDate() + " - " + event.getEvent_endDate());
+			cell = row.createCell(3);
 			if(event.getEvent_status()==0 || event.getEvent_status()==1) {
 
 				if(event.getEvent_status()==0) {
@@ -931,7 +936,7 @@ public class EventController {
 				else {
 					cell.setCellValue("모집완료");
 				}
-				cell = row.createCell(3);
+				cell = row.createCell(4);
 				cell.setCellValue(event.getApplication_count());
 			}
 			else if(event.getEvent_status()==2 || event.getEvent_status()==3) {
@@ -941,10 +946,10 @@ public class EventController {
 				} else {
 					cell.setCellValue("진행완료");
 				}
-				cell = row.createCell(3);
+				cell = row.createCell(4);
 				cell.setCellValue(event.getStaff_count());
 			}
-			cell = row.createCell(4);
+			cell = row.createCell(5);
 			cell.setCellValue(event.getBooth_count());
 		}
 
