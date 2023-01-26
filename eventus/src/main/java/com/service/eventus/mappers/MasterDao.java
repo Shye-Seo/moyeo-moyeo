@@ -41,7 +41,9 @@ public interface MasterDao {
     int update_work_total_time(String total_time, int staff_id);
 
     //근무기록 리스트(스태프)
-    @Select("select * from staff_work_record where staff_id = ${staff_id}")
+    @Select("select event_title, work_date, work_start_time, work_end_time, work_outing_time, work_comeback_time, work_total_time from eventusdb.staff_work_record swr\n" +
+            "inner join eventusdb.event e on swr.event_id=e.id\n" +
+            "where staff_id=#{staff_id}")
     List<MasterVo> report_work_list_Staff(int staff_id);
     
     //근무기록 시간 수정(관리자)
@@ -55,8 +57,6 @@ public interface MasterDao {
     @Select("select id from event where event_title = #{event_title}")
     int getEventId(String event_title);
 
-    @Insert("")
-    int addContract(MasterVo masterVo);
 
     // 이벤트 정보 가져오기
     @Select("select * from event where id=#{id}")

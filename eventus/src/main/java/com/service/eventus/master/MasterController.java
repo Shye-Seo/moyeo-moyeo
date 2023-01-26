@@ -34,6 +34,19 @@ public class MasterController {
     List<MasterVo> staff_list;
     List<MasterVo> report_work_list;
 
+    @RequestMapping("/main_ForStaff")
+    public ModelAndView main_ForStaff(HttpSession session) throws Exception {
+        ModelAndView mav = new ModelAndView();
+        String user_id = (String) session.getAttribute("user_id");
+        int staff_id = masterService.getUserId(user_id);
+
+        // 근무기록 리스트
+        List<MasterVo> report_work_list = masterService.report_work_list_Staff(staff_id);
+        mav.addObject("report_work_list", report_work_list);
+
+        return mav;
+    }
+
     @RequestMapping("/manage_staff")
     public ModelAndView manage_staff(@RequestParam(value="page", required=false, defaultValue = "1") int page, HttpSession session) throws Exception {
         // 세션에 저장된 user_id를 가져온다.
@@ -186,10 +199,12 @@ public class MasterController {
         ModelAndView mav = new ModelAndView();
         if(masterVo.getYear() != 0) {
             // 세션에 저장되어 있는 유저 아이디의 id값을 masterVo에 저장
-            System.out.println("이거 실행?");
+
             String user_id = (String) session.getAttribute("user_id");
             int id = masterService.getUserId(user_id);
             masterVo.setStaff_id(id);
+            // masterVo의 staff_address 띄어쓰기를 +로 바꾸어 저장
+            masterVo.setStaff_address(masterVo.getStaff_address().replace(" ", "+"));
             mav.addObject("masterVo", masterVo);
             mav.setViewName("/contract_file");
         }
@@ -334,40 +349,45 @@ public class MasterController {
         Row row;
         Cell cell;
         int rowNo = 0;
+        int i=1;
 
         // 헤더 정보 구성
         row = sheet.createRow(rowNo++);
         cell = row.createCell(0);
-        cell.setCellValue("행사명");
+        cell.setCellValue("No");
         cell = row.createCell(1);
-        cell.setCellValue("이름");
+        cell.setCellValue("행사명");
         cell = row.createCell(2);
-        cell.setCellValue("성별");
+        cell.setCellValue("이름");
         cell = row.createCell(3);
-        cell.setCellValue("생년월일");
+        cell.setCellValue("성별");
         cell = row.createCell(4);
-        cell.setCellValue("연락처");
+        cell.setCellValue("생년월일");
         cell = row.createCell(5);
-        cell.setCellValue("가입일자");
+        cell.setCellValue("연락처");
         cell = row.createCell(6);
+        cell.setCellValue("가입일자");
+        cell = row.createCell(7);
         cell.setCellValue("합격여부");
 
         // 데이터 부분 생성
         for(MasterVo staff : staff_list) {
             row = sheet.createRow(rowNo++);
             cell = row.createCell(0);
-            cell.setCellValue(staff.getEvent_title());
+            cell.setCellValue(i++);
             cell = row.createCell(1);
-            cell.setCellValue(staff.getUser_name());
+            cell.setCellValue(staff.getEvent_title());
             cell = row.createCell(2);
-            cell.setCellValue(staff.getUser_gender());
+            cell.setCellValue(staff.getUser_name());
             cell = row.createCell(3);
-            cell.setCellValue(staff.getUser_birth());
+            cell.setCellValue(staff.getUser_gender());
             cell = row.createCell(4);
-            cell.setCellValue(staff.getUser_phone());
+            cell.setCellValue(staff.getUser_birth());
             cell = row.createCell(5);
-            cell.setCellValue(staff.getUser_date_join());
+            cell.setCellValue(staff.getUser_phone());
             cell = row.createCell(6);
+            cell.setCellValue(staff.getUser_date_join());
+            cell = row.createCell(7);
 
             int pass_check = masterService.checkStaffPasser(staff);
             if(pass_check == 1) {
@@ -401,48 +421,53 @@ public class MasterController {
         Row row;
         Cell cell;
         int rowNo = 0;
+        int i=1;
 
         // 헤더 정보 구성
         row = sheet.createRow(rowNo++);
         cell = row.createCell(0);
-        cell.setCellValue("일자");
+        cell.setCellValue("No");
         cell = row.createCell(1);
-        cell.setCellValue("행사명");
+        cell.setCellValue("일자");
         cell = row.createCell(2);
-        cell.setCellValue("이름");
+        cell.setCellValue("행사명");
         cell = row.createCell(3);
-        cell.setCellValue("연락처");
+        cell.setCellValue("이름");
         cell = row.createCell(4);
-        cell.setCellValue("출근");
+        cell.setCellValue("연락처");
         cell = row.createCell(5);
-        cell.setCellValue("외출");
+        cell.setCellValue("출근");
         cell = row.createCell(6);
-        cell.setCellValue("복귀");
+        cell.setCellValue("외출");
         cell = row.createCell(7);
-        cell.setCellValue("퇴근");
+        cell.setCellValue("복귀");
         cell = row.createCell(8);
+        cell.setCellValue("퇴근");
+        cell = row.createCell(9);
         cell.setCellValue("소계시간");
 
         // 데이터 부분 생성
         for(MasterVo report_work : report_work_list) {
             row = sheet.createRow(rowNo++);
             cell = row.createCell(0);
-            cell.setCellValue(report_work.getWork_date());
+            cell.setCellValue(i++);
             cell = row.createCell(1);
-            cell.setCellValue(report_work.getEvent_title());
+            cell.setCellValue(report_work.getWork_date());
             cell = row.createCell(2);
-            cell.setCellValue(report_work.getUser_name());
+            cell.setCellValue(report_work.getEvent_title());
             cell = row.createCell(3);
-            cell.setCellValue(report_work.getUser_phone());
+            cell.setCellValue(report_work.getUser_name());
             cell = row.createCell(4);
-            cell.setCellValue(report_work.getWork_start_time());
+            cell.setCellValue(report_work.getUser_phone());
             cell = row.createCell(5);
-            cell.setCellValue(report_work.getWork_outing_time());
+            cell.setCellValue(report_work.getWork_start_time());
             cell = row.createCell(6);
-            cell.setCellValue(report_work.getWork_comeback_time());
+            cell.setCellValue(report_work.getWork_outing_time());
             cell = row.createCell(7);
-            cell.setCellValue(report_work.getWork_end_time());
+            cell.setCellValue(report_work.getWork_comeback_time());
             cell = row.createCell(8);
+            cell.setCellValue(report_work.getWork_end_time());
+            cell = row.createCell(9);
             cell.setCellValue(report_work.getWork_total_time());
         }
 
