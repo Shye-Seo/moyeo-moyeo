@@ -86,7 +86,8 @@
 						</ol>
                     </ul>    
                                 
-                    <!-- 페이징 처리(Unix 참조) -->
+                    <!-- 페이징 -->
+                    
                     <!-- 검색 안했을 때  -->
                     <div th:if="${searchKeyword == null}" class="null"> 
                         <ul class="pagewrap">
@@ -94,7 +95,8 @@
                             	<a class="page-link page_icon" th:href="@{eventList_ForStaff?page=1}"><img src="imgs/page_start_btn.svg"></a>
                             </li>
                             <li class="icon_right">
-                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?page={page} (page = ${pagination.prevBlock})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{eventList_ForStaff?page={page} (page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{eventList_ForStaff?page={page} (page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
                             </li>
                              <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
 							    <li class="page-item" 
@@ -104,7 +106,8 @@
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?page={page} (page = ${pagination.nextBlock})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{eventList_ForStaff?page={page} (page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{eventList_ForStaff?page={page} (page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
                             	<a class="page-link page_icon" th:href="@{eventList_ForStaff?page={page} (page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
@@ -119,7 +122,8 @@
                             	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page=1 (key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
                             </li>
                             <li class="icon_right">
-                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.prevBlock})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
                             </li>
                              <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
 							    <li class="page-item" 
@@ -130,13 +134,20 @@
                                 </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.nextBlock})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
                             	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
                             </li>
                         </ul>
                     </div>
+                    
+                    <script th:inline="javascript">
+                    	var searchWord = /*[[${searchKeyword}]]*/
+                    	var nowpage = /*[[${nowpage}]]*/
+                    	console.log(nowpage);
+                    </script>
                 </div>
             </div>
         </div>

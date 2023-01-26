@@ -9,27 +9,56 @@ button{
     padding-bottom: 40px;
 }
 .area .search_area {
-    width:40%;
-    padding-left:60%;
+    width:45%;
+    padding-left:55%;
 }
 
 #searchForm{
 	display: flex;
 }
 
-.calendar {
-    width: 45%;
-    height: 40px;
-    /* UI Properties */
-    background: #FAFAFA 0% 0% no-repeat padding-box;
+.date_search{
+	display:flex;
+	width:47%;
+	background: #FAFAFA 0% 0% no-repeat padding-box;
     border: 0.5px solid #999999;
     border-radius: 3px;
-    opacity: 1;
+}
+
+.date_search .calendar_start{
+	border:none;
+	background:none;
+	padding-left: 15px;
+    width: 30%;
+    font-size: 13px;
+}
+
+.date_search .calendar_end{
+	border:none;
+	background:none;
+    width: 30%;
+    font-size: 13px;
+    padding-left: 10px;
+}
+
+.date_search .date_div{
+	height: 40px;
+    line-height: 40px;
+    color: #666666;
+/*     width:5%; */
+}
+
+.date_search .calendar_button{
+/* 	width: 40px; */
+/*     height: 40px; */
+    text-align: center;
+    display: flex;
+    margin-left: 17%;
 }
 
 .text_search{
 	display:flex;
-	width:55%;
+	width:53%;
 	margin-left:25px;
 }
 
