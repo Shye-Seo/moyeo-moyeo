@@ -44,27 +44,27 @@
                     
 
                     <ul class="list">
-                        <ol>
-                            <li id="no_area">No</li>
-                            <li id="event_area">행사명</li>
-                            <li id="name_area">이름</li>
-                            <li id="gender_area">성별</li>
-                            <li id="birth_area">생년월일</li>
-                            <li id="contact_area">연락처</li>
-                            <li id="join_date">이력서</li>
+                        <ol class="top_ol">
+                            <li class="no_area">No</li>
+                            <li class="event_area">행사명</li>
+                            <li class="name_area">이름</li>
+                            <li class="gender_area">성별</li>
+                            <li class="birth_area">생년월일</li>
+                            <li class="contact_area">연락처</li>
+                            <li class="join_date">이력서</li>
                             <li>근로계약서</li>
                         </ol>
                         <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
                         <ol th:block th:each="staff : ${staff_list}">
-                            <li th:text="${staff.list_no}" id="no_area"></li>
-                            <li th:text="${staff.event_title}" id="event_area"></li>
-                            <li th:text="${staff.user_name}" id="name_area"></li>
-                            <li th:text="${staff.user_gender}" id="gender_area"></li>
-                            <li th:text="${staff.user_birth}" id="birth_area"></li>
-                            <li th:text="${staff.user_phone}" id="contact_area"></li>
-                            <li th:text="${staff.user_date_join}" id="join_date"></li>
+                            <li th:text="${staff.list_no}" class="no_area"></li>
+                            <li th:text="${staff.event_title}" class="event_area"></li>
+                            <li th:text="${staff.user_name}" class="name_area"></li>
+                            <li th:text="${staff.user_gender}" class="gender_area"></li>
+                            <li th:text="${staff.user_birth}" class="birth_area"></li>
+                            <li th:text="${staff.user_phone}" class="contact_area"></li>
+                            <li th:text="${staff.user_date_join}" class="join_date"></li>
                             <li th:if="${staff.contract_check == 0}">미등록</li>
-                            <li th:if="${staff.contract_check == 1}" id="last_arrange">
+                            <li th:if="${staff.contract_check == 1}" class="last_arrange">
                                 <a th:href="@{/contract_check(event_id=${staff.event_id}, staff_id=${staff.staff_id})}">보기</a>
                             </li>
                         </ol>

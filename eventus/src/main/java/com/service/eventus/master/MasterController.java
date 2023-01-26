@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.service.eventus.event.ApplicationVo;
 import com.service.eventus.event.EventVo;
 
 import jakarta.servlet.http.HttpSession;
@@ -41,8 +42,14 @@ public class MasterController {
         int staff_id = masterService.getUserId(user_id);
 
         // 근무기록 리스트
-        List<MasterVo> report_work_list = masterService.report_work_list_Staff(staff_id);
+        List<MasterVo> report_work_list = masterService.report_work_list_Staff_main(staff_id);
+        // 최근행사
+        List<EventVo> event_list = masterService.select_event_info();
+        // 대기중인지원
+        List<ApplicationVo> app_list = masterService.select_app_info(staff_id);
         mav.addObject("report_work_list", report_work_list);
+        mav.addObject("event_list", event_list);
+        mav.addObject("app_list", app_list);
 
         return mav;
     }

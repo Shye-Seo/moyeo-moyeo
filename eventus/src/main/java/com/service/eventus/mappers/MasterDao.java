@@ -1,5 +1,7 @@
 package com.service.eventus.mappers;
 
+import com.service.eventus.event.ApplicationVo;
+import com.service.eventus.event.EventVo;
 import com.service.eventus.master.MasterVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -44,6 +46,11 @@ public interface MasterDao {
             "inner join eventusdb.event e on swr.event_id=e.id\n" +
             "where staff_id=#{staff_id}")
     List<MasterVo> report_work_list_Staff(int staff_id);
+    //근무기록 리스트(스태프)_메인용
+    @Select("select event_title, work_date, work_start_time, work_end_time, work_outing_time, work_comeback_time, work_total_time from eventusdb.staff_work_record swr\n" +
+    		"inner join eventusdb.event e on swr.event_id=e.id\n" +
+    		"where staff_id=#{staff_id} ORDER BY work_date DESC limit 8")
+    List<MasterVo> report_work_list_Staff_main(int staff_id);
     
     @Select("select id from user where user_id = #{user_id}")
     int getUserId(String user_id);
@@ -71,4 +78,12 @@ public interface MasterDao {
     // 근로계약서 정보 가져오기
     @Select("select * from contract_file cf inner join event e on cf.event_id=e.id where event_id=#{event_id} and staff_id=#{staff_id}")
     MasterVo getContractInfo(MasterVo masterVo);
+    
+    
+    //메인 이벤트 정보_staff
+	@Select("SELECT id, event_title, event_venue, event_status FROM event order by event_status, created_at DESC limit 10")
+	List<EventVo> select_event_info();
+	//메인 지원 정보_staff
+	@Select("SELECT e.event_title, staff_result, app_created_at FROM staff_application s INNER JOIN event e on s.event_id = e.id where staff_id = #{user_id} order by staff_result, app_created_at desc limit 4")
+	List<ApplicationVo> select_app_info(int staff_id);
 }

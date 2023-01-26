@@ -10,4 +10,8 @@ public class ApplicationVo {
 	private int resume_id;
 	private String staff_position;
 	private int staff_result;
+	private String app_created_at;
+	
+	//main
+	private String event_title;
 }	

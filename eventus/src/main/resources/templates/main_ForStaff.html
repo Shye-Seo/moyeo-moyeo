@@ -35,55 +35,13 @@
                             </div>
                             <div class="event_box_wrap">
                                 <div class="event_box_in">
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat recruiting"></div>
-                                        <p>1홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
-                                    </a>
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat completed"></div>
-                                        <p>2홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
-                                    </a>
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat ongoing"></div>
-                                        <p>3홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
-                                    </a>
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat ongoing"></div>
-                                        <p>4홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
-                                    </a>
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat recruiting"></div>
-                                        <p>5홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
-                                    </a>
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat completed"></div>
-                                        <p>6홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
-                                    </a>
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat ongoing"></div>
-                                        <p>7홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
-                                    </a>
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat ongoing"></div>
-                                        <p>8홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
-                                    </a>
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat ongoing"></div>
-                                        <p>9홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
-                                    </a>
-                                    <a href="#" class="event_box">
-                                        <div class="eventStat ongoing"></div>
-                                        <p>0홈/테이블데코페어(벡스코)</p>
-                                        <p>부산 벡스코</p>
+                                    <a th:each="event : ${event_list}" th:href="'eventDetail_forStaff?id='+${event.id}" class="event_box">
+                                        <div th:if="${event.event_status == 0}" class="eventStat recruiting"></div>
+                                        <div th:if="${event.event_status == 1}" class="eventStat completed"></div>
+                                        <div th:if="${event.event_status == 2}" class="eventStat ongoing"></div>
+                                        <div th:if="${event.event_status == 3}" class="eventStat onend"></div>
+                                        <p>[[${event.event_title}]]</p>
+                                        <p>[[${event.event_venue}]]</p>
                                     </a>
                                 </div>
                             </div>
@@ -93,20 +51,13 @@
                             <p class="area_title">대기 중인 지원</p>
                             <a class="link" href="/manage_career_forstaff">더보기</a>
                             <div class="app_list">
-                                <div class="app_line">
-                                    <a class="app_title" href="#">부산 건축박람회&사인엑스포</a>
-                                    <div class="app_date">2022.08.01</div>
-                                    <div class="app_btn_forstaff wait"></div>
-                                </div>
-                                <div class="app_line">
-                                    <a class="app_title" href="#">부산 건축박람회&사인엑스포</a>
-                                    <div class="app_date">2022.08.01</div>
-                                    <div class="app_btn_forstaff pass"></div>
-                                </div>
-                                <div class="app_line">
-                                    <a class="app_title" href="#">부산 건축박람회&사인엑스포</a>
-                                    <div class="app_date">2022.08.01</div>
-                                    <div class="app_btn_forstaff nonpass"></div>
+                                <p class="empty" th:if="${app_list.size == 0}">지원 내역이 없습니다.</p>
+                                <div th:each="app : ${app_list}" class="app_line">
+                                    <a class="app_title" href="#">[[${app.event_title}]]</a>
+                                    <div class="app_date date_set">[[${app.app_created_at}]]</div>
+                                    <div th:if="${app.staff_result==0}" class="app_btn_forstaff wait"></div>
+                                    <div th:if="${app.staff_result==1}" class="app_btn_forstaff pass"></div>
+                                    <div th:if="${app.staff_result==2}" class="app_btn_forstaff nonpass"></div>
                                 </div>
                             </div>
                         </div>
@@ -117,70 +68,28 @@
                             <p class="area_title">나의 근무 기록</p>
                             <a class="link" href="/report_work_ForStaff">더보기</a>
                             <div class="record_list">
-                                <div class="record_line">
+                                <p class="empty" th:if="${report_work_list.size == 0}">근무기록 내역이 없습니다.</p>
+                                <div th:each=" work : ${report_work_list}" class="record_line">
+                                    
                                     <div class="recode_info">
-                                        <div class="record_event">부산 건축박람회&사인엑스포</div>
-                                        <div class="record_date">2022.12.21</div>
+                                        <div class="record_event">[[${work.event_title}]]</div>
+                                        <div class="record_date date_set">[[${work.work_date}]]</div>
                                     </div>
                                     <div class="record_time">
                                         <p>출근</p>
-                                        <p>00:00</p>
+                                        <p class="time_set">[[${work.work_start_time}]]</p>
                                     </div>
                                     <div class="record_time">
                                         <p>외출</p>
-                                        <p>00:00</p>
+                                        <p class="time_set">[[${work.work_outing_time}]]</p>
                                     </div>
                                     <div class="record_time">
                                         <p>복귀</p>
-                                        <p>00:00</p>
+                                        <p class="time_set">[[${work.work_comeback_time}]]</p>
                                     </div>
                                     <div class="record_time">
                                         <p>퇴근</p>
-                                        <p>00:00</p>
-                                    </div>
-                                </div>
-                                <div class="record_line">
-                                    <div class="recode_info">
-                                        <div class="record_event">부산 건축박람회&사인엑스포</div>
-                                        <div class="record_date">2022.12.21</div>
-                                    </div>
-                                    <div class="record_time">
-                                        <p>출근</p>
-                                        <p>00:00</p>
-                                    </div>
-                                    <div class="record_time">
-                                        <p>외출</p>
-                                        <p>00:00</p>
-                                    </div>
-                                    <div class="record_time">
-                                        <p>복귀</p>
-                                        <p>00:00</p>
-                                    </div>
-                                    <div class="record_time">
-                                        <p>퇴근</p>
-                                        <p>00:00</p>
-                                    </div>
-                                </div>
-                                <div class="record_line">
-                                    <div class="recode_info">
-                                        <div class="record_event">부산 건축박람회&사인엑스포</div>
-                                        <div class="record_date">2022.12.21</div>
-                                    </div>
-                                    <div class="record_time">
-                                        <p>출근</p>
-                                        <p>00:00</p>
-                                    </div>
-                                    <div class="record_time">
-                                        <p>외출</p>
-                                        <p>00:00</p>
-                                    </div>
-                                    <div class="record_time">
-                                        <p>복귀</p>
-                                        <p>00:00</p>
-                                    </div>
-                                    <div class="record_time">
-                                        <p>퇴근</p>
-                                        <p>00:00</p>
+                                        <p class="time_set">[[${work.work_end_time}]]</p>
                                     </div>
                                 </div>
                             </div>
@@ -194,6 +103,23 @@
         const box_count =  $(".event_box_in").children().length;
         const inbox_width = box_count * 250 - 800;
         $(function(){
+            $(".date_set").each(function(){
+                let date = $(this).text();
+                date = date.substring(0,10);
+                let result = date.replace(/-/g, '.');
+                $(this).text(result);
+            })
+
+            $('.time_set').each(function(){
+                let time = $(this).text();
+                let result = time.replace(/ /g, '');
+                if(result==""){
+                    $(this).text("00:00");
+                }else{
+                    $(this).text(result);
+                }
+            })
+
             $('.event_box_in').draggable({
                 "axis": "x",
                 stop: function() {
@@ -205,6 +131,7 @@
                     }
                 }
             });
+            
         })
 
         // 최근행사 버튼

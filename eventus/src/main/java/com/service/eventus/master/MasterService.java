@@ -1,5 +1,7 @@
 package com.service.eventus.master;
 
+import com.service.eventus.event.ApplicationVo;
+import com.service.eventus.event.EventVo;
 import com.service.eventus.mappers.MasterDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,10 @@ public class MasterService {
         return masterDao.report_work_list_Staff(staff_id);
     }
     
+    public List<MasterVo> report_work_list_Staff_main(int staff_id) {
+    	return masterDao.report_work_list_Staff_main(staff_id);
+    }
+    
     public MasterVo getEventInfo(int id) {
         return masterDao.getEventInfo(id);
     }
@@ -62,4 +68,12 @@ public class MasterService {
     }
 
     public MasterVo getContractInfo(MasterVo masterVo) { return masterDao.getContractInfo(masterVo); }
+    
+    public List<EventVo> select_event_info(){
+    	return masterDao.select_event_info();
+    }
+    
+    List<ApplicationVo> select_app_info(int staff_id){
+    	return masterDao.select_app_info(staff_id);
+    }
 }

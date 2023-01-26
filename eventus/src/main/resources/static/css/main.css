@@ -11,7 +11,7 @@
 .area_title {
     font-size: 22px;
     font-weight: 600;
-    margin-bottom: 25px;
+    margin-bottom: 24px;
 }
 .main_area .link{
     position: absolute;
@@ -89,16 +89,18 @@
     color: #DD5067;
 }
 
-.completed, .ongoing{
+.completed, .ongoing, .onend{
     background-color: #6666661A;
+    color: #666666;
 }
 .completed::after{
     content: "모집마감";
-    color: #666666;
 }
 .ongoing::after{
     content: "진행중";
-    color: #666666;
+}
+.onend::after{
+    content: "진행완료";
 }
 
 .event_box p:nth-child(2){
@@ -121,12 +123,13 @@
 }
 
 .app_list{
-    width: 780px; height: auto;
+    width: 780px; height: 380px;
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0px 0px 10px #0000000D;
     padding: 20px 40px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .app_line{
@@ -180,13 +183,14 @@
 }
 
 .staff_list, .record_list{
-    width: 600px; height: auto;
+    width: 600px; height: 800px;
     box-shadow: 0px 0px 10px #0000000d;
     background-color: #ffffff;
     border-radius: 20px;
     padding: 30px 40px;
     padding-bottom: 40px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .staff_date{
@@ -290,12 +294,13 @@
 
 .record_list{
     padding: 40px;
+    padding-bottom: 43px;
 }
 .record_line{
     display: flex;
     align-items: center;
-    gap: 25px;
-    margin-bottom: 50px;
+    gap: 15px;
+    margin-bottom: 55px;
 }
 .record_line:last-child{
     margin: 0;
@@ -310,6 +315,7 @@
 }
 .record_time {
     text-align: center;
+    width: 60px;
 }
 .record_time p:first-child, .record_event{
     color: #999999;
@@ -321,3 +327,10 @@
     font-weight: 600;
 }
 
+p.empty {
+    text-align: center;
+    width: calc(100% - 80px);
+    position: absolute;
+    top: calc(50% - 8px);
+    color: #999999;
+}
