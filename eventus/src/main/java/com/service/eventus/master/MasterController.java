@@ -22,9 +22,11 @@ import javax.inject.Inject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MasterController {
@@ -34,6 +36,28 @@ public class MasterController {
 
     List<MasterVo> staff_list;
     List<MasterVo> report_work_list;
+    
+    @RequestMapping("/main")
+    public ModelAndView main(HttpSession session) throws Exception {
+        ModelAndView mav = new ModelAndView();
+        String user_id = (String) session.getAttribute("user_id");
+        int staff_id = masterService.getUserId(user_id);
+
+        // 최근행사
+        List<EventVo> event_list = masterService.select_event_info();
+        // 대기중인지원
+        Map<Integer, List<String>> profile_map = new HashMap<Integer, List<String>>();
+        List<EventVo> app_list = masterService.select_app_manage();
+        for( EventVo eventVo : app_list) {
+        	List<String> profile_list = masterService.app_profile_list(eventVo.getId());
+        	profile_map.put( eventVo.getId(), profile_list );
+        }
+        
+        mav.addObject("event_list", event_list);
+        mav.addObject("app_list", app_list);
+        mav.addObject("profile_map", profile_map);
+        return mav;
+    }
 
     @RequestMapping("/main_ForStaff")
     public ModelAndView main_ForStaff(HttpSession session) throws Exception {
