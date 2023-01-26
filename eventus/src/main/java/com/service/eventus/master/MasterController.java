@@ -231,7 +231,7 @@ public class MasterController {
     }
 
     //근무기록 리스트(관리자)
-    @GetMapping(value="/report_work")
+    @GetMapping(value="/report_w")
     public String report_work(@ModelAttribute EventVo eventVo, ModelMap model) throws Exception{
         report_work_list = masterService.report_work_list();
 
@@ -303,12 +303,14 @@ public class MasterController {
 		return "report_work_ForStaff";
 	}
     
-//  근무기록 리스트(스태프)
+//  근무기록 리스트 시간 수정(관리자)
   @GetMapping(value="/update_reportwork_time")
 	public String report_work_time_update(ModelMap model) {
-  	 
-	  masterService.report_work_time_update(0);
-		return "report_work_ForStaff";
+//  	 System.out.println(masterVo);
+//  	
+//	  masterService.report_work_time_update(masterVo);
+	  
+		return "report_work";
 	}
   
     

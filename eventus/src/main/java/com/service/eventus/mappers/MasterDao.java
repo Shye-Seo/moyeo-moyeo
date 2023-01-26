@@ -47,7 +47,7 @@ public interface MasterDao {
     //근무기록 시간 수정(관리자)
     @Update("update staff_work_record set work_start_time = #{work_start_time}, work_end_time = #{work_end_time}, "
 			+ "work_outing_time = #{work_outing_time}, work_comeback_time = #{work_comeback_time} where id = #{staff_id}")
-	void report_work_time_update (int staff_id);
+	int report_work_time_update (MasterVo masterVo);
     
     @Select("select id from user where user_id = #{user_id}")
     int getUserId(String user_id);
