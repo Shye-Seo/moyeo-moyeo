@@ -317,4 +317,10 @@ body {background:#F8F9FB;}
     font-weight: 800;
     border: 0;
     outline: none;
+    text-align: center;
+}
+
+.ui-datepicker-calendar th span{
+	color: #999999;
+	font-weight: 300;
 }
