@@ -53,10 +53,6 @@ public class MasterService {
     }
 
 
-    public int addContract(MasterVo masterVo) {
-        return masterDao.addContract(masterVo);
-    }
-
     public int getUserId(String user_id) {
         return masterDao.getUserId(user_id);
     }
