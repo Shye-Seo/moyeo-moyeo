@@ -46,14 +46,14 @@
 
                     <ul class="list">
                         <ol id="top_ol">
-                            <div id="index_area_s"><li>No</li></div>
-                            <div id="title_area_s"><li>행사명</li></div>
-                            <div id="date_area_s"><li>행사기간</li></div>
-                            <div id="status_area_s"><li>진행현황</li></div>
+                            <div class="index_area_s"><li>No</li></div>
+                            <div class="title_area_s"><li>행사명</li></div>
+                            <div class="date_area_s"><li>행사기간</li></div>
+                            <div class="status_area_s"><li>진행현황</li></div>
                         </ol>
-						<ol th:each="event : ${event_list}" id="list_ol">
+						<ol th:each="event : ${event_list}" class="list_ol">
 							<!-- status 따라서 color 변경  -->
-							<div id="index_area_s">
+							<div class="index_area_s">
                                 <li th:text="${pagination.totalListCnt - eventStat.index - ((nowpage - 1)*10)}" th:if="${event.event_status == 0}" class="red"></li>
                                 <li th:text="${pagination.totalListCnt - eventStat.index - ((nowpage - 1)*10)}" th:if="${event.event_status == 1}" class="black"></li>
                                 <li th:text="${pagination.totalListCnt - eventStat.index - ((nowpage - 1)*10)}" th:if="${event.event_status == 2}" class="black"></li>
@@ -62,21 +62,21 @@
 <!-- 								<li class="eventlist"></li> -->
 							</div>
 							
-							<div id="title_area_s">
+							<div class="title_area_s">
 							<a th:href="@{eventDetail_forStaff(id=${event.id})}" th:if="${event.event_status == 0}"><li th:text="${event.event_title}" class="red"></li></a>
 							<a th:href="@{eventDetail_forStaff(id=${event.id})}" th:if="${event.event_status == 1}"><li th:text="${event.event_title}" class="black"></li></a>
 							<a th:href="@{eventDetail_forStaff(id=${event.id})}" th:if="${event.event_status == 2}"><li th:text="${event.event_title}" class="black"></li></a>
 							<a th:href="@{eventDetail_forStaff(id=${event.id})}" th:if="${event.event_status == 3}"><li th:text="${event.event_title}" class="gray"></li></a>
 							</div>
 							
-							<div id="date_area_s">
+							<div class="date_area_s">
 							<li th:text="${event.event_startDate} + ' - ' + ${event.event_endDate}" th:if="${event.event_status == 0}" class="red"></li>
 							<li th:text="${event.event_startDate} + ' - ' + ${event.event_endDate}" th:if="${event.event_status == 1}" class="black"></li>
 							<li th:text="${event.event_startDate} + ' - ' + ${event.event_endDate}" th:if="${event.event_status == 2}" class="black"></li>
 							<li th:text="${event.event_startDate} + ' - ' + ${event.event_endDate}" th:if="${event.event_status == 3}" class="gray"></li>
 							</div>
 							
-							<div id="status_area_s">
+							<div class="status_area_s">
 							<li th:if="${event.event_status == 0}" class="red">모집중</li>
 							<li th:if="${event.event_status == 1}" class="black">모집완료</li>
 							<li th:if="${event.event_status == 2}" class="black">진행중</li>
@@ -91,23 +91,23 @@
                     <div th:if="${searchKeyword == null}" class="null"> 
                         <ul class="pagewrap">
                             <li>
-                            	<a class="page-link" id="page_icon" th:href="@{eventList_ForStaff?page=1}"><img src="imgs/page_start_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?page=1}"><img src="imgs/page_start_btn.svg"></a>
                             </li>
                             <li class="icon_right">
-                            	<a class="page-link" id="page_icon" th:href="@{eventList_ForStaff?page={page} (page = ${pagination.prevBlock})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?page={page} (page = ${pagination.prevBlock})}"><img src="imgs/page_back_btn.svg"></a>
                             </li>
                              <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
 							    <li class="page-item" 
 							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
 							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
-							    		<a class="page-link" id="page_num" th:href="@{eventList_ForStaff?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+							    		<a class="page-link" th:id="'page_num'+${pageButton}" th:href="@{eventList_ForStaff?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link" id="page_icon" th:href="@{eventList_ForStaff?page={page} (page = ${pagination.nextBlock})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?page={page} (page = ${pagination.nextBlock})}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
-                            	<a class="page-link" id="page_icon" th:href="@{eventList_ForStaff?page={page} (page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?page={page} (page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
                             </li>
                         </ul>
                     </div>
@@ -116,28 +116,30 @@
                     <div th:if="${searchKeyword != null}" class="notnull">
                         <ul class="pagewrap">
                             <li>
-                            	<a class="page-link" id="page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page=1 (key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page=1 (key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
                             </li>
                             <li class="icon_right">
-                            	<a class="page-link" id="page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.prevBlock})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.prevBlock})}"><img src="imgs/page_back_btn.svg"></a>
                             </li>
                              <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
 							    <li class="page-item" 
 							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
 							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
-							    		<a class="page-link" id="page_num" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
-							    </li>
+							    	<a class="page-link" th:id="'page_num'+${pageButton}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
+                                    
+                                </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link" id="page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.nextBlock})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.nextBlock})}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
-                            	<a class="page-link" id="page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+    <script> $('#page_num'+[[${nowpage}]]).addClass("thisPage"); </script>
 </body>
 </html>
