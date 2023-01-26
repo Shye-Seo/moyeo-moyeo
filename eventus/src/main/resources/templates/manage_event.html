@@ -120,7 +120,7 @@
                     <div th:if="${searchKeyword == null}" class="null"> 
                         <ul class="pagewrap">
                             <li>
-                            	<a class="page-link" id="page_icon" th:href="@{manage_event?page=1}"><img src="imgs/page_start_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{manage_event?page=1}"><img src="imgs/page_start_btn.svg"></a>
                             </li>
                             <li class="icon_right">
                             	<a class="page-link" id="page_icon" th:if="${nowpage == 1}" th:href="@{manage_event?page={page} (page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
@@ -130,7 +130,7 @@
 							    <li class="page-item" 
 							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
 							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
-							    		<a class="page-link" id="page_num" th:href="@{manage_event?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{manage_event?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
 							    </li>
 						    </th:block>
                             <li class="icon_left">
@@ -138,7 +138,7 @@
                             	<a class="page-link" id="page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event?page={page} (page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
-                            	<a class="page-link" id="page_icon" th:href="@{manage_event?page={page} (page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{manage_event?page={page} (page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
                             </li>
                         </ul>
                     </div>
@@ -147,7 +147,7 @@
                     <div th:if="${searchKeyword != null}" class="notnull">
                         <ul class="pagewrap">
                             <li>
-                            	<a class="page-link" id="page_icon" th:href="@{manage_event?searchKeyword={key}&page=1 (key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{manage_event?searchKeyword={key}&page=1 (key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
                             </li>
                             <li class="icon_right">
                             	<a class="page-link" id="page_icon" th:if="${nowpage == 1}" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
@@ -157,7 +157,7 @@
 							    <li class="page-item" 
 							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
 							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
-							    		<a class="page-link" id="page_num" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
 							    </li>
 						    </th:block>
                             <li class="icon_left">
@@ -165,12 +165,13 @@
                             	<a class="page-link" id="page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
-                            	<a class="page-link" id="page_icon" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
                             </li>
                         </ul>
                     </div>
                     
                     <script th:inline="javascript">
+						$('#page_num'+[[${nowpage}]]).addClass("thisPage");
                     	var searchWord = /*[[${searchKeyword}]]*/
                     	var nowpage = /*[[${nowpage}]]*/
                     	console.log(nowpage);

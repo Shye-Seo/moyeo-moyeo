@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -181,20 +182,36 @@ public class MasterController {
 
     // 근로확인서 및 보안각서 최종 확인 및 저장하기
     @RequestMapping("/contract_check")
-    public ModelAndView contract_check(@ModelAttribute MasterVo masterVo) {
+    public ModelAndView contract_check(@ModelAttribute MasterVo masterVo, HttpSession session) {
         ModelAndView mav = new ModelAndView();
-        System.out.println(masterVo.getStaff_id());
-        // 세션에 저장되어 있는 유저 아이디의 id값을 masterVo에 저장
-        if(masterVo.getStaff_id() == 0) {
-            masterVo.setStaff_id(18);
+        if(masterVo.getYear() != 0) {
+            // 세션에 저장되어 있는 유저 아이디의 id값을 masterVo에 저장
+            System.out.println("이거 실행?");
+            String user_id = (String) session.getAttribute("user_id");
+            int id = masterService.getUserId(user_id);
+            masterVo.setStaff_id(id);
             mav.addObject("masterVo", masterVo);
             mav.setViewName("/contract_file");
         }
         else {
             MasterVo masterVo1 = masterService.getContractInfo(masterVo);
+            // masterVo.contract_date를 year, month, day로 나누어 int형으로 저장
+            String[] contract_date = masterVo1.getContract_date().split("-");
+
+            // contract_date[0~2]을 int형으로 형변환하여 각각 year, month, day에 저장
+            int year = Integer.parseInt(contract_date[0]);
+            int month = Integer.parseInt(contract_date[1]);
+            int day = Integer.parseInt(contract_date[2]);
+
+            masterVo1.setYear(year);
+            masterVo1.setMonth(month);
+            masterVo1.setDay(day);
+
             mav.addObject("masterVo", masterVo1);
             mav.setViewName("/contract_file_forview");
         }
+
+
 
         return mav;
     }
