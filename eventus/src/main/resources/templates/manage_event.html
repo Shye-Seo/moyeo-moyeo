@@ -7,19 +7,27 @@
     <title>이벤터즈랩(eventusLAB)</title>
     
     <!-- datepicker, jquery, jqueryUI, datetimepicker -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<!--     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
+<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<!--     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+<!--     <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"> -->
+<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script> -->
     
-<!--     <script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.12/jsrender.min.js"></script>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="/css/manage_event.css">
     <script src="/js/manage_event.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- daterangepicker css -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	 
+	<!-- daterangepicker js -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </head>
 <body>
     <div id="wrap">
@@ -53,15 +61,19 @@
                     <div class="search_area">
                     	<form id="searchForm" th:action="@{/manage_event}" method="get">
 	                        <div class="date_search">
-		                        <input type="text" name="event_startDate" class="datepicker date_input required calendar_start" th:placeholder="${firstDate}" autocomplete='off'>
-		                        <div class="date_div"><span>-</span></div>
-		                        <input type="text" name="event_endDate" class="datepicker date_input required calendar_end" th:placeholder="${lastDate}" autocomplete='off'>
+	                        	<div class="date_input">
+	                        		<input type="hidden" name="startDate" id="startDate">
+	                        		<input type="hidden" name="endDate" id="endDate">
+	                        		<input type="text" name="searchDate" th:placeholder="${firstDate}+' - '+${lastDate}" id="searchDate" th:if="${startDate == null && endDate == null}">
+	                        		<input type="text" name="searchDate" th:value="${startDate}+' - '+${endDate}" id="searchDate" th:if="${startDate != null && endDate != null}">
+		                        </div>
 		                        <div class="calendar_button">
-	                        		<button type="button" class="search_img"><img src="imgs/register-calendar.svg"></button>
+	                        		<button type="button" class="search_img" onclick="calendar();"><img src="imgs/register-calendar.svg"></button>
 	                        	</div>
 	                        </div>
 	                        <div class="text_search">
-	                        	<input type="text" class="word_search" placeholder="검색" name="searchKeyword">
+	                        	<input type="text" class="word_search" placeholder="검색" name="searchKeyword" th:if="${searchKeyword == null}">
+	                        	<input type="text" class="word_search" th:value="${searchKeyword}" name="searchKeyword" th:if="${searchKeyword != null}">
 	                        	<div class="search_button">
 	                        		<button type="submit" class="search_img"><img src="imgs/search_btn.svg"></button>
 	                        	</div>
@@ -69,6 +81,45 @@
                         </form>
                     </div>
                     
+					<script>
+						function calendar(){
+							$('#searchDate').trigger('click');
+						}
+						
+                    	$("#searchDate").daterangepicker({
+                    		"autoApply":true,	//날짜 선택하면 input에 자동적용
+                    		"opens":'left',		//왼쪽으로 open
+                    	    locale: {
+                    	    "separator": " - ",          // 시작일시와 종료일시 구분자
+                    	    "format": 'YYYY.MM.DD',     // 일시 노출 포맷
+//                     	    "applyLabel": "확인",                    // 확인 버튼 텍스트
+//                     	    "cancelLabel": "취소",                   // 취소 버튼 텍스트
+                    	    "daysOfWeek": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+                    	    "monthNames": ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    	    },
+                    	    timePicker: false,                        // 시간 노출 여부
+                    	    showDropdowns: true,                     // 년월 수동 설정 여부
+                    	    timePicker24Hour: false,                  // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
+                    	    timePickerSeconds: false,                 // 초 노출 여부
+                    	    singleDatePicker: false,                   // 하나의 달력 사용 여부
+                    	    linkedCalendars: false					  //각 달력 <>연결해서 이동되지 않도록 false
+                    	}, function (start, end, label) {
+                    		console.log('선택된 날짜: ' + start.format('YYYY.MM.DD') + ' to ' + end.format('YYYY.MM.DD'));
+                    		searchDate(start.format('YYYY.MM.DD'), end.format('YYYY.MM.DD'));
+                    	});
+                    	
+                    	function searchDate(start,end){
+	                    	$.ajax({
+	                			url : "/manage_event",
+	                			type : 'get',
+	                			data : {startDate:start, endDate:end},
+	                			success: function(data){
+	                				window.location.href = "/manage_event?startDate="+start+"&endDate="+end;
+	                			}
+	                		});
+                    	}
+                    	 
+                    </script>
 
                     <ul class="list">
                         <ol id="top_ol">
@@ -132,7 +183,7 @@
                     <!-- 페이징 -->
                     
                     <!-- 검색 안했을 때  -->
-                    <div th:if="${searchKeyword == null}" class="null"> 
+                    <div th:if="${searchKeyword == null && startDate == null && endDate == null}" class="null"> 
                         <ul class="pagewrap">
                             <li>
                             	<a class="page-link page_icon" th:href="@{manage_event?page=1}"><img src="imgs/page_start_btn.svg"></a>
@@ -158,8 +209,8 @@
                         </ul>
                     </div>
                     
-                    <!-- 검색했을 때  -->
-                    <div th:if="${searchKeyword != null}" class="notnull">
+                    <!-- 검색어로만 검색했을 때  -->
+                    <div th:if="${searchKeyword != null && startDate == null && endDate == null}" class="notnull">
                         <ul class="pagewrap">
                             <li>
                             	<a class="page-link page_icon" th:href="@{manage_event?searchKeyword={key}&page=1 (key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
@@ -181,6 +232,60 @@
                             </li>
                             <li>
                             	<a class="page-link page_icon" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 날짜로만 검색했을 때  -->
+                    <div th:if="${searchKeyword == null && startDate != null && endDate != null}" class="notnull">
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{manage_event?startDate={start}&endDate={end}&page=1 (start = ${startDate}, end = ${endDate})}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{manage_event?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{manage_event?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{manage_event?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{manage_event?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{manage_event?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 동시 검색했을 때  -->
+                    <div th:if="${searchKeyword != null && startDate != null && endDate != null}" class="notnull">
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{manage_event?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page=1 (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate})}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{manage_event?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{manage_event?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{manage_event?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{manage_event?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{manage_event?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
                             </li>
                         </ul>
                     </div>
@@ -506,19 +611,5 @@
 		</div>
 	</div>
     </script>
-    <script>
-    $(function () {
-        $(".datepicker").datepicker({ dateFormat: "yy.mm.dd" });
-    });
-    
- // datepicker setting
-    $.datepicker.setDefaults({
-        dateFormat: 'yy.mm.dd',
-        dayNamesMin:['SUN','MON','TUE','WED','THU','FRI','SAT'],
-        showMonthAfterYear: true,
-        changeMonth: true,
-        changeYear: true
-    });
- </script>
 </body>
 </html>

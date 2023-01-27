@@ -261,6 +261,7 @@ public class EventService {
 		return eventDao.setEventStatus(event_id, i);
 	}
 
+	/* ---페이징처리--- */
 	public int findAllCnt() {
 		return eventDao.findAllCnt();
 	}
@@ -275,5 +276,21 @@ public class EventService {
 
 	public int searchCnt(String searchKeyword) {
 		return eventDao.searchCnt(searchKeyword);
-	}	
+	}
+
+	public int searchCnt_date(String startDate, String endDate) {
+		return eventDao.searchCnt_date(startDate, endDate);
+	}
+	
+	public List<EventVo> event_searchList_date(String startDate, String endDate, int startIndex, int pageSize){
+		return eventDao.event_searchList_date(startDate, endDate, startIndex, pageSize);
+	}
+
+	public int searchCnt_keydate(String startDate, String endDate, String searchKeyword) {
+		return eventDao.searchCnt_keydate(startDate, endDate, searchKeyword);
+	}
+
+	public List<EventVo> event_searchList_keydate(String startDate, String endDate, String searchKeyword, int startIndex, int pageSize) {
+		return eventDao.event_searchList_keydate(startDate, endDate, searchKeyword, startIndex, pageSize);
+	}
 }

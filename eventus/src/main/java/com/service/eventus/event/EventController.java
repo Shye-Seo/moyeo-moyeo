@@ -55,7 +55,11 @@ public class EventController {
 	List<EventVo> event_list;
 	
 	@GetMapping(value="/manage_event")
-	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model, @RequestParam(defaultValue = "1") int page, String searchKeyword) throws Exception{
+	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model, @RequestParam(defaultValue = "1") int page, String searchKeyword, String startDate, String endDate, String searchDate) throws Exception{
+		if(searchDate != null) {
+			System.out.println(searchDate);
+		}
+		
 		// 오늘 날짜
       LocalDate now = LocalDate.now();
       Calendar time = Calendar.getInstance();
@@ -85,7 +89,7 @@ public class EventController {
       
       model.addAttribute("firstDate", firstDate);
       model.addAttribute("lastDate", lastDate);
-		 
+      
       	// 총 게시물 수 
 	    int totalListCnt = eventService.findAllCnt();
 
@@ -99,10 +103,11 @@ public class EventController {
 
 	    event_list = eventService.findListPaging(startIndex, pageSize);
 	    
-	    if(searchKeyword == null) {
+	    if(searchKeyword == null && startDate == null && endDate == null) { //키워드&날짜 null (기본상태)
 	    	event_list = eventService.findListPaging(startIndex, pageSize);
 	    	model.addAttribute("pagination", pagination);
-	    }else {
+	    	
+	    }else if(searchKeyword != null && startDate == null && endDate == null){ //키워드검색, 날짜는 null
 	    	totalListCnt = eventService.searchCnt(searchKeyword);
 	    	pagination = new PagingVo(totalListCnt, page);
 	    	startIndex = pagination.getStartIndex();
@@ -110,6 +115,35 @@ public class EventController {
 	    	event_list = eventService.event_searchList(searchKeyword, startIndex, pageSize);
 	    	model.addAttribute("pagination", pagination);
 	    	model.addAttribute("searchKeyword", searchKeyword);
+	    	
+	    }else if(searchKeyword == null && startDate != null && endDate != null) { //날짜검색, 키워드는 null
+	    	totalListCnt = eventService.searchCnt_date(startDate,endDate);
+	    	pagination = new PagingVo(totalListCnt, page);
+	    	startIndex = pagination.getStartIndex();
+	    	pageSize = pagination.getPageSize();
+	    	event_list = eventService.event_searchList_date(startDate, endDate, startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    	model.addAttribute("startDate", startDate);
+	    	model.addAttribute("endDate", endDate);
+	    	
+	    }else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
+	    	startDate = searchDate.substring(0, 11);
+	    	endDate = searchDate.substring(13, 23);
+	    	System.out.println("startDate : "+startDate);
+	    	System.out.println("endDate : "+endDate);
+	    	
+	    	model.addAttribute("searchDate", searchDate);
+	    	
+	    	totalListCnt = eventService.searchCnt_keydate(startDate, endDate, searchKeyword);
+	    	pagination = new PagingVo(totalListCnt, page);
+	    	startIndex = pagination.getStartIndex();
+	    	pageSize = pagination.getPageSize();
+	    	event_list = eventService.event_searchList_keydate(startDate, endDate, searchKeyword, startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    	model.addAttribute("startDate", startDate);
+	    	model.addAttribute("endDate", endDate);
+	    	model.addAttribute("searchKeyword", searchKeyword);
+	    	System.out.println(pagination);
 	    }
 	    System.out.println("nowpage : "+page);
 	    

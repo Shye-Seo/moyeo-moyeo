@@ -56,5 +56,11 @@ public class PagingVo {
 		/* === 다음 블럭에 대한 validation ===*/
 		if(nextBlock > totalPageCnt) {nextBlock = totalPageCnt;}
 		setStartIndex((page-1) * pageSize); //DB 접근 시작 index
+		
+		if(totalListCnt == 0) { //결과와 일치하는 게시물이 없을 때
+			setTotalPageCnt(1);
+			setEndPage(1);
+			setStartPage(1);
+		}
 	}
 }

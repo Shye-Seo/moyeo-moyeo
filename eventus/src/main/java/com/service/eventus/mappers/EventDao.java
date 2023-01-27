@@ -183,4 +183,16 @@ public interface EventDao {
 
 	@Select("select count(*) from event where event_title like concat('%','${searchKeyword}','%')")
 	int searchCnt(String searchKeyword);
+
+	@Select("select count(*) from event where (#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})")
+	int searchCnt_date(String startDate, String endDate);
+	
+	@Select("select * from event where (#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate}) order by event_status asc, id desc limit #{startIndex}, #{pageSize}")
+	List<EventVo> event_searchList_date(String startDate, String endDate, int startIndex, int pageSize);
+
+	@Select("select count(*) from event where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and event_title like concat('%','${searchKeyword}','%')")
+	int searchCnt_keydate(String startDate, String endDate, String searchKeyword);
+
+	@Select("select * from event where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and event_title like concat('%','${searchKeyword}','%') order by event_status asc, id desc limit #{startIndex}, #{pageSize}")
+	List<EventVo> event_searchList_keydate(String startDate, String endDate, String searchKeyword, int startIndex, int pageSize);
 }
