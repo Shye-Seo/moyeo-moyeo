@@ -109,7 +109,7 @@ public interface EventDao {
 	@Select("select count(*) from staff_passer where event_id = #{event_id}")
 	int staff_count(int event_id); // 근무직원 count
 
-	@Select("select * from user u inner join staff_application a, staff_passer s, staff_resume r where u.id = s.staff_id and s.staff_id = a.staff_id and s.event_id = a.event_id and s.staff_id = r.staff_id and s.event_id = #{event_id}")
+	@Select("select * from user u inner join staff_application a, staff_passer s, staff_resume r where u.id = s.staff_id and s.staff_id = a.staff_id and s.event_id = a.event_id and s.staff_id = r.staff_id and a.resume_id = r.id and s.event_id = #{event_id}")
 	List<MemberVo> workStaff_list(int event_id); // 근무직원 리스트(진행중) - 직원정보(이름, 나이, 휴대폰번호)
 
 	@Select("select * from staff_work_record where staff_id = #{staff_id} and event_id = #{event_id} and work_date = #{work_date}")
@@ -139,6 +139,10 @@ public interface EventDao {
 	
 	@Insert("insert into staff_work_record(work_end_time, work_date, staff_id, event_id) values(#{end_time}, #{work_date}, #{staff_id}, #{event_id}) on duplicate key update work_end_time = #{end_time}")
 	boolean record_endTime_new(int event_id, int staff_id, String work_date, String end_time); // 퇴근시간 기록
+	
+	//근무기록 로그
+	@Insert("insert into work_log(staff_id, staff_name, event_name, work_time, work_state) values (#{staff_id},#{staff_name},#{event_name},#{work_time},#{work_state})")
+	boolean insert_work_log(int staff_id, String staff_name, String event_name, String work_time, int work_state);
 	
 	//이벤트 부스-----------------------------
 	@Select("select count(*) from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id} and b.flag = 'Y'")

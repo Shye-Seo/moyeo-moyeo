@@ -2,6 +2,7 @@
 //현재 열려있는 이벤트 id
 let now_event_id_for_app = 0;
 let now_event_id_for_work = 0;
+let now_event_title_for_work = "";
 
 //모달창 활성화 여부
 let modal_L_state = false;
@@ -25,7 +26,6 @@ function modal_inact(){
     $("#modal_wrap").hide();
     $('.modal_con_L').hide();
     $(".confirm_wrap").hide();
-    accept_staff_list = [];
 }
 
 //모달창 종료_이력서만
@@ -177,8 +177,7 @@ function resume_download(thisId){
 
 
 //근무자 모달
-function modal_act_workRecord(thisId){
-
+function modal_act_workRecord(thisId,obj){
     $.ajax({
         url : "/get_workStaff_list",
         type : 'get',
@@ -187,7 +186,10 @@ function modal_act_workRecord(thisId){
             const list = data.workStaff_list;
 
             now_event_id_for_work = data.event_id;
+            now_event_title_for_work = $(obj).attr('data-title');
             today_for_work = data.work_date;
+
+            console.log(now_event_title_for_work)
 
             if(list.length <=0){
                 alert("현재 근무자가 없습니다.");
@@ -213,13 +215,15 @@ function modal_act_workRecord(thisId){
 }
 
 //work record
-function record_Time(staff_id, record_id, obj, action)  { //출근기록
+function record_Time(staff_id,user_name, record_id, obj, action)  { //출근기록
   $.ajax({
 		url : action,
 		type : 'post',
 		data : {
 			staff_id:staff_id,
+            staff_name:user_name,
 			event_id:now_event_id_for_work,
+			event_title:now_event_title_for_work,
 			work_date:today_for_work,
 			record_id:record_id
 		},
@@ -231,14 +235,16 @@ function record_Time(staff_id, record_id, obj, action)  { //출근기록
 }
 
 /* 기록없을때  */
-function no_record_Time(staff_id, obj,action)  {
-  
+function no_record_Time(staff_id,user_name, obj,action)  {
+  console.log(now_event_title_for_work)
   $.ajax({
 		url : action,
 		type : 'post',
 		data : {
             staff_id:staff_id,
+            staff_name:user_name,
 			event_id:now_event_id_for_work,
+			event_title:now_event_title_for_work,
 			work_date:today_for_work
 		},
 		success: function(){

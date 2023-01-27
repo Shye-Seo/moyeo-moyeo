@@ -1,203 +1,9 @@
-* {
-	margin: 0;
-	padding: 0;
-}
-
-ul, ol, li {
-	list-style: none;
-}
-
-a {
-	text-decoration: none;
-	color: black;
-}
-
-img {
-	border: 0;
-	width: 100%;
-}
-
 pre {
 	height: 300px;
 	overflow-y: scroll;
 }
-
-
-body {
-	font-family: 'pretendard';
-	background-color: #F8F9FB;
-}
-
 #wrap {
 	width: 100%;
-}
-
-/* fixed menu */
-.sidebar {
-	width: 180px;
-	height: 100%;
-	background-color: #5B8FD2; /* Click 시 색상 변경 */
-	position: fixed;
-	top: 0;
-	left: 0;
-	overflow: hidden;
-	box-shadow: 3px 0 6px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-	display: block;
-	top: 0;
-	height: 120px;
-	line-height: 120px;
-	text-align: center;
-}
-
-.sidebar .logo img {
-	width: 140px;
-	margin: 0 auto;
-}
-
-.menu-categories {
-	overflow: hidden;
-}
-
-.menu-categories .menu {
-	position: relative;
-	box-sizing: border-box;
-}
-
-.menu-categories .menu a {
-	height: 120px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.menu-categories .menu a div {
-	flex-direction: column;
-	text-align: center;
-}
-
-.menu-categories .menu a div img {
-	width: 40px;
-}
-
-.menu-categories .menu a div span {
-	color: #fff;
-	font-size: 16px;
-	font-weight: 700;
-	display: block;
-}
-
-/* main */
-.content {
-	position: relative;
-	width: calc(100% - 200px);
-	margin-left: 200px;
-	height: auto;
-}
-
-.container {
-	width: 85%;
-	margin: 0 auto;
-	height: auto;
-}
-
-.page-header{
-	width: 100%; max-width: 1440px;
-	height: 120px;
-	line-height: 120px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.page-header span {
-	font-weight: 500;
-	font-size: 25px;
-	color: #333;
-}
-
-.excel_download {
-	width: 250px;
-	height: 50px;
-	background-color: #ffffff;
-	box-shadow: 0px 0px 10px #0000000D;
-	border-radius: 50px;
-	padding-left: 70px;
-	box-sizing: border-box;
-	line-height: 50px;
-	font-size: 16px;
-	font-weight: 500;
-	cursor: pointer;
-}
-
-.detail_bar {
-	width: 100%;
-	border-bottom: 1px solid #DDDDDD;
-	display: flex;
-}
-
-.detail_bar .detail1, .detail_bar .detail2{
-    width: 80px;
-    display: flex; gap: 10px;
-    align-items: center;
-    height: 30px;
-    cursor: pointer;
-    border-bottom: 3px solid #00000000;
-    margin-right: 40px;
-}
-.detail_bar .detail2{
-    width: 95px;
-}
-.detail_bar .this_bar, .detail_bar>div:hover{
-    border-bottom: 3px solid #5B8FD2;
-}
-
-.detail_bar img {
-    width:14px;
-    height:14px;
-}
-
-.detail_bar p {
-    font-size: 16px;
-    font-weight: 500;
-    color: #999999;
-}
-
-.detail_bar .detail1 p {
-    color:#333333;
-}
-
-/* .detail_bar .detail1 { */
-/* 	border-bottom: 3px solid #5B8FD2; */
-/* 	width: fit-content; */
-/* } */
-
-.detail_bar input {
-	position: relative;
-	top: -1px;
-	border: 0;
-	background-color: #F8F9FB;
-	cursor: pointer;
-	font-size: 16px;
-	font-weight: 500;
-	color: #999999;
-}
-
-.detail_bar .detail1 p {
-	color:#333333;
-}
-
-.area {
-	position: relative;
-	width: 100%;
-	height: 84%;
-	margin-top: 50px;
-	margin-bottom: 100px;
-	background-color: #fff;
-	box-shadow: 0px 0px 10px #0000000D;
-	border-radius: 10px;
 }
 
 .area .search_area {
@@ -228,62 +34,30 @@ body {
 }
 
 .list {
-	margin: auto;
-	margin-top: 1%;
-	width: 91%;
-	padding-bottom: 50px;
+	margin-top: 20px;
+	width: 100%;
+	overflow: hidden;
 }
 
 .list ol {
-	font-weight: bold;
+    display: flex;
+    justify-content: space-around;
+    height: 55px;
+    align-items: center;
+}
+.list{
+	font-weight: 600;
+}
+.list .top_ol {
+	color: #666666;
 	border-top: 1px solid #DDDDDD;
 	border-bottom: 1px solid #DDDDDD;
+	box-shadow: 0px 3px 6px #0000000d;
+}
+.list .top_ol li{
+	color: #666666;
 }
 
-ol li {
-	display: inline-block;
-	margin-top: 1.5%;
-	margin-bottom: 1.5%;
-	margin-left: 7%;
-	overflow: hidden;
-}
-
-.list ol li:nth-child(1) {
-	margin-left: 4%;
-}
-
-.list ol:nth-child(1) li:nth-child(8) {
-	margin-left: 5.8%;
-}
-
-
-#no_area {
-	width: 2%;
-	text-align: center;
-}
-
-#event_area {
-	width: 8%;
-	text-align: center;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	word-break: break-all;
-}
-
-#name_area, #gender_area {
-	width: 4%;
-	text-align: center;
-}
-
-#birth_area, #contact_area, #join_date {
-	width: 7%;
-	text-align: center;
-}
-
-#last_arrange {
-	margin-left: 7.5%;
-}
 
 .no_area {
 	width: 2%;
