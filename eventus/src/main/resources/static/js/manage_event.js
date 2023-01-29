@@ -186,7 +186,9 @@ function modal_act_workRecord(thisId,obj){
             const list = data.workStaff_list;
 
             now_event_id_for_work = data.event_id;
-            now_event_title_for_work = $(obj).attr('data-title');
+            if(obj != null){
+                now_event_title_for_work = $(obj).attr('data-title');
+            }
             today_for_work = data.work_date;
 
             console.log(now_event_title_for_work)
@@ -236,7 +238,6 @@ function record_Time(staff_id,user_name, record_id, obj, action)  { //출근기�
 
 /* 기록없을때  */
 function no_record_Time(staff_id,user_name, obj,action)  {
-  console.log(now_event_title_for_work)
   $.ajax({
 		url : action,
 		type : 'post',
@@ -251,7 +252,7 @@ function no_record_Time(staff_id,user_name, obj,action)  {
             $('.total').empty();
             $('.today').empty();
             $('#modal_content_wrap').empty();
-            modal_act_workRecord(now_event_id_for_work);
+            modal_act_workRecord(now_event_id_for_work,null);
 		}
 	});
 }
