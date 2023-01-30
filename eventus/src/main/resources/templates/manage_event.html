@@ -165,7 +165,7 @@
 							<a th:if="${event.event_status == 1}" th:onclick="'modal_act_application('+${event.id}+','+${event.event_check}+')'"><li th:text="${event.application_count} + ' 명'" class="black"></li></a>
 							
                             <!-- 근무기록 -->
-                            <a th:if="${event.event_status == 2}" th:onclick="'modal_act_workRecord('+${event.id}+')'"><li th:text="${event.staff_count} + ' 명'" class="black"></li></a>
+                            <a th:if="${event.event_status == 2}" th:onclick="'modal_act_workRecord('+${event.id}+',this)'" th:data-title="${event.event_title}"><li th:text="${event.staff_count} + ' 명'" class="black"></li></a>
 							<li th:if="${event.event_status == 3}" th:text="${event.staff_count} + ' 명'" class="gray"></li>
 							</div>
 							
@@ -408,7 +408,7 @@
 					<div class="each_record">
 						<p>출근</p>
                         {{if time!=null && time.work_start_time == null }}
-						<button type="button" class="record_btn start_btn" onclick="record_Time({{:list.id}},{{:time.id}},this,'/record_start')">기록</button>
+						<button type="button" class="record_btn start_btn" onclick="record_Time({{:list.id}},'{{:list.user_name}}',{{:time.id}},this,'/record_start')">기록</button>
                         {{else time.work_start_time != null }}
 						<button type="button" class="workTime_text" >{{:time.work_start_time}}</button>
                         {{/if}}
@@ -416,7 +416,7 @@
 					<div class="each_record">
 						<p>외출</p>
                         {{if time!=null && time.work_outing_time == null }}
-						<button type="button" class="record_btn outing_btn" onclick="record_Time({{:list.id}},{{:time.id}},this,'/record_out')" >기록</button>
+						<button type="button" class="record_btn outing_btn" onclick="record_Time({{:list.id}},'{{:list.user_name}}',{{:time.id}},this,'/record_out')" >기록</button>
                         {{else time.work_outing_time != null }}
 						<button type="button" class="workTime_text">{{:time.work_outing_time}}</button>
                         {{/if}}
@@ -424,7 +424,7 @@
 					<div class="each_record">
 						<p>복귀</p>
                         {{if time!=null && time.work_comeback_time == null }}
-						<button type="button" class="record_btn comeback_btn" onclick="record_Time({{:list.id}},{{:time.id}},this,'/record_back')" >기록</button>
+						<button type="button" class="record_btn comeback_btn" onclick="record_Time({{:list.id}},'{{:list.user_name}}',{{:time.id}},this,'/record_back')" >기록</button>
                         {{else time.work_comeback_time != null }}
 						<button type="button" class="workTime_text" >{{:time.work_comeback_time}}</button>
                         {{/if}}
@@ -432,7 +432,7 @@
 					<div class="each_record">
 						<p>퇴근</p>
                         {{if time!=null && time.work_end_time == null }}
-						<button type="button" class="record_btn end_btn" onclick="record_Time({{:list.id}},{{:time.id}},this,'/record_end')" >기록</button>
+						<button type="button" class="record_btn end_btn" onclick="record_Time({{:list.id}},'{{:list.user_name}}',{{:time.id}},this,'/record_end')" >기록</button>
                         {{else time.work_end_time != null }}
 						<button type="button" class="workTime_text">{{:time.work_end_time}}</button>
                         {{/if}}
@@ -444,19 +444,19 @@
 				<div class="record_div">
 					<div class="each_record">
 						<p>출근</p>
-						<button type="button" class="record_btn start_btn" onclick="no_record_Time({{:list.id}},this,'/record_start_new')">기록</button>
+						<button type="button" class="record_btn start_btn" onclick="no_record_Time({{:list.id}},'{{:list.user_name}}',this,'/record_start_new')">기록</button>
 					</div>
 					<div class="each_record">
 						<p>외출</p>
-						<button type="button" class="record_btn outing_btn" onclick="no_record_Time({{:list.id}},this,'/record_out_new')">기록</button>
+						<button type="button" class="record_btn outing_btn" onclick="no_record_Time({{:list.id}},'{{:list.user_name}}',this,'/record_out_new')">기록</button>
 					</div>
 					<div class="each_record">
 						<p>복귀</p>
-						<button type="button" class="record_btn comeback_btn" onclick="no_record_Time({{:list.id}},this,'/record_back_new')">기록</button>
+						<button type="button" class="record_btn comeback_btn" onclick="no_record_Time({{:list.id}},'{{:list.user_name}}',this,'/record_back_new')">기록</button>
 					</div>
 					<div class="each_record">
 						<p>퇴근</p>
-						<button type="button" class="record_btn end_btn" onclick="no_record_Time({{:list.id}},this,'/record_end_new')">기록</button>
+						<button type="button" class="record_btn end_btn" onclick="no_record_Time({{:list.id}},'{{:list.user_name}}',this,'/record_end_new')">기록</button>
 					</div>
 				</div>
 			</div>

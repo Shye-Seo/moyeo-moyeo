@@ -34,12 +34,6 @@ public class MainController {
 	@GetMapping(value="/find_id_pw")
 	public String find_id_pw() { return "find_id_pw"; }
 
-	// 관리자 페이지 링크
-	@GetMapping(value="/main")
-	public String Main() {
-		return "main";
-	}
-
 
 	@GetMapping(value="/contract_file")
 	public String contract_file() {

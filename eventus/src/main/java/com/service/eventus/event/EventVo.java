@@ -28,4 +28,5 @@ public class EventVo {
     private int application_count;
     private int staff_count; 
     private int booth_count;
+    
 }

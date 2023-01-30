@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.service.eventus.aws.AwsS3Service;
 import com.service.eventus.event.EventFileVo;
 import com.service.eventus.event.EventVo;
+import com.service.eventus.mappers.MemberDao;
 import com.service.eventus.member.MemberVo;
 
 import jakarta.servlet.http.HttpSession;
@@ -122,7 +123,7 @@ public class ResumeController {
 	//이력서 추가/수정
 	@ResponseBody
 	@RequestMapping(value="/resumeAdd", method=RequestMethod.POST)
-	public String resumeAdd(MultipartHttpServletRequest multipartRequest, @ModelAttribute ResumeVo resumeVo) throws Exception{
+	public String resumeAdd(HttpSession session ,MultipartHttpServletRequest multipartRequest, @ModelAttribute ResumeVo resumeVo) throws Exception{
 		
 		int OldResume_id = Integer.parseInt(multipartRequest.getParameter("OldResume_id"));
 		String OldProfile = (String) multipartRequest.getParameter("OldProfile");
@@ -137,9 +138,12 @@ public class ResumeController {
 		if(profileImg.getOriginalFilename() != "") {
 			String filename = s3Service.upload_profile(profileImg, Integer.toString(resumeVo.getStaff_id()), Integer.toString(resumeID));
 			resumeService.insertProfile(resumeVo.getStaff_id(), resumeID, filename);
+			session.setAttribute("myProfile", filename);
 		}else if(OldResume_id != 0 ) {
 			resumeService.insertProfile(resumeVo.getStaff_id(), resumeID, OldProfile);
 		}
+
+		
 		
 		return "myresume_forStaff";
 	}

@@ -132,6 +132,10 @@ button{
     font-size: 14px;
 }
 
+.list_ol:hover {
+    background-color: #5B8FD208;
+}
+
 .index_area{
 	margin-left:4%;
 	width: 10%;
@@ -169,6 +173,7 @@ button{
 	margin-right: auto;
 	box-shadow: 0px 3px 10px #99999929;
 	cursor: pointer;
+	background-color: #ffffff;
 }
 
 .red{

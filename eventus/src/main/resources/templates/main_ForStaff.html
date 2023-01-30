@@ -53,7 +53,7 @@
                             <div class="app_list">
                                 <p class="empty" th:if="${app_list.size == 0}">지원 내역이 없습니다.</p>
                                 <div th:each="app : ${app_list}" class="app_line">
-                                    <a class="app_title" href="#">[[${app.event_title}]]</a>
+                                    <a class="app_title" th:href="'/eventDetail_forStaff?id='+${app.id}">[[${app.event_title}]]</a>
                                     <div class="app_date date_set">[[${app.app_created_at}]]</div>
                                     <div th:if="${app.staff_result==0}" class="app_btn_forstaff wait"></div>
                                     <div th:if="${app.staff_result==1}" class="app_btn_forstaff pass"></div>

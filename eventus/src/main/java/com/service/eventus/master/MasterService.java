@@ -76,4 +76,13 @@ public class MasterService {
     List<ApplicationVo> select_app_info(int staff_id){
     	return masterDao.select_app_info(staff_id);
     }
+    
+    List<EventVo> select_app_manage(){
+    	return masterDao.select_app_manage();
+    }
+    List<String> app_profile_list(int event_id){
+    	return masterDao.app_profile_list(event_id);
+    }
+    
+    
 }
