@@ -117,6 +117,7 @@ pre {
 }
 .list{
 	font-weight: 600;
+	min-height: 618px;
 }
 .list .top_ol {
 	color: #666666;
