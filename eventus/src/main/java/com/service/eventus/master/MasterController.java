@@ -34,6 +34,16 @@ public class MasterController {
     List<MasterVo> staff_list;
     List<MasterVo> report_work_list;
 
+    // 메인(관리자)
+    @RequestMapping("/main")
+    public ModelAndView main(HttpSession session) throws Exception {
+        ModelAndView mav = new ModelAndView();
+
+
+        return mav;
+    }
+
+    // 메인(스태프)
     @RequestMapping("/main_ForStaff")
     public ModelAndView main_ForStaff(HttpSession session) throws Exception {
         ModelAndView mav = new ModelAndView();
@@ -199,14 +209,14 @@ public class MasterController {
         ModelAndView mav = new ModelAndView();
         if(masterVo.getYear() != 0) {
             // 세션에 저장되어 있는 유저 아이디의 id값을 masterVo에 저장
-
             String user_id = (String) session.getAttribute("user_id");
             int id = masterService.getUserId(user_id);
             masterVo.setStaff_id(id);
             // masterVo의 staff_address 띄어쓰기를 +로 바꾸어 저장
-            masterVo.setStaff_address(masterVo.getStaff_address().replace(" ", "+"));
+            // masterVo.setStaff_address(masterVo.getStaff_address().replace(" ", "+"));
             mav.addObject("masterVo", masterVo);
             mav.setViewName("/contract_file");
+            System.out.println(1);
         }
         else {
             MasterVo masterVo1 = masterService.getContractInfo(masterVo);
@@ -224,10 +234,11 @@ public class MasterController {
 
             mav.addObject("masterVo", masterVo1);
             mav.setViewName("/contract_file_forview");
+            System.out.println(2);
         }
 
 
-
+        System.out.println(3);
         return mav;
     }
 
