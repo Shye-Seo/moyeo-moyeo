@@ -42,6 +42,10 @@ public class MasterService {
     	return masterDao.report_work_list_Staff_main(staff_id);
     }
     
+    public int report_work_time_update(MasterVo masterVo) {
+        return masterDao.report_work_time_update(masterVo);
+    }
+    
     public MasterVo getEventInfo(int id) {
         return masterDao.getEventInfo(id);
     }
