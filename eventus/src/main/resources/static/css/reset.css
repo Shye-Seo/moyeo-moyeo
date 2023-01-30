@@ -231,20 +231,22 @@ body {background:#F8F9FB;}
 .detail_bar .this_bar, .detail_bar>div:hover{
     border-bottom: 3px solid #5B8FD2;
 }
+.detail_bar .this_bar p, .detail_bar .this_bar button{
+    color:#333333;
+}
 
 .detail_bar img {
     width:14px; height: 14px;
 }
 
-.detail_bar p {
+.detail_bar p, .detail_bar button {
     font-size: 16px;
     font-weight: 500;
     color: #999999;
+    background: none;
+    border: 0;
 }
 
-.detail_bar .detail1 p {
-    color:#333333;
-}
 
 .area{
     position:relative;
