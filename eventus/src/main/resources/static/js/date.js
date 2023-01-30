@@ -82,9 +82,9 @@ $(document).ready(function() {
 		var update_btn_num = "li." + num;
 
 		var start = $(update_btn_num).siblings().children("#start_area_input").val();
-		var end = $(update_btn_num).siblings().children("#outing_area_input").val();
-		var out = $(update_btn_num).siblings().children("#comeback_area_input").val();
-		var back = $(update_btn_num).siblings().children("#end_area_input").val();
+		var out = $(update_btn_num).siblings().children("#outing_area_input").val();
+		var back = $(update_btn_num).siblings().children("#comeback_area_input").val();
+		var end = $(update_btn_num).siblings().children("#end_area_input").val();
 		
 		if(start == null || start ==="") {
 			alert("출근시간을 기록해 주세요.")
