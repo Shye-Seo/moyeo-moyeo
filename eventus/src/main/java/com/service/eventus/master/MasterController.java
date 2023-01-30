@@ -59,6 +59,16 @@ public class MasterController {
         return mav;
     }
 
+    // 메인(관리자)
+    @RequestMapping("/main")
+    public ModelAndView main(HttpSession session) throws Exception {
+        ModelAndView mav = new ModelAndView();
+
+
+        return mav;
+    }
+
+    // 메인(스태프)
     @RequestMapping("/main_ForStaff")
     public ModelAndView main_ForStaff(HttpSession session) throws Exception {
         ModelAndView mav = new ModelAndView();
@@ -230,14 +240,14 @@ public class MasterController {
         ModelAndView mav = new ModelAndView();
         if(masterVo.getYear() != 0) {
             // 세션에 저장되어 있는 유저 아이디의 id값을 masterVo에 저장
-
             String user_id = (String) session.getAttribute("user_id");
             int id = masterService.getUserId(user_id);
             masterVo.setStaff_id(id);
             // masterVo의 staff_address 띄어쓰기를 +로 바꾸어 저장
-            masterVo.setStaff_address(masterVo.getStaff_address().replace(" ", "+"));
+            // masterVo.setStaff_address(masterVo.getStaff_address().replace(" ", "+"));
             mav.addObject("masterVo", masterVo);
             mav.setViewName("/contract_file");
+            System.out.println(1);
         }
         else {
             MasterVo masterVo1 = masterService.getContractInfo(masterVo);
@@ -255,10 +265,11 @@ public class MasterController {
 
             mav.addObject("masterVo", masterVo1);
             mav.setViewName("/contract_file_forview");
+            System.out.println(2);
         }
 
 
-
+        System.out.println(3);
         return mav;
     }
 
@@ -338,7 +349,7 @@ public class MasterController {
         model.addAttribute("report_work_list", report_work_list);
         return "report_work";
     }
-    
+//    근무기록 리스트(스태프)
     @GetMapping(value="/report_work_ForStaff")
 	public String report_work_ForStaff(ModelMap model, HttpSession session) {
     	 int id = (int)session.getAttribute("id");
@@ -348,6 +359,19 @@ public class MasterController {
     	 
 		return "report_work_ForStaff";
 	}
+    
+//  근무기록 리스트 시간 수정(관리자)
+  @RequestMapping(value="/update_reportwork_time")
+	public String report_work_time_update(@RequestParam(value="numb",  required=false) String num, @ModelAttribute MasterVo masterVo, ModelMap model) {
+  	 System.out.println(masterVo);
+	 System.out.println("yyyyy"+num);
+  	
+	  masterService.report_work_time_update(masterVo);
+	  
+		return "redirect:/report_work";
+	}
+  
+    
     // 이력서 등록
     @RequestMapping("/insert_contract")
     @ResponseBody

@@ -38,6 +38,10 @@ public class MasterService {
         return masterDao.report_work_list_Staff(staff_id);
     }
     
+    public int report_work_time_update(MasterVo masterVo) {
+        return masterDao.report_work_time_update(masterVo);
+    }
+    
     public List<MasterVo> report_work_list_Staff_main(int staff_id) {
     	return masterDao.report_work_list_Staff_main(staff_id);
     }
