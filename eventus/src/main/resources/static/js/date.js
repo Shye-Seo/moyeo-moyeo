@@ -78,54 +78,77 @@ $(document).ready(function() {
 	});
 
 	$("[id='check_btn']").click(function() {
-		console.log("체크버튼 눌림")
 		var num = $(this).attr('value');
 		var update_btn_num = "li." + num;
-		
-		e.preventDefault();
-		
-		var form = $(form).serialize();
 
+		var start = $(update_btn_num).siblings().children("#start_area_input").val();
+		var out = $(update_btn_num).siblings().children("#outing_area_input").val();
+		var back = $(update_btn_num).siblings().children("#comeback_area_input").val();
+		var end = $(update_btn_num).siblings().children("#end_area_input").val();
+		
+		if(start == null || start ==="") {
+			alert("출근시간을 기록해 주세요.")
+			return false;
+		} else if(end == null || end ==="") {
+			alert("퇴근시간을 기록해 주세요.")
+			return false;
+		} else if(out == null || out ==="") {
+			alert("외출시간을 기록해 주세요.")
+			return false;
+		} else if(back == null || back ==="") {
+			alert("복귀시간을 기록해 주세요.")
+			return false;
+		} 
+		
+		if(start.indexOf(":") == -1) {
+			alert("형식이 알맞지 않습니다.")
+			return false;
+		} else if(end.indexOf(":") == -1) {
+			alert("형식이 알맞지 않습니다.")
+			return false;
+		} else if(out.indexOf(":") == -1) {
+			alert("형식이 알맞지 않습니다.")
+			return false;
+		} else if(back.indexOf(":") == -1) {
+			alert("형식이 알맞지 않습니다.")
+			return false;
+		}
 		$.ajax({
-			url: $(form).attr('action'),
+			url: "/update_reportwork_time",
 			type: "POST",
-			data: {numb : num},
+			data: { 
+				numb: num,
+				start : start ,
+				end : end,
+				out : out,
+				back : back
+				},
 			success: function(data) {
-				alert("success")
+				alert("입력 완료")
+				$('.area').load(location.href+' .area');
 			}
 		});
 
-		if ($(update_btn_num).siblings(".list_start_area") == null || $(update_btn_num).siblings(".list_start_area") == "") {
-			return false;
-		}
 		return true;
-		//		document.report_worktimeUpdateForm.submit();
 
 	});
 
 
 });
-function checkform() {
-	document.report_worktimeUpdateForm.submit();
-}
 
 function inputTimeColon(time) {
 
 	// 먼저 기존에 들어가 있을 수 있는 콜론(:)기호를 제거한다.
 	var replaceTime = time.value.replace(/\:/g, "");
-	console.log(replaceTime + "+++")
-	console.log(replaceTime.length + "---")
 
 	// 글자수가 4 ~ 5개 사이일때만 동작하게 고정한다.
 	if (replaceTime.length >= 4 && replaceTime.length < 5) {
 
 		// 시간을 추출
 		var hours = replaceTime.substring(0, 2);
-		console.log("hour : " + hours)
 
 		// 분을 추출
 		var minute = replaceTime.substring(2, 4);
-		console.log("min : " + minute)
 
 		// 시간은 24:00를 넘길 수 없게 세팅
 		if (hours + minute > 2400) {

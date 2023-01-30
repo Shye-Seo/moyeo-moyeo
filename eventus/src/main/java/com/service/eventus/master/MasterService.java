@@ -38,8 +38,8 @@ public class MasterService {
         return masterDao.report_work_list_Staff(staff_id);
     }
     
-    public int report_work_time_update(MasterVo masterVo) {
-        return masterDao.report_work_time_update(masterVo);
+    public int report_work_time_update(String work_start_time, String work_end_time, String work_outing_time, String work_comeback_time, int staff_id) {
+        return masterDao.report_work_time_update(work_start_time, work_end_time, work_outing_time, work_comeback_time, staff_id);
     }
     
     public List<MasterVo> report_work_list_Staff_main(int staff_id) {
