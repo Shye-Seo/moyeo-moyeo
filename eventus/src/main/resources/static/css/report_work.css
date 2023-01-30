@@ -269,7 +269,10 @@ ol li {
 }
 
 .time_update input{
-	width:3%;
+	width:55px;
+	margin-left: 8px;
+	font-size: 15px;
+	text-align:center;
 }
 #date_area_staff {
 	width: 10%;
@@ -294,13 +297,16 @@ ol li {
 	display:flex;
 }
 .pen_btn {
-/* 	width:50%; */
+padding-left:10px;
 }
 #check_btn, #close_btn {
 /* 	width:50%; */
 	display:none;
 }
 
+#close_btn { 
+	padding-left: 10px;
+	}
 .input_wrap {
 display:none;	
 }
