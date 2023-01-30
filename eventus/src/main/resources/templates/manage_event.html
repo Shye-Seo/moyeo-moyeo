@@ -62,8 +62,6 @@
                     	<form id="searchForm" th:action="@{/manage_event}" method="get">
 	                        <div class="date_search">
 	                        	<div class="date_input">
-	                        		<input type="hidden" name="startDate" id="startDate">
-	                        		<input type="hidden" name="endDate" id="endDate">
 	                        		<input type="text" name="searchDate" th:placeholder="${firstDate}+' - '+${lastDate}" id="searchDate" th:if="${startDate == null && endDate == null}">
 	                        		<input type="text" name="searchDate" th:value="${startDate}+' - '+${endDate}" id="searchDate" th:if="${startDate != null && endDate != null}">
 		                        </div>
@@ -210,34 +208,34 @@
                     </div>
                     
                     <!-- 검색어로만 검색했을 때  -->
-                    <div th:if="${searchKeyword != null && startDate == null && endDate == null}" class="notnull">
+                    <div th:if="${searchKeyword != null && startDate == null && endDate == null && today != null}" class="notnull_keyword">
                         <ul class="pagewrap">
                             <li>
-                            	<a class="page-link page_icon" th:href="@{manage_event?searchKeyword={key}&page=1 (key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{manage_event?searchDate={date}&searchKeyword={key}&page=1 (date = ${searchDate}, key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
                             </li>
                             <li class="icon_right">
-                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{manage_event?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{manage_event?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
                             </li>
                              <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
 							    <li class="page-item" 
 							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
 							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
-							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{manage_event?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{manage_event?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
-                            	<a class="page-link page_icon" th:href="@{manage_event?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{manage_event?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
                             </li>
                         </ul>
                     </div>
                     
                     <!-- 날짜로만 검색했을 때  -->
-                    <div th:if="${searchKeyword == null && startDate != null && endDate != null}" class="notnull">
+                    <div th:if="${searchKeyword == null && startDate != null && endDate != null}" class="notnull_date">
                         <ul class="pagewrap">
                             <li>
                             	<a class="page-link page_icon" th:href="@{manage_event?startDate={start}&endDate={end}&page=1 (start = ${startDate}, end = ${endDate})}"><img src="imgs/page_start_btn.svg"></a>
@@ -264,7 +262,7 @@
                     </div>
                     
                     <!-- 동시 검색했을 때  -->
-                    <div th:if="${searchKeyword != null && startDate != null && endDate != null}" class="notnull">
+                    <div th:if="${searchKeyword != null && searchDate != null && today == null}" class="notnull_all">
                         <ul class="pagewrap">
                             <li>
                             	<a class="page-link page_icon" th:href="@{manage_event?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page=1 (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate})}"><img src="imgs/page_start_btn.svg"></a>

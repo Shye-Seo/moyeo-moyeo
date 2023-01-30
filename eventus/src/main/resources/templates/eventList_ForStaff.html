@@ -5,10 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이벤터즈랩(eventusLAB)</title>
+    
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.12/jsrender.min.js"></script>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="/css/manage_event.css">
+    <script src="/js/manage_event.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- daterangepicker css -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	 
+	<!-- daterangepicker js -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </head>
 <body>
     <div id="wrap">
@@ -33,15 +44,64 @@
                 <div class="area">
                     <div class="search_area">
                         <form id="searchForm" th:action="@{/eventList_ForStaff}" method="get">
-	                        <input type="text" class="calendar">
+	                        <div class="date_search">
+	                        	<div class="date_input">
+	                        		<input type="text" name="searchDate" th:placeholder="${firstDate}+' - '+${lastDate}" id="searchDate" th:if="${startDate == null && endDate == null}">
+	                        		<input type="text" name="searchDate" th:value="${startDate}+' - '+${endDate}" id="searchDate" th:if="${startDate != null && endDate != null}">
+		                        </div>
+		                        <div class="calendar_button">
+	                        		<button type="button" class="search_img" onclick="calendar();"><img src="imgs/register-calendar.svg"></button>
+	                        	</div>
+	                        </div>
 	                        <div class="text_search">
-	                        	<input type="text" class="word_search" placeholder="검색" name="searchKeyword">
+	                        	<input type="text" class="word_search" placeholder="검색" name="searchKeyword" th:if="${searchKeyword == null}">
+	                        	<input type="text" class="word_search" th:value="${searchKeyword}" name="searchKeyword" th:if="${searchKeyword != null}">
 	                        	<div class="search_button">
 	                        		<button type="submit" class="search_img"><img src="imgs/search_btn.svg"></button>
 	                        	</div>
 	                        </div>
                         </form>
                     </div>
+                    
+                    <script>
+						function calendar(){
+							$('#searchDate').trigger('click');
+						}
+						
+                    	$("#searchDate").daterangepicker({
+                    		"autoApply":true,	//날짜 선택하면 input에 자동적용
+                    		"opens":'left',		//왼쪽으로 open
+                    	    locale: {
+                    	    "separator": " - ",          // 시작일시와 종료일시 구분자
+                    	    "format": 'YYYY.MM.DD',     // 일시 노출 포맷
+//                     	    "applyLabel": "확인",                    // 확인 버튼 텍스트
+//                     	    "cancelLabel": "취소",                   // 취소 버튼 텍스트
+                    	    "daysOfWeek": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+                    	    "monthNames": ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    	    },
+                    	    timePicker: false,                        // 시간 노출 여부
+                    	    showDropdowns: true,                     // 년월 수동 설정 여부
+                    	    timePicker24Hour: false,                  // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
+                    	    timePickerSeconds: false,                 // 초 노출 여부
+                    	    singleDatePicker: false,                   // 하나의 달력 사용 여부
+                    	    linkedCalendars: false					  //각 달력 <>연결해서 이동되지 않도록 false
+                    	}, function (start, end, label) {
+                    		console.log('선택된 날짜: ' + start.format('YYYY.MM.DD') + ' to ' + end.format('YYYY.MM.DD'));
+                    		searchDate(start.format('YYYY.MM.DD'), end.format('YYYY.MM.DD'));
+                    	});
+                    	
+                    	function searchDate(start,end){
+	                    	$.ajax({
+	                			url : "/eventList_ForStaff",
+	                			type : 'get',
+	                			data : {startDate:start, endDate:end},
+	                			success: function(data){
+	                				window.location.href = "/eventList_ForStaff?startDate="+start+"&endDate="+end;
+	                			}
+	                		});
+                    	}
+                    	 
+                    </script>
                     
 
                     <ul class="list">
@@ -89,7 +149,7 @@
                     <!-- 페이징 -->
                     
                     <!-- 검색 안했을 때  -->
-                    <div th:if="${searchKeyword == null}" class="null"> 
+                    <div th:if="${searchKeyword == null && startDate == null && endDate == null}" class="null"> 
                         <ul class="pagewrap">
                             <li>
                             	<a class="page-link page_icon" th:href="@{eventList_ForStaff?page=1}"><img src="imgs/page_start_btn.svg"></a>
@@ -115,30 +175,83 @@
                         </ul>
                     </div>
                     
-                    <!-- 검색했을 때  -->
-                    <div th:if="${searchKeyword != null}" class="notnull">
+                    <!-- 검색어로만 검색했을 때  -->
+                    <div th:if="${searchKeyword != null && startDate == null && endDate == null && today != null}" class="notnull_keyword">
                         <ul class="pagewrap">
                             <li>
-                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page=1 (key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchDate={date}&searchKeyword={key}&page=1 (date = ${searchDate}, key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
                             </li>
                             <li class="icon_right">
-                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{eventList_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{eventList_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
                             </li>
                              <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
 							    <li class="page-item" 
 							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
 							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
-							    	<a class="page-link" th:id="'page_num'+${pageButton}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
-                                    
-                                </li>
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{eventList_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{eventList_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{eventList_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
-                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchKeyword={key}&page={page} (key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 날짜로만 검색했을 때  -->
+                    <div th:if="${searchKeyword == null && startDate != null && endDate != null}" class="notnull_date">
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&page=1 (start = ${startDate}, end = ${endDate})}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 동시 검색했을 때  -->
+                    <div th:if="${searchKeyword != null && startDate != null && endDate != null}" class="notnull_all">
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page=1 (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate})}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{eventList_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
                             </li>
                         </ul>
                     </div>
