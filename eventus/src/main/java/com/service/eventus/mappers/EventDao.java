@@ -199,4 +199,17 @@ public interface EventDao {
 
 	@Select("select * from event where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and event_title like concat('%','${searchKeyword}','%') order by event_status asc, id desc limit #{startIndex}, #{pageSize}")
 	List<EventVo> event_searchList_keydate(String startDate, String endDate, String searchKeyword, int startIndex, int pageSize);
+
+	/* 부스리스트 페이징 및 검색 */
+	@Select("select count(*) from event_booth where event_id = #{event_id} and flag = 'Y'")
+	int booth_list_AllCnt(int event_id);
+	
+	@Select("select * from event_booth where event_id = #{event_id} and flag = 'Y' limit #{startIndex}, #{pageSize}")
+	List<BoothVo> booth_list_paging(int event_id, int startIndex, int pageSize);
+
+	@Select("select count(*) from event_booth where event_id = #{event_id} and booth_name like concat('%','${searchKeyword}','%')")
+	int booth_searchCnt(int event_id, String searchKeyword);
+
+	@Select("select * from event_booth where event_id = #{event_id} and flag = 'Y' and booth_name like concat('%','${searchKeyword}','%') limit #{startIndex}, #{pageSize}")
+	List<EventVo> booth_searchList(int event_id, String searchKeyword, int startIndex, int pageSize);
 }

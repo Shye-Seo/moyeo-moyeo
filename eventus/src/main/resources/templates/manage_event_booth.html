@@ -43,8 +43,16 @@
 	                    	<img src="imgs/back_btn.svg" id="back_btn" onclick="location.href='manage_event'">
 	                    </div>
 	                    <div class="search_area">
-	                        <input type="text" class="calendar">
-	                        <input type="text" class="word_search">
+	                        <form id="searchForm" th:action="@{/manage_event_booth}" method="get">
+		                        <div class="text_search">
+		                        	<input type="hidden" name="id" th:value="${event_id}">
+		                        	<input type="text" class="word_search" placeholder="검색" name="searchKeyword" th:if="${searchKeyword == null}">
+		                        	<input type="text" class="word_search" th:value="${searchKeyword}" name="searchKeyword" th:if="${searchKeyword != null}">
+		                        	<div class="search_button">
+		                        		<button type="submit" class="search_img"><img src="imgs/search_btn.svg"></button>
+		                        	</div>
+		                        </div>
+                        	</form>
 	                    </div>
                     </div>
                     
@@ -61,7 +69,6 @@
                         </ol>
 						<ol th:each="booth : ${booth_list}" id="list_ol">
 							<input type="hidden" th:value="${booth.id}" id="booth_id">
-<!-- 							<div id="index_area"><li th:text="${booth.id}"></li></div> -->
 							<div id="index_area"><li class="boothlist"></li></div>
 							<div id="title_area"><li th:text="${booth.event_title}" id="text_over"></li></div>
 							<div id="date_area"><li th:text="${booth.event_startDate} + ' - ' + ${booth.event_endDate}"></li></div>
@@ -75,20 +82,71 @@
 	                <div id="button_">
 	                	<button type="button" id="register_btn" th:attr="onclick=|registerModal('${event_id}', '${Title}')|">부스등록</button>
 	                </div>
+	                
+                <!-- 페이징 -->
+                
+                <!-- 검색 안했을 때  -->
+                    <div th:if="${searchKeyword == null}" class="null"> 
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{manage_event_booth?id={id}&page=1 (id = ${event_id})}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 검색어로만 검색했을 때  -->
+                    <div th:if="${searchKeyword != null}" class="notnull_keyword">
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page=1 (id = ${event_id}, key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <script th:inline="javascript">
+						$('#page_num'+[[${nowpage}]]).addClass("thisPage");
+                    	var searchWord = /*[[${searchKeyword}]]*/
+                    	var nowpage = /*[[${nowpage}]]*/
+                    	console.log(nowpage);
+                    </script>
                 </div>
                 
-
-                <!-- 페이징 처리(Unix 참조) -->
-                <div>
-                    <ul>
-                        <!-- 이전 -->
-
-                        <!-- 번호 -->
-
-                        <!-- 다음 -->
-
-                    </ul>
-                </div>
             </div>
         </div>
         

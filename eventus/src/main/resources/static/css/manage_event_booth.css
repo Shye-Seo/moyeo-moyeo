@@ -1,4 +1,4 @@
-button{border:none;}
+button{border:none;background:none;}
 *{
     margin: 0;
     padding: 0;
@@ -114,16 +114,20 @@ body{
 #wrap{
     width: 100%;
 }
-
+.area {
+    padding-bottom: 40px;
+}
 .area{
-	position:relative;
-    width: 100%; height: auto;
-    max-width: 1440px; min-height: 720px;
+	position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 1440px;
+    min-height: 720px;
     margin-top: 20px;
     background-color: #fff;
-    box-shadow: 0px 0px 10px #0000000D;
+    box-shadow: 0px 0px 10px #0000000d;
     border-radius: 10px;
-    padding: 40px;
+    padding: 60px;
     box-sizing: border-box;
     margin-bottom: 40px;
 }
@@ -148,42 +152,57 @@ body{
 }
 
 .area .search_area {
-    width:49%;
-    padding-left:60%;
+    width: 24%;
+    padding-left: 76%;
 }
 
-.calendar {
-    margin-right:25px;
-    width: 34%;
-    height: 40px;
-    /* UI Properties */
-    background: #FAFAFA 0% 0% no-repeat padding-box;
-    border: 0.5px solid #999999;
-    border-radius: 3px;
-    opacity: 1;
+#searchForm{
+	display: flex;
+}
+
+.text_search{
+	display:flex;
+	width:100%;
+	margin-left:25px;
 }
 
 .word_search {
-    width: 42%;
+    width: 85%;
     height: 40px;
-    /* UI Properties */
     background: #FAFAFA 0% 0% no-repeat padding-box;
     border: 0.5px solid #999999;
-    border-radius: 3px;
+    border-radius: 3px 0 0 3px;
     opacity: 1;
+    border-right: none;
+    padding-left: 15px;
+}
+
+.text_search .search_button{
+	width: 15%;
+    display: flex;
+    border: 0.5px solid #999999;
+    border-left: none;
+    background: #FAFAFA 0% 0% no-repeat padding-box;
+    border-radius: 0 3px 3px 0;
+}
+
+.search_button .search_img{
+	margin: 0 auto;
+	cursor: pointer;
 }
 
 .list {
-    margin-top:20px;
+    margin-top: 20px;
+    overflow: hidden;
 }
 
 .list #top_ol {
-    font-weight: bold;
-    border-top: 2px solid #DDDDDD;
-    border-bottom: 2px solid #DDDDDD;
+    border-top: 1px solid #BBBBBB;
+    border-bottom: 1px solid #BBBBBB;
     display: flex;
     flex-direction: row;
     font-weight: 600;
+    box-shadow: 0px 3px 6px #0000000d;
 }
 
 #top_ol div li {
@@ -199,6 +218,7 @@ body{
 	line-height: 45px;
 	height: 45px;
 	font-weight: 600;
+	font-size: 14px;
 }
 
 #icon_area img {
@@ -402,4 +422,57 @@ body{
 #delete_confirm{
 	margin-top: 30px;
 	margin-bottom: 60px;
+}
+
+/* 페이징 */
+.null, .notnull_keyword, .notnull_date, .notnull_all{
+    width: 100%;
+    height: 80px;
+    position: relative;
+}
+.pagewrap{
+	display: flex;
+	position: absolute;
+	/* right: 40px;
+	margin-top: 57px; */
+    right: 0; bottom: 0;
+}
+
+.pagewrap li{
+	margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+/*     border: 1px solid #DDDDDD; */
+}
+
+.pagewrap .page_icon{
+	border: 1px solid #DDDDDD;
+}
+
+.pagewrap li a{
+	line-height: 30px;
+	color: #999999;
+}
+
+.pagewrap img{
+	width: 10px;
+	height: 10px;
+}
+
+.page-link{
+	display:block;
+}
+
+.icon_right{
+	padding-right:10px;
+}
+.icon_left{
+	padding-left:10px;
+}
+
+
+.page-item .thisPage{
+    color: #333;
+    border: 1px solid #DDDDDD;
 }

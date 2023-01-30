@@ -298,4 +298,21 @@ public class EventService {
 	public List<EventVo> event_searchList_keydate(String startDate, String endDate, String searchKeyword, int startIndex, int pageSize) {
 		return eventDao.event_searchList_keydate(startDate, endDate, searchKeyword, startIndex, pageSize);
 	}
+
+	public List<BoothVo> booth_list_paging(int event_id, int startIndex, int pageSize) {
+		return eventDao.booth_list_paging(event_id, startIndex, pageSize);
+	}
+
+	public int booth_list_AllCnt(int event_id) {
+		return eventDao.booth_list_AllCnt(event_id);
+	}
+
+	public int booth_searchCnt(int event_id, String searchKeyword) {
+		return eventDao.booth_searchCnt(event_id, searchKeyword);
+	}
+
+	public List<EventVo> booth_searchList(int event_id, String searchKeyword, int startIndex, int pageSize) {
+		return eventDao.booth_searchList(event_id, searchKeyword, startIndex, pageSize);
+	}
+
 }

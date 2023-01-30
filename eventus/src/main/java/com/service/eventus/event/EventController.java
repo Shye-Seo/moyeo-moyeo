@@ -655,13 +655,41 @@ public class EventController {
 	
 	// 부스현황 리스트
 	@GetMapping(value="/manage_event_booth")
-	public String event_booth_list(@RequestParam("id") int event_id, ModelMap model) throws Exception{
+	public String event_booth_list(@RequestParam("id") int event_id, ModelMap model, @RequestParam(defaultValue = "1") int page, String searchKeyword) throws Exception{
 		
 		model.addAttribute("event_id", event_id);
 		String Title = eventService.getTitle(event_id);
 		model.addAttribute("Title", Title);
 		
-		List<BoothVo> booth_list = eventService.booth_list(event_id);
+		// 총 게시물 수 
+	    int totalListCnt = eventService.booth_list_AllCnt(event_id);
+
+	    // 생성인자로  총 게시물 수, 현재 페이지를 전달
+	    PagingVo pagination = new PagingVo(totalListCnt, page);
+
+	    // DB select start index
+	    int startIndex = pagination.getStartIndex();
+	    // 페이지 당 보여지는 게시글의 최대 개수
+	    int pageSize = pagination.getPageSize();
+	    
+	    List<BoothVo> booth_list = eventService.booth_list_paging(event_id, startIndex, pageSize);
+	    
+	    if(searchKeyword == null) { //키워드 null (기본상태)
+	    	booth_list = eventService.booth_list_paging(event_id, startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    	System.out.println("111");
+	    	System.out.println("paginagion : "+pagination);
+	    	
+	    }else if(searchKeyword != null){ //키워드 검색 시,
+	    	totalListCnt = eventService.booth_searchCnt(event_id, searchKeyword);
+	    	pagination = new PagingVo(totalListCnt, page);
+	    	startIndex = pagination.getStartIndex();
+	    	pageSize = pagination.getPageSize();
+	    	event_list = eventService.booth_searchList(event_id, searchKeyword, startIndex, pageSize);
+	    	model.addAttribute("pagination", pagination);
+	    	model.addAttribute("searchKeyword", searchKeyword);
+	    }
+	    
 		if (booth_list != null) {
 			for (BoothVo vo : booth_list) {
 				String event_title = eventService.getEventTitle(vo.getId());
@@ -678,6 +706,7 @@ public class EventController {
 		int booth_num = booth_list.size();
 		model.addAttribute("booth_list", booth_list);
 		model.addAttribute("booth_num", booth_num);
+		model.addAttribute("nowpage", page);
 	    return "manage_event_booth";
 	}
 	
