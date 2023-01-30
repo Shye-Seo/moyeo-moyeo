@@ -43,7 +43,9 @@ public class MasterService {
     }
     
     public List<MasterVo> report_work_list_Staff_main(int staff_id) {
+    	//띄어쓰기 여기에서 없애기
     	return masterDao.report_work_list_Staff_main(staff_id);
+    	
     }
     
     public MasterVo getEventInfo(int id) {
@@ -77,15 +79,18 @@ public class MasterService {
     	return masterDao.select_event_info();
     }
     
-    List<ApplicationVo> select_app_info(int staff_id){
+    public List<ApplicationVo> select_app_info(int staff_id){
     	return masterDao.select_app_info(staff_id);
     }
     
-    List<EventVo> select_app_manage(){
+    public List<EventVo> select_app_manage(){
     	return masterDao.select_app_manage();
     }
-    List<String> app_profile_list(int event_id){
+    public List<String> app_profile_list(int event_id){
     	return masterDao.app_profile_list(event_id);
+    }
+    public List<WorkLogVo> selet_work_log(){
+    	return masterDao.selet_work_log();
     }
     
     

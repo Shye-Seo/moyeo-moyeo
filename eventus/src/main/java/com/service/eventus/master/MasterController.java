@@ -52,19 +52,13 @@ public class MasterController {
         	List<String> profile_list = masterService.app_profile_list(eventVo.getId());
         	profile_map.put( eventVo.getId(), profile_list );
         }
+        //직원근무기록
+        List<WorkLogVo> workLog_list = masterService.selet_work_log();
         
         mav.addObject("event_list", event_list);
         mav.addObject("app_list", app_list);
         mav.addObject("profile_map", profile_map);
-        return mav;
-    }
-
-    // 메인(관리자)
-    @RequestMapping("/main")
-    public ModelAndView main(HttpSession session) throws Exception {
-        ModelAndView mav = new ModelAndView();
-
-
+        mav.addObject("workLog_list", workLog_list);
         return mav;
     }
 

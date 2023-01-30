@@ -90,41 +90,14 @@
                                     <p>2022.08.01 (수)</p>
                                     <div></div>
                                 </div>
-                                <div class="staff_line">
+                                <div class="staff_line" th:each=" workLog : ${workLog_list}">
                                     <div class="profile_img" style="background-color: brown;"></div>
                                     <div class="staff_info">
-                                        <p>김포유</p>
-                                        <p>부산 건축박람회&사인엑스포</p>
+                                        <p>[[${workLog.staff_name}]]</p>
+                                        <p>[[${workLog.event_name}]]</p>
                                     </div>
                                     <div class="staff_time">08:00 AM</div>
                                     <div class="staff_btn start"></div>
-                                </div>
-                                <div class="staff_line">
-                                    <div class="profile_img" style="background-color: brown;"></div>
-                                    <div class="staff_info">
-                                        <p>김포유</p>
-                                        <p>부산 건축박람회&사인엑스포</p>
-                                    </div>
-                                    <div class="staff_time">08:00 AM</div>
-                                    <div class="staff_btn end"></div>
-                                </div>
-                                <div class="staff_line">
-                                    <div class="profile_img" style="background-color: brown;"></div>
-                                    <div class="staff_info">
-                                        <p>김포유</p>
-                                        <p>부산 건축박람회&사인엑스포</p>
-                                    </div>
-                                    <div class="staff_time">08:00 AM</div>
-                                    <div class="staff_btn comeback"></div>
-                                </div>
-                                <div class="staff_line">
-                                    <div class="profile_img" style="background-color: brown;"></div>
-                                    <div class="staff_info">
-                                        <p>김포유</p>
-                                        <p>부산 건축박람회&사인엑스포</p>
-                                    </div>
-                                    <div class="staff_time">08:00 AM</div>
-                                    <div class="staff_btn outing"></div>
                                 </div>
                             </div>
                         </div>

@@ -3,6 +3,8 @@ package com.service.eventus.mappers;
 import com.service.eventus.event.ApplicationVo;
 import com.service.eventus.event.EventVo;
 import com.service.eventus.master.MasterVo;
+import com.service.eventus.master.WorkLogVo;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -96,4 +98,8 @@ public interface MasterDao {
 	List<EventVo> select_app_manage();
 	@Select("SELECT f.file_name FROM staff_file f inner join staff_application a on f.resume_id = a.resume_id where a.event_id=#{event_id} limit 4")
 	List<String> app_profile_list(int event_id);
+	//메인 직원근무기록_manage
+	@Select("SELECT * FROM work_log order by created_at desc limit 8")
+	List<WorkLogVo> selet_work_log();
+	
 }
