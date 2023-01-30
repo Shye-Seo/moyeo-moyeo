@@ -100,16 +100,16 @@ $(document).ready(function() {
 			return false;
 		} 
 		
-		if(start.indexOf(":") == -1) {
+		if(start.indexOf(":") == -1 || start.length < 5 ) {
 			alert("형식이 알맞지 않습니다.")
 			return false;
-		} else if(end.indexOf(":") == -1) {
+		} else if(end.indexOf(":") == -1 || end.length < 5 ) {
 			alert("형식이 알맞지 않습니다.")
 			return false;
-		} else if(out.indexOf(":") == -1) {
+		} else if(out.indexOf(":") == -1 || out.length < 5 ) {
 			alert("형식이 알맞지 않습니다.")
 			return false;
-		} else if(back.indexOf(":") == -1) {
+		} else if(back.indexOf(":") == -1 || back.length < 5 ) {
 			alert("형식이 알맞지 않습니다.")
 			return false;
 		}

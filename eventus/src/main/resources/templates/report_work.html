@@ -120,10 +120,10 @@
                         
                         
 <!--                         근무기록 시간 수정 -->
-                        <li class="time_update"><input th:value="${report_work.work_start_time}" id="start_area_input" onKeyup="inputTimeColon(this);" maxlength="7" onFocus="this.value='';return true;"/></li>
-                        <li class="time_update"><input th:value="${report_work.work_outing_time}" id="outing_area_input" onKeyup="inputTimeColon(this);"maxlength="7" onFocus="this.value='';return true;"/></li>
-                        <li class="time_update"><input th:value="${report_work.work_comeback_time}" id="comeback_area_input" onKeyup="inputTimeColon(this);"maxlength="7" onFocus="this.value='';return true;"/></li>
-                        <li class="time_update"><input th:value="${report_work.work_end_time}" id="end_area_input" onKeyup="inputTimeColon(this);" maxlength="7" onFocus="this.value='';return true;"/></li>
+                        <li class="time_update"><input th:value="${report_work.work_start_time}" id="start_area_input" onKeyup="inputTimeColon(this);" minlength="5" nmaxlength="7" onFocus="this.value='';return true;"/></li>
+                        <li class="time_update"><input th:value="${report_work.work_outing_time}" id="outing_area_input" onKeyup="inputTimeColon(this);" minlength="5" maxlength="7" onFocus="this.value='';return true;"/></li>
+                        <li class="time_update"><input th:value="${report_work.work_comeback_time}" id="comeback_area_input" onKeyup="inputTimeColon(this);" minlength="5" maxlength="7" onFocus="this.value='';return true;"/></li>
+                        <li class="time_update"><input th:value="${report_work.work_end_time}" id="end_area_input" onKeyup="inputTimeColon(this);" minlength="5" maxlength="7" onFocus="this.value='';return true;"/></li>
                         
                         <li th:text="${report_work.work_total_time}" id="total_time_area"></li>
                         <li id="new_update" th:class="${report_work.id}"> 
