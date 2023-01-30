@@ -144,11 +144,11 @@ body{
     align-items: center;
     border: 1px solid #DDDDDD;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 #back_btn{
 	height: 12.5px;
-	cursor: pointer;
 }
 
 .area .search_area {
@@ -215,8 +215,8 @@ body{
 #list_ol{
 	display: flex;
 	border-bottom: 1px solid #DDDDDD;
-	line-height: 45px;
-	height: 45px;
+	line-height: 55px;
+	height: 55px;
 	font-weight: 600;
 	font-size: 14px;
 }
@@ -224,8 +224,8 @@ body{
 #icon_area img {
 	cursor: pointer;
 	width: auto;
-	height: 17px;
-	margin-top: 14px;
+/* 	height: 17px; */
+/* 	margin-top: 14px; */
 }
 
 #index_area{

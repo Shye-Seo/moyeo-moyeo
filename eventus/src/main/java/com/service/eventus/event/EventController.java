@@ -677,8 +677,6 @@ public class EventController {
 	    if(searchKeyword == null) { //키워드 null (기본상태)
 	    	booth_list = eventService.booth_list_paging(event_id, startIndex, pageSize);
 	    	model.addAttribute("pagination", pagination);
-	    	System.out.println("111");
-	    	System.out.println("paginagion : "+pagination);
 	    	
 	    }else if(searchKeyword != null){ //키워드 검색 시,
 	    	totalListCnt = eventService.booth_searchCnt(event_id, searchKeyword);

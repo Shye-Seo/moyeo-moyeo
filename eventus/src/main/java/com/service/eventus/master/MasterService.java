@@ -18,8 +18,8 @@ public class MasterService {
     @Autowired
     private MasterDao masterDao;
 
-    public List<MasterVo> getListMemberApp(String user_id) {
-        return masterDao.getListMemberApp(user_id);
+    public List<MasterVo> getListMemberApp(String user_id, int startIndex, int pageSize) {
+        return masterDao.getListMemberApp(user_id, startIndex, pageSize);
     }
 
     public List<MasterVo> getListUserApp(String user_id) {
@@ -83,6 +83,34 @@ public class MasterService {
     List<String> app_profile_list(int event_id){
     	return masterDao.app_profile_list(event_id);
     }
+
+	public int findAllCnt(String user_id) {
+		return masterDao.fintAllCnt(user_id);
+	}
+
+	public int searchCnt_date(String user_id, String startDate, String endDate) {
+		return masterDao.searchCnt_date(user_id, startDate, endDate);
+	}
+
+	public List<MasterVo> staff_searchList_date(String user_id, String startDate, String endDate, int startIndex, int pageSize) {
+		return masterDao.staff_searchList_date(user_id, startDate, endDate, startIndex, pageSize);
+	}
+
+	public int searchCnt(String user_id, String searchKeyword) {
+		return masterDao.searchCnt(user_id, searchKeyword);
+	}
+
+	public List<MasterVo> staff_searchList(String user_id, String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.staff_searchList(user_id, searchKeyword, startIndex, pageSize);
+	}
+
+	public int searchCnt_keydate(String user_id, String startDate, String endDate, String searchKeyword) {
+		return masterDao.searchCnt_keydate(user_id, startDate, endDate, searchKeyword);
+	}
+
+	public List<MasterVo> staff_searchList_keydate(String user_id, String startDate, String endDate, String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.staff_searchList_keydate(user_id, startDate, endDate, searchKeyword, startIndex, pageSize);
+	}
     
     
 }
