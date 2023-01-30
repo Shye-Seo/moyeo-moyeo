@@ -37,6 +37,7 @@ public class MasterController {
     private MasterService masterService;
 
     List<MasterVo> staff_list;
+    List<MasterVo> career_list;
     List<MasterVo> report_work_list;
     
     @RequestMapping("/main")
@@ -58,15 +59,6 @@ public class MasterController {
         mav.addObject("event_list", event_list);
         mav.addObject("app_list", app_list);
         mav.addObject("profile_map", profile_map);
-        return mav;
-    }
-
-    // 메인(관리자)
-    @RequestMapping("/main")
-    public ModelAndView main(HttpSession session) throws Exception {
-        ModelAndView mav = new ModelAndView();
-
-
         return mav;
     }
 
@@ -329,76 +321,270 @@ public class MasterController {
         return mav;
     }
 
-    @RequestMapping("/manage_career_forstaff")
-    public ModelAndView manage_career_ForStaff(@RequestParam(value="page", required=false, defaultValue = "1") int page, HttpSession session) {
+    @GetMapping("/manage_career_forstaff")
+    public ModelAndView manage_career_ForStaff(@RequestParam(defaultValue = "1") int page, HttpSession session, String searchKeyword, String startDate, String endDate, String searchDate) {
         // 세션에 저장된 user_id를 가져온다.
         String user_id = (String) session.getAttribute("user_id");
-        int career_size=0; // 페이지 개수 세기(페이징 처리)
+        
+        // 오늘 날짜
+        LocalDate now = LocalDate.now();
+        
+        Calendar cal = Calendar.getInstance();
+        int year_ = now.getYear();
+        int month_ = now.getMonthValue();
+        int day_ = now.getDayOfMonth();
+        cal.set(year_, month_-1, day_);
+        
+        String today = "";
+        
+        if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
+      	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
+        }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
+      	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
+        }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
+      	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
+        }else {
+      	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
+        }
+        
+        int career_size = 0; // 페이지 개수 세기(페이징 처리)
         int career_num; // 페이지 개수 세기(번호 붙히는 용도)
         ModelAndView mav = new ModelAndView();
-        List<MasterVo> career_list = masterService.getListUserApp(user_id);
-        List<MasterVo> career_list_forview = new ArrayList<>();
-        career_num=career_list.size();
+        
+        //총 게시물 수
+        int totalListCnt = masterService.findAllCnt_user(user_id);
+        
+        // 생성인자로  총 게시물 수, 현재 페이지를 전달
+	    PagingVo pagination = new PagingVo(totalListCnt, page);
 
-        // list 객체인 career_list를 반복문 돌려서 행사 모집중 | 합격, 불합격 | 이력서 등록, 미등록 여부 확인
-        for (MasterVo career : career_list) {
-            career.setList_no(career_num);
-            career_num--;
-            career_size++;
-            if(career.getEvent_check() == 1) {
-                int pass_check = masterService.checkStaffPasser(career);
-                if(pass_check == 1) { // 있으면
-                    career.setPass_check(1);
-                    int contract_check = masterService.checkContractFile(career);
-                    if(contract_check == 1) { // 있으면
-                        career.setContract_check(1);
+	    // DB select start index
+	    int startIndex = pagination.getStartIndex();
+	    // 페이지 당 보여지는 게시글의 최대 개수
+	    int pageSize = pagination.getPageSize();
+	    
+        career_list = masterService.getListUserApp(user_id, startIndex, pageSize);
+
+        if(searchKeyword == null && startDate == null && endDate == null) { //키워드&날짜 null (기본상태)
+        	
+        	career_list = masterService.getListUserApp(user_id, startIndex, pageSize);
+        	
+        	career_num = career_list.size();
+        	
+        	// list 객체인 career_list를 반복문 돌려서 행사 모집중 | 합격, 불합격 | 이력서 등록, 미등록 여부 확인
+            for (MasterVo career : career_list) {
+                career.setList_no(career_num);
+                career_num--;
+                career_size++;
+                if(career.getEvent_check() == 1) {
+                    int pass_check = masterService.checkStaffPasser(career);
+                    if(pass_check == 1) { // 있으면
+                        career.setPass_check(1);
+                        int contract_check = masterService.checkContractFile(career);
+                        if(contract_check == 1) { // 있으면
+                            career.setContract_check(1);
+                        }else {
+                            career.setContract_check(0);
+                        }
+                    }else {
+                        career.setPass_check(0);
+                        career.setContract_check(-1);
                     }
-                    else {
-                        career.setContract_check(0);
-                    }
-                }
-                else {
-                    career.setPass_check(0);
+                }else {
+                    career.setPass_check(-1);
                     career.setContract_check(-1);
                 }
-
             }
-            else {
-                career.setPass_check(-1);
-                career.setContract_check(-1);
-            }
-
-        }
+            
+        	mav.addObject("pagination", pagination);
+	    	
+	    }else if(searchKeyword == null && startDate != null && endDate != null) { //날짜검색, 키워드는 null
+	    	
+	    	totalListCnt = masterService.searchUserCnt_date(user_id, startDate,endDate);
+	    	pagination = new PagingVo(totalListCnt, page);
+	    	startIndex = pagination.getStartIndex();
+	    	pageSize = pagination.getPageSize();
+	    	career_list = masterService.user_searchList_date(user_id, startDate, endDate, startIndex, pageSize);
+	    	
+	    	career_num = career_list.size();
+	    	
+	    	// list 객체인 career_list를 반복문 돌려서 행사 모집중 | 합격, 불합격 | 이력서 등록, 미등록 여부 확인
+	        for (MasterVo career : career_list) {
+	            career.setList_no(career_num);
+	            career_num--;
+	            career_size++;
+	            if(career.getEvent_check() == 1) {
+	                int pass_check = masterService.checkStaffPasser(career);
+	                if(pass_check == 1) { // 있으면
+	                    career.setPass_check(1);
+	                    int contract_check = masterService.checkContractFile(career);
+	                    if(contract_check == 1) { // 있으면
+	                        career.setContract_check(1);
+	                    }else {
+	                        career.setContract_check(0);
+	                    }
+	                }else {
+	                    career.setPass_check(0);
+	                    career.setContract_check(-1);
+	                }
+	            }else {
+	                career.setPass_check(-1);
+	                career.setContract_check(-1);
+	            }
+	        }
+	    	
+	    	mav.addObject("pagination", pagination);
+	    	mav.addObject("startDate", startDate);
+	    	mav.addObject("endDate", endDate);
+	    	
+	    }else if(searchKeyword != null && searchDate != null){ 
+	    	startDate = searchDate.substring(0, 10);
+	    	endDate = searchDate.substring(13, 23);
+    		
+	    	if(startDate.equals(today) && endDate.equals(today)) { //키워드검색, 날짜null처리
+	    		
+	    		totalListCnt = masterService.searchUserCnt(user_id, searchKeyword);
+	    		pagination = new PagingVo(totalListCnt, page);
+	    		startIndex = pagination.getStartIndex();
+	    		pageSize = pagination.getPageSize();
+	    		career_list = masterService.user_searchList(user_id, searchKeyword, startIndex, pageSize);
+	    		
+	    		career_num = career_list.size();
+	    		
+	    		// list 객체인 career_list를 반복문 돌려서 행사 모집중 | 합격, 불합격 | 이력서 등록, 미등록 여부 확인
+	            for (MasterVo career : career_list) {
+	                career.setList_no(career_num);
+	                career_num--;
+	                career_size++;
+	                if(career.getEvent_check() == 1) {
+	                    int pass_check = masterService.checkStaffPasser(career);
+	                    if(pass_check == 1) { // 있으면
+	                        career.setPass_check(1);
+	                        int contract_check = masterService.checkContractFile(career);
+	                        if(contract_check == 1) { // 있으면
+	                            career.setContract_check(1);
+	                        }else {
+	                            career.setContract_check(0);
+	                        }
+	                    }else {
+	                        career.setPass_check(0);
+	                        career.setContract_check(-1);
+	                    }
+	                }else {
+	                    career.setPass_check(-1);
+	                    career.setContract_check(-1);
+	                }
+	            }
+	    		
+	    		mav.addObject("pagination", pagination);
+	    		mav.addObject("searchKeyword", searchKeyword);
+	    		mav.addObject("searchDate", searchDate);
+	    		mav.addObject("today", today);
+	    		
+	    	}else { // 키워드&날짜 동시검색
+	    		
+	    		mav.addObject("searchDate", searchDate);
+	    		totalListCnt = masterService.searchUserCnt_keydate(user_id, startDate, endDate, searchKeyword);
+	    		pagination = new PagingVo(totalListCnt, page);
+	    		startIndex = pagination.getStartIndex();
+	    		pageSize = pagination.getPageSize();
+	    		career_list = masterService.user_searchList_keydate(user_id, startDate, endDate, searchKeyword, startIndex, pageSize);
+	    		
+	    		career_num = career_list.size();
+	    		
+	    		// list 객체인 career_list를 반복문 돌려서 행사 모집중 | 합격, 불합격 | 이력서 등록, 미등록 여부 확인
+	            for (MasterVo career : career_list) {
+	                career.setList_no(career_num);
+	                career_num--;
+	                career_size++;
+	                if(career.getEvent_check() == 1) {
+	                    int pass_check = masterService.checkStaffPasser(career);
+	                    if(pass_check == 1) { // 있으면
+	                        career.setPass_check(1);
+	                        int contract_check = masterService.checkContractFile(career);
+	                        if(contract_check == 1) { // 있으면
+	                            career.setContract_check(1);
+	                        }else {
+	                            career.setContract_check(0);
+	                        }
+	                    }else {
+	                        career.setPass_check(0);
+	                        career.setContract_check(-1);
+	                    }
+	                }else {
+	                    career.setPass_check(-1);
+	                    career.setContract_check(-1);
+	                }
+	            }
+	    		
+	    		mav.addObject("pagination", pagination);
+	    		mav.addObject("startDate", startDate);
+	    		mav.addObject("endDate", endDate);
+	    		mav.addObject("searchKeyword", searchKeyword);
+	    		
+	    	}
+	    }
+	    mav.addObject("searchDate", searchDate);
+        
+        // list 객체인 career_list를 반복문 돌려서 행사 모집중 | 합격, 불합격 | 이력서 등록, 미등록 여부 확인
+//        for (MasterVo career : career_list) {
+//            career.setList_no(career_num);
+//            career_num--;
+//            career_size++;
+//            if(career.getEvent_check() == 1) {
+//                int pass_check = masterService.checkStaffPasser(career);
+//                if(pass_check == 1) { // 있으면
+//                    career.setPass_check(1);
+//                    int contract_check = masterService.checkContractFile(career);
+//                    if(contract_check == 1) { // 있으면
+//                        career.setContract_check(1);
+//                    }
+//                    else {
+//                        career.setContract_check(0);
+//                    }
+//                }
+//                else {
+//                    career.setPass_check(0);
+//                    career.setContract_check(-1);
+//                }
+//            }
+//            else {
+//                career.setPass_check(-1);
+//                career.setContract_check(-1);
+//            }
+//        }
 
         // 페이징 처리
         // String 형인 변수 page를 int형으로 변환하여 page_str에 저장
-        int page_str = Integer.parseInt(String.valueOf(page));
-        // totalPage는 staff_list의 크기를 10으로 나눈 몫에 1을 더한 값
-        int totalPage = (career_size / 10) + 1;
-        // 시작 페이지
-        int startPage;
+//        int page_str = Integer.parseInt(String.valueOf(page));
+//        // totalPage는 staff_list의 크기를 10으로 나눈 몫에 1을 더한 값
+//        int totalPage = (career_size / 10) + 1;
+//        // 시작 페이지
+//        int startPage;
 
         // 보이는 페이지 번호 변경
-        if(page % 10 != 0) { startPage = (page / 10) * 10 + 1; }
-        else { startPage = ((page / 10) - 1) * 10 + 1; }
-
-        if(page_str*10>=career_size) {
-            for(int j=(page_str*10)-9;j<=career_size;j++) { // 하나의 게시물에 10개의 정보가 들어간다.
-                // 자료형이 MasterVo인 리스트 career_list에서 j번째 요소를 자료형이 MasterVo인 리스트 career_list_forview에 추가
-                career_list_forview.add(career_list.get(j-1));
-            }
-        }
-        else {
-            for(int j=(page_str*10)-9;j<=page_str*10;j++) { // 하나의 게시물에 10개의 정보가 들어간다.
-                // 자료형이 MasterVo인 리스트 career_list에서에서 j번째 요소를 자료형이 MasterVo인 리스트 career_list_forview에 추가
-                career_list_forview.add(career_list.get(j-1));
-            }
-        }
-
-        mav.addObject("career_list", career_list_forview);
-        mav.addObject("totalPage", totalPage);
-        mav.addObject("page", page_str);
-        mav.addObject("startPage", startPage);
+//        if(page % 10 != 0) { startPage = (page / 10) * 10 + 1; }
+//        else { startPage = ((page / 10) - 1) * 10 + 1; }
+//
+//        if(page_str*10>=career_size) {
+//            for(int j=(page_str*10)-9;j<=career_size;j++) { // 하나의 게시물에 10개의 정보가 들어간다.
+//                // 자료형이 MasterVo인 리스트 career_list에서 j번째 요소를 자료형이 MasterVo인 리스트 career_list_forview에 추가
+//                career_list_forview.add(career_list.get(j-1));
+//            }
+//        }
+//        else {
+//            for(int j=(page_str*10)-9;j<=page_str*10;j++) { // 하나의 게시물에 10개의 정보가 들어간다.
+//                // 자료형이 MasterVo인 리스트 career_list에서에서 j번째 요소를 자료형이 MasterVo인 리스트 career_list_forview에 추가
+//                career_list_forview.add(career_list.get(j-1));
+//            }
+//        }
+//
+//        mav.addObject("career_list", career_list_forview);
+//        mav.addObject("totalPage", totalPage);
+//        mav.addObject("page", page_str);
+//        mav.addObject("startPage", startPage);
+        mav.addObject("career_list", career_list);
+		mav.addObject("nowpage", page);
+        
         return mav;
     }
 

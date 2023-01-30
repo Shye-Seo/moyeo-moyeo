@@ -22,8 +22,8 @@ public class MasterService {
         return masterDao.getListMemberApp(user_id, startIndex, pageSize);
     }
 
-    public List<MasterVo> getListUserApp(String user_id) {
-        return masterDao.getListUserApp(user_id);
+    public List<MasterVo> getListUserApp(String user_id, int startIndex, int pageSize) {
+        return masterDao.getListUserApp(user_id, startIndex, pageSize);
     }
 
     public List<MasterVo> report_work_list() {
@@ -88,6 +88,7 @@ public class MasterService {
     	return masterDao.app_profile_list(event_id);
     }
 
+	/* 관리자 직원관리 페이징 */
 	public int findAllCnt(String user_id) {
 		return masterDao.fintAllCnt(user_id);
 	}
@@ -115,6 +116,36 @@ public class MasterService {
 	public List<MasterVo> staff_searchList_keydate(String user_id, String startDate, String endDate, String searchKeyword, int startIndex, int pageSize) {
 		return masterDao.staff_searchList_keydate(user_id, startDate, endDate, searchKeyword, startIndex, pageSize);
 	}
+
+	/* ----------------사용자 이력관리 페이징----------- */
+	public int findAllCnt_user(String user_id) {
+		return masterDao.findAllCnt_user(user_id);
+	}
+	
+	public int searchUserCnt_date(String user_id, String startDate, String endDate) {
+		return masterDao.searchUserCnt_date(user_id, startDate, endDate);
+	}
+
+	public List<MasterVo> user_searchList_date(String user_id, String startDate, String endDate, int startIndex, int pageSize) {
+		return masterDao.user_searchList_date(user_id, startDate, endDate, startIndex, pageSize);
+	}
+
+	public int searchUserCnt(String user_id, String searchKeyword) {
+		return masterDao.searchUserCnt(user_id, searchKeyword);
+	}
+
+	public List<MasterVo> user_searchList(String user_id, String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.user_searchList(user_id, searchKeyword, startIndex, pageSize);
+	}
+
+	public int searchUserCnt_keydate(String user_id, String startDate, String endDate, String searchKeyword) {
+		return masterDao.searchUserCnt_keydate(user_id, startDate, endDate, searchKeyword);
+	}
+
+	public List<MasterVo> user_searchList_keydate(String user_id, String startDate, String endDate,	String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.user_searchList_keydate(user_id, startDate, endDate, searchKeyword, startIndex, pageSize);
+	}
+
     
     
 }

@@ -28,8 +28,8 @@ public interface MasterDao {
             "inner join staff_application sa on e.id=sa.event_id\n" +
             "inner join user u on sa.staff_id=u.id\n" +
             "where u.user_id=#{user_id}\n" +
-            "order by e.event_startDate desc;")
-    List<MasterVo> getListUserApp(String user_id);
+            "order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
+    List<MasterVo> getListUserApp(String user_id, int startIndex, int pageSize);
 
     //근무기록 리스트(관리자)
     @Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time,"
@@ -97,7 +97,7 @@ public interface MasterDao {
 	@Select("SELECT f.file_name FROM staff_file f inner join staff_application a on f.resume_id = a.resume_id where a.event_id=#{event_id} limit 4")
 	List<String> app_profile_list(int event_id);
 
-	/* 관리자 - 직원관리 페이징처리 */
+	/* 관리자 ----------------- 직원관리 페이징처리 */
 	//검색 전 기본상태
 	@Select("select count(*) from event e" +
             "    inner join staff_application sa on e.id = sa.event_id" +
@@ -148,4 +148,55 @@ public interface MasterDao {
             "	 and (#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})"+
 			"    order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
 	List<MasterVo> staff_searchList_keydate(String user_id, String startDate, String endDate, String searchKeyword,	int startIndex, int pageSize);
+
+	/* -----------사용자 이력관리 페이징------- */
+	@Select ("select count(*) from event e" +
+            "	 inner join staff_application sa on e.id = sa.event_id" +
+            "	 inner join user u on sa.staff_id = u.id" +
+            "	 where u.user_id = #{user_id}")
+	int findAllCnt_user(String user_id);
+
+	//날짜 검색
+	@Select ("select count(*) from event e" +
+            "	 inner join staff_application sa on e.id = sa.event_id" +
+            "	 inner join user u on sa.staff_id = u.id" +
+            "	 where u.user_id = #{user_id} and ((#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate}))")
+	int searchUserCnt_date(String user_id, String startDate, String endDate);
+
+	@Select ("select * from event e" +
+            "	 inner join staff_application sa on e.id = sa.event_id" +
+            "	 inner join user u on sa.staff_id = u.id" +
+            "	 where u.user_id = #{user_id} and ((#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate}))" +
+            "	 order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> user_searchList_date(String user_id, String startDate, String endDate, int startIndex, int pageSize);
+
+	//키워드 검색
+	@Select ("select count(*) from event e" +
+            "	 inner join staff_application sa on e.id = sa.event_id" +
+            "	 inner join user u on sa.staff_id = u.id" +
+            "	 where u.user_id = #{user_id} and e.event_title like concat('%','${searchKeyword}','%')")
+	int searchUserCnt(String user_id, String searchKeyword);
+
+	@Select ("select * from event e" +
+            "	 inner join staff_application sa on e.id = sa.event_id" +
+            "	 inner join user u on sa.staff_id = u.id" +
+            "	 where u.user_id = #{user_id} and e.event_title like concat('%','${searchKeyword}','%')" +
+			"	 order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> user_searchList(String user_id, String searchKeyword, int startIndex, int pageSize);
+
+	//동시 검색
+	@Select("select count(*) from event e" +
+            "    inner join staff_application sa on e.id = sa.event_id" +
+            "    inner join user u on sa.staff_id = u.id" +
+            "    where u.user_id = #{user_id} and e.event_title like concat('%','${searchKeyword}','%')" +
+            "	 and ((#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate}))")
+	int searchUserCnt_keydate(String user_id, String startDate, String endDate, String searchKeyword);
+
+	@Select("select * from event e" +
+            "    inner join staff_application sa on e.id = sa.event_id" +
+            "    inner join user u on sa.staff_id = u.id" +
+            "    where u.user_id = #{user_id} and e.event_title like concat('%','${searchKeyword}','%')" +
+            "	 and ((#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate}))" +
+			"	 order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> user_searchList_keydate(String user_id, String startDate, String endDate, String searchKeyword, int startIndex, int pageSize);
 }

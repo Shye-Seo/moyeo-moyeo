@@ -41,7 +41,6 @@
                         <img src="/imgs/material-view-list.svg">
                         <p>직원현황</p>
                     </div>
-                    
                 </div>
 
                 <div class="area">
@@ -126,7 +125,7 @@
                             <li th:text="${staff.user_birth}" class="birth_area"></li>
                             <li th:text="${staff.user_phone}" class="contact_area"></li>
                             <li th:text="${staff.user_date_join}" class="join_date"></li>
-                            <li th:if="${staff.contract_check == 0}">미등록</li>
+                            <li th:if="${staff.contract_check == 0}"></li>
                             <li th:if="${staff.contract_check == 1}" class="last_arrange">
                                 <a th:href="@{/contract_check(event_id=${staff.event_id}, staff_id=${staff.staff_id})}">보기</a>
                             </li>
