@@ -318,7 +318,7 @@ public class MasterController {
         model.addAttribute("report_work_list", report_work_list);
         return "report_work";
     }
-    
+//    근무기록 리스트(스태프)
     @GetMapping(value="/report_work_ForStaff")
 	public String report_work_ForStaff(ModelMap model, HttpSession session) {
     	 int id = (int)session.getAttribute("id");
@@ -328,6 +328,19 @@ public class MasterController {
     	 
 		return "report_work_ForStaff";
 	}
+    
+//  근무기록 리스트 시간 수정(관리자)
+  @RequestMapping(value="/update_reportwork_time")
+	public String report_work_time_update(@RequestParam(value="numb",  required=false) String num, @ModelAttribute MasterVo masterVo, ModelMap model) {
+  	 System.out.println(masterVo);
+	 System.out.println("yyyyy"+num);
+  	
+	  masterService.report_work_time_update(masterVo);
+	  
+		return "redirect:/report_work";
+	}
+  
+    
     // 이력서 등록
     @RequestMapping("/insert_contract")
     @ResponseBody

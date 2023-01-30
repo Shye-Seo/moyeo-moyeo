@@ -1,5 +1,6 @@
 package com.service.eventus.mappers;
 
+import com.service.eventus.event.EventVo;
 import com.service.eventus.master.MasterVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -44,6 +45,11 @@ public interface MasterDao {
             "inner join eventusdb.event e on swr.event_id=e.id\n" +
             "where staff_id=#{staff_id}")
     List<MasterVo> report_work_list_Staff(int staff_id);
+    
+    //근무기록 시간 수정(관리자)
+    @Update("update staff_work_record set work_start_time = #{work_start_time}, work_end_time = #{work_end_time}, "
+			+ "work_outing_time = #{work_outing_time}, work_comeback_time = #{work_comeback_time} where id = #{staff_id}")
+	int report_work_time_update (MasterVo masterVo);
     
     @Select("select id from user where user_id = #{user_id}")
     int getUserId(String user_id);
