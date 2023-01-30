@@ -78,20 +78,36 @@ $(document).ready(function() {
 	});
 
 	$("[id='check_btn']").click(function() {
-
+		console.log("체크버튼 눌림")
 		var num = $(this).attr('value');
 		var update_btn_num = "li." + num;
 		
-		if($(update_btn_num).siblings(".list_start_area") == null || $(update_btn_num).siblings(".list_start_area") == "" ){
-	     return false;
+		e.preventDefault();
+		
+		var form = $(form).serialize();
+
+		$.ajax({
+			url: $(form).attr('action'),
+			type: "POST",
+			data: {numb : num},
+			success: function(data) {
+				alert("success")
+			}
+		});
+
+		if ($(update_btn_num).siblings(".list_start_area") == null || $(update_btn_num).siblings(".list_start_area") == "") {
+			return false;
 		}
 		return true;
-		/*document.report_worktimeUpdateForm.submit();*/
+		//		document.report_worktimeUpdateForm.submit();
 
 	});
 
 
 });
+function checkform() {
+	document.report_worktimeUpdateForm.submit();
+}
 
 function inputTimeColon(time) {
 

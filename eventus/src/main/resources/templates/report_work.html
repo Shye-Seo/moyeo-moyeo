@@ -105,7 +105,7 @@
                         <li id="total_time_area">소계시간</li>
                         <li id="new_update">수정</li>
                     </ol>
-                    <form id="report_worktimeUpdateForm" name="report_worktimeUpdateForm" action="/update_reportwork_time" method="post" onsubmit="return false">
+                    <form id="report_worktimeUpdateForm" name="report_worktimeUpdateForm" action="/update_reportwork_time" method="post">
                     <ol th:each="report_work : ${report_work_list}" id="list_ol">
                         
                         <li th:text="${report_work.work_date}" id="date_area"></li>
@@ -120,21 +120,21 @@
                         
                         
 <!--                         근무기록 시간 수정 -->
-                        <li class="time_update"><input th:value="${report_work.work_start_time}" id="start_area_input" onKeyup="inputTimeColon(this);" maxlength="7"/></li>
+                        <li class="time_update"><input th:value="${report_work.work_start_time}" id="work_start_time" onKeyup="inputTimeColon(this);" maxlength="7"/></li>
                         <li class="time_update"><input th:value="${report_work.work_outing_time}" id="outing_area_input" onKeyup="inputTimeColon(this);"maxlength="7"/></li>
                         <li class="time_update"><input th:value="${report_work.work_comeback_time}" id="comeback_area_input" onKeyup="inputTimeColon(this);"maxlength="7"/></li>
                         <li class="time_update"><input th:value="${report_work.work_end_time}" id="end_area_input" onKeyup="inputTimeColon(this);" maxlength="7"/></li>
                         
                         <li th:text="${report_work.work_total_time}" id="total_time_area"></li>
                         <li id="new_update" th:class="${report_work.id}"> 
-                        <button id="update_btn" th:value="${report_work.id}">
+                        <button type="button" id="update_btn" th:value="${report_work.id}">
                         <div class="btns_div">
                         <img src="imgs/pen.svg" class="pen_btn" >
                       </div>
                         </button>
-                         <button id="check_btn" th:value="${report_work.id}"><img src="imgs/Icon_material_check.svg" class="check_btn" ></button>
-                         <button id="close_btn" th:value="${report_work.id}"><img src="imgs/Icon_material_close.svg" class="close_btn" ></button></li>
-                         <input type="hidden" id="staff_id" th:value="${report_work.id}">
+                         <button type="submit" id="check_btn" th:value="${report_work.id}"><img src="imgs/Icon_material_check.svg" class="check_btn" onclick="checkform()" ></button>
+                         <button type="button" id="close_btn" th:value="${report_work.id}"><img src="imgs/Icon_material_close.svg" class="close_btn" ></button></li>
+<!--                         <input type="hidden" id="staff_id" th:value="${report_work.id}">-->
                     </ol>
                     </form>
 
