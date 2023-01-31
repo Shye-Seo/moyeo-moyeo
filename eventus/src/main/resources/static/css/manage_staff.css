@@ -335,3 +335,280 @@ pre {
     color: #333;
     border: 1px solid #DDDDDD;
 }
+
+/* 이력서 모달 */
+ #modal_wrap{
+    width: 100%; height: 100%;
+    position: fixed;
+    top: 0; left: 0;
+    display: none;
+}
+
+.modal_bg{
+    width: 100%;
+    height: 100%;
+    background-color: #33333326;
+    position: relative;
+    top: 0; left: 0;
+}
+
+.modal_con_L{
+    width: 39%;
+    max-width: 670px;
+    height: 900px;
+    background-color: #ffffff;
+    display: block;
+    position: absolute;
+    top: calc(50% - 450px);
+    right: 48%;
+    border-radius: 7px;
+    display: none;
+    box-shadow: 3px 3px 6px #99999929;
+}
+
+#resume_wrapper{
+	display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.modal_download_area{
+	display: flex;
+}
+
+.download_area {
+    display: flex;
+    margin-right: 450px;
+}
+
+.download_area #pdf {
+    margin-top: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.download_area #pdf_text {
+    margin-top: 18px;
+    position: relative;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.download_area #pdf_text #pdf_text_ {
+    color: #333333;
+    font-size: 14px;
+    font: normal normal 300 14px/17px Pretendard;
+    letter-spacing: -0.28px;
+}
+
+.resume_close {
+    width: 40px;
+}
+
+.resume_close #close_btn{
+	margin-left: 15px;
+	cursor: pointer;
+}
+
+.resume_line {
+    border: 1px solid;
+    width: 590px;
+    position: relative;
+}
+
+#resume_content{
+	width: 590px;
+}
+
+#resume_content .resume_title #resume_title_text {
+    text-align: right;
+    font: normal normal 600 20px/24px Pretendard;
+    letter-spacing: 5px;
+    color: #333333;
+    margin: 10px 0 50px 0;
+}
+
+#resume_content .resume_staff_info .profile_top{
+	display: flex;
+	margin-bottom: 70px;
+}
+
+.profile_top #resume_img_file {
+    display: flex;
+    align-items: center;
+    margin-right: 100px;
+    width: 130px;
+    height: 130px;
+    border-radius: 65px;
+    overflow: hidden;
+}
+
+.profile_top #resume_img_file #resume_profile_img {
+    width: 130px;
+}
+
+.profile_top #resume_info_area{
+/* 	margin-top: 25px; */
+}
+
+.profile_top #resume_info_area #resume_top_area{
+	display: flex;
+}
+
+.profile_top #resume_info_area #resume_top_area #staff_name{
+	text-align: left;
+    font: normal normal 600 20px/24px Pretendard;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.profile_top #resume_info_area #resume_top_area #staff_age{
+	text-align: left;
+    font: normal normal 600 16px/19px Pretendard;
+    letter-spacing: 0px;
+    color: #000000;
+    margin-left: 10px;
+}
+
+.profile_top #resume_info_area #resume_top_area #div_line {
+    border-left: 1px solid #707070;
+    height: 19px;
+    width: 0;
+    margin: 0 10.5px;
+}
+
+.profile_top #resume_info_area #resume_top_area #staff_gender {
+    text-align: left;
+    font: normal normal 600 16px/19px Pretendard;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.profile_top #resume_info_area #resume_top_area #profile_wrap{
+	display: flex;
+	margin-top: 4px;
+}
+
+.profile_top #resume_info_area #first_info, #second_info, #third_info{
+	display: flex;
+    font: normal normal 600 14px/17px Pretendard;
+    color: #000000;
+}
+
+.profile_top #resume_info_area #first_info{
+	margin-top: 25px;
+}
+
+.profile_top #resume_info_area #second_info{
+	margin-top: 15px;
+}
+
+.profile_top #resume_info_area #third_info{
+	margin-top: 15px;
+}
+
+.profile_top #resume_info_area #first_info #staff_birth{
+	display: flex;
+}
+
+.profile_top #resume_info_area #first_info #staff_phone{
+	display: flex;
+	margin-left: 40px;
+}
+
+#resume_icon {
+/*     width: 17px; */
+/*     height: 17px; */
+    margin-right: 5px;
+}
+
+#resume_info_text{
+	margin-top: 2px;
+}
+
+.resume_school_info{
+/* 	margin-top: 40px; */
+}
+
+.resume_table_title{
+	text-align: left;
+    font: normal normal 600 18px/21px Pretendard;
+    letter-spacing: 0px;
+    color: #333333;
+    margin-bottom: 7px;
+}
+
+.resume_school_info .resume_table_school .table_row{
+	display: flex;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.resume_school_info .resume_table_school #table_top li{
+	color: #999999;
+	background-color: #F2F8FF;
+	border-top: 1px solid #5B8FD2;
+}
+
+.resume_school_info .resume_table_school .table_row li{
+	border-bottom: 1px solid #DDDDDD;
+	padding: 15px 10px;
+}
+
+.resume_school_info .resume_table_school .table_row li:first-child{
+	width: 35%;
+}
+
+.resume_school_info .resume_table_school .table_row li:nth-child(2){
+	width: 35%;
+}
+
+.resume_school_info .resume_table_school .table_row li:nth-child(3){
+	width: 10%;
+	text-align: center;
+}
+
+.resume_school_info .resume_table_school .table_row li:nth-child(4){
+	width: 10%;
+	text-align: center;
+}
+
+.resume_school_info .resume_table_school .table_row li:nth-child(5){
+	width: 10%;
+	text-align: center;
+}
+
+.resume_career_info{
+	margin-top: 60px;
+	margin-bottom: 300px;
+}
+
+.resume_career_info .resume_table_career .table_row{
+	display: flex;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.resume_career_info .resume_table_career #table_top li{
+	color: #999999;
+	background-color: #F2F8FF;
+	border-top: 1px solid #5B8FD2;
+}
+
+.resume_career_info .resume_table_career .table_row li{
+	border-bottom: 1px solid #DDDDDD;
+	padding: 15px 10px;
+}
+
+.resume_career_info .resume_table_career .table_row li:first-child{
+	width: 30%;
+}
+
+.resume_career_info .resume_table_career .table_row li:nth-child(2){
+	width: 30%;
+}
+
+.resume_career_info .resume_table_career .table_row li:nth-child(3){
+	width: 30%;
+}
