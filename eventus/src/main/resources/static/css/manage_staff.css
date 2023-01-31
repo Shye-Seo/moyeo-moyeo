@@ -353,15 +353,13 @@ pre {
 }
 
 .modal_con_L{
-    width: 39%;
-    max-width: 670px;
-    height: 900px;
+    width: 47%;
+    min-width: 700px;
     background-color: #ffffff;
     display: block;
     position: absolute;
-    top: calc(50% - 450px);
-    right: 48%;
-    border-radius: 7px;
+    top: 0;
+    right: 0;
     display: none;
     box-shadow: 3px 3px 6px #99999929;
 }
@@ -370,26 +368,30 @@ pre {
 	display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 15px;
+    padding: 20px;
 }
 
 .modal_download_area{
 	display: flex;
+	width: 100%;
+    margin-bottom: 77px;
 }
 
 .download_area {
     display: flex;
-    margin-right: 450px;
+    margin-right: 80%;
+    margin-left: 15px;
+    width: 15%;
 }
 
 .download_area #pdf {
-    margin-top: 20px;
+    margin-top: 10px;
     position: relative;
     cursor: pointer;
 }
 
 .download_area #pdf_text {
-    margin-top: 18px;
+    margin-top: 8px;
     position: relative;
     margin-left: 5px;
     cursor: pointer;
@@ -403,11 +405,11 @@ pre {
 }
 
 .resume_close {
-    width: 40px;
+    width: 5%;
 }
 
 .resume_close #close_btn{
-	margin-left: 15px;
+/* 	margin-left: 15px; */
 	cursor: pointer;
 }
 
@@ -557,26 +559,28 @@ pre {
 }
 
 .resume_school_info .resume_table_school .table_row li:first-child{
-	width: 35%;
+	width: 25%;
+	padding-left: 20px;
 }
 
 .resume_school_info .resume_table_school .table_row li:nth-child(2){
-	width: 35%;
+	width: 23%;
 }
 
 .resume_school_info .resume_table_school .table_row li:nth-child(3){
-	width: 10%;
+	width: 17.5%;
 	text-align: center;
 }
 
 .resume_school_info .resume_table_school .table_row li:nth-child(4){
-	width: 10%;
+	width: 17.5%;
 	text-align: center;
 }
 
 .resume_school_info .resume_table_school .table_row li:nth-child(5){
-	width: 10%;
+	width: 15%;
 	text-align: center;
+/* 	padding-right: 20px; */
 }
 
 .resume_career_info{
@@ -602,13 +606,20 @@ pre {
 }
 
 .resume_career_info .resume_table_career .table_row li:first-child{
-	width: 30%;
+	width: 25%;
+	padding-left: 20px;
 }
 
 .resume_career_info .resume_table_career .table_row li:nth-child(2){
-	width: 30%;
+	width: 25%;
 }
 
 .resume_career_info .resume_table_career .table_row li:nth-child(3){
-	width: 30%;
+	width: 35%;
+}
+
+.resume_career_info .resume_table_career .table_row li:nth-child(4){
+	width: 15%;
+	text-align:right;
+	padding-right:20px;
 }
