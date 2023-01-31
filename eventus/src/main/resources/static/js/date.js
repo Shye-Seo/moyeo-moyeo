@@ -85,48 +85,58 @@ $(document).ready(function() {
 		var out = $(update_btn_num).siblings().children("#outing_area_input").val();
 		var back = $(update_btn_num).siblings().children("#comeback_area_input").val();
 		var end = $(update_btn_num).siblings().children("#end_area_input").val();
-		
-		if(start == null || start ==="") {
+
+		// 출근시간, 퇴근시간 필수 입력 값
+		if (start == null || start == "") {
 			alert("출근시간을 기록해 주세요.")
 			return false;
-		} else if(end == null || end ==="") {
+		} else if (end == null || end == "") {
 			alert("퇴근시간을 기록해 주세요.")
 			return false;
-		} else if(out == null || out ==="") {
-			alert("외출시간을 기록해 주세요.")
-			return false;
-		} else if(back == null || back ==="") {
-			alert("복귀시간을 기록해 주세요.")
-			return false;
-		} 
-		
-		if(start.indexOf(":") == -1 || start.length < 5 ) {
-			alert("형식이 알맞지 않습니다.")
-			return false;
-		} else if(end.indexOf(":") == -1 || end.length < 5 ) {
-			alert("형식이 알맞지 않습니다.")
-			return false;
-		} else if(out.indexOf(":") == -1 || out.length < 5 ) {
-			alert("형식이 알맞지 않습니다.")
-			return false;
-		} else if(back.indexOf(":") == -1 || back.length < 5 ) {
-			alert("형식이 알맞지 않습니다.")
-			return false;
 		}
+	
+		
+		//시간 형식 
+		if (start != null || start != "") {
+			if (start.indexOf(":") == -1 || start.length < 5) {
+				alert("출근시간 형식이 알맞지 않습니다.")
+				return false;
+			}
+		}
+		if (end != null || end != "") {
+			if (end.indexOf(":") == -1 || end.length < 5) {
+				alert("퇴근시간 형식이 알맞지 않습니다.")
+				return false;
+			}
+		}
+		if (out.length > 0) {
+			if (out.indexOf(":") == -1 || out.length < 5) {
+				alert("외출시간 형식이 알맞지 않습니다.")
+				return false;
+			} 
+		}
+
+		if (back.lenth > 0) {
+			if (back.indexOf(":") == -1 || back.length < 5) {
+				alert("복귀시간 형식이 알맞지 않습니다.")
+				return false;
+			}
+		}
+
 		$.ajax({
 			url: "/update_reportwork_time",
 			type: "POST",
-			data: { 
+			data: {
 				numb: num,
-				start : start ,
-				end : end,
-				out : out,
-				back : back
-				},
+				start: start,
+				end: end,
+				out: out,
+				back: back
+			},
 			success: function(data) {
 				alert("입력 완료");
 				window.location.reload();
-//				$('.area').load(location.href+' .area');
+				//				$('.area').load(location.href+' .area');
 			}
 		});
 
