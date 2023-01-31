@@ -13,53 +13,22 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
     <script src="/js/date.js"></script>
+    
+    <!-- daterangepicker css -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	 
+	<!-- daterangepicker js -->
+<!-- 	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </head>
 <script>
 
   </script>
 <body>
-<div id="wrap">
-    <!-- fixed menu -->
-<!--     <div class="sidebar"> -->
-<!--         <a href="/main" class="logo"> -->
-<!--             <img src="/imgs/logo.png" alt="eventusLAB"> -->
-<!--         </a> -->
-<!--         <ul class="menu-categories"> -->
-<!--             <li class="menu"> -->
-<!--                 <a href="/main"> -->
-<!--                     <div> -->
-<!--                         <img src="/imgs/main.svg" alt="main"> -->
-<!--                         <span>메인</span> -->
-<!--                     </div> -->
-<!--                 </a> -->
-<!--             </li> -->
-<!--             <li class="menu"> -->
-<!--                 <a href="/manage_event"> -->
-<!--                     <div> -->
-<!--                         <img src="/imgs/schedule.svg" alt="schedule"> -->
-<!--                         <span>행사관리</span> -->
-<!--                     </div> -->
-<!--                 </a> -->
-<!--             </li> -->
-<!--             <li class="menu"> -->
-<!--                 <a href="/manage_staff"> -->
-<!--                     <div> -->
-<!--                         <img src="/imgs/stafflist.svg" alt="stafflist"> -->
-<!--                         <span>직원관리</span> -->
-<!--                     </div> -->
-<!--                 </a> -->
-<!--             </li> -->
-<!--             <li class="menu"> -->
-<!--                 <a href="/report_work"> -->
-<!--                     <div> -->
-<!--                         <img src="/imgs/timesheet.svg" alt="timesheet"> -->
-<!--                         <span>근무기록</span> -->
-<!--                     </div> -->
-<!--                 </a> -->
-<!--             </li> -->
-<!--         </ul> -->
-<!--     </div> -->
-<div th:replace="~{common/side :: sidebar_manage ('timesheet')}"></div>
+	<div id="wrap">
+		<div th:replace="~{common/side :: sidebar_manage ('timesheet')}"></div>
+		
     <!-- main -->
     <div class="content">
         <div class="container">
@@ -82,41 +51,92 @@
             </div>
 
             <div class="area">
-            <form action="Search">
-                <div class="search_area">
-                    <input type="text" id="s_calendar">
-                    <input type="text" id="e_calendar">
-                    <input type="text" class="word_search">
+            	<div class="search_area">
+                	<form id="searchForm" th:action="@{/report_work_ForStaff}" method="get">
+	                	<div class="date_search">
+	                    	<div class="date_input">
+	                        	<input type="text" name="searchDate" th:placeholder="${firstDate}+' - '+${lastDate}" id="searchDate" th:if="${startDate == null && endDate == null}">
+	                        	<input type="text" name="searchDate" th:value="${startDate}+' - '+${endDate}" id="searchDate" th:if="${startDate != null && endDate != null}">
+		                    </div>
+		                    <div class="calendar_button">
+	                      		<button type="button" class="search_img" onclick="calendar();"><img src="imgs/register-calendar.svg"></button>
+	                        </div>
+	                    </div>
+	                    <div class="text_search">
+	                    	<input type="text" class="word_search" placeholder="검색" name="searchKeyword" th:if="${searchKeyword == null}">
+	                        <input type="text" class="word_search" th:value="${searchKeyword}" name="searchKeyword" th:if="${searchKeyword != null}">
+	                        <div class="search_button">
+	                        	<button type="submit" class="search_img"><img src="imgs/search_btn.svg"></button>
+	                        </div>
+	                    </div>
+					</form>
                 </div>
-                </form>
-
+                
+                <script>
+						function calendar(){
+							$('#searchDate').trigger('click');
+						}
+						
+                    	$("#searchDate").daterangepicker({
+                    		"autoApply":true,	//날짜 선택하면 input에 자동적용
+                    		"opens":'left',		//왼쪽으로 open
+                    	    locale: {
+                    	    "separator": " - ",          // 시작일시와 종료일시 구분자
+                    	    "format": 'YYYY.MM.DD',     // 일시 노출 포맷
+//                     	    "applyLabel": "확인",                    // 확인 버튼 텍스트
+//                     	    "cancelLabel": "취소",                   // 취소 버튼 텍스트
+                    	    "daysOfWeek": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+                    	    "monthNames": ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    	    },
+                    	    timePicker: false,                        // 시간 노출 여부
+                    	    showDropdowns: true,                     // 년월 수동 설정 여부
+                    	    timePicker24Hour: false,                  // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
+                    	    timePickerSeconds: false,                 // 초 노출 여부
+                    	    singleDatePicker: false,                   // 하나의 달력 사용 여부
+                    	    linkedCalendars: false					  //각 달력 <>연결해서 이동되지 않도록 false
+                    	}, function (start, end, label) {
+                    		console.log('선택된 날짜: ' + start.format('YYYY.MM.DD') + ' to ' + end.format('YYYY.MM.DD'));
+                    		searchDate(start.format('YYYY.MM.DD'), end.format('YYYY.MM.DD'));
+                    	});
+                    	
+                    	function searchDate(start,end){
+	                    	$.ajax({
+	                			url : "/report_work_ForStaff",
+	                			type : 'get',
+	                			data : {startDate:start, endDate:end},
+	                			success: function(data){
+	                				window.location.href = "/report_work_ForStaff?startDate="+start+"&endDate="+end;
+	                			}
+	                		});
+                    	}
+                    	 
+                    </script>
 
                 <ul class="list">
-                    <ol id="title_area">
-                        <li id="date_area">일자</li>
-                        <!--                             <li>요일</li> -->
-                        <li id="event_area">행사명</li>
-                        <li id="name_area">이름</li>
-                        <li id="contact_area">연락처</li>
-                        <li id="start_area">출근</li>
-                        <li id="outing_area">외출</li>
-                        <li id="comeback_area">복귀</li>
-                        <li id="end_area">퇴근</li>
-                        <li id="total_time_area">소계시간</li>
-                        <li id="new_update">수정</li>
+                    <ol id="top_ol">
+                        <div id="date_area"><li>일자</li></div>
+                        <div id="event_area"><li>행사명</li></div>
+                        <div id="name_area"><li>이름</li></div>
+                        <div id="contact_area"><li>연락처</li></div>
+                        <div id="start_area"><li>출근</li></div>
+                        <div id="outing_area"><li>외출</li></div>
+                        <div id="comeback_area"><li>복귀</li></div>
+                        <div id="end_area"><li>퇴근</li></div>
+                        <div id="total_time_area"><li>소계시간</li></div>
+                        <div id="new_update"><li>수정</li></div>
                     </ol>
 <!--                    <form id="report_worktimeUpdateForm" name="report_worktimeUpdateForm" action="/update_reportwork_time" method="post">-->
-                    <ol th:each="report_work : ${report_work_list}" id="list_ol">
+                    <ol th:each="report_work : ${report_work_list}" class="list_ol">
                         
-                        <li th:text="${report_work.work_date}" id="date_area"></li>
-                        <li th:text="${report_work.event_title}" id="event_area"></li>
-                        <li th:text="${report_work.user_name}" id="name_area"></li>
-                        <li th:text="${report_work.user_phone}" id="contact_area"></li>
+                        <div id="date_area"><li th:text="${report_work.work_date}"></li></div>
+                        <div id="event_area"><li th:text="${report_work.event_title}"></li></div>
+                        <div id="name_area"><li th:text="${report_work.user_name}"></li></div>
+                        <div id="contact_area"><li th:text="${report_work.user_phone}"></li></div>
                         
-                        <li th:text="${report_work.work_start_time}" id="start_area" class="list_start_area"></li>
-                        <li th:text="${report_work.work_outing_time}" id="outing_area" class="list_outing_area"></li>
-                        <li th:text="${report_work.work_comeback_time}" id="comeback_area" class="list_comeback_area"></li>
-                        <li th:text="${report_work.work_end_time}" id="end_area" class="list_end_area"></li>
+                        <div id="start_area"><li th:text="${report_work.work_start_time}" class="list_start_area"></li></div>
+                        <div id="outing_area"><li th:text="${report_work.work_outing_time}" class="list_outing_area"></li></div>
+                        <div id="comeback_area"><li th:text="${report_work.work_comeback_time}" class="list_comeback_area"></li></div>
+                        <div id="end_area"><li th:text="${report_work.work_end_time}" class="list_end_area"></li></div>
                         
                         
 <!--                         근무기록 시간 수정 -->
@@ -139,19 +159,8 @@
 <!--                    </form>-->
 
                 </ul>
-            </div>
-
-
-            <!-- 페이징 처리(Unix 참조) -->
-            <div>
-                <ul>
-                    <!-- 이전 -->
-
-                    <!-- 번호 -->
-
-                    <!-- 다음 -->
-
-                </ul>
+                
+                
             </div>
         </div>
     </div>

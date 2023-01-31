@@ -138,7 +138,7 @@ button{
 }
 
 #event_area {
-	width: 10%;
+	width: 25%;
 	text-align: center;
 	white-space: nowrap;
 	overflow: hidden;
@@ -147,19 +147,25 @@ button{
 }
 
 #name_area {
-	width: 4%;
+	width: 7%;
 	text-align: center;
+}
+
+#name_area li {
 	color: #5b8fd2;
 }
 
 #contact_area {
-	width: 8%;
+	width: 13%;
 	text-align: center;
+}
+
+#contact_area li {
 	color: #5b8fd2;
 }
 
 #start_area, #outing_area, #comeback_area, #end_area, #total_time_area {
-	width: 5%;
+	width: 8%;
 	text-align: center;
 }
 
@@ -169,6 +175,7 @@ button{
 
 #new_update {
 	width: 4%;
+	text-align: center;
 }
 
 #update_btn, #check_btn, #close_btn {
@@ -210,7 +217,7 @@ button{
 	display:flex;
 }
 .pen_btn {
-padding-left:10px;
+/* padding-left:10px; */
 }
 #check_btn, #close_btn {
 /* 	width:50%; */
