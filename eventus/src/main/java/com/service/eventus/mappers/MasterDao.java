@@ -3,6 +3,8 @@ package com.service.eventus.mappers;
 import com.service.eventus.event.ApplicationVo;
 import com.service.eventus.event.EventVo;
 import com.service.eventus.master.MasterVo;
+import com.service.eventus.master.WorkLogVo;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -16,7 +18,7 @@ import java.util.List;
 public interface MasterDao {
 
     // 주최한 행사에 지원해서 합격한 근로자들 목록 전부 출력
-    @Select("select event_id, staff_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join from event e" +
+    @Select("select event_id, staff_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from event e" +
             "    inner join staff_application sa on e.id = sa.event_id" +
             "    inner join user u on sa.staff_id = u.id" +
             "    where e.user_id = #{user_id}" +
@@ -46,6 +48,7 @@ public interface MasterDao {
             "inner join eventusdb.event e on swr.event_id=e.id\n" +
             "where staff_id=#{staff_id}")
     List<MasterVo> report_work_list_Staff(int staff_id);
+    
     //근무기록 리스트(스태프)_메인용
     @Select("select event_title, work_date, work_start_time, work_end_time, work_outing_time, work_comeback_time, work_total_time from eventusdb.staff_work_record swr\n" +
     		"inner join eventusdb.event e on swr.event_id=e.id\n" +
@@ -55,7 +58,7 @@ public interface MasterDao {
     //근무기록 시간 수정(관리자)
     @Update("update staff_work_record set work_start_time = #{work_start_time}, work_end_time = #{work_end_time}, "
 			+ "work_outing_time = #{work_outing_time}, work_comeback_time = #{work_comeback_time} where id = #{staff_id}")
-	int report_work_time_update (MasterVo masterVo);
+	int report_work_time_update (String work_start_time, String work_end_time, String work_outing_time, String work_comeback_time, int staff_id);
     
     @Select("select id from user where user_id = #{user_id}")
     int getUserId(String user_id);
@@ -96,6 +99,9 @@ public interface MasterDao {
 	List<EventVo> select_app_manage();
 	@Select("SELECT f.file_name FROM staff_file f inner join staff_application a on f.resume_id = a.resume_id where a.event_id=#{event_id} limit 4")
 	List<String> app_profile_list(int event_id);
+	//메인 직원근무기록_manage
+	@Select("SELECT * FROM work_log order by created_at desc limit 8")
+	List<WorkLogVo> selet_work_log();
 
 	/* 관리자 ----------------- 직원관리 페이징처리 */
 	//검색 전 기본상태
@@ -112,7 +118,7 @@ public interface MasterDao {
             "    where e.user_id = #{user_id} and (#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})")
 	int searchCnt_date(String user_id, String startDate, String endDate);
 
-	@Select("select event_id, staff_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join from event e" +
+	@Select("select event_id, staff_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from event e" +
             "    inner join staff_application sa on e.id = sa.event_id" +
             "    inner join user u on sa.staff_id = u.id" +
             "    where e.user_id = #{user_id} and (#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})" +

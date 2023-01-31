@@ -106,29 +106,30 @@
                     </script>
 
                     <ul class="list">
-                        <ol class="top_ol">
-                            <li class="no_area">No</li>
-                            <li class="title_area">행사명</li>
-                            <li class="date_area">행사기간</li>
-                            <li class="pass_area">합격여부</li>
-                            <li class="contrac_area">근로계약서</li>
+                        <ol id="top_ol">
+                            <div class="no_area"><li>No</li></div>
+                            <div class="title_area"><li>행사명</li></div>
+                            <div class="date_area"><li>행사기간</li></div>
+                            <div class="pass_area"><li>합격여부</li></div>
+                            <div class="contrac_area"><li>근로계약서</li></div>
                         </ol>
                         <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
-                        <ol th:block th:each="career : ${career_list}">
-                            <li th:text="${pagination.totalListCnt - careerStat.index - ((nowpage - 1)*10)}" class="no_area"></li>
-                            <li th:text="${career.event_title}" class="title_area"></li>
-                            <li th:text="${career.event_startDate} + ' - ' + ${career.event_endDate}" class="date_area"></li>
-                            <li th:if="${career.event_check == 0}" class="pass_area">대기중</li>
-
-                            <li th:if="${career.pass_check == 0}" class="pass_area">불합격</li>
-                            <li th:if="${career.pass_check == 1}" class="pass_area">합격</li>
-
-
-                            <li th:if="${career.contract_check == 1}" class="contrac_area">등록완료</li>
-                            <li th:if="${career.contract_check == 0}" class="contrac_area">
-                                <input th:name="${career.event_id}" type="button" class="contract_add" value="미등록">
-                            </li>
-                            <li th:if="${career.event_check == 0}" class="contrac_area"></li>
+                        <ol th:block th:each="career : ${career_list}" class="list_ol">
+                            <div class="no_area"><li th:text="${pagination.totalListCnt - careerStat.index - ((nowpage - 1)*10)}"></li></div>
+                            <div class="title_area"><li th:text="${career.event_title}"></li></div>
+                            <div class="date_area"><li th:text="${career.event_startDate} + ' - ' + ${career.event_endDate}"></li></div>
+                            <div class="pass_area">
+	                            <li th:if="${career.event_check == 0}">대기중</li>
+	                            <li th:if="${career.pass_check == 0}">불합격</li>
+	                            <li th:if="${career.pass_check == 1}">합격</li>
+                            </div>
+                            <div class="contrac_area">
+	                            <li th:if="${career.contract_check == 1}">등록완료</li>
+	                            <li th:if="${career.contract_check == 0}">
+	                                <input th:name="${career.event_id}" type="button" class="contract_add" value="미등록">
+	                            </li>
+	                            <li th:if="${career.event_check == 0}"></li>
+                            </div>
                         </ol>
                     </ul>
 

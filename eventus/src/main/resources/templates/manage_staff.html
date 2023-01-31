@@ -106,29 +106,33 @@
                     </script>
                     
                     <ul class="list">
-                        <ol class="top_ol">
-                            <li class="no_area">No</li>
-                            <li class="event_area">행사명</li>
-                            <li class="name_area">이름</li>
-                            <li class="gender_area">성별</li>
-                            <li class="birth_area">생년월일</li>
-                            <li class="contact_area">연락처</li>
-                            <li class="join_date">이력서</li>
-                            <li>근로계약서</li>
+                        <ol id="top_ol">
+                            <div class="index_area"><li>No</li></div>
+                            <div class="event_area"><li>행사명</li></div>
+                            <div class="workdate_area"><li>근무기간</li></div>
+                            <div class="name_area"><li>이름</li></div>
+                            <div class="gender_area"><li>성별</li></div>
+                            <div class="birth_area"><li>생년월일</li></div>
+                            <div class="phone_area"><li>연락처</li></div>
+                            <div class="resume_area"><li>이력서</li></div>
+                            <div class="contact_area"><li>근로계약서</li></div>
                         </ol>
                         <!-- db에서 가져온 mastervo 데이터를 thymeleaf를 사용하여 출력 -->
-                        <ol th:block th:each="staff : ${staff_list}">
-                            <li th:text="${pagination.totalListCnt - staffStat.index - ((nowpage - 1)*10)}" class="no_area"></li>
-                            <li th:text="${staff.event_title}" class="event_area"></li>
-                            <li th:text="${staff.user_name}" class="name_area"></li>
-                            <li th:text="${staff.user_gender}" class="gender_area"></li>
-                            <li th:text="${staff.user_birth}" class="birth_area"></li>
-                            <li th:text="${staff.user_phone}" class="contact_area"></li>
-                            <li th:text="${staff.user_date_join}" class="join_date"></li>
-                            <li th:if="${staff.contract_check == 0}"></li>
-                            <li th:if="${staff.contract_check == 1}" class="last_arrange">
-                                <a th:href="@{/contract_check(event_id=${staff.event_id}, staff_id=${staff.staff_id})}">보기</a>
-                            </li>
+                        <ol th:block th:each="staff : ${staff_list}" class="list_ol">
+                            <div class="index_area"><li th:text="${pagination.totalListCnt - staffStat.index - ((nowpage - 1)*10)}"></li></div>
+                            <div class="event_area"><li th:text="${staff.event_title}"></li></div>
+                            <div class="workdate_area"><li th:text="${staff.event_startDate + '-' + staff.event_endDate}"></li></div>
+                            <div class="name_area"><li th:text="${staff.user_name}"></li></div>
+                            <div class="gender_area"><li th:text="${staff.user_gender}"></li></div>
+                            <div class="birth_area"><li th:text="${staff.user_birth}"></li></div>
+                            <div class="phone_area"><li th:text="${staff.user_phone}"></li></div>
+                            <div class="resume_area"><li></li></div>
+                            <div class="contact_area">
+	                            <li th:if="${staff.contract_check == 0}"></li>
+	                            <li th:if="${staff.contract_check == 1}">
+	                                <a th:href="@{/contract_check(event_id=${staff.event_id}, staff_id=${staff.staff_id})}">보기</a>
+	                            </li>
+                            </div>
                         </ol>
                     </ul>
                     
