@@ -9,28 +9,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.12/jsrender.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="/js/main.js"></script>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
     <div id="wrap">
-    
-        <!-- 어떤 메뉴를 쓸지 파라미터로 넘겨야 합니다 -->
-
-    <!-- 
-
-        사이드바가 올 자리에
-        <div th:replace="~{common/side :: sidebar_manage ('***')}"></div>
-
-        *** ↓↓↓
-        메인 = main
-        행사관리 = schedule
-        직원관리 = stafflist
-        근무기록 = timesheet
-
-
-
-     -->
     
     <div th:replace="~{common/side :: sidebar_manage ('main')}"></div>
         <!-- main -->
@@ -87,17 +71,22 @@
                             <a class="link" href="/manage_staff">더보기</a>
                             <div class="staff_list">
                                 <div class="staff_date">
-                                    <p>2022.08.01 (수)</p>
+                                    <p>[[${today}]]</p>
                                     <div></div>
                                 </div>
                                 <div class="staff_line" th:each=" workLog : ${workLog_list}">
-                                    <div class="profile_img" style="background-color: brown;"></div>
+                                    <div class="profile_img">
+                                        <img th:src="'https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/'+${workLog.file_name}" alt="profile" onerror="this.src='/imgs/profile_none_img.svg'">
+                                    </div>
                                     <div class="staff_info">
                                         <p>[[${workLog.staff_name}]]</p>
                                         <p>[[${workLog.event_name}]]</p>
                                     </div>
-                                    <div class="staff_time">08:00 AM</div>
-                                    <div class="staff_btn start"></div>
+                                    <div class="staff_time time_set">[[${workLog.work_time}]]</div>
+                                    <div th:if="${workLog.work_state == 1}" class="staff_btn start"></div>
+                                    <div th:if="${workLog.work_state == 2}" class="staff_btn outing"></div>
+                                    <div th:if="${workLog.work_state == 3}" class="staff_btn comeback"></div>
+                                    <div th:if="${workLog.work_state == 4}" class="staff_btn end"></div>
                                 </div>
                             </div>
                         </div>
@@ -106,55 +95,5 @@
             </div>
         </div>
     </div>
-    <script>
-        const box_count =  $(".event_box_in").children().length;
-        const inbox_width = box_count * 250 - 800;
-        $(function(){
-            $(".date_set").each(function(){
-                let date = $(this).text();
-                date = date.substring(0,10);
-                let result = date.replace(/-/g, '.');
-                $(this).text(result);
-            })
-
-            $('.event_box_in').draggable({
-                "axis": "x",
-                stop: function() {
-                    if($(this).position().left > 0){
-                        $(this).css('left','0')
-                    }
-                    if($(this).position().left < -inbox_width){
-                        $(this).css('left',-inbox_width+'px')
-                    }
-                }
-            });
-        })
-
-        // 최근행사 버튼
-        function list_next(){
-            let left_num = $('.event_box_in').position().left;
-            if(left_num > -inbox_width){
-                left_num -= 750;
-                if(left_num < -inbox_width){
-                    left_num = -inbox_width
-                }
-            }else{
-                return false;
-            }
-            $('.event_box_in').animate({left : left_num+'px'},300);
-        }
-        function list_pre(){
-            let left_num = $('.event_box_in').position().left;
-            if(left_num < 0){
-                left_num += 750;
-                if(left_num > 0){
-                    left_num = 0;
-                }
-            }else{
-                return false;
-            }
-            $('.event_box_in').animate({left : left_num+'px'},300);
-        }
-    </script>
 </body>
 </html>

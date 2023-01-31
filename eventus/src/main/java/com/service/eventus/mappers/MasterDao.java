@@ -101,7 +101,8 @@ public interface MasterDao {
 	@Select("SELECT f.file_name FROM staff_file f inner join staff_application a on f.resume_id = a.resume_id where a.event_id=#{event_id} limit 4")
 	List<String> app_profile_list(int event_id);
 	//메인 직원근무기록_manage
-	@Select("SELECT * FROM work_log order by created_at desc limit 8")
+	@Select("SELECT l.staff_id, l.staff_name, l.event_name, l.work_time, l.work_state, f.file_name FROM work_log l left join (SELECT a.event_id, a.staff_id, f.file_name from staff_application a left join staff_file f on a.resume_id = f.resume_id and a.staff_id = f.staff_id) f "
+			+ "on l.staff_id=f.staff_id and l.event_id = f.event_id where created_at > curdate() order by created_at desc limit 8")
 	List<WorkLogVo> selet_work_log();
 
 	/* 관리자 ----------------- 직원관리 페이징처리 */

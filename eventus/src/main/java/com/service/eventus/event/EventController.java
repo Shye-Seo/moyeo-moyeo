@@ -536,7 +536,7 @@ public class EventController {
 		String start_time = now.format(formatter);
 		
 		eventService.record_startTime(record_id, event_id, staff_id, work_date, start_time);
-		eventService.insert_work_log(staff_id, staff_name, event_title, start_time, 1);
+		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, start_time, 1);
 		return start_time;
 	}
 	
@@ -552,7 +552,7 @@ public class EventController {
         String out_time = now.format(formatter);
         
 		eventService.record_outTime(record_id, event_id, staff_id, work_date, out_time);
-		eventService.insert_work_log(staff_id, staff_name, event_title, out_time, 2);
+		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, out_time, 2);
 		return out_time;
 	}
 	
@@ -568,7 +568,7 @@ public class EventController {
         String back_time = now.format(formatter);
         
 		eventService.record_backTime(record_id, event_id, staff_id, work_date, back_time);
-		eventService.insert_work_log(staff_id, staff_name, event_title, back_time, 3);
+		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, back_time, 3);
 		return back_time;
 	}
 	
@@ -584,7 +584,7 @@ public class EventController {
         String end_time = now.format(formatter);
         
 		eventService.record_endTime(record_id, event_id, staff_id, work_date, end_time);
-		eventService.insert_work_log(staff_id, staff_name, event_title, end_time, 4);
+		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, end_time, 4);
 		return end_time;
 	}
 	
@@ -601,7 +601,7 @@ public class EventController {
 		String start_time = now.format(formatter);
 		
 		eventService.record_startTime_new(event_id, staff_id, work_date, start_time);
-		eventService.insert_work_log(staff_id, staff_name, event_title, start_time, 1);
+		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, start_time, 1);
 		return start_time;
 	}
 	
@@ -617,7 +617,7 @@ public class EventController {
         String out_time = now.format(formatter);
         
 		eventService.record_outTime_new(event_id, staff_id, work_date, out_time);
-		eventService.insert_work_log(staff_id, staff_name, event_title, out_time, 2);
+		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, out_time, 2);
 		return out_time;
 	}
 	
@@ -633,7 +633,7 @@ public class EventController {
         String back_time = now.format(formatter);
         
 		eventService.record_backTime_new(event_id, staff_id, work_date, back_time);
-		eventService.insert_work_log(staff_id, staff_name, event_title, back_time, 3);
+		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, back_time, 3);
 		return back_time;
 	}
 	
@@ -649,7 +649,7 @@ public class EventController {
         String end_time = now.format(formatter);
         
 		eventService.record_endTime_new(event_id, staff_id, work_date, end_time);
-		eventService.insert_work_log(staff_id, staff_name, event_title, end_time, 4);
+		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, end_time, 4);
 		return end_time;
 	}
 	
