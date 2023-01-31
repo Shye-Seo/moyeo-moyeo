@@ -12,4 +12,7 @@ public class WorkLogVo {
 	private int work_state;
 	private String created_at;
 	
+	//프로필사진
+	private String file_name;
+	
 }

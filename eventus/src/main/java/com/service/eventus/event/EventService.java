@@ -211,8 +211,8 @@ public class EventService {
 	}
 	
 	//근무기록로그
-	public boolean insert_work_log(int staff_id, String staff_name, String event_name, String work_time, int work_state) {
-		return eventDao.insert_work_log(staff_id, staff_name, event_name, work_time, work_state);
+	public boolean insert_work_log(int staff_id, String staff_name, int event_id, String event_name, String work_time, int work_state) {
+		return eventDao.insert_work_log(staff_id, staff_name, event_id, event_name, work_time, work_state);
 	}
 
 	//-------------------부스----------------

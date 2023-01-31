@@ -141,8 +141,8 @@ public interface EventDao {
 	boolean record_endTime_new(int event_id, int staff_id, String work_date, String end_time); // 퇴근시간 기록
 	
 	//근무기록 로그
-	@Insert("insert into work_log(staff_id, staff_name, event_name, work_time, work_state) values (#{staff_id},#{staff_name},#{event_name},#{work_time},#{work_state})")
-	boolean insert_work_log(int staff_id, String staff_name, String event_name, String work_time, int work_state);
+	@Insert("insert into work_log(staff_id, staff_name, event_id, event_name, work_time, work_state) values (#{staff_id},#{staff_name},#{event_id},#{event_name},#{work_time},#{work_state})")
+	boolean insert_work_log(int staff_id, String staff_name, int event_id, String event_name, String work_time, int work_state);
 	
 	//이벤트 부스-----------------------------
 	@Select("select count(*) from event e inner join event_booth b where e.id = b.event_id and e.id = #{event_id} and b.flag = 'Y'")

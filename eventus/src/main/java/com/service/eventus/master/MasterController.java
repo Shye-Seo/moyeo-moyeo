@@ -21,13 +21,17 @@ import jakarta.servlet.http.HttpSession;
 import javax.inject.Inject;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.Date;
 import java.util.HashMap;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -45,6 +49,13 @@ public class MasterController {
         ModelAndView mav = new ModelAndView();
         String user_id = (String) session.getAttribute("user_id");
         int staff_id = masterService.getUserId(user_id);
+        
+     // 오늘 날짜
+     		LocalDate now = LocalDate.now();
+     		DayOfWeek dayOfWeek = now.getDayOfWeek();
+     		String today = now.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+     		today += " ("+dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)+")";
+     	
 
         // 최근행사
         List<EventVo> event_list = masterService.select_event_info();
@@ -58,6 +69,7 @@ public class MasterController {
         //직원근무기록
         List<WorkLogVo> workLog_list = masterService.selet_work_log();
         
+        mav.addObject("today", today);
         mav.addObject("event_list", event_list);
         mav.addObject("app_list", app_list);
         mav.addObject("profile_map", profile_map);
