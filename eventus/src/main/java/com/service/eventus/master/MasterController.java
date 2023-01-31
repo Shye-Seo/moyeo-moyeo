@@ -39,6 +39,7 @@ public class MasterController {
     List<MasterVo> staff_list;
     List<MasterVo> career_list;
     List<MasterVo> report_work_list;
+    List<MasterVo> report_work_list_Staff;
     
     @RequestMapping("/main")
     public ModelAndView main(HttpSession session) throws Exception {
@@ -715,14 +716,100 @@ public class MasterController {
         return "report_work";
     }
     
-//    근무기록 리스트(스태프)
+//    근무기록 리스트(스태프) -> DB와 비교하기 위해 날짜형태(0000-00-00) 변경 필요
     @GetMapping(value="/report_work_ForStaff")
-	public String report_work_ForStaff(ModelMap model, HttpSession session) {
+	public String report_work_ForStaff(ModelMap model, HttpSession session, @RequestParam(defaultValue = "1") int page, String searchKeyword, String startDate, String endDate, String searchDate) {
+    	
     	 int id = (int)session.getAttribute("id");
-    	 List<MasterVo> report_work_list_Staff = masterService.report_work_list_Staff(id);
     	 
-    	 model.addAttribute("report_work_list", report_work_list_Staff);
+    	 // 오늘 날짜
+         LocalDate now = LocalDate.now();
+         
+         Calendar cal = Calendar.getInstance();
+         int year_ = now.getYear();
+         int month_ = now.getMonthValue();
+         int day_ = now.getDayOfMonth();
+         cal.set(year_, month_-1, day_);
+         
+         String today = "";
+         
+         if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
+       	  today = cal.get(Calendar.YEAR)+"-0"+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
+         }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
+       	  today = cal.get(Calendar.YEAR)+"-0"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
+         }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
+       	  today = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
+         }else {
+       	  today = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
+         }
+         
+         //총 게시물 수
+         int totalListCnt = masterService.CntAll_staffwork(id);
+         
+         // 생성인자로  총 게시물 수, 현재 페이지를 전달
+ 	     PagingVo pagination = new PagingVo(totalListCnt, page);
+
+ 	    // DB select start index
+ 	    int startIndex = pagination.getStartIndex();
+ 	    // 페이지 당 보여지는 게시글의 최대 개수
+ 	    int pageSize = pagination.getPageSize();
+         
+    	 report_work_list_Staff = masterService.report_work_list_Staff(id, startIndex, pageSize);
     	 
+    	 if(searchKeyword == null && startDate == null && endDate == null) { //키워드&날짜 null (기본상태)
+    		report_work_list_Staff = masterService.report_work_list_Staff(id, startIndex, pageSize);
+ 	    	model.addAttribute("pagination", pagination);
+ 	    	
+ 	    }else if(searchKeyword == null && startDate != null && endDate != null) { //날짜검색, 키워드는 null
+ 	    	startDate = startDate.substring(0, 4) + "-" + startDate.substring(5, 7) + "-" + startDate.substring(8, 10);
+ 	    	endDate = endDate.substring(0, 4) + "-" + endDate.substring(5, 7) + "-" + endDate.substring(8, 10);
+ 	    	
+ 	    	totalListCnt = masterService.worksearchCnt_date(id, startDate, endDate);
+ 	    	pagination = new PagingVo(totalListCnt, page);
+ 	    	startIndex = pagination.getStartIndex();
+ 	    	pageSize = pagination.getPageSize();
+ 	    	report_work_list_Staff = masterService.staffwork_searchList_date(id, startDate, endDate, startIndex, pageSize);
+ 	    	model.addAttribute("pagination", pagination);
+ 	    	model.addAttribute("startDate", startDate);
+ 	    	model.addAttribute("endDate", endDate);
+ 	    	
+ 	    }else if(searchKeyword != null && searchDate != null){ 
+ 	    	startDate = searchDate.substring(0, 10);
+ 	    	endDate = searchDate.substring(13, 23);
+ 	    	
+ 	    	startDate = startDate.substring(0, 4) + "-" + startDate.substring(5, 7) + "-" + startDate.substring(8, 10);
+ 	    	endDate = endDate.substring(0, 4) + "-" + endDate.substring(5, 7) + "-" + endDate.substring(8, 10);
+     		
+ 	    	if(startDate.equals(today) && endDate.equals(today)) { //키워드검색, 날짜null처리
+ 	    		totalListCnt = masterService.worksearchCnt_key(id, searchKeyword);
+ 	    		pagination = new PagingVo(totalListCnt, page);
+ 	    		startIndex = pagination.getStartIndex();
+ 	    		pageSize = pagination.getPageSize();
+ 	    		report_work_list_Staff = masterService.staffwork_searchList(id, searchKeyword, startIndex, pageSize);
+ 	    		model.addAttribute("pagination", pagination);
+ 	    		model.addAttribute("searchKeyword", searchKeyword);
+ 	    		model.addAttribute("searchDate", searchDate);
+ 	    		model.addAttribute("today", today);
+ 	    		
+ 	    	}else { // 키워드&날짜 동시검색
+ 	    		model.addAttribute("searchDate", searchDate);
+ 	    		totalListCnt = masterService.worksearchCnt_keydate(id, startDate, endDate, searchKeyword);
+ 	    		pagination = new PagingVo(totalListCnt, page);
+ 	    		startIndex = pagination.getStartIndex();
+ 	    		pageSize = pagination.getPageSize();
+ 	    		report_work_list_Staff = masterService.staffwork_searchList_keydate(id, startDate, endDate, searchKeyword, startIndex, pageSize);
+ 	    		model.addAttribute("pagination", pagination);
+ 	    		model.addAttribute("startDate", startDate);
+ 	    		model.addAttribute("endDate", endDate);
+ 	    		model.addAttribute("searchKeyword", searchKeyword);
+ 	    		
+ 	    	}
+ 	    }
+ 	    model.addAttribute("searchDate", searchDate);
+    	 
+    	model.addAttribute("report_work_list", report_work_list_Staff);
+    	model.addAttribute("nowpage", page);
+    	
 		return "report_work_ForStaff";
 	}
     

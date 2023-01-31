@@ -44,10 +44,11 @@ public interface MasterDao {
     int update_work_total_time(String total_time, int staff_id);
 
     //근무기록 리스트(스태프)
-    @Select("select event_title, work_date, work_start_time, work_end_time, work_outing_time, work_comeback_time, work_total_time from eventusdb.staff_work_record swr\n" +
-            "inner join eventusdb.event e on swr.event_id=e.id\n" +
-            "where staff_id=#{staff_id}")
-    List<MasterVo> report_work_list_Staff(int staff_id);
+    @Select("select event_title, work_date, work_start_time, work_end_time, work_outing_time, work_comeback_time, work_total_time from eventusdb.staff_work_record swr " +
+            "inner join eventusdb.event e on swr.event_id=e.id " +
+            "where staff_id=#{staff_id} " +
+    		"order by swr.id desc limit #{startIndex}, #{pageSize}")
+    List<MasterVo> report_work_list_Staff(int staff_id, int startIndex, int pageSize);
     
     //근무기록 리스트(스태프)_메인용
     @Select("select event_title, work_date, work_start_time, work_end_time, work_outing_time, work_comeback_time, work_total_time from eventusdb.staff_work_record swr\n" +
@@ -205,4 +206,54 @@ public interface MasterDao {
             "	 and ((#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate}))" +
 			"	 order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
 	List<MasterVo> user_searchList_keydate(String user_id, String startDate, String endDate, String searchKeyword, int startIndex, int pageSize);
+
+	/* 근무기록 페이징 (스태프) */
+	@Select("select count(*) from eventusdb.staff_work_record swr " +
+            "inner join eventusdb.event e on swr.event_id=e.id " +
+            "where staff_id= #{staff_id}")
+	int CntAll_staffwork(int staff_id);
+
+	//날짜 검색 - 근무일자 기준
+	@Select("select count(*) from eventusdb.staff_work_record swr " +
+            "inner join eventusdb.event e on swr.event_id=e.id " +
+            "where staff_id= #{staff_id} " +
+			"and (#{startDate} <= swr.work_date and swr.work_date <= #{endDate})")
+	int worksearchCnt_date(int staff_id, String startDate, String endDate);
+
+	@Select("select * from eventusdb.staff_work_record swr " +
+            "inner join eventusdb.event e on swr.event_id=e.id " +
+            "where staff_id= #{staff_id} " +
+			"and (#{startDate} <= swr.work_date and swr.work_date <= #{endDate}) " +
+            "order by swr.id desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> staffwork_searchList_date(int staff_id, String startDate, String endDate, int startIndex, int pageSize);
+
+	//키워드 검색
+	@Select("select count(*) from eventusdb.staff_work_record swr " +
+            "inner join eventusdb.event e on swr.event_id=e.id " +
+            "where staff_id= #{staff_id} " +
+            "and e.event_title like concat('%','${searchKeyword}','%')")
+	int worksearchCnt_key(int staff_id, String searchKeyword);
+
+	@Select("select * from eventusdb.staff_work_record swr " +
+            "inner join eventusdb.event e on swr.event_id=e.id " +
+            "where staff_id= #{staff_id} " +
+            "and e.event_title like concat('%','${searchKeyword}','%') " +
+			"order by swr.id desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> staffwork_searchList(int staff_id, String searchKeyword, int startIndex, int pageSize);
+
+	//동시 검색
+	@Select("select count(*) from eventusdb.staff_work_record swr " +
+            "inner join eventusdb.event e on swr.event_id=e.id " +
+            "where staff_id= #{staff_id} " +
+            "and e.event_title like concat('%','${searchKeyword}','%') " +
+            "and (#{startDate} <= swr.work_date and swr.work_date <= #{endDate})")
+	int worksearchCnt_keydate(int staff_id, String startDate, String endDate, String searchKeyword);
+
+	@Select("select * from eventusdb.staff_work_record swr " +
+            "inner join eventusdb.event e on swr.event_id=e.id " +
+            "where staff_id= #{staff_id} " +
+            "and e.event_title like concat('%','${searchKeyword}','%') " +
+            "and (#{startDate} <= swr.work_date and swr.work_date <= #{endDate}) " +
+			"order by swr.id desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> staffwork_searchList_keydate(int staff_id, String startDate, String endDate, String searchKeyword, int startIndex, int pageSize);
 }
