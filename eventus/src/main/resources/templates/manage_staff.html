@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/manage_staff.css">
 <!--     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" /> -->
+    <script src="/js/common.js"></script>
     <script src="/js/manage_event.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
@@ -124,11 +125,11 @@
                         <ol th:block th:each="staff : ${staff_list}" class="list_ol">
                             <div class="index_area"><li th:text="${pagination.totalListCnt - staffStat.index - ((nowpage - 1)*10)}"></li></div>
                             <div class="event_area"><li th:text="${staff.event_title}"></li></div>
-                            <div class="workdate_area"><li th:text="${staff.event_startDate + '-' + staff.event_endDate}"></li></div>
+                            <div class="workdate_area"><li th:text="${staff.event_startDate + ' ~ ' + staff.event_endDate}"></li></div>
                             <div class="name_area"><li th:text="${staff.user_name}"></li></div>
                             <div class="gender_area"><li th:text="${staff.user_gender}"></li></div>
-                            <div class="birth_area"><li th:text="${staff.user_birth}"></li></div>
-                            <div class="phone_area"><li th:text="${staff.user_phone}"></li></div>
+                            <div class="birth_area"><li th:text="${staff.user_birth}" class="date_set"></li></div>
+                            <div class="phone_area"><li th:text="${staff.user_phone}" class="phone_set"></li></div>
                             <div class="resume_area">
                             	<li><img src="imgs/staff_resume_icon.svg" th:onclick="'resume_act('+${staff.resume_id}+',this)'" id="staff_resume_icon"></li>
                             </div>
@@ -639,6 +640,31 @@
 
     </style>
     <script>
+        $(function(){
+            $('.date_set').each(function(){
+                let date = $(this).text();
+                let date_list = date.split('-');
+                if(date_list[1].length<=1){
+                    date_list[1]='0'+date_list[1];
+                }
+                if(date_list[2].length<=1){
+                    date_list[2]='0'+date_list[2];
+                }
+                $(this).html(date_list[0]+"."+date_list[1]+"."+date_list[2])
+            })
+
+            $('.phone_set').each(function(){
+                let num = $(this).text();
+                let numSet ="";
+                if(num.split('-').length <=1){
+                    numSet = chkItemPhone(num);
+                }else{
+                    numSet = num;
+                }
+                $(this).html(numSet)
+            })
+        })
+
 
     </script>
 </body>
