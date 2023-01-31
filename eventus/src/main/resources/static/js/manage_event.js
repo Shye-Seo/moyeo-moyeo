@@ -34,6 +34,13 @@ function modal_inact_resume(){
     $('.modal_con_L').hide();
 }
 
+//모달창 종료_직원관리 이력서
+function modal_close_resume(){
+	$('#resume_wrap').empty();
+	$('.modal_con_L').hide();
+	$("#modal_wrap").hide();
+}
+
 //지원자 모달 act
 function modal_act_application(thisId,chk){
     $.ajax({
