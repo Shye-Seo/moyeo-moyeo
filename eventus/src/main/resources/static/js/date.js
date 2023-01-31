@@ -40,7 +40,7 @@ $(document).ready(function() {
 		$(update_btn_num).siblings(".list_outing_area").css({ "display": "none" });
 		$(update_btn_num).siblings(".list_comeback_area").css({ "display": "none" });
 		$(update_btn_num).siblings(".list_end_area").css({ "display": "none" });
-		$(update_btn_num).siblings(".time_update").css({ "display": "inline" });
+		$(update_btn_num).siblings(".time_update").css({ "display": "inline-block" });
 
 		$(update_btn_num).siblings(".input_wrap").css({ "display": "flex" });
 
@@ -62,10 +62,10 @@ $(document).ready(function() {
 		$(update_btn_num).siblings().children("#comeback_area_input").css({ "display": "none" });
 		$(update_btn_num).siblings().children("#end_area_input").css({ "display": "none" });*/
 		$(update_btn_num).siblings(".time_update").css({ "display": "none" });
-		$(update_btn_num).siblings(".list_start_area").css({ "display": "inline" });
-		$(update_btn_num).siblings(".list_outing_area").css({ "display": "inline" });
-		$(update_btn_num).siblings(".list_comeback_area").css({ "display": "inline" });
-		$(update_btn_num).siblings(".list_end_area").css({ "display": "inline" });
+		$(update_btn_num).siblings(".list_start_area").css({ "display": "inline-block" });
+		$(update_btn_num).siblings(".list_outing_area").css({ "display": "inline-block" });
+		$(update_btn_num).siblings(".list_comeback_area").css({ "display": "inline-block" });
+		$(update_btn_num).siblings(".list_end_area").css({ "display": "inline-block" });
 
 		$(update_btn_num).siblings(".input_wrap").css({ "display": "flex" });
 
@@ -100,16 +100,16 @@ $(document).ready(function() {
 			return false;
 		} 
 		
-		if(start.indexOf(":") == -1) {
+		if(start.indexOf(":") == -1 || start.length < 5 ) {
 			alert("형식이 알맞지 않습니다.")
 			return false;
-		} else if(end.indexOf(":") == -1) {
+		} else if(end.indexOf(":") == -1 || end.length < 5 ) {
 			alert("형식이 알맞지 않습니다.")
 			return false;
-		} else if(out.indexOf(":") == -1) {
+		} else if(out.indexOf(":") == -1 || out.length < 5 ) {
 			alert("형식이 알맞지 않습니다.")
 			return false;
-		} else if(back.indexOf(":") == -1) {
+		} else if(back.indexOf(":") == -1 || back.length < 5 ) {
 			alert("형식이 알맞지 않습니다.")
 			return false;
 		}
@@ -124,8 +124,9 @@ $(document).ready(function() {
 				back : back
 				},
 			success: function(data) {
-				alert("입력 완료")
-				$('.area').load(location.href+' .area');
+				alert("입력 완료");
+				window.location.reload();
+//				$('.area').load(location.href+' .area');
 			}
 		});
 

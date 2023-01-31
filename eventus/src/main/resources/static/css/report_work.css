@@ -105,16 +105,27 @@ ol li {
 }
 
 .time_update input{
-	width:3%;
+	width:55px;
+	margin-left: 8px;
+	font-size: 15px;
+	text-align:center;
 }
 #date_area_staff {
+	width: 10%;
+	text-align: center;
+}
+#event_area_staff {
 	width: 15%;
 	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-all;
 }
 
 #start_area_staff, #outing_area_staff, #comeback_area_staff,
 	#end_area_staff {
-	width: 15%;
+	width: 12%;
 	text-align: center;
 }
 
@@ -122,13 +133,16 @@ ol li {
 	display:flex;
 }
 .pen_btn {
-/* 	width:50%; */
+padding-left:10px;
 }
 #check_btn, #close_btn {
 /* 	width:50%; */
 	display:none;
 }
 
+#close_btn { 
+	padding-left: 10px;
+	}
 .input_wrap {
 display:none;	
 }
