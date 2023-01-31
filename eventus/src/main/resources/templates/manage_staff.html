@@ -130,7 +130,7 @@
                             <div class="birth_area"><li th:text="${staff.user_birth}"></li></div>
                             <div class="phone_area"><li th:text="${staff.user_phone}"></li></div>
                             <div class="resume_area">
-                            	<li><img src="imgs/staff_resume_icon.svg" th:onclick="'resume_act('+${staff.resume_id}+',this)'" id="resume_icon"></li>
+                            	<li><img src="imgs/staff_resume_icon.svg" th:onclick="'resume_act('+${staff.resume_id}+',this)'" id="staff_resume_icon"></li>
                             </div>
                             <div class="contact_area">
 	                            <li th:if="${staff.contract_check == 0}"></li>

@@ -186,8 +186,9 @@ pre {
 	text-align: center;
 }
 
-#resume_icon{
+#staff_resume_icon{
 	width:auto;
+	cursor:pointer;
 }
 
 /* 사용자 - 이력관리 페이지 */
