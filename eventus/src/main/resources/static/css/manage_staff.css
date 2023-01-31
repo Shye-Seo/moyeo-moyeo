@@ -142,7 +142,7 @@ pre {
 /* 관리자 - 직원관리 페이지 */
 
 .index_area{
-	margin-left:3%;
+	margin-left:2%;
 	width: 5%;
 	text-align:center;
 }
@@ -186,9 +186,13 @@ pre {
 	text-align: center;
 }
 
+#resume_icon{
+	width:auto;
+}
+
 /* 사용자 - 이력관리 페이지 */
 .no_area {
-	margin-left:3%;
+	margin-left:2%;
 	width: 5%;
 	text-align: center;
 }

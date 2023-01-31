@@ -18,7 +18,7 @@ import java.util.List;
 public interface MasterDao {
 
     // 주최한 행사에 지원해서 합격한 근로자들 목록 전부 출력
-    @Select("select event_id, staff_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from event e" +
+    @Select("select event_id, staff_id, resume_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from event e" +
             "    inner join staff_application sa on e.id = sa.event_id" +
             "    inner join user u on sa.staff_id = u.id" +
             "    where e.user_id = #{user_id}" +
@@ -118,7 +118,7 @@ public interface MasterDao {
             "    where e.user_id = #{user_id} and (#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})")
 	int searchCnt_date(String user_id, String startDate, String endDate);
 
-	@Select("select event_id, staff_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from event e" +
+	@Select("select event_id, staff_id, resume_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from event e" +
             "    inner join staff_application sa on e.id = sa.event_id" +
             "    inner join user u on sa.staff_id = u.id" +
             "    where e.user_id = #{user_id} and (#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})" +

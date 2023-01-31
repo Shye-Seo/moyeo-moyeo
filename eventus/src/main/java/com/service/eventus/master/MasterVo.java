@@ -39,5 +39,7 @@ public class MasterVo {
     private int day;
     private String identification_number; // 주민등록번호
     private String contract_date;
+    
+    private int resume_id; //지원할 때의 이력서
 
 }

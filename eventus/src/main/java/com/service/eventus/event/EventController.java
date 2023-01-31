@@ -914,7 +914,6 @@ public class EventController {
 		int staff_id = resumeService.selectStaffId(resume_id);
 		resumeMap.put("staff_id", staff_id);
 		
-		
 		MemberVo staff_info = resumeService.getStaffInfo(staff_id);
 		ResumeVo staff_resume = resumeService.getStaffResume(resume_id);
 		

@@ -368,7 +368,6 @@ public class MasterController {
         career_list = masterService.getListUserApp(user_id, startIndex, pageSize);
 
         if(searchKeyword == null && startDate == null && endDate == null) { //키워드&날짜 null (기본상태)
-        	System.out.println("기본");
         	
         	career_list = masterService.getListUserApp(user_id, startIndex, pageSize);
         	
@@ -402,7 +401,6 @@ public class MasterController {
         	mav.addObject("pagination", pagination);
 	    	
 	    }else if(searchKeyword == null && startDate != null && endDate != null) { //날짜검색, 키워드는 null
-	    	System.out.println("날짜검색");
 	    	
 	    	totalListCnt = masterService.searchUserCnt_date(user_id, startDate,endDate);
 	    	pagination = new PagingVo(totalListCnt, page);
@@ -487,7 +485,6 @@ public class MasterController {
 	    		
 	    	}else { // 키워드&날짜 동시검색
 	    		
-	    		System.out.println("동시검색");
 	    		mav.addObject("searchDate", searchDate);
 	    		totalListCnt = masterService.searchUserCnt_keydate(user_id, startDate, endDate, searchKeyword);
 	    		pagination = new PagingVo(totalListCnt, page);
