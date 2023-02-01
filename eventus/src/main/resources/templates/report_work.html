@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
     <script src="/js/date.js"></script>
+    <script src="/js/common.js"></script>
     
     <!-- daterangepicker css -->
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -131,12 +132,12 @@
                         <div id="date_area"><li th:text="${report_work.work_date}"></li></div>
                         <div id="event_area"><li th:text="${report_work.event_title}"></li></div>
                         <div id="name_area"><li th:text="${report_work.user_name}"></li></div>
-                        <div id="contact_area"><li th:text="${report_work.user_phone}"></li></div>
+                        <div id="contact_area"><li th:text="${report_work.user_phone}" class="phone_set"></li></div>
                         
-                        <div id="start_area"><li th:text="${report_work.work_start_time}" class="list_start_area"></li></div>
-                        <div id="outing_area"><li th:text="${report_work.work_outing_time}" class="list_outing_area"></li></div>
-                        <div id="comeback_area"><li th:text="${report_work.work_comeback_time}" class="list_comeback_area"></li></div>
-                        <div id="end_area"><li th:text="${report_work.work_end_time}" class="list_end_area"></li></div>
+                        <div id="start_area" class="list_start_area"><li th:text="${report_work.work_start_time}"></li></div>
+                        <div id="outing_area" class="list_outing_area"><li th:text="${report_work.work_outing_time}"></li></div>
+                        <div id="comeback_area" class="list_comeback_area"><li th:text="${report_work.work_comeback_time}"></li></div>
+                        <div id="end_area" class="list_end_area"><li th:text="${report_work.work_end_time}"></li></div>
                         
                         
 <!--                         근무기록 시간 수정 -->
@@ -276,6 +277,22 @@
                     	var nowpage = /*[[${nowpage}]]*/
                     	console.log(nowpage);
                     </script>
+                    <script>
+        $(function(){
+            $('.phone_set').each(function(){
+                let num = $(this).text();
+                let numSet ="";
+                if(num.split('-').length <=1){
+                    numSet = chkItemPhone(num);
+                }else{
+                    numSet = num;
+                }
+                $(this).html(numSet)
+            })
+        })
+
+
+    </script>
             </div>
         </div>
     </div>

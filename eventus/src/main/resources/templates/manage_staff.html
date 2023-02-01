@@ -125,7 +125,7 @@
                         <ol th:block th:each="staff : ${staff_list}" class="list_ol">
                             <div class="index_area"><li th:text="${pagination.totalListCnt - staffStat.index - ((nowpage - 1)*10)}"></li></div>
                             <div class="event_area"><li th:text="${staff.event_title}"></li></div>
-                            <div class="workdate_area"><li th:text="${staff.event_startDate + ' ~ ' + staff.event_endDate}"></li></div>
+                            <div class="workdate_area"><li th:text="${staff.event_startDate + ' - ' + staff.event_endDate}"></li></div>
                             <div class="name_area"><li th:text="${staff.user_name}"></li></div>
                             <div class="gender_area"><li th:text="${staff.user_gender}"></li></div>
                             <div class="birth_area"><li th:text="${staff.user_birth}" class="date_set"></li></div>

@@ -189,9 +189,21 @@ button{
 
 .time_update input{
 	width:55px;
-	margin-left: 8px;
 	font-size: 15px;
 	text-align:center;
+}
+#start_area_input {
+    margin-left: 23px;
+}
+#outing_area_input {
+    margin-left: 47px;
+}
+#comeback_area_input {
+    margin-left: 47px;
+}
+#end_area_input {
+    margin-left: 45px;
+    margin-right: 25px;
 }
 .date_area_staff {
 	width: 15%;

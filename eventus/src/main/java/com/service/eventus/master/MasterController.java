@@ -706,8 +706,6 @@ public class MasterController {
         if(searchKeyword == null && startDate == null && endDate == null) { //키워드&날짜 null (기본상태)
     		report_work_list = masterService.report_work_list_paging(startIndex, pageSize);
  	    	model.addAttribute("pagination", pagination);
- 	    	System.out.println("기본");
- 	    	System.out.println("pagination : "+pagination);
  	    	
  	    }else if(searchKeyword == null && startDate != null && endDate != null) { //날짜검색, 키워드는 null
  	    	startDate = startDate.substring(0, 4) + "-" + startDate.substring(5, 7) + "-" + startDate.substring(8, 10);
@@ -721,8 +719,6 @@ public class MasterController {
  	    	model.addAttribute("pagination", pagination);
  	    	model.addAttribute("startDate", startDate);
  	    	model.addAttribute("endDate", endDate);
- 	    	System.out.println("날짜");
- 	    	System.out.println("pagination : "+pagination);
  	    	
  	    }else if(searchKeyword != null && searchDate != null){ 
  	    	startDate = searchDate.substring(0, 10);
@@ -741,8 +737,6 @@ public class MasterController {
  	    		model.addAttribute("searchKeyword", searchKeyword);
  	    		model.addAttribute("searchDate", searchDate);
  	    		model.addAttribute("today", today);
- 	    		System.out.println("키워드");
- 	    		System.out.println("pagination : "+pagination);
  	    		
  	    	}else { // 키워드&날짜 동시검색
  	    		model.addAttribute("searchDate", searchDate);
@@ -755,8 +749,6 @@ public class MasterController {
  	    		model.addAttribute("startDate", startDate);
  	    		model.addAttribute("endDate", endDate);
  	    		model.addAttribute("searchKeyword", searchKeyword);
- 	    		System.out.println("동시");
- 	    		System.out.println("pagination : "+pagination);
  	    		
  	    	}
  	    }
@@ -768,8 +760,7 @@ public class MasterController {
             String comeback_time = report_work_list.get(i).getWork_comeback_time();
             String end_time = report_work_list.get(i).getWork_end_time();
             int staff_id = report_work_list.get(i).getId();
-
-
+            
             if(start_time != null && end_time != null) {
                 SimpleDateFormat sdf = new SimpleDateFormat("HH : mm");
 
