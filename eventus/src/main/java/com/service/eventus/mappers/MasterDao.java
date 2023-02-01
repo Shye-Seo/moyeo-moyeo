@@ -95,7 +95,7 @@ public interface MasterDao {
 	@Select("SELECT e.id, e.event_title, staff_result, app_created_at FROM staff_application s INNER JOIN event e on s.event_id = e.id where staff_id = #{user_id} order by staff_result, app_created_at desc limit 4")
 	List<ApplicationVo> select_app_info(int staff_id);
 	//메인 대기중인지원_manage
-	@Select("SELECT e.id, e.event_title, e.event_deadline, count(a.staff_id) as staff_count FROM event e inner join staff_application a on a.event_id = e.id where event_status=0 GROUP BY a.event_id order by event_deadline limit 4")
+	@Select("SELECT e.id, e.event_title, e.event_deadline, count(a.staff_id) as staff_count FROM event e left join staff_application a on a.event_id = e.id where event_status=0 GROUP BY a.event_id order by event_deadline limit 4")
 	List<EventVo> select_app_manage();
 	@Select("SELECT f.file_name FROM staff_file f inner join staff_application a on f.resume_id = a.resume_id where a.event_id=#{event_id} limit 4")
 	List<String> app_profile_list(int event_id);
