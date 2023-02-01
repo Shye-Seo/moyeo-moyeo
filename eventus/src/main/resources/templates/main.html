@@ -35,7 +35,7 @@
                             </div>
                             <div class="event_box_wrap">
                                 <div class="event_box_in">
-                                    <a th:each="event : ${event_list}" th:href="'eventDetail_forStaff?id='+${event.id}" class="event_box">
+                                    <a th:each="event : ${event_list}" th:href="'eventDetail?id='+${event.id}" class="event_box">
                                         <div th:if="${event.event_status == 0}" class="eventStat recruiting"></div>
                                         <div th:if="${event.event_status == 1}" class="eventStat completed"></div>
                                         <div th:if="${event.event_status == 2}" class="eventStat ongoing"></div>
