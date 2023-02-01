@@ -53,6 +53,7 @@ public class EventController {
 	private ResumeService resumeService;
 
 	List<EventVo> event_list;
+	List<BoothVo> booth_list;
 	
 	@GetMapping(value="/manage_event")
 	public String event_list(@ModelAttribute EventVo eventVo, ModelMap model, @RequestParam(defaultValue = "1") int page, String searchKeyword, String startDate, String endDate, String searchDate) throws Exception{
@@ -672,7 +673,7 @@ public class EventController {
 	    // 페이지 당 보여지는 게시글의 최대 개수
 	    int pageSize = pagination.getPageSize();
 	    
-	    List<BoothVo> booth_list = eventService.booth_list_paging(event_id, startIndex, pageSize);
+	    booth_list = eventService.booth_list_paging(event_id, startIndex, pageSize);
 	    
 	    if(searchKeyword == null) { //키워드 null (기본상태)
 	    	booth_list = eventService.booth_list_paging(event_id, startIndex, pageSize);
@@ -683,7 +684,7 @@ public class EventController {
 	    	pagination = new PagingVo(totalListCnt, page);
 	    	startIndex = pagination.getStartIndex();
 	    	pageSize = pagination.getPageSize();
-	    	event_list = eventService.booth_searchList(event_id, searchKeyword, startIndex, pageSize);
+	    	booth_list = eventService.booth_searchList(event_id, searchKeyword, startIndex, pageSize);
 	    	model.addAttribute("pagination", pagination);
 	    	model.addAttribute("searchKeyword", searchKeyword);
 	    }

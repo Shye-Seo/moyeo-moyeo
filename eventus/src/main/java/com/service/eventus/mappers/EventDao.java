@@ -204,12 +204,12 @@ public interface EventDao {
 	@Select("select count(*) from event_booth where event_id = #{event_id} and flag = 'Y'")
 	int booth_list_AllCnt(int event_id);
 	
-	@Select("select * from event_booth where event_id = #{event_id} and flag = 'Y' limit #{startIndex}, #{pageSize}")
+	@Select("select * from event_booth where event_id = #{event_id} and flag = 'Y' order by id desc limit #{startIndex}, #{pageSize}")
 	List<BoothVo> booth_list_paging(int event_id, int startIndex, int pageSize);
 
 	@Select("select count(*) from event_booth where event_id = #{event_id} and booth_name like concat('%','${searchKeyword}','%')")
 	int booth_searchCnt(int event_id, String searchKeyword);
 
-	@Select("select * from event_booth where event_id = #{event_id} and flag = 'Y' and booth_name like concat('%','${searchKeyword}','%') limit #{startIndex}, #{pageSize}")
-	List<EventVo> booth_searchList(int event_id, String searchKeyword, int startIndex, int pageSize);
+	@Select("select * from event_booth where event_id = #{event_id} and flag = 'Y' and booth_name like concat('%','${searchKeyword}','%') order by id desc limit #{startIndex}, #{pageSize}")
+	List<BoothVo> booth_searchList(int event_id, String searchKeyword, int startIndex, int pageSize);
 }

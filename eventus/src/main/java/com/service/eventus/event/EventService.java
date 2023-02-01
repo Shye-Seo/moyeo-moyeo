@@ -311,7 +311,7 @@ public class EventService {
 		return eventDao.booth_searchCnt(event_id, searchKeyword);
 	}
 
-	public List<EventVo> booth_searchList(int event_id, String searchKeyword, int startIndex, int pageSize) {
+	public List<BoothVo> booth_searchList(int event_id, String searchKeyword, int startIndex, int pageSize) {
 		return eventDao.booth_searchList(event_id, searchKeyword, startIndex, pageSize);
 	}
 

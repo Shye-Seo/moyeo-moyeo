@@ -69,7 +69,7 @@
                         </ol>
 						<ol th:each="booth : ${booth_list}" id="list_ol">
 							<input type="hidden" th:value="${booth.id}" id="booth_id">
-							<div id="index_area"><li class="boothlist"></li></div>
+							<div id="index_area"><li class="boothlist" th:text="${pagination.totalListCnt - boothStat.index - ((nowpage - 1)*10)}"></li></div>
 							<div id="title_area"><li th:text="${booth.event_title}" id="text_over"></li></div>
 							<div id="date_area"><li th:text="${booth.event_startDate} + ' - ' + ${booth.event_endDate}"></li></div>
 							<div id="booth_area"><li th:text="${booth.booth_name}" id="text_over"></li></div>
@@ -351,15 +351,6 @@
 					});
 				}
 			</script>
-			
-			<script th:inline="javascript">
-		        var num = /*[[${booth_num}]]*/
-		        console.log(num);
-		        $(".boothlist").each(function(){
-		            $(this).text(num);
-		            num--;
-		        });
-		    </script>
     </div>
 </body>
 </html>
