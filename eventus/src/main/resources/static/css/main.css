@@ -56,6 +56,33 @@
     background-color:#5B8FD2;
     color: #ffffff;
 }
+.event_btn button:hover #prev_btn{display:none;}
+.event_btn button:hover #prev_btn_hover{display:block;}
+.event_btn button:hover #next_btn{display:none;}
+.event_btn button:hover #next_btn_hover{display:block;}
+
+#prev_btn, #next_btn{
+	width: auto;
+	position: relative;
+}
+
+/* 흰색 버튼 기본:안보임 */
+#prev_btn_hover, #next_btn_hover{
+	width: auto;
+	position: absolute;
+	display:none;
+}
+#next_btn{
+	margin-left:2px;
+}
+#prev_btn_hover{
+	top: 8px;
+	left: 10.5px;
+}
+#next_btn_hover{
+	top: 8px;
+	right: 10px;
+}
 
 .event_box_wrap{
     width: 100%; height: 370px;

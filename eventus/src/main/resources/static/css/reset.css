@@ -35,8 +35,8 @@ body {background:#F8F9FB;}
 }
 
 .sidebar .logo img{
-    width: 125px;
-    margin: 0 auto;
+    width: 130px;
+    margin: 38px auto;
 }
 
 .menu-categories{
@@ -325,4 +325,9 @@ body {background:#F8F9FB;}
 .ui-datepicker-calendar th span{
 	color: #999999;
 	font-weight: 300;
+}
+
+/* daterangepicker ui 수정 */
+.daterangepicker{
+	right: 532.062px;
 }
