@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="modal_all">
-        <form th:fragment="modal" action="/contract_check">
+        <form th:fragment="modal" action="/contract_check" method="post">
         <!-- 근로계약서 -->
         <div id="modal1">
             <input type="image" id="cancel1" src="../imgs/close_btn_black.svg">
@@ -178,7 +178,7 @@
         $(function() {
             var event_id = [[${masterVo.event_id}]];
             var staff_id = [[${masterVo.staff_id}]];
-            var staff_address = [[${masterVo.staff_address}]];
+            var staff_address = '[[${masterVo.staff_address}]]';
             // staff_address는 문자열이다.
             // 문자열 안에 +를 공백으로 바꿔준다.
             staff_address = staff_address.replace(/\+/g, ' ');
@@ -265,9 +265,9 @@
                     data: {
                         event_id: event_id,
                         staff_id: staff_id,
-                        user_name: [[${masterVo.user_name}]],
+                        user_name: '[[${masterVo.user_name}]]',
                         user_phone: [[${masterVo.user_phone}]],
-                        staff_address: [[${masterVo.staff_address}]],
+                        staff_address: '[[${masterVo.staff_address}]]',
                         identification_number: [[${masterVo.identification_number}]],
                         contract_date: [[${masterVo.year}]] + '-' + [[${masterVo.month}]] + '-' + [[${masterVo.day}]],
                     }

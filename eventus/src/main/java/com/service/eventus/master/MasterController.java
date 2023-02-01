@@ -613,7 +613,7 @@ public class MasterController {
     }
 
     // 근로확인서 및 보안각서 최종 확인 및 저장하기
-    @RequestMapping("/contract_check")
+    @RequestMapping(value="/contract_check", method=RequestMethod.POST)
     public ModelAndView contract_check(@ModelAttribute MasterVo masterVo, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         if(masterVo.getYear() != 0) {
