@@ -34,8 +34,8 @@ public class MasterService {
         return masterDao.update_work_total_time(total_time, staff_id);
     } 
     
-    public List<MasterVo> report_work_list_Staff(int staff_id) {
-        return masterDao.report_work_list_Staff(staff_id);
+    public List<MasterVo> report_work_list_Staff(int staff_id, int startIndex, int pageSize) {
+        return masterDao.report_work_list_Staff(staff_id, startIndex, pageSize);
     }
     
     public List<MasterVo> report_work_list_Staff_main(int staff_id) {
@@ -149,6 +149,67 @@ public class MasterService {
 
 	public List<MasterVo> user_searchList_keydate(String user_id, String startDate, String endDate,	String searchKeyword, int startIndex, int pageSize) {
 		return masterDao.user_searchList_keydate(user_id, startDate, endDate, searchKeyword, startIndex, pageSize);
+	}
+
+	public int CntAll_staffwork(int staff_id) {
+		return masterDao.CntAll_staffwork(staff_id);
+	}
+
+	public int worksearchCnt_date(int id, String startDate, String endDate) {
+		return masterDao.worksearchCnt_date(id, startDate, endDate);
+	}
+
+	public List<MasterVo> staffwork_searchList_date(int staff_id, String startDate, String endDate, int startIndex, int pageSize) {
+		return masterDao.staffwork_searchList_date(staff_id, startDate, endDate, startIndex, pageSize);
+	}
+
+	public int worksearchCnt_key(int staff_id, String searchKeyword) {
+		return masterDao.worksearchCnt_key(staff_id, searchKeyword);
+	}
+
+	public List<MasterVo> staffwork_searchList(int staff_id, String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.staffwork_searchList(staff_id, searchKeyword, startIndex, pageSize);
+	}
+
+	public int worksearchCnt_keydate(int staff_id, String startDate, String endDate, String searchKeyword) {
+		return masterDao.worksearchCnt_keydate(staff_id, startDate, endDate, searchKeyword);
+	}
+
+	public List<MasterVo> staffwork_searchList_keydate(int staff_id, String startDate, String endDate, String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.staffwork_searchList_keydate(staff_id, startDate, endDate, searchKeyword, startIndex, pageSize);
+	}
+
+	/* ----------------관리자 근무기록 페이징------------- */
+	public int CntAll_work() {
+		return masterDao.CntAll_work();
+	}
+
+	public List<MasterVo> report_work_list_paging(int startIndex, int pageSize) {
+		return masterDao.report_work_list_paging(startIndex, pageSize);
+	}
+
+	public int WorkSearchCnt_date(String startDate, String endDate) {
+		return masterDao.WorkSearchCnt_date(startDate, endDate);
+	}
+
+	public List<MasterVo> Work_SearchList_date(String startDate, String endDate, int startIndex, int pageSize) {
+		return masterDao.Work_SearchList_date(startDate, endDate, startIndex, pageSize);
+	}
+
+	public int WorkSearchCnt_key(String searchKeyword) {
+		return masterDao.WorkSearchCnt_key(searchKeyword);
+	}
+
+	public List<MasterVo> Work_SearchList(String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.Work_SearchList(searchKeyword, startIndex, pageSize);
+	}
+
+	public int WorkSearchCnt_keydate(String startDate, String endDate, String searchKeyword) {
+		return masterDao.WorkSearchCnt_keydate(startDate, endDate, searchKeyword);
+	}
+
+	public List<MasterVo> Work_SearchList_keydate(String startDate, String endDate, String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.Work_SearchList_keydate(startDate, endDate, searchKeyword, startIndex, pageSize);
 	}
 
     

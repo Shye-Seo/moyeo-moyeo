@@ -10,6 +10,14 @@
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" as="style" crossorigin
 		href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
+		
+	<!-- daterangepicker css -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	 
+	<!-- daterangepicker js -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </head>
 
 <body>
@@ -35,43 +43,202 @@
 
 				<div class="area">
 					<div class="search_area">
-						<input type="text" class="calendar"> <input type="text" class="word_search">
-					</div>
+                    	<form id="searchForm" th:action="@{/report_work_ForStaff}" method="get">
+	                        <div class="date_search">
+	                        	<div class="date_input">
+	                        		<input type="text" name="searchDate" th:placeholder="${firstDate}+' - '+${lastDate}" id="searchDate" th:if="${startDate == null && endDate == null}">
+	                        		<input type="text" name="searchDate" th:value="${startDate}+' - '+${endDate}" id="searchDate" th:if="${startDate != null && endDate != null}">
+		                        </div>
+		                        <div class="calendar_button">
+	                        		<button type="button" class="search_img" onclick="calendar();"><img src="imgs/register-calendar.svg"></button>
+	                        	</div>
+	                        </div>
+	                        <div class="text_search">
+	                        	<input type="text" class="word_search" placeholder="검색" name="searchKeyword" th:if="${searchKeyword == null}">
+	                        	<input type="text" class="word_search" th:value="${searchKeyword}" name="searchKeyword" th:if="${searchKeyword != null}">
+	                        	<div class="search_button">
+	                        		<button type="submit" class="search_img"><img src="imgs/search_btn.svg"></button>
+	                        	</div>
+	                        </div>
+                        </form>
+                    </div>
+                    
+					<script>
+						function calendar(){
+							$('#searchDate').trigger('click');
+						}
+						
+                    	$("#searchDate").daterangepicker({
+                    		"autoApply":true,	//날짜 선택하면 input에 자동적용
+                    		"opens":'left',		//왼쪽으로 open
+                    	    locale: {
+                    	    "separator": " - ",          // 시작일시와 종료일시 구분자
+                    	    "format": 'YYYY.MM.DD',     // 일시 노출 포맷
+//                     	    "applyLabel": "확인",                    // 확인 버튼 텍스트
+//                     	    "cancelLabel": "취소",                   // 취소 버튼 텍스트
+                    	    "daysOfWeek": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+                    	    "monthNames": ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    	    },
+                    	    timePicker: false,                        // 시간 노출 여부
+                    	    showDropdowns: true,                     // 년월 수동 설정 여부
+                    	    timePicker24Hour: false,                  // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
+                    	    timePickerSeconds: false,                 // 초 노출 여부
+                    	    singleDatePicker: false,                   // 하나의 달력 사용 여부
+                    	    linkedCalendars: false					  //각 달력 <>연결해서 이동되지 않도록 false
+                    	}, function (start, end, label) {
+                    		console.log('선택된 날짜: ' + start.format('YYYY.MM.DD') + ' to ' + end.format('YYYY.MM.DD'));
+                    		searchDate(start.format('YYYY.MM.DD'), end.format('YYYY.MM.DD'));
+                    	});
+                    	
+                    	function searchDate(start,end){
+	                    	$.ajax({
+	                			url : "/report_work_ForStaff",
+	                			type : 'get',
+	                			data : {startDate:start, endDate:end},
+	                			success: function(data){
+	                				window.location.href = "/report_work_ForStaff?startDate="+start+"&endDate="+end;
+	                			}
+	                		});
+                    	}
+                    	 
+                    </script>
 
 
 					<ul class="list">
-						<ol>
-							<li id="date_area_staff">일자</li>
-							<li id="event_area_staff">행사명</li>
-							<li id="start_area_staff">출근</li>
-							<li id="outing_area_staff">외출</li>
-							<li id="comeback_area_staff">복귀</li>
-							<li id="end_area_staff">퇴근</li>
+						<ol id="top_ol">
+							<div class="date_area_staff"><li>일자</li></div>
+							<div class="event_area_staff"><li>행사명</li></div>
+							<div class="start_area_staff"><li>출근</li></div>
+							<div class="outing_area_staff"><li>외출</li></div>
+							<div class="comeback_area_staff"><li>복귀</li></div>
+							<div class="end_area_staff"><li>퇴근</li></div>
 						</ol>
-						<ol th:each="report_work : ${report_work_list}" id="list_ol">
-							<li th:text="${report_work.work_date}" id="date_area_staff"></li>
-							<li th:text="${report_work.event_title}" id="event_area_staff"></li>
-							<li th:text="${report_work.work_start_time}" id="start_area_staff"></li>
-							<li th:text="${report_work.work_outing_time}" id="outing_area_staff"></li>
-							<li th:text="${report_work.work_comeback_time}" id="comeback_area_staff"></li>
-							<li th:text="${report_work.work_end_time}" id="end_area_staff"></li>
+						<ol th:each="report_work : ${report_work_list}" class="list_ol">
+							<div class="date_area_staff"><li th:text="${report_work.work_date}"></li></div>
+							<div class="event_area_staff"><li th:text="${report_work.event_title}"></li></div>
+							<div class="start_area_staff"><li th:text="${report_work.work_start_time}"></li></div>
+							<div class="outing_area_staff"><li th:text="${report_work.work_outing_time}"></li></div>
+							<div class="comeback_area_staff"><li th:text="${report_work.work_comeback_time}"></li></div>
+							<div class="end_area_staff"><li th:text="${report_work.work_end_time}"></li></div>
 						</ol>
-
-
 					</ul>
-				</div>
-
-
-				<!-- 페이징 처리(Unix 참조) -->
-				<div>
-					<ul>
-						<!-- 이전 -->
-
-						<!-- 번호 -->
-
-						<!-- 다음 -->
-
-					</ul>
+					
+					<!-- 페이징 -->
+                    
+                    <!-- 검색 안했을 때  -->
+                    <div th:if="${searchKeyword == null && startDate == null && endDate == null}" class="null"> 
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{report_work_ForStaff?page=1}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{report_work_ForStaff?page={page} (page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{report_work_ForStaff?page={page} (page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{report_work_ForStaff?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{report_work_ForStaff?page={page} (page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{report_work_ForStaff?page={page} (page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{report_work_ForStaff?page={page} (page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 검색어로만 검색했을 때  -->
+                    <div th:if="${searchKeyword != null && startDate == null && endDate == null && today != null}" class="notnull_keyword">
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page=1 (date = ${searchDate}, key = ${searchKeyword})}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 날짜로만 검색했을 때  -->
+                    <div th:if="${searchKeyword == null && startDate != null && endDate != null}" class="notnull_date">
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page=1 (start = ${startDate}, end = ${endDate})}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 동시 검색했을 때  -->
+                    <div th:if="${searchKeyword != null && searchDate != null && today == null}" class="notnull_all">
+                        <ul class="pagewrap">
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page=1 (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate})}"><img src="imgs/page_start_btn.svg"></a>
+                            </li>
+                            <li class="icon_right">
+                            	<a class="page-link page_icon" th:if="${nowpage == 1}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_back_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != 1}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage}-1)}"><img src="imgs/page_back_btn.svg"></a>
+                            </li>
+                             <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+							    <li class="page-item" 
+							    		 th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+							    		th:each="pageButton : ${#numbers.sequence(start, end)}">
+							    		<a class="page-link"  th:id="'page_num'+${pageButton}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${pageButton})}" th:text=${pageButton}></a>
+							    </li>
+						    </th:block>
+                            <li class="icon_left">
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            </li>
+                            <li>
+                            	<a class="page-link page_icon" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <script th:inline="javascript">
+						$('#page_num'+[[${nowpage}]]).addClass("thisPage");
+                    	var searchWord = /*[[${searchKeyword}]]*/
+                    	var nowpage = /*[[${nowpage}]]*/
+                    	console.log(nowpage);
+                    </script>
 				</div>
 			</div>
 		</div>
