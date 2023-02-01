@@ -257,4 +257,56 @@ public interface MasterDao {
             "and (#{startDate} <= swr.work_date and swr.work_date <= #{endDate}) " +
 			"order by swr.id desc limit #{startIndex}, #{pageSize}")
 	List<MasterVo> staffwork_searchList_keydate(int staff_id, String startDate, String endDate, String searchKeyword, int startIndex, int pageSize);
+
+	/* ---------------관리자 근무기록 페이징------------- */
+	@Select("select count(*) from staff_work_record a "
+            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id")
+	int CntAll_work();
+
+	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time,"
+            + " work_comeback_time, work_end_time, work_total_time from staff_work_record a "
+            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id "
+            + "order by work_date desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> report_work_list_paging(int startIndex, int pageSize);
+
+	//날짜 검색
+	@Select("select count(*) from staff_work_record a "
+            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id "
+			+ "where (#{startDate} <= work_date and work_date <= #{endDate})")
+	int WorkSearchCnt_date(String startDate, String endDate);
+
+	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time,"
+            + " work_comeback_time, work_end_time, work_total_time from staff_work_record a "
+            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id "
+            + "where (#{startDate} <= work_date and work_date <= #{endDate}) " 
+            + "order by work_date desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> Work_SearchList_date(String startDate, String endDate, int startIndex, int pageSize);
+
+	//키워드 검색
+	@Select("select count(*) from staff_work_record a "
+            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id "
+            + "where e.event_title like concat('%','${searchKeyword}','%') or u.user_name like concat('%','${searchKeyword}','%')")
+	int WorkSearchCnt_key(String searchKeyword);
+
+	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time,"
+            + " work_comeback_time, work_end_time, work_total_time from staff_work_record a "
+            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id "
+            + "where e.event_title like concat('%','${searchKeyword}','%') or u.user_name like concat('%','${searchKeyword}','%') " 
+            + "order by work_date desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> Work_SearchList(String searchKeyword, int startIndex, int pageSize);
+
+	//동시 검색
+	@Select("select count(*) from staff_work_record a "
+            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id "
+			+ "where (#{startDate} <= work_date and work_date <= #{endDate}) "
+            + "and (e.event_title like concat('%','${searchKeyword}','%') or u.user_name like concat('%','${searchKeyword}','%'))")
+	int WorkSearchCnt_keydate(String startDate, String endDate, String searchKeyword);
+
+	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time,"
+			+ " work_comeback_time, work_end_time, work_total_time from staff_work_record a "
+            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id "
+			+ "where (#{startDate} <= work_date and work_date <= #{endDate}) "
+            + "and (e.event_title like concat('%','${searchKeyword}','%') or u.user_name like concat('%','${searchKeyword}','%')) "
+            + "order by work_date desc limit #{startIndex}, #{pageSize}")
+	List<MasterVo> Work_SearchList_keydate(String startDate, String endDate, String searchKeyword, int startIndex, int pageSize);
 }

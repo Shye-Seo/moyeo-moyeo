@@ -179,6 +179,39 @@ public class MasterService {
 		return masterDao.staffwork_searchList_keydate(staff_id, startDate, endDate, searchKeyword, startIndex, pageSize);
 	}
 
+	/* ----------------관리자 근무기록 페이징------------- */
+	public int CntAll_work() {
+		return masterDao.CntAll_work();
+	}
+
+	public List<MasterVo> report_work_list_paging(int startIndex, int pageSize) {
+		return masterDao.report_work_list_paging(startIndex, pageSize);
+	}
+
+	public int WorkSearchCnt_date(String startDate, String endDate) {
+		return masterDao.WorkSearchCnt_date(startDate, endDate);
+	}
+
+	public List<MasterVo> Work_SearchList_date(String startDate, String endDate, int startIndex, int pageSize) {
+		return masterDao.Work_SearchList_date(startDate, endDate, startIndex, pageSize);
+	}
+
+	public int WorkSearchCnt_key(String searchKeyword) {
+		return masterDao.WorkSearchCnt_key(searchKeyword);
+	}
+
+	public List<MasterVo> Work_SearchList(String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.Work_SearchList(searchKeyword, startIndex, pageSize);
+	}
+
+	public int WorkSearchCnt_keydate(String startDate, String endDate, String searchKeyword) {
+		return masterDao.WorkSearchCnt_keydate(startDate, endDate, searchKeyword);
+	}
+
+	public List<MasterVo> Work_SearchList_keydate(String startDate, String endDate, String searchKeyword, int startIndex, int pageSize) {
+		return masterDao.Work_SearchList_keydate(startDate, endDate, searchKeyword, startIndex, pageSize);
+	}
+
     
     
 }
