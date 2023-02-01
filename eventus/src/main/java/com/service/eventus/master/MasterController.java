@@ -800,18 +800,35 @@ public class MasterController {
 
                     int hour = (int)Sum/(60*60);
                     int minute = (int)Sum/60-(hour*60);
-                    String total = hour + " : "+ minute;
+                    
+                    String total = "";
+                    if(hour < 10 && minute < 10) {
+                    	total = "0"+hour+" : 0"+minute;
+                    }else if(hour < 10 && minute >= 10) {
+                    	total = "0"+hour+" : "+minute;
+                    }else if(hour >= 10 && minute < 10) {
+                    	total = ""+hour+" : 0"+minute;
+                    }else { total = ""+hour+" : "+minute; }
+//                    String total = hour + " : "+ minute;
                     masterService.update_work_total_time(total, staff_id);
 
                 } else {
                     int hour = (int)diffSec/(60*60);
                     int minute = (int)diffSec/60-(hour*60);
 
-                    String total = hour + " : "+ minute;
+                    String total = "";
+                    if(hour < 10 && minute < 10) {
+                    	total = "0"+hour+" : 0"+minute;
+                    }else if(hour < 10 && minute >= 10) {
+                    	total = "0"+hour+" : "+minute;
+                    }else if(hour >= 10 && minute < 10) {
+                    	total = ""+hour+" : 0"+minute;
+                    }else { total = ""+hour+" : "+minute; }
+//                    String total = hour + " : "+ minute;
                     masterService.update_work_total_time(total, staff_id);
                 }
             } else {
-            	 String total = 0 + " : "+ 0;
+            	 String total = 00 + " : "+ 00;
                  masterService.update_work_total_time(total, staff_id);
             }
 
