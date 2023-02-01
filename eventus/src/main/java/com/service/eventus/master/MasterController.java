@@ -944,6 +944,16 @@ public class MasterController {
 			@RequestParam(value = "back", required = false) String work_comeback_time) {
 
 		int staff_id = Integer.parseInt(num);
+		
+		if(work_start_time == "") {
+			work_start_time = null;
+		} else if(work_end_time == "") {
+			work_end_time = null;
+		} else if(work_outing_time == "") {
+			work_outing_time = null;
+		} else if(work_comeback_time == "") {
+			work_comeback_time = null;
+		}
 
 		masterService.report_work_time_update(work_start_time, work_end_time, work_outing_time, work_comeback_time, staff_id);
 
