@@ -121,7 +121,7 @@
         </div>
 
         <!-- 보안 각서 -->
-        <div id="modal2">
+        <div id="modal2" style='page-break-before:always'>
             <input type="image" id="cancel2" src="../imgs/close_btn_black.svg">
             <h2>보안각서</h2>
             <table id="security_table">
@@ -243,7 +243,7 @@
             });
 
             $('#save_btn').click(function() {
-                $('#save_btn').css('display', 'none');
+                // $('#save_btn').css('display', 'none');
                 // pdf 다운로드
                 let element = document.getElementById('modal_all');
                 let opt = {
@@ -263,26 +263,26 @@
                 html2pdf().from(element).set(opt).save();
 
                 // 서버에 근로계약서 등록 데이터 저장
-                $.ajax({
-                    url: '/insert_contract',
-                    type: "GET",
-                    data: {
-                        event_id: event_id,
-                        staff_id: staff_id,
-                        user_name: '[[${masterVo.user_name}]]',
-                        user_phone: '[[${masterVo.user_phone}]]',
-                        staff_address: '[[${masterVo.staff_address}]]',
-                        identification_number: '[[${masterVo.identification_number}]]',
-                        contract_date: '[[${masterVo.year}]]' + '-' + '[[${masterVo.month}]]' + '-' + '[[${masterVo.day}]]',
-                    }
-                });
+                // $.ajax({
+                //     url: '/insert_contract',
+                //     type: "GET",
+                //     data: {
+                //         event_id: event_id,
+                //         staff_id: staff_id,
+                //         user_name: '[[${masterVo.user_name}]]',
+                //         user_phone: '[[${masterVo.user_phone}]]',
+                //         staff_address: '[[${masterVo.staff_address}]]',
+                //         identification_number: '[[${masterVo.identification_number}]]',
+                //         contract_date: '[[${masterVo.year}]]' + '-' + '[[${masterVo.month}]]' + '-' + '[[${masterVo.day}]]',
+                //     }
+                // });
 
                 // 5초 뒤에 location.href로 이동
-                alert("다운로드 후 자동으로 페이지 이동됩니다.\n확인 버튼 클릭 후, 조금만 기다려주세요!");
+                // alert("다운로드 후 자동으로 페이지 이동됩니다.\n확인 버튼 클릭 후, 조금만 기다려주세요!");
 
-                setTimeout(function() {
-                    location.href = '/manage_career_forstaff';
-                }, 3000);
+                // setTimeout(function() {
+                //     location.href = '/manage_career_forstaff';
+                // }, 3000);
             });
         })
 
@@ -294,6 +294,10 @@
     		padding:0;
     		margin:0;
     	}
+        body{
+            width: 50%;
+            margin: 0 auto;
+        }
     	#modal1{
     		border-bottom: 1px solid #999999;
     	}
@@ -331,7 +335,7 @@
         }
 		/* -----근로계약서----- */
         pre {
-            width: 47%;
+            width: 100%;
             height:auto;
             margin: auto;
             margin-bottom: 50px;
@@ -351,7 +355,7 @@
         }
 
         #employment_contract {
-            width: 50%;
+            width: 100%;
             margin: auto;
             margin-bottom: 20px;
             border: 1px solid #BFBFBF;
@@ -391,7 +395,7 @@
         }
 
         .contrac_date_area {
-            width: 70%;
+            width: 100%;
             margin: auto;
             margin-bottom: 41px;
             text-align: center;
@@ -498,7 +502,7 @@
         }
 
         .button_collection {
-            width: 50%;
+            width: 100%;
             margin: 0 auto;
             margin-top: 50px;
             text-align: center;
@@ -511,7 +515,7 @@
 		
 		/* -----보안각서----- */
 		#security_table {
-            width: 50%;
+            width: 100%;
             margin: auto;
             margin-bottom: 20px;
             border: 1px solid #BFBFBF;
@@ -546,7 +550,7 @@
 		}
 		
 		.security_content {
-            width: 50%;
+            width: 100%;
             margin: auto;
             margin-top: 100px;
             margin-bottom: 150px;
@@ -560,7 +564,7 @@
         }
         
         .contrac_date_area2 {
-            width: 50%;
+            width: 100%;
             margin: auto;
             margin-bottom: 30px;
             text-align: center;
@@ -575,14 +579,14 @@
 		
         .staff_sign2 {
             text-align: center;
-            width: 50%;
+            width: 100%;
             margin: 0 auto;
             color: #000000;
             font-size: 14px;
         }
         
         .business_name {
-            width: 50%;
+            width: 100%;
             margin: 70px auto 0 auto;
             font-size: 14px;
             color: #000000;
