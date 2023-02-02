@@ -193,7 +193,7 @@
                             <div class="contact_area">
 	                            <li th:if="${staff.contract_check == 0}"></li>
 	                            <li th:if="${staff.contract_check == 1}">
-	                                <a th:href="@{/contract_check(event_id=${staff.event_id}, staff_id=${staff.staff_id})}">보기</a>
+	                                <a th:href="@{/contract_check(event_id=${staff.event_id}, staff_id=${staff.staff_id})}" id="contract_link">보기</a>
 	                            </li>
                             </div>
                         </ol>
@@ -546,7 +546,7 @@
             white-space: pre-wrap;
         }
 
-        table {
+        #employment_contract {
             width: 68%;
             margin: auto;
             margin-bottom: 2%;
@@ -556,7 +556,7 @@
             border-right: 0;
         }
 
-        td {
+        #employment_contract td {
             border-left: 2px solid #999999;
             border-bottom: 2px solid #999999;
         }
