@@ -613,7 +613,7 @@ public class MasterController {
     }
 
     // 근로확인서 및 보안각서 최종 확인 및 저장하기
-    @RequestMapping(value="/contract_check", method=RequestMethod.POST)
+    @RequestMapping(value="/contract_check", method= {RequestMethod.POST,RequestMethod.GET})
     public ModelAndView contract_check(@ModelAttribute MasterVo masterVo, HttpSession session) {
         ModelAndView mav = new ModelAndView();
         if(masterVo.getYear() != 0) {
@@ -645,8 +645,6 @@ public class MasterController {
             mav.setViewName("/contract_file_forview");
             System.out.println(2);
         }
-
-
         System.out.println(3);
         return mav;
     }
@@ -664,6 +662,7 @@ public class MasterController {
         mav.setViewName("/manage_career_forstaff");
         return mav;
     }
+    
 
     //근무기록 리스트(관리자) -> DB와 비교하기 위해 날짜형태(0000-00-00) 변경 필요
     @GetMapping(value="/report_work")

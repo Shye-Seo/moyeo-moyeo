@@ -12,7 +12,7 @@
         <!-- 근로계약서 -->
         <div id="modal1">
             <input type="image" id="cancel1" src="../imgs/close_btn_black.svg">
-            <h2>근로계약서</h2>
+            <h2 class="modal_title">근로계약서</h2>
             <table>
                 <tr>
                     <td class="table_title" rowspan="3">사 업 주</td>
@@ -119,7 +119,7 @@
         <!-- 보안 각서 -->
         <div id="modal2">
             <input type="image" id="cancel2" src="../imgs/close_btn_black.svg">
-            <h2>보안각서</h2>
+            <h2 class="modal_title">보안각서</h2>
             <table>
                 <tr>
                     <td class="table_title">소속</td>
@@ -266,10 +266,10 @@
                         event_id: event_id,
                         staff_id: staff_id,
                         user_name: '[[${masterVo.user_name}]]',
-                        user_phone: [[${masterVo.user_phone}]],
+                        user_phone: '[[${masterVo.user_phone}]]',
                         staff_address: '[[${masterVo.staff_address}]]',
-                        identification_number: [[${masterVo.identification_number}]],
-                        contract_date: [[${masterVo.year}]] + '-' + [[${masterVo.month}]] + '-' + [[${masterVo.day}]],
+                        identification_number: '[[${masterVo.identification_number}]]',
+                        contract_date: '[[${masterVo.year}]]' + '-' + '[[${masterVo.month}]]' + '-' + '[[${masterVo.day}]]',
                     }
                 });
 
