@@ -313,7 +313,8 @@
     </div>
     <form th:insert="~{contract_file :: modal}" action="contract_check" id="contract" class="contract" method="post"></form>
     <style>
-
+		#left_none{border-left:none !important;}
+		
         #contract {
             position: fixed;
             top: 0;
@@ -338,63 +339,85 @@
         }
 
         h2 {
-            margin: 5%;
-            text-align: center;
+            margin-right: auto;
+		    text-align: center;
+		    margin-top: 50px;
+		    margin-bottom: 40px;
+		    font-size: 21px;
         }
-
+		/* -----근로계약서----- */
         pre {
-            width: 68%;
-            height:410px;
+            width: 70%;
+            height:300px;
             margin: auto;
-            margin-bottom: 5%;
+            margin-bottom: 50px;
             white-space: pre-wrap;
+            font-size:14px;
+            color: #000000;
+        }
+        
+        .test::-webkit-scrollbar-thumb{
+        	background-color:#DDDDDD;
+        	border-radius:20px;
+        }
+        
+        .test::-webkit-scrollbar{
+        	background-color:#fff;
+        	width: 7px;
         }
 
-        table {
-            width: 68%;
+        #employment_contract {
+            width: 70%;
             margin: auto;
-            margin-bottom: 2%;
-            border: 2px solid #999999;
+            margin-bottom: 20px;
+            border: 1px solid #BFBFBF;
             border-collapse: collapse;
             border-left:0;
             border-right: 0;
         }
-
-        td {
-            border-left: 2px solid #999999;
-            border-bottom: 2px solid #999999;
+        
+        #employment_contract tr{
+        	height: 27px;
         }
+
+        #employment_contract td {
+            border-left: 1px solid #BFBFBF;
+            border-bottom: 1px solid #BFBFBF;
+            font-size: 15px;
+            color: #000000;
+        }
+        
+        #employment_contract input {
+		    padding-left: 10px;
+		    height: 27px;
+		    width: 98%;
+		    text-align: center;
+		    font-size:15px;
+		}
 
         .table_title {
-            background: #E8E8E8 0% 0% no-repeat padding-box;
+            background-color: #E8E8E8;
+            width: 100px;
+    		text-align: center;
         }
-
-        .security_content {
-            width: 80%;
-            margin: auto;
-            margin-top: 10%;
-            margin-bottom: 15%;
-            text-align:center;
-            line-height: 25px;
-        }
-
-        .security_content p {
-
+        
+        .table_text{
+        	text-align: center;
         }
 
         .contrac_date_area {
-            width: 80%;
+            width: 70%;
             margin: auto;
-            margin-bottom: 4%;
+            margin-bottom: 41px;
             text-align: center;
+            font-size:15px;
+            color: #000000;
         }
-
-        .contrac_date_area2 {
-            width: 80%;
-            margin: auto;
-            margin-bottom: 5%;
-            text-align: center;
-        }
+        
+        .contrac_date_area input {
+		    padding-right: 10px;
+		    text-align: right;
+		}
 
         #reset_btn, #back_btn {
             width: 100px;
@@ -404,7 +427,7 @@
             color: #333333;
             background: #FFFFFF 0% 0% no-repeat padding-box;
             border: 0.5px solid #999999;
-            border-shadow: 0px 3px 10px #99999929;
+            box-shadow: 0px 3px 10px #99999929;
             border-radius: 5px;
             cursor: pointer;
         }
@@ -417,15 +440,14 @@
             color: #5D91D0;
             background: #FFFFFF 0% 0% no-repeat padding-box;
             border: 0.5px solid #5D91D0;
-            border-shadow: 0px 3px 10px #5D91D0;
+            box-shadow: 0px 3px 10px #99999929;
             border-radius: 5px;
             cursor: pointer;
         }
 
         #next_btn, #confirm_btn {
-            margin-left: 10%;
+            margin-left: 20px;
         }
-
 
         .year {
             margin-right: 1%;
@@ -437,7 +459,7 @@
         }
 
         #year1, #year2 {
-            width: 105px;
+            width: 90px;
             height: 30px;
 
             background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -446,7 +468,7 @@
         }
 
         #month1, #month2, #day1, #day2 {
-            width: 43px;
+            width: 30px;
             height: 30px;
 
             background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -455,45 +477,122 @@
         }
 
         .info_area {
-            width:68%;
+            width:70%;
             margin:auto;
             display:flex;
-            justify-content: space-around;
+            font-size:14px;
+            color: #000000;
+        }
+        
+        .info_area .business_sign{
+        	margin: 0 5%;
+        }
+        
+        .info_area .employee_sign{
+        	display: flex;
+        	margin-left: 10%;
         }
 
         .staff_sign {
-            margin-left:23%;
-        }
-
-        .staff_sign2 {
-            text-align: center;
+            margin-right: 10px;
         }
 
         #user_name2, #user_name4 {
-            width: 240px;
+            width: 230px;
             height:30px;
 
             background: #FFFFFF 0% 0% no-repeat padding-box;
             border: 0.5px solid #999999;
             border-radius: 5px;
-        }
-
-        .business_name {
-            width: 68%;
-            margin-top: 13.8%;
-            margin-left: 15%;
+            padding-left:10px;
         }
 
         .button_collection {
-            width: 300px;
-            margin: auto;
-            margin-top: 3%;
+            width: 70%;
+            margin: 0 auto;
+            margin-top: 50px;
+            text-align: center;
         }
 
         #user_name1, #user_phone1, #staff_address1, #identification_number1, #user_name3, #identification_number2, #staff_address2 {
             border:0;
         }
+		
+		/* -----보안각서----- */
+		#security_table {
+            width: 70%;
+            margin: auto;
+            margin-bottom: 20px;
+            border: 1px solid #BFBFBF;
+            border-collapse: collapse;
+            border-left:0;
+            border-right: 0;
+        }
+        
+        #security_table tr{
+        	height: 27px;
+        }
 
+        #security_table td {
+            border-left: 1px solid #BFBFBF;
+            border-bottom: 1px solid #BFBFBF;
+            font-size: 15px;
+            color: #000000;
+        }
+        
+        .text_padding{
+        	padding-left: 15px;
+        }
+        
+        #security_table input {
+		    padding-left: 15px;
+		    height: 27px;
+		    width: 98%;
+		    font-size:15px;
+		}
+		
+		.security_content {
+            width: 70%;
+            margin: auto;
+            margin-top: 100px;
+            margin-bottom: 150px;
+            text-align:center;
+            line-height: 20px;
+            font-size: 14px;
+        }
+        
+        .security_content p{
+        	color: #000000;
+        }
+        
+        .contrac_date_area2 {
+            width: 70%;
+            margin: auto;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #000000;
+            font-size: 15px;
+        }
+        
+        .contrac_date_area2 input {
+		    padding-right: 10px;
+		    text-align: right;
+		}
+		
+        .staff_sign2 {
+            text-align: center;
+            width: 70%;
+            margin: 0 auto;
+            color: #000000;
+            font-size: 14px;
+        }
+        
+        .business_name {
+            width: 70%;
+            margin: 70px auto 0 auto;
+            font-size: 14px;
+            color: #000000;
+        }
     </style>
     <script>
 
@@ -519,6 +618,7 @@
                     var event_endDate = eventInfo.event_endDate;
                     var event_position_pay = eventInfo.event_position_pay;
                     var event_venue = eventInfo.event_venue;
+                    var event_title = eventInfo.event_title;
                     // startDate와 endDate의 날짜 차이 계산
                     var date1 = new Date(event_startDate);
                     var date2 = new Date(event_endDate);
@@ -532,6 +632,7 @@
                     $("#event_endDate").text(event_endDate);
                     $("#work_date").text(work_date);
                     $("#event_position_pay").text(event_position_pay);
+                    $("#event_title").text(event_title);
 
                 })
             });

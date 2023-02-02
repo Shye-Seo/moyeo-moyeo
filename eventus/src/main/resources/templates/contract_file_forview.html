@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>이벤터즈랩(eventusLAB)</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
@@ -11,7 +11,7 @@
         <div id="modal1" th:fragment="modal">
             <input type="image" id="cancel1" src="../imgs/close_btn_black.svg">
             <h2>근로계약서</h2>
-            <table>
+            <table id="contract_check">
                 <tr>
                     <td class="table_title" rowspan="3">사 업 주</td>
                     <td class="table_title">대표자</td>
