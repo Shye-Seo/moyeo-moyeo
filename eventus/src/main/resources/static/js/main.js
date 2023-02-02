@@ -16,7 +16,7 @@ $(function(){
         let time = $(this).text();
         let result = time.replace(/ /g, '');
         if(result==""){
-            $(this).text("00:00");
+            $(this).text("-");
         }else{
             $(this).text(result);
         }
