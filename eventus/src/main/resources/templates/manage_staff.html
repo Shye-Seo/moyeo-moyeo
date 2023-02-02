@@ -21,6 +21,63 @@
 <!-- 	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	
+	<style>
+		/* 달력 열리는 위치 수정 */
+		.daterangepicker{
+			right: 532.062px !important;
+			left: auto !important;
+		}
+		/* 기본선택된 날짜 및 시작, 끝날짜 배경색 */
+		.daterangepicker td.active, .daterangepicker td.active:hover, td.active.end-date {
+		    background-color: #FFD0DE !important;
+		    border-color: transparent;
+		    color: #333333;
+		}
+		.daterangepicker select.monthselect {
+		    border: none;
+		    text-align: center;
+		    font-size: 15px;
+		}
+		.daterangepicker select.yearselect {
+		    border: none;
+		    text-align: center;
+		    font-size: 15px;
+		}
+		/* 요일부분 */
+		.daterangepicker .table-condensed thead tr th {
+		    color: #999999;
+		    font-weight: 400;
+		}
+		/* 달력 각 날짜 td */
+		.daterangepicker td.today.active.start-date.active.end-date.available {
+		    border-radius: 15px;
+		}
+		.daterangepicker .calendar-table th, .daterangepicker .calendar-table td {
+		    min-width: 30px;
+		    width: 30px;
+		    height: 30px;
+		    line-height: 30px;
+		}
+		/* 오늘날짜 font weight 수정 */
+		.daterangepicker td.today{
+			font-weight:400;
+		}
+		/* 시작날짜와 끝날짜 사이의 range */
+		.in-range {
+		    color: #333333;
+ 		    background-color: rgba(255, 208, 222, 0.3) !important;
+		}
+		/* 날짜 선택 전, hover */
+		.daterangepicker td.in-range:hover { 
+		    background-color: #eee !important;
+		    border-color: transparent;
+		    color: inherit;
+		}
+		.daterangepicker td.off.ends {
+		    background: #fff !important;
+		}
+	</style>
 </head>
 <body>
     <div id="wrap">
