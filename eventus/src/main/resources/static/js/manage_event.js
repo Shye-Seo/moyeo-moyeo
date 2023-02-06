@@ -171,7 +171,7 @@ function resume_download(thisId){
             html2canvas: { // html2canvas 옵션
                 useCORS: true, // 영역 안에 로컬 이미지를 삽입 할 때 옵션 필요
                 scrollY: 0, // 스크롤 이슈 때문에 필수
-                scale: 2, // browsers device pixel ratio
+                scale: 3, // browsers device pixel ratio
                 dpi: 300,
                 letterRendering: true,
                 allowTaint: false, //useCORS를 true로 설정 시 반드시 allowTaint를 false처리 해주어야함

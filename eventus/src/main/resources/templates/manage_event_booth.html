@@ -103,8 +103,8 @@
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.totalPageCnt}" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.totalPageCnt}" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
                             	<a class="page-link page_icon" th:href="@{manage_event_booth?id={id}&page={page} (id = ${event_id}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
@@ -130,8 +130,8 @@
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.totalPageCnt}" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.totalPageCnt}" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
                             	<a class="page-link page_icon" th:href="@{manage_event_booth?id={id}&searchKeyword={key}&page={page} (id = ${event_id}, key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
