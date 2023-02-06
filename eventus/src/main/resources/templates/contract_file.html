@@ -121,7 +121,7 @@
         </div>
 
         <!-- 보안 각서 -->
-        <div id="modal2" style='page-break-before:always'>
+        <div id="modal2">
             <input type="image" id="cancel2" src="../imgs/close_btn_black.svg">
             <h2>보안각서</h2>
             <table id="security_table">
@@ -243,7 +243,9 @@
             });
 
             $('#save_btn').click(function() {
-                // $('#save_btn').css('display', 'none');
+                $('#save_btn').css('display', 'none');
+                $('#modal1').css('border-bottom', 'none');
+                $('.button_collection').css('display', 'none');
                 // pdf 다운로드
                 let element = document.getElementById('modal_all');
                 let opt = {
@@ -263,26 +265,26 @@
                 html2pdf().from(element).set(opt).save();
 
                 // 서버에 근로계약서 등록 데이터 저장
-                // $.ajax({
-                //     url: '/insert_contract',
-                //     type: "GET",
-                //     data: {
-                //         event_id: event_id,
-                //         staff_id: staff_id,
-                //         user_name: '[[${masterVo.user_name}]]',
-                //         user_phone: '[[${masterVo.user_phone}]]',
-                //         staff_address: '[[${masterVo.staff_address}]]',
-                //         identification_number: '[[${masterVo.identification_number}]]',
-                //         contract_date: '[[${masterVo.year}]]' + '-' + '[[${masterVo.month}]]' + '-' + '[[${masterVo.day}]]',
-                //     }
-                // });
+                $.ajax({
+                    url: '/insert_contract',
+                    type: "GET",
+                    data: {
+                        event_id: event_id,
+                        staff_id: staff_id,
+                        user_name: '[[${masterVo.user_name}]]',
+                        user_phone: '[[${masterVo.user_phone}]]',
+                        staff_address: '[[${masterVo.staff_address}]]',
+                        identification_number: '[[${masterVo.identification_number}]]',
+                        contract_date: '[[${masterVo.year}]]' + '-' + '[[${masterVo.month}]]' + '-' + '[[${masterVo.day}]]',
+                    }
+                });
 
-                // 5초 뒤에 location.href로 이동
-                // alert("다운로드 후 자동으로 페이지 이동됩니다.\n확인 버튼 클릭 후, 조금만 기다려주세요!");
+//                 5초 뒤에 location.href로 이동
+//                 alert("다운로드 후 자동으로 페이지 이동됩니다.\n확인 버튼 클릭 후, 조금만 기다려주세요!");
 
-                // setTimeout(function() {
-                //     location.href = '/manage_career_forstaff';
-                // }, 3000);
+                setTimeout(function() {
+                    location.href = '/manage_career_forstaff';
+                }, 3000);
             });
         })
 
@@ -330,15 +332,15 @@
             margin-right: auto;
 		    text-align: center;
 		    margin-top: 20px;
-		    margin-bottom: 30px;
+		    margin-bottom: 20px;
 		    font-size: 21px;
         }
 		/* -----근로계약서----- */
         pre {
-            width: 100%;
+            width: 95%;
             height:auto;
             margin: auto;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
             white-space: pre-wrap;
             font-size:12px;
             color: #000000;
