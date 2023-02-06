@@ -131,26 +131,26 @@ public class EventService {
 	//문자발송
 	// coolsms에 정보를 보내 회원가입시 인증번호를 보낸 후, 인증번호를 return 한다.
     public void sendSms_forPasser(String user_phone, String user_name, String event_name, String position_name) throws CoolsmsException {
-//        String api_key = "NCS9HI923SUSM5VF";
-//        String api_secret = "XLQEOJRXNGAIUHIFRGX5VUTCHEJV7D8N";
-//
-//        Message coolsms = new Message(api_key, api_secret);
-//
-//        // 4 params(to, from, type, text) are mandatory. must be filled
-//        HashMap<String, String> params = new HashMap<String, String>();
-//        params.put("to", user_phone);
-//        params.put("from", "010-9878-0502"); // 발신전화번호. 테스트시에는 발신, 수신 둘다 본인 번호로 하면됨
-//        params.put("type", "SMS");
-//        params.put("text", "[TEST]" +user_name +"님, "+ event_name + " 행사에 합격하셨습니다. 홈페이지에 확인해주세요!"); // 문자 내용 입력
-//
-//        // send() 를 통해 전송
-//        try {
-//            JSONObject obj = (JSONObject) coolsms.send(params);
-//            System.out.println(obj.toString());
-//        }catch(CoolsmsException e) {
-//            System.out.println(e.getMessage());
-//            System.out.println(e.getCode());
-//        }
+        String api_key = "NCS9HI923SUSM5VF";
+        String api_secret = "XLQEOJRXNGAIUHIFRGX5VUTCHEJV7D8N";
+
+        Message coolsms = new Message(api_key, api_secret);
+
+        // 4 params(to, from, type, text) are mandatory. must be filled
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("to", user_phone);
+        params.put("from", "010-9878-0502"); // 발신전화번호. 테스트시에는 발신, 수신 둘다 본인 번호로 하면됨
+        params.put("type", "SMS");
+        params.put("text", "[TEST]" +user_name +"님, "+ event_name + " 행사에 합격하셨습니다. 홈페이지에서 확인해주세요!"); // 문자 내용 입력
+
+        // send() 를 통해 전송
+        try {
+            JSONObject obj = (JSONObject) coolsms.send(params);
+            System.out.println(obj.toString());
+        }catch(CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+        }
     }
 	
 	//모집종료

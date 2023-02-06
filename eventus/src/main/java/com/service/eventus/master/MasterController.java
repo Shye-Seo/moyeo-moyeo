@@ -622,7 +622,7 @@ public class MasterController {
             int id = masterService.getUserId(user_id);
             masterVo.setStaff_id(id);
             // masterVo의 staff_address 띄어쓰기를 +로 바꾸어 저장
-            // masterVo.setStaff_address(masterVo.getStaff_address().replace(" ", "+"));
+             masterVo.setStaff_address(masterVo.getStaff_address().replace(" ", "+"));
             mav.addObject("masterVo", masterVo);
             mav.setViewName("/contract_file");
             System.out.println(1);

@@ -200,8 +200,8 @@
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{report_work_ForStaff?page={page} (page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{report_work_ForStaff?page={page} (page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.totalPageCnt}" th:href="@{report_work_ForStaff?page={page} (page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.totalPageCnt}" th:href="@{report_work_ForStaff?page={page} (page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
                             	<a class="page-link page_icon" th:href="@{report_work_ForStaff?page={page} (page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
@@ -227,8 +227,8 @@
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.totalPageCnt}" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.totalPageCnt}" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
                             	<a class="page-link page_icon" th:href="@{report_work_ForStaff?searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate}, key = ${searchKeyword}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
@@ -254,8 +254,8 @@
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.totalPageCnt}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.totalPageCnt}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
                             	<a class="page-link page_icon" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&page={page} (start = ${startDate}, end = ${endDate}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
@@ -281,8 +281,8 @@
 							    </li>
 						    </th:block>
                             <li class="icon_left">
-                            	<a class="page-link page_icon" th:if="${nowpage == pagination.endPage}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
-                            	<a class="page-link page_icon" th:if="${nowpage != pagination.endPage}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage == pagination.totalPageCnt}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage})}"><img src="imgs/page_next_btn.svg"></a>
+                            	<a class="page-link page_icon" th:if="${nowpage != pagination.totalPageCnt}" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${nowpage}+1)}"><img src="imgs/page_next_btn.svg"></a>
                             </li>
                             <li>
                             	<a class="page-link page_icon" th:href="@{report_work_ForStaff?startDate={start}&endDate={end}&searchDate={date}&searchKeyword={key}&page={page} (date = ${searchDate},key = ${searchKeyword},start = ${startDate}, end = ${endDate}, page = ${pagination.totalPageCnt})}"><img src="imgs/page_end_btn.svg"></a>
