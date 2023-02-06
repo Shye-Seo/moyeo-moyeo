@@ -211,7 +211,5 @@ public class MasterService {
 	public List<MasterVo> Work_SearchList_keydate(String startDate, String endDate, String searchKeyword, int startIndex, int pageSize) {
 		return masterDao.Work_SearchList_keydate(startDate, endDate, searchKeyword, startIndex, pageSize);
 	}
-
-    
     
 }

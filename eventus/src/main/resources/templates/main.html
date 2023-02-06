@@ -72,7 +72,7 @@
                     <div class="R_area">
                         <div class="area2">
                             <p class="area_title">직원 근무 기록</p>
-                            <a class="link" href="/manage_staff">더보기</a>
+                            <a class="link" href="/report_work">더보기</a>
                             <div class="staff_list">
                                 <div class="staff_date">
                                     <p>[[${today}]]</p>
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="staff_line" th:each=" workLog : ${workLog_list}">
                                     <div class="profile_img">
-                                        <img th:src="'https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/'+${workLog.file_name}" alt="profile" onerror="this.src='/imgs/profile_none_img.svg'">
+                                        <img th:src="'ㅇㅌ https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/'+${workLog.file_name}" alt="profile" onerror="this.src='/imgs/profile_none_img.svg'">
                                     </div>
                                     <div class="staff_info">
                                         <p>[[${workLog.staff_name}]]</p>

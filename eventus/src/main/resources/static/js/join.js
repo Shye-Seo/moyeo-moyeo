@@ -83,7 +83,7 @@ $(function() {
         var regExp = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,16}$/;
         if(!regExp.test($("#member input[name=user_pw]").val())){
             pw_checked = "0";
-            $("#pw_check1").text("비밀번호 형식이 맞지 않습니다.");
+            $("#pw_check1").text("비밀번호가 영문, 숫자 특수기호 중 2가지 이상 조합, 10자~16자이어야 합니다.");
             $("#pw_check1").css("color", "#DD5067");
         }
         else {
