@@ -1030,12 +1030,12 @@ public class MasterController {
 
 			staff_list = masterService.staff_Downloaddate(user_id, startDate, endDate);
 //		    	System.out.println("날짜");
-			filename = "event_excel_"+startDate+"_"+endDate+".xlsx";
+			filename = "staff_excel_"+startDate+"_"+endDate+".xlsx";
 
 		}else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
 //			 System.out.println("키워드");
 			staff_list = masterService.staff_Downloadkey(user_id, searchKeyword);
-			filename = "event_excel_"+searchKeyword+".xlsx";
+			filename = "staff_excel_"+searchKeyword+".xlsx";
 
 		}else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
 			startDate = searchDate.substring(0, 10);
@@ -1043,7 +1043,7 @@ public class MasterController {
 
 			staff_list = masterService.staff_Downloadkeydate(user_id, startDate, endDate, searchKeyword);
 //		    	System.out.println("동시");
-			filename = "event_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
+			filename = "staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
 		}
 
         // 데이터 부분 생성
@@ -1146,32 +1146,32 @@ public class MasterController {
 			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
 		}
 
-		//staff_list = MasterService.report_work_findDownloadList();
+		report_work_list = masterService.report_work_findDownloadList();
 
 		if(searchKeyword == null && searchDate == null) { //키워드&날짜 null (기본상태)
-			//staff_list = MasterService.report_work_findDownloadList();
+			report_work_list = masterService.report_work_findDownloadList();
 //		    	System.out.println("기본");
 
 		}else if(searchKeyword == null && searchDate != null) { //날짜검색, 키워드는 null
 			startDate = searchDate.substring(0, 10);
 			endDate = searchDate.substring(13, 23);
 
-			//staff_list = MasterService.report_work_Downloaddate(startDate, endDate);
+			report_work_list = masterService.report_work_Downloaddate(startDate, endDate);
 //		    	System.out.println("날짜");
-			filename = "event_excel_"+startDate+"_"+endDate+".xlsx";
+			filename = "report_work_excel_"+startDate+"_"+endDate+".xlsx";
 
 		}else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
 //			 System.out.println("키워드");
-			//staff_list = MasterService.report_work_Downloadkey(searchKeyword);
-			filename = "event_excel_"+searchKeyword+".xlsx";
+			report_work_list = masterService.report_work_Downloadkey(searchKeyword);
+			filename = "report_work_excel_"+searchKeyword+".xlsx";
 
 		}else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
 			startDate = searchDate.substring(0, 10);
 			endDate = searchDate.substring(13, 23);
 
-			//staff_list = MasterService.report_work_Downloadkeydate(startDate, endDate, searchKeyword);
+			report_work_list = masterService.report_work_Downloadkeydate(startDate, endDate, searchKeyword);
 //		    	System.out.println("동시");
-			filename = "event_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
+			filename = "report_work_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
 		}
 
         // 데이터 부분 생성

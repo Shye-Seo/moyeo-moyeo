@@ -36,7 +36,7 @@ public interface MasterDao {
     //근무기록 리스트(관리자)
     @Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time,"
             + " work_comeback_time, work_end_time, work_total_time from staff_work_record a "
-            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id;")
+            + "left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id")
     List<MasterVo> report_work_list();
 
     //근무기록 소계시간(관리자)
@@ -337,4 +337,16 @@ public interface MasterDao {
 			"where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and event_title like concat('%','${searchKeyword}','%') and e.user_id = #{user_id} " +
 			"order by e.event_startDate asc, sa.id asc")
 	List<MasterVo> staff_Downloadkeydate(String user_id, String startDate, String endDate, String searchKeyword);
+
+	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id")
+	List<MasterVo> report_work_findDownloadList();
+
+	@Select("")
+	List<MasterVo> report_work_Downloaddate(String startDate, String endDate);
+
+	@Select("")
+	List<MasterVo> report_work_Downloadkey(String searchKeyword);
+
+	@Select("")
+	List<MasterVo> report_work_Downloadkeydate(String startDate, String endDate, String searchKeyword);
 }
