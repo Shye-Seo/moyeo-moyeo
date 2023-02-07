@@ -1136,13 +1136,13 @@ public class MasterController {
 		String today = "";
 
 		if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-			today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
+			today = cal.get(Calendar.YEAR)+"-0"+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
 		}else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-			today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
+			today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
 		}else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
+			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
 		}else {
-			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
+			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
 		}
 
 		report_work_list = masterService.report_work_findDownloadList();

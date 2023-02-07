@@ -344,7 +344,7 @@ public interface MasterDao {
 	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a \n" +
 			"left JOIN user u ON a.staff_id= u.id \n" +
 			"left join event e ON a.event_id = e.id\n" +
-			"where (#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})")
+			"where (#{startDate} <= work_date and work_date <= #{endDate})")
 	List<MasterVo> report_work_Downloaddate(String startDate, String endDate);
 
 	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a \n" +
@@ -356,6 +356,6 @@ public interface MasterDao {
 	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a \n" +
 			"left JOIN user u ON a.staff_id= u.id \n" +
 			"left join event e ON a.event_id = e.id\n" +
-			"where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and event_title like concat('%','${searchKeyword}','%')")
+			"where (#{startDate} <= work_date and work_date <= #{endDate}) and event_title like concat('%','${searchKeyword}','%')")
 	List<MasterVo> report_work_Downloadkeydate(String startDate, String endDate, String searchKeyword);
 }
