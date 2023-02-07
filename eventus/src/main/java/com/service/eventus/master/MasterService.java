@@ -18,7 +18,24 @@ public class MasterService {
     @Autowired
     private MasterDao masterDao;
 
-    public List<MasterVo> getListMemberApp(String user_id, int startIndex, int pageSize) {
+	public static List<MasterVo> staff_findDownloadList(String user_id) {
+		return masterDao.staff_findDownloadList(user_id);
+	}
+
+	public static List<MasterVo> staff_Downloaddate(String user_id, String startDate, String endDate) {
+		return masterDao.staff_Downloaddate(user_id, startDate, endDate);
+	}
+
+	public static List<MasterVo> staff_Downloadkey(String user_id, String searchKeyword) {
+		return masterDao.staff_Downloadkey(user_id, searchKeyword);
+	}
+
+	public static List<MasterVo> staff_Downloadkeydate(String user_id, String startDate, String endDate, String searchKeyword) {
+		return masterDao.staff_Downloadkeydate(user_id, startDate, endDate, searchKeyword);
+	}
+
+
+	public List<MasterVo> getListMemberApp(String user_id, int startIndex, int pageSize) {
         return masterDao.getListMemberApp(user_id, startIndex, pageSize);
     }
 
