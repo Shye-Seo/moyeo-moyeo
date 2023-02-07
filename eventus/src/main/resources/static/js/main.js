@@ -34,6 +34,12 @@ $(function(){
             }
         }
     });
+
+    window.addEventListener("resize", function() {
+        if($(this).position().left < -inbox_width){
+            $(this).css('left',-($(".event_box_in").width()- $(".event_box_wrap").width() -10)+'px')
+        }
+    })
     
 })
 
@@ -44,7 +50,7 @@ function list_next(){
     if(left_num > -inbox_width){
         left_num -= 250;
         if(left_num < -inbox_width){
-            left_num = -inbox_width
+            left_num = -($(".event_box_in").width()- $(".event_box_wrap").width() -10);
         }
     }else{
         return false;
