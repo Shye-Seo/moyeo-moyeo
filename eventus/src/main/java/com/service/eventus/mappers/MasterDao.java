@@ -22,7 +22,7 @@ public interface MasterDao {
             "    inner join staff_application sa on e.id = sa.event_id" +
             "    inner join user u on sa.staff_id = u.id" +
             "    where e.user_id = #{user_id}" +
-            "    order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
+            "    order by e.event_startDate desc, sa.id desc limit #{startIndex}, #{pageSize}")
     List<MasterVo> getListMemberApp(String user_id, int startIndex, int pageSize);
 
     // 이력관리 - 지원현황 : 유저 아이디를 가지고 지원한 이벤트 목록 가져오기
@@ -124,7 +124,7 @@ public interface MasterDao {
             "    inner join staff_application sa on e.id = sa.event_id" +
             "    inner join user u on sa.staff_id = u.id" +
             "    where e.user_id = #{user_id} and (#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})" +
-            "    order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
+            "    order by e.event_startDate desc, sa.id desc limit #{startIndex}, #{pageSize}")
 	List<MasterVo> staff_searchList_date(String user_id, String startDate, String endDate, int startIndex, int pageSize);
 
 	//키워드 검색 (행사명 또는 스태프이름)
@@ -138,23 +138,23 @@ public interface MasterDao {
             "    inner join staff_application sa on e.id = sa.event_id" +
             "    inner join user u on sa.staff_id = u.id" +
             "    where e.user_id = #{user_id} and (e.event_title like concat('%','${searchKeyword}','%') or u.user_name like concat('%','${searchKeyword}','%'))" +
-			"    order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
+			"    order by e.event_startDate desc, sa.id desc limit #{startIndex}, #{pageSize}")
 	List<MasterVo> staff_searchList(String user_id, String searchKeyword, int startIndex, int pageSize);
 
 	//동시 검색
 	@Select("select count(*) from event e" +
             "    inner join staff_application sa on e.id = sa.event_id" +
             "    inner join user u on sa.staff_id = u.id" +
-            "    where e.user_id = #{user_id} and (e.event_title like concat('%','${searchKeyword}','%') or u.user_name like concat('%','${searchKeyword}','%'))" +
-            "	 and (#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})")
+            "    where (e.user_id = #{user_id} and (e.event_title like concat('%','${searchKeyword}','%') or u.user_name like concat('%','${searchKeyword}','%'))" +
+            "	 and ((#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})))")
 	int searchCnt_keydate(String user_id, String startDate, String endDate, String searchKeyword);
 
 	@Select("select * from event e" +
             "    inner join staff_application sa on e.id = sa.event_id" +
             "    inner join user u on sa.staff_id = u.id" +
-            "    where e.user_id = #{user_id} and (e.event_title like concat('%','${searchKeyword}','%') or u.user_name like concat('%','${searchKeyword}','%'))" +
-            "	 and (#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})"+
-			"    order by e.event_startDate desc limit #{startIndex}, #{pageSize}")
+            "    where (e.user_id = #{user_id} and (e.event_title like concat('%','${searchKeyword}','%') or u.user_name like concat('%','${searchKeyword}','%'))" +
+            "	 and ((#{startDate} <= e.event_startDate and e.event_startDate <= #{endDate}) or (#{startDate} <= e.event_endDate and e.event_endDate <= #{endDate})))"+
+			"    order by e.event_startDate desc, sa.id desc limit #{startIndex}, #{pageSize}")
 	List<MasterVo> staff_searchList_keydate(String user_id, String startDate, String endDate, String searchKeyword,	int startIndex, int pageSize);
 
 	/* -----------사용자 이력관리 페이징------- */
@@ -314,27 +314,27 @@ public interface MasterDao {
 			"inner join staff_application sa on e.id = sa.event_id " +
 			"inner join user u on sa.staff_id = u.id " +
 			"where e.user_id = #{user_id} " +
-			"order by e.event_startDate desc")
+			"order by e.event_startDate asc, sa.id asc")
 	List<MasterVo> staff_findDownloadList(String user_id);
 
 	@Select("select event_id, staff_id, resume_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from eventusdb.event e " +
 			"inner join eventusdb.staff_application sa on e.id = sa.event_id " +
 			"inner join eventusdb.user u on sa.staff_id = u.id " +
 			"where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and e.user_id = #{user_id} " +
-			"order by e.event_startDate desc")
+			"order by e.event_startDate asc, sa.id asc")
 	List<MasterVo> staff_Downloaddate(String user_id, String startDate, String endDate);
 
 	@Select("select event_id, staff_id, resume_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from eventusdb.event e " +
 			"inner join eventusdb.staff_application sa on e.id = sa.event_id " +
 			"inner join eventusdb.user u on sa.staff_id = u.id " +
 			"where (event_title like concat('%','${searchKeyword}','%')) and e.user_id = #{user_id} " +
-			"order by e.event_startDate desc")
+			"order by e.event_startDate asc, sa.id asc")
 	List<MasterVo> staff_Downloadkey(String user_id, String searchKeyword);
 
 	@Select("select event_id, staff_id, resume_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from eventusdb.event e " +
 			"inner join eventusdb.staff_application sa on e.id = sa.event_id " +
 			"inner join eventusdb.user u on sa.staff_id = u.id " +
 			"where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and event_title like concat('%','${searchKeyword}','%') and e.user_id = #{user_id} " +
-			"order by e.event_startDate desc")
+			"order by e.event_startDate asc, sa.id asc")
 	List<MasterVo> staff_Downloadkeydate(String user_id, String startDate, String endDate, String searchKeyword);
 }
