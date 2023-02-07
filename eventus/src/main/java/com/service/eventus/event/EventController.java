@@ -1002,9 +1002,14 @@ public class EventController {
 	// 행사관리 엑셀 다운로드
 	@RequestMapping(value="/event_excel", method= RequestMethod.GET)
 	@ResponseBody
-	public void event_excel(HttpServletResponse response) throws IOException {
+	public void event_excel(HttpServletResponse response, String searchKeyword, String startDate, String endDate, String searchDate) throws IOException {
 		// 엑셀 파일명
 		String filename = "event_excel.xlsx";
+		System.out.println(searchKeyword);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		System.out.println(searchDate);
+		if(searchKeyword == "") {searchKeyword = null;}
 
 		Workbook workbook = new XSSFWorkbook();
 		Sheet sheet = workbook.createSheet("event_list");
@@ -1028,6 +1033,57 @@ public class EventController {
 		cell = row.createCell(5);
 		cell.setCellValue("부스현황");
 
+		// 오늘 날짜
+	      LocalDate now = LocalDate.now();
+	      Calendar time = Calendar.getInstance();
+	      SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+	      
+	      Calendar cal = Calendar.getInstance();
+	      int year_ = now.getYear();
+	      int month_ = now.getMonthValue();
+	      int day_ = now.getDayOfMonth();
+	      cal.set(year_, month_-1, day_);
+	      
+	      String today = "";
+	      
+	      if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
+	    	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
+	      }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
+	    	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
+	      }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
+	    	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
+	      }else {
+	    	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
+	      }
+	      
+		 event_list = eventService.findDownloadList();
+		
+		 if(searchKeyword == null && searchDate == null) { //키워드&날짜 null (기본상태)
+		    	event_list = eventService.findDownloadList();
+//		    	System.out.println("기본");
+		    	
+		 }else if(searchKeyword == null && searchDate != null) { //날짜검색, 키워드는 null
+			 	startDate = searchDate.substring(0, 10);
+		    	endDate = searchDate.substring(13, 23);
+		    	
+		    	event_list = eventService.event_Downloaddate(startDate, endDate);
+//		    	System.out.println("날짜");
+		    	filename = "event_excel_"+startDate+"_"+endDate+".xlsx";
+		    	
+		 }else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
+//			 System.out.println("키워드");
+	    		event_list = eventService.event_Downloadkey(searchKeyword);
+	    		filename = "event_excel_"+searchKeyword+".xlsx";
+	    		
+		 }else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
+		    	startDate = searchDate.substring(0, 10);
+		    	endDate = searchDate.substring(13, 23);
+		    	
+		    	event_list = eventService.event_Downloadkeydate(startDate, endDate, searchKeyword);
+//		    	System.out.println("동시");
+		    	filename = "event_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
+		 }
+		
 		for(EventVo event : event_list) {
 			row = sheet.createRow(rowNo++);
 			cell = row.createCell(0);

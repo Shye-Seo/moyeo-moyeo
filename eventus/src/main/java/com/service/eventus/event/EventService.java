@@ -315,4 +315,20 @@ public class EventService {
 		return eventDao.booth_searchList(event_id, searchKeyword, startIndex, pageSize);
 	}
 
+	public List<EventVo> findDownloadList() {
+		return eventDao.findDownloadList();
+	}
+
+	public List<EventVo> event_Downloaddate(String startDate, String endDate) {
+		return eventDao.event_Downloaddate(startDate, endDate);
+	}
+
+	public List<EventVo> event_Downloadkey(String searchKeyword) {
+		return eventDao.event_Downloadkey(searchKeyword);
+	}
+
+	public List<EventVo> event_Downloadkeydate(String startDate, String endDate, String searchKeyword) {
+		return eventDao.event_Downloadkeydate(startDate, endDate, searchKeyword);
+	}
+
 }
