@@ -92,6 +92,10 @@
                     </div>
                     <div class="excel_download">
                         <form action="/staff_excel" method="get">
+                            <!-- 엑셀 데이터 다운로드 위해서 파라미터 넘김 -->
+                            <input type="hidden" name="searchDate" th:value="${startDate}+' - '+${endDate}" th:if="${startDate != null && endDate != null}">
+                            <input type="hidden" class="word_search" placeholder="검색" name="searchKeyword" th:if="${searchKeyword == null}">
+                            <input type="hidden" class="word_search" th:value="${searchKeyword}" name="searchKeyword" th:if="${searchKeyword != null}">
                             <button type="submit" class="excel_submit">엑셀 데이터 다운로드</button>
                         </form>
                     </div>

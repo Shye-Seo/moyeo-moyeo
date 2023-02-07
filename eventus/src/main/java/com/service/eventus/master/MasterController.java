@@ -961,8 +961,9 @@ public class MasterController {
     // 직원관리 엑셀 다운로드
     @RequestMapping(value="/staff_excel", method= RequestMethod.GET)
     @ResponseBody
-    public void staff_excel(HttpServletResponse response) throws IOException {
+    public void staff_excel(HttpServletResponse response, HttpSession session, String searchKeyword, String startDate, String endDate, String searchDate) throws IOException {
 
+		String user_id = (String) session.getAttribute("user_id");
         // 엑셀 파일명
         String filename = "staff_list.xlsx";
         // 엑셀 파일 생성(xlsx 확장자)
@@ -973,6 +974,7 @@ public class MasterController {
         int rowNo = 0;
         int i=1;
 
+		if(searchKeyword == "") {searchKeyword = null;}
         // 헤더 정보 구성
         row = sheet.createRow(rowNo++);
         cell = row.createCell(0);
@@ -991,6 +993,57 @@ public class MasterController {
         cell.setCellValue("가입일자");
         cell = row.createCell(7);
         cell.setCellValue("합격여부");
+
+		// 오늘 날짜
+		LocalDate now = LocalDate.now();
+		Calendar time = Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+
+		Calendar cal = Calendar.getInstance();
+		int year_ = now.getYear();
+		int month_ = now.getMonthValue();
+		int day_ = now.getDayOfMonth();
+		cal.set(year_, month_-1, day_);
+
+		String today = "";
+
+		if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
+			today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
+		}else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
+			today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
+		}else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
+			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
+		}else {
+			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
+		}
+
+		staff_list = MasterService.staff_findDownloadList(user_id);
+
+		if(searchKeyword == null && searchDate == null) { //키워드&날짜 null (기본상태)
+			staff_list = MasterService.staff_findDownloadList(user_id);
+//		    	System.out.println("기본");
+
+		}else if(searchKeyword == null && searchDate != null) { //날짜검색, 키워드는 null
+			startDate = searchDate.substring(0, 10);
+			endDate = searchDate.substring(13, 23);
+
+			staff_list = MasterService.staff_Downloaddate(user_id, startDate, endDate);
+//		    	System.out.println("날짜");
+			filename = "event_excel_"+startDate+"_"+endDate+".xlsx";
+
+		}else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
+//			 System.out.println("키워드");
+			staff_list = MasterService.staff_Downloadkey(user_id, searchKeyword);
+			filename = "event_excel_"+searchKeyword+".xlsx";
+
+		}else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
+			startDate = searchDate.substring(0, 10);
+			endDate = searchDate.substring(13, 23);
+
+			staff_list = MasterService.staff_Downloadkeydate(user_id, startDate, endDate, searchKeyword);
+//		    	System.out.println("동시");
+			filename = "event_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
+		}
 
         // 데이터 부분 생성
         for(MasterVo staff : staff_list) {
