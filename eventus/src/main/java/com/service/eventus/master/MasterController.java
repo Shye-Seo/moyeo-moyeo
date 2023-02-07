@@ -1090,7 +1090,6 @@ public class MasterController {
         // 엑셀 파일명
         String filename = "report_excel_list.xlsx";
         // 엑셀 파일 내용
-        List<MasterVo> report_work_list = masterService.report_work_list();
         // 엑셀 파일 생성(xlsx 확장자)
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("report_work_list");
