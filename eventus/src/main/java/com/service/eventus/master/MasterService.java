@@ -34,6 +34,23 @@ public class MasterService {
 		return masterDao.staff_Downloadkeydate(user_id, startDate, endDate, searchKeyword);
 	}
 
+	public List<MasterVo> report_work_findDownloadList() {
+		return masterDao.report_work_findDownloadList();
+	}
+
+	public List<MasterVo> report_work_Downloaddate(String startDate, String endDate) {
+		return masterDao.report_work_Downloaddate(startDate, endDate);
+	}
+
+	public List<MasterVo> report_work_Downloadkey(String searchKeyword) {
+		return masterDao.report_work_Downloadkey(searchKeyword);
+	}
+
+	public List<MasterVo> report_work_Downloadkeydate(String startDate, String endDate, String searchKeyword) {
+		return masterDao.report_work_Downloadkeydate(startDate, endDate, searchKeyword);
+	}
+
+
 
 	public List<MasterVo> getListMemberApp(String user_id, int startIndex, int pageSize) {
         return masterDao.getListMemberApp(user_id, startIndex, pageSize);
