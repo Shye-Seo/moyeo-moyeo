@@ -13,6 +13,7 @@ $(function(){
         $('select').addClass('fix_input');
         $('#add_career').hide();
         $('#submit_bt').hide();
+        $('.profile_wrap').css('pointer-events','none');
     }else{
         $('#update_bt').hide();
     }
@@ -23,7 +24,7 @@ $(function(){
         $('input').removeClass('fix_input');
         $('select').removeAttr('disabled','false');
         $('select').removeClass('fix_input');
-
+		$('.profile_wrap').css('pointer-events','unset');
         $('.lock_input').attr('readonly','true');
         $('#submit_bt').show()
         $('.remove_career').show();
