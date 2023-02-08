@@ -114,14 +114,14 @@
                 	<p><span class="user_name"><input type="text" id="user_name2"></span><p>
                 </div>
             </div>
-            <div class="button_collection">
+            <div class="button_collection erase">
               <input type="reset" id="reset_btn" value="취소">
               <input type="button" id="next_btn" value="다음">
             </div>
         </div>
 
         <!-- 보안 각서 -->
-        <div id="modal2" >
+        <div id="modal2" style="page-break-before: always;">
             <input type="image" id="cancel2" src="../imgs/close_btn_black.svg">
             <h2>보안각서</h2>
             <table id="security_table">
@@ -186,12 +186,6 @@
             // staff_address는 문자열이다.
             // 문자열 안에 +를 공백으로 바꿔준다.
             staff_address = staff_address.replace(/\+/g, ' ');
-
-            $.each($('input'), function(){
-                var a = $(this).val();
-                $(this).val(a.replace(/\+/g, ' '))
-            });
-
             // 필요없는 버튼 삭제 및 텍스트 추가
             $('input[name="user_name"]').remove();
             $('.user_name').text('[[${masterVo.user_name}]]');
@@ -257,7 +251,6 @@
                     margin:       0.5,
                     filename:     '근로계약서.pdf',
                     image:        { type: 'jpeg', quality: 0.98 },
-                    pagebreak: { mode: 'avoid-all', before: '#modal2' },
                     html2canvas: { // html2canvas 옵션
                         useCORS: true, // 영역 안에 로컬 이미지를 삽입 할 때 옵션 필요
                         scrollY: 0, // 스크롤 이슈 때문에 필수
@@ -296,7 +289,7 @@
 
     </script>
     <style>
-    	@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
     	*{margin: 0; padding: 0; font-family: 'pretendard'; color: #000000;}
     	p{
     		padding:0;
@@ -307,7 +300,7 @@
             margin: 0 auto;
         }
     	#modal1{
-    		border-bottom: 1px solid #999999;
+     		border-bottom: 1px solid #999999;
     	}
 		#left_none{border-left:none !important;}
 		
@@ -329,24 +322,19 @@
             cursor:pointer;
         }
 
-        input[type=image] {
-            float: right;
-            margin: 2%;
-        }
-
         h2 {
             margin-right: auto;
 		    text-align: center;
 		    margin-top: 20px;
 		    margin-bottom: 20px;
-		    font-size: 21px;
+ 		    font-size: 21px;
         }
 		/* -----근로계약서----- */
         pre {
             width: 95%;
             height:auto;
             margin: auto;
-            margin-bottom: 5px;
+            /* margin-bottom: 5px; */
             white-space: pre-wrap;
             font-size:12px;
             color: #000000;
@@ -383,14 +371,6 @@
             color: #000000;
             text-align: center;
         }
-        
-        #employment_contract input {
-		    padding-left: 10px;
-		    height: 27px;
-		    width: 98%;
-		    text-align: center;
-		    font-size:15px;
-		}
 
         .table_title {
             background-color: #E8E8E8;
@@ -401,6 +381,9 @@
         .table_text{
         	text-align: center;
         }
+        .erase{
+            display: none;
+        }
 
         .contrac_date_area {
             width: 100%;
@@ -410,11 +393,6 @@
             font-size:13px;
             color: #000000;
         }
-        
-        .contrac_date_area input {
-		    padding-right: 10px;
-		    text-align: right;
-		}
 
         #reset_btn, #back_btn {
             width: 100px;
@@ -446,13 +424,8 @@
             margin-left: 20px;
         }
 
-        .year {
-/*             margin-right: 1%; */
-        }
-
         .month, .day {
             margin-left: 1%;
-/*             margin-right: 1%; */
         }
 
         #year1, #year2 {
@@ -484,7 +457,6 @@
         
         .info_area .business_sign{
         	margin-left: 200px;
-/*         	margin: 0 5%; */
         }
         
         .business_sign p:last-child {
