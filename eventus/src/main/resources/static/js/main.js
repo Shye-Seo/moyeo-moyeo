@@ -35,10 +35,10 @@ $(function(){
     });
 
     window.addEventListener("resize", function() {
+        inbox_width = box_count * 250 - $(".event_box_wrap").width()
         if($(".event_box_in").position().left < -inbox_width){
             $(".event_box_in").css('left',-($(".event_box_in").width()- $(".event_box_wrap").width() -10)+'px')
         }
-        inbox_width = box_count * 250 - $(".event_box_wrap").width()
     })
     
 })
