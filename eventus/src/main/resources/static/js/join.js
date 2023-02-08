@@ -275,7 +275,7 @@ $(function() {
                     user_pw: $('#member input[name=user_pw]').val(),
                     user_name: $('#member input[name=user_name]').val(),
                     user_email: $('#member input[name=user_email]').val(),
-                    user_birth: $('#member #birth_year').val() + '.' + $('#member #birth_month').val() + '.' + $('#member #birth_day').val(),
+                    user_birth: $('#member #birth_year').val() + '-' + $('#member #birth_month').val() + '-' + $('#member #birth_day').val(),
                     user_gender: $("#member input[name=user_gender]:checked").val(),
                     user_phone: $('#member input[name=user_phone]').val(),
                     user_date_join: today,
