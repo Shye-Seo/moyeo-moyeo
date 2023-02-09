@@ -2,6 +2,10 @@ package com.service.eventus.event;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -1012,6 +1016,15 @@ public class EventController {
 		if(searchKeyword == "") {searchKeyword = null;}
 
 		Workbook workbook = new XSSFWorkbook();
+		
+	//      엑셀스타일
+      CellStyle style = workbook.createCellStyle();
+      style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+      style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+      Font Bold = workbook.createFont();
+      Bold.setBold(true);
+      style.setFont(Bold);
+	//      
 		Sheet sheet = workbook.createSheet("event_list");
 		Row row;
 		Cell cell;
@@ -1022,17 +1035,39 @@ public class EventController {
 		row = sheet.createRow(rowNo++);
 		cell = row.createCell(0);
 		cell.setCellValue("No");
+        cell.setCellStyle(style);
 		cell = row.createCell(1);
 		cell.setCellValue("행사명");
+        cell.setCellStyle(style);
 		cell = row.createCell(2);
 		cell.setCellValue("행사기간");
+        cell.setCellStyle(style);
 		cell = row.createCell(3);
 		cell.setCellValue("진행현황");
+        cell.setCellStyle(style);
 		cell = row.createCell(4);
 		cell.setCellValue("지원현황");
+        cell.setCellStyle(style);
 		cell = row.createCell(5);
 		cell.setCellValue("부스현황");
+        cell.setCellStyle(style);
 
+
+        //열 길이 바꾸기
+        for(int a =0; a<8;a++) {
+        	sheet.autoSizeColumn(a);
+        	if(a==0) {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)1000);
+        	}else if(a==1) {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)7000);
+        	}else if(a==2) {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)5000);
+        	}else {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)3000);
+        	}
+        	
+        }
+        
 		// 오늘 날짜
 	      LocalDate now = LocalDate.now();
 	      Calendar time = Calendar.getInstance();

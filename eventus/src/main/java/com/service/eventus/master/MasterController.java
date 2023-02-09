@@ -1023,7 +1023,9 @@ public class MasterController {
         	sheet.autoSizeColumn(a);
         	if(a==0) {
         		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)1000);
-        	}else if(a==1 || a==2) {
+        	}else if(a==1) {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)7000);
+        	}else if(a==2) {
         		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)5000);
         	}else {
         		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)3000);
@@ -1129,6 +1131,16 @@ public class MasterController {
         // 엑셀 파일 내용
         // 엑셀 파일 생성(xlsx 확장자)
         Workbook workbook = new XSSFWorkbook();
+        
+	//      엑셀스타일
+	      CellStyle style = workbook.createCellStyle();
+	      style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+	      style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	      Font Bold = workbook.createFont();
+	      Bold.setBold(true);
+	      style.setFont(Bold);
+	//      
+	      
         Sheet sheet = workbook.createSheet("report_work_list");
         Row row;
         Cell cell;
@@ -1140,24 +1152,49 @@ public class MasterController {
         row = sheet.createRow(rowNo++);
         cell = row.createCell(0);
         cell.setCellValue("No");
+        cell.setCellStyle(style);
         cell = row.createCell(1);
         cell.setCellValue("일자");
+        cell.setCellStyle(style);
         cell = row.createCell(2);
         cell.setCellValue("행사명");
+        cell.setCellStyle(style);
         cell = row.createCell(3);
         cell.setCellValue("이름");
+        cell.setCellStyle(style);
         cell = row.createCell(4);
         cell.setCellValue("연락처");
+        cell.setCellStyle(style);
         cell = row.createCell(5);
         cell.setCellValue("출근");
+        cell.setCellStyle(style);
         cell = row.createCell(6);
         cell.setCellValue("외출");
+        cell.setCellStyle(style);
         cell = row.createCell(7);
         cell.setCellValue("복귀");
+        cell.setCellStyle(style);
         cell = row.createCell(8);
         cell.setCellValue("퇴근");
+        cell.setCellStyle(style);
         cell = row.createCell(9);
         cell.setCellValue("소계시간");
+        cell.setCellStyle(style);
+        
+        //열 길이 바꾸기
+        for(int a =0; a<=9;a++) {
+        	sheet.autoSizeColumn(a);
+        	if(a==0) {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)1000);
+        	}else if(a==1) {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)4000);
+        	}else if(a==2) {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)7000);
+        	}else {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)2500);
+        	}
+        	
+        }
 
 		// 오늘 날짜
 		LocalDate now = LocalDate.now();
