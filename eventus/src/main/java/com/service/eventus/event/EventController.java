@@ -403,8 +403,6 @@ public class EventController {
 		Map applicationMap = new HashMap<>();
 		applicationMap.put("event_id", event_id);
 		
-		System.out.println("=============> id:"+event_id);
-		
 		List<MemberVo> application_list = eventService.application_list(event_id);
 		if (application_list != null) {
 			for (MemberVo memberVo : application_list) {

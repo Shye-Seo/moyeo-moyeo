@@ -320,45 +320,6 @@
                     	console.log(nowpage);
                     </script>
                     
-                    <!-- 페이징 처리 -->
-<!--                     <div class="paging_area"> -->
-<!--                         <ul> -->
-<!--                             처음 -->
-<!--                             <li id="prev"> -->
-<!--                                 <a th:href="@{/manage_staff(page=1)}">&lt;&lt;</a> -->
-<!--                             </li> -->
-
-<!--                             이전 -->
-<!--                             <li th:if="${page <= 1}" id="prev"> -->
-<!--                                 <a th:href="@{/manage_staff(page=1)}">&lt;</a> -->
-<!--                             </li> -->
-<!--                             <li th:if="${page > 1}" id="prev"> -->
-<!--                                 <a th:href="@{/manage_staff(page=${page - 1})}">&lt;</a> -->
-<!--                             </li> -->
-
-<!--                             번호 10개씩 -->
-<!--                             <li th:if="${startPage*10 <= totalPage}" th:each="i : ${#numbers.sequence(startPage, startPage + 9)}" id="page_num"> -->
-<!--                                 <a th:href="@{/manage_staff(page=${i})}" th:text="${i}" ></a> -->
-<!--                             </li> -->
-
-<!--                             <li th:if="${startPage*10 > totalPage}" th:each="i : ${#numbers.sequence(startPage, totalPage)}" id="page_num"> -->
-<!--                                 <a th:href="@{/manage_staff(page=${i})}" th:text="${i}"></a> -->
-<!--                             </li> -->
-
-<!--                             다음 -->
-<!--                             <li th:if="${page < totalPage}" id="next"> -->
-<!--                                 <a th:href="@{/manage_staff(page=${page+1})}">&gt;</a> -->
-<!--                             </li> -->
-<!--                             <li th:if="${page >= totalPage}" id="next"> -->
-<!--                                 <a th:href="@{/manage_staff(page=${totalPage})}">&gt;</a> -->
-<!--                             </li> -->
-
-<!--                             마지막 -->
-<!--                             <li id="next"> -->
-<!--                                 <a th:href="@{/manage_staff(page=${totalPage})}">&gt;&gt;</a> -->
-<!--                             </li> -->
-<!--                         </ul> -->
-<!--                     </div> -->
                 </div>
             </div>
         </div>
@@ -372,7 +333,6 @@
                 </div>
             </div>
         </div>
-        <!-- <form th:insert="~{contract_file_forview :: modal}" action="contract_check" id="contract" class="contract" method="post"></form> -->
     </div>
     
     <script id="resume_file" type="text/x-jsrender">

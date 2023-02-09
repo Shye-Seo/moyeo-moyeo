@@ -823,7 +823,7 @@ public class MasterController {
                     masterService.update_work_total_time(total, staff_id);
                 }
             } else {
-            	 String total = 00 + " : "+ 00;
+            	 String total = "00 : 00";
                  masterService.update_work_total_time(total, staff_id);
             }
 
@@ -1061,18 +1061,15 @@ public class MasterController {
 
 		if(searchKeyword == null && searchDate == null) { //키워드&날짜 null (기본상태)
 			staff_list = masterService.staff_findDownloadList(user_id);
-//		    	System.out.println("기본");
 
 		}else if(searchKeyword == null && searchDate != null) { //날짜검색, 키워드는 null
 			startDate = searchDate.substring(0, 10);
 			endDate = searchDate.substring(13, 23);
 
 			staff_list = masterService.staff_Downloaddate(user_id, startDate, endDate);
-//		    	System.out.println("날짜");
 			filename = "staff_excel_"+startDate+"_"+endDate+".xlsx";
 
 		}else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
-//			 System.out.println("키워드");
 			staff_list = masterService.staff_Downloadkey(user_id, searchKeyword);
 			filename = "staff_excel_"+searchKeyword+".xlsx";
 
@@ -1081,7 +1078,6 @@ public class MasterController {
 			endDate = searchDate.substring(13, 23);
 
 			staff_list = masterService.staff_Downloadkeydate(user_id, startDate, endDate, searchKeyword);
-//		    	System.out.println("동시");
 			filename = "staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
 		}
 
@@ -1093,15 +1089,18 @@ public class MasterController {
             cell = row.createCell(1);
             cell.setCellValue(staff.getEvent_title());
             cell = row.createCell(2);
-            cell.setCellValue( staff.getEvent_startDate() + "~" +staff.getEvent_endDate());
+            cell.setCellValue(staff.getEvent_startDate() + "-" +staff.getEvent_endDate());
             cell = row.createCell(3);
             cell.setCellValue(staff.getUser_name());
             cell = row.createCell(4);
             cell.setCellValue(staff.getUser_gender());
             cell = row.createCell(5);
-            cell.setCellValue(staff.getUser_birth());
+            String birth = staff.getUser_birth().replaceAll("-", ".");
+            cell.setCellValue(birth);
             cell = row.createCell(6);
-            cell.setCellValue(staff.getUser_phone());
+            String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
+			String staff_phone = staff.getUser_phone().replaceAll(regEx, "$1-$2-$3");
+            cell.setCellValue(staff_phone);
             cell = row.createCell(7);
 
             int pass_check = masterService.checkStaffPasser(staff);
@@ -1259,7 +1258,9 @@ public class MasterController {
             cell = row.createCell(3);
             cell.setCellValue(report_work.getUser_name());
             cell = row.createCell(4);
-            cell.setCellValue(report_work.getUser_phone());
+            String regEx = "(\\d{3})(\\d{3,4})(\\d{4})";
+			String staff_phone = report_work.getUser_phone().replaceAll(regEx, "$1-$2-$3");
+            cell.setCellValue(staff_phone);
             cell = row.createCell(5);
             cell.setCellValue(report_work.getWork_start_time());
             cell = row.createCell(6);
