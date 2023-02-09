@@ -3,6 +3,10 @@ package com.service.eventus.master;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -970,6 +974,16 @@ public class MasterController {
         // 엑셀 파일 생성(xlsx 확장자)
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("staff_list");
+        
+//        엑셀스타일
+        CellStyle style = workbook.createCellStyle();
+        style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        Font Bold = workbook.createFont();
+        Bold.setBold(true);
+        style.setFont(Bold);
+//        
+        
         Row row;
         Cell cell;
         int rowNo = 0;
@@ -980,20 +994,43 @@ public class MasterController {
         row = sheet.createRow(rowNo++);
         cell = row.createCell(0);
         cell.setCellValue("No");
+        cell.setCellStyle(style); //스타일적용
         cell = row.createCell(1);
         cell.setCellValue("행사명");
+        cell.setCellStyle(style);
         cell = row.createCell(2);
-        cell.setCellValue("이름");
+        cell.setCellValue("근무기간");
+        cell.setCellStyle(style);
         cell = row.createCell(3);
-        cell.setCellValue("성별");
+        cell.setCellValue("이름");
+        cell.setCellStyle(style);
         cell = row.createCell(4);
-        cell.setCellValue("생년월일");
+        cell.setCellValue("성별");
+        cell.setCellStyle(style);
         cell = row.createCell(5);
-        cell.setCellValue("연락처");
+        cell.setCellValue("생년월일");
+        cell.setCellStyle(style);
         cell = row.createCell(6);
-        cell.setCellValue("가입일자");
+        cell.setCellValue("연락처");
+        cell.setCellStyle(style);
         cell = row.createCell(7);
         cell.setCellValue("합격여부");
+        cell.setCellStyle(style);
+       
+        
+        //열 길이 바꾸기
+        for(int a =0; a<8;a++) {
+        	sheet.autoSizeColumn(a);
+        	if(a==0) {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)1000);
+        	}else if(a==1 || a==2) {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)5000);
+        	}else {
+        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)3000);
+        	}
+        	
+        }
+        
 
 		// 오늘 날짜
 		LocalDate now = LocalDate.now();
@@ -1054,15 +1091,15 @@ public class MasterController {
             cell = row.createCell(1);
             cell.setCellValue(staff.getEvent_title());
             cell = row.createCell(2);
-            cell.setCellValue(staff.getUser_name());
+            cell.setCellValue( staff.getEvent_startDate() + "~" +staff.getEvent_endDate());
             cell = row.createCell(3);
-            cell.setCellValue(staff.getUser_gender());
+            cell.setCellValue(staff.getUser_name());
             cell = row.createCell(4);
-            cell.setCellValue(staff.getUser_birth());
+            cell.setCellValue(staff.getUser_gender());
             cell = row.createCell(5);
-            cell.setCellValue(staff.getUser_phone());
+            cell.setCellValue(staff.getUser_birth());
             cell = row.createCell(6);
-            cell.setCellValue(staff.getUser_date_join());
+            cell.setCellValue(staff.getUser_phone());
             cell = row.createCell(7);
 
             int pass_check = masterService.checkStaffPasser(staff);
