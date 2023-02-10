@@ -227,4 +227,18 @@ public interface EventDao {
 
 	@Select("select * from event where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and event_title like concat('%','${searchKeyword}','%') order by event_status desc, id asc")
 	List<EventVo> event_Downloadkeydate(String startDate, String endDate, String searchKeyword);
+	
+	
+//	부스 엑셀
+//	@Select("select * from event_booth where event_id = 15 and flag = 'Y' order by id asc")
+//	List<BoothVo> findBoothDownloadList();
+	
+	@Select("<script>"
+			+ "select e.id, e.event_title, e.event_startDate, e.event_endDate, b.booth_name, b.counting, b.expected_time from event_booth b inner join event e where b.event_id = e.id and event_id = #{event_id} and b.flag = 'Y' "
+			+ "<if test=\"searchKeyword != null\" >and b.booth_name like concat('%','${searchKeyword}','%') </if>"
+			+ "<if test=\"startDate != null and endDate != null\" > and ((#{startDate} <![CDATA[<= ]]> event_startDate and event_startDate <![CDATA[<= ]]> #{endDate}) or (#{startDate} <![CDATA[<= ]]> event_endDate and event_endDate <![CDATA[<= ]]> #{endDate})) </if> "
+			+ "order by id asc </script>")
+	List<BoothVo> findBoothDownloadList(int event_id, String searchKeyword, String startDate, String endDate);
+	
+	
 }

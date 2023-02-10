@@ -1104,4 +1104,133 @@ public class EventController {
 		workbook.write(response.getOutputStream());
 		workbook.close();
 	}
+	
+	// 행사관리 부스 다운로드
+		@RequestMapping(value="/booth_excel", method= RequestMethod.GET)
+		@ResponseBody
+		public void booth_excel(HttpServletResponse response, String id ,String searchKeyword, String startDate, String endDate, String searchDate) throws IOException {
+			// 엑셀 파일명
+			String filename = "booth_excel.xlsx";
+			System.out.println(searchKeyword);
+			System.out.println(startDate);
+			System.out.println(endDate);
+			System.out.println(searchDate);
+			if(searchKeyword == "") {searchKeyword = null;}
+
+			Workbook workbook = new XSSFWorkbook();
+			
+		//      엑셀스타일
+	      CellStyle style = workbook.createCellStyle();
+	      style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+	      style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	      Font Bold = workbook.createFont();
+	      Bold.setBold(true);
+	      style.setFont(Bold);
+		//      
+			Sheet sheet = workbook.createSheet("booth_list");
+			Row row;
+			Cell cell;
+			int rowNo = 0;
+			int i=1;
+
+			// 헤더 정보 구성
+			row = sheet.createRow(rowNo++);
+			cell = row.createCell(0);
+			cell.setCellValue("No");
+	        cell.setCellStyle(style);
+			cell = row.createCell(1);
+			cell.setCellValue("행사명");
+	        cell.setCellStyle(style);
+			cell = row.createCell(2);
+			cell.setCellValue("행사기간");
+	        cell.setCellStyle(style);
+			cell = row.createCell(3);
+			cell.setCellValue("부스명");
+	        cell.setCellStyle(style);
+			cell = row.createCell(4);
+			cell.setCellValue("카운팅");
+	        cell.setCellStyle(style);
+			cell = row.createCell(5);
+			cell.setCellValue("소요시간");
+	        cell.setCellStyle(style);
+
+
+	        //열 길이 바꾸기
+	        for(int a =0; a<8;a++) {
+	        	sheet.autoSizeColumn(a);
+	        	if(a==0) {
+	        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)1000);
+	        	}else if(a==1||a==3) {
+	        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)7000);
+	        	}else if(a==2) {
+	        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)5000);
+	        	}else {
+	        		sheet.setColumnWidth(a, (sheet.getColumnWidth(a))+(short)1500);
+	        	}
+	        	
+	        }
+	        
+			// 오늘 날짜 (오늘-오늘검색일 시)
+		      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+		      Calendar cal = Calendar.getInstance();
+		      String today = dateFormat.format(cal.getTime());
+		      if(searchDate!=null && searchDate.equals(today+" - "+today)) {
+		    	  searchDate=null;
+		      }else if(searchDate!=null) {
+		    	  startDate = searchDate.substring(0, 10);
+		    	  endDate = searchDate.substring(13, 23);
+		      }
+		      
+		      booth_list = eventService.findBoothDownloadList(Integer.parseInt(id) ,searchKeyword, startDate, endDate);
+			
+			 if(searchKeyword == null && searchDate == null) { //키워드&날짜 null (기본상태)
+//			    	event_list = eventService.findDownloadList();
+//			    	System.out.println("기본");
+			    	
+			 }else if(searchKeyword == null && searchDate != null) { //날짜검색, 키워드는 null
+//				 	startDate = searchDate.substring(0, 10);
+//			    	endDate = searchDate.substring(13, 23);
+//			    	
+//			    	event_list = eventService.event_Downloaddate(startDate, endDate);
+//			    	System.out.println("날짜");
+			    	filename = "booth_excel_"+startDate+"_"+endDate+".xlsx";
+			    	
+			 }else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
+//				 System.out.println("키워드");
+//		    		event_list = eventService.event_Downloadkey(searchKeyword);
+		    		filename = new String(("booth_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
+		    		
+			 }else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
+//			    	startDate = searchDate.substring(0, 10);
+//			    	endDate = searchDate.substring(13, 23);
+//			    	
+//			    	event_list = eventService.event_Downloadkeydate(startDate, endDate, searchKeyword);
+//			    	System.out.println("동시");
+			    	filename =  new String(("booth_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
+			 }
+			
+			for(BoothVo booth : booth_list) {
+				row = sheet.createRow(rowNo++);
+				cell = row.createCell(0);
+				cell.setCellValue(i++);
+				cell = row.createCell(1);
+				cell.setCellValue(booth.getEvent_title());
+				cell = row.createCell(2);
+				cell.setCellValue(booth.getEvent_startDate() + " - " + booth.getEvent_endDate());
+				cell = row.createCell(3);
+				cell.setCellValue(booth.getBooth_name());
+				cell = row.createCell(4);
+				cell.setCellValue(booth.getCounting());
+				cell = row.createCell(5);
+				cell.setCellValue(booth.getExpected_time());
+			}
+
+			// 컨텐트 타입과 파일명 지정
+			response.setContentType("ms-vnd/excel");
+			response.setHeader("Content-Disposition", "attachment;filename="+filename);
+
+			// 엑셀 출력
+			workbook.write(response.getOutputStream());
+			workbook.close();
+		}
 }
