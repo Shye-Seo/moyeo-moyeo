@@ -74,7 +74,7 @@ public interface EventDao {
 	@Select("select staff_address from staff_resume r inner join staff_application s where s.resume_id = r.id and  s.staff_id = #{staff_id} and s.event_id = #{event_id}")
 	String getStaffAddress(int event_id, int staff_id); // 지원현황 지원자 리스트(모집중) - 거주지
 	
-	@Select("select round((to_days(now()) - (to_days('${user_birth}'))) / 365)")
+	@Select("select floor((to_days(now()) - (to_days('${user_birth}'))) / 365)")
 	String getUserAge(String user_birth); // 지원현황 지원자 리스트(모집중) - 나이계산(만 나이)
 	
 	@Select("select distinct staff_position as position_count  from staff_application where event_id = #{event_id}")
@@ -105,6 +105,8 @@ public interface EventDao {
 	
 	@Update("update event set event_check = #{status} where id = #{event_id}")
 	public boolean update_event_check(int status, int event_id); //이벤트 체크 변경
+	@Update("update staff_application set staff_result = #{status} where staff_result = 0 and event_id = #{event_id}")
+	public boolean update_fail_check(int status, int event_id); //대기중>불합격 체크 변경
 	
 	@Select("select count(*) from staff_passer where event_id = #{event_id}")
 	int staff_count(int event_id); // 근무직원 count

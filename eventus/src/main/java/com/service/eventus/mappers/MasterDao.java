@@ -341,21 +341,21 @@ public interface MasterDao {
 	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a left JOIN user u ON a.staff_id= u.id left join event e ON a.event_id = e.id order by work_date asc, a.id asc")
 	List<MasterVo> report_work_findDownloadList();
 
-	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a \n" +
-			"left JOIN user u ON a.staff_id= u.id \n" +
-			"left join event e ON a.event_id = e.id \n" +
+	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a " +
+			"left JOIN user u ON a.staff_id= u.id " +
+			"left join event e ON a.event_id = e.id " +
 			"where (#{startDate} <= work_date and work_date <= #{endDate}) order by work_date asc, a.id asc")
 	List<MasterVo> report_work_Downloaddate(String startDate, String endDate);
 
-	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a \n" +
-			"left JOIN user u ON a.staff_id= u.id \n" +
-			"left join event e ON a.event_id = e.id\n" +
-			"where (event_title like concat('%','${searchKeyword}','%')) order by work_date asc, a.id asc")
+	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a " +
+			"left JOIN user u ON a.staff_id= u.id " +
+			"left join event e ON a.event_id = e.id " +
+			"where (event_title like concat('%',#{searchKeyword},'%') or user_name like concat('%',#{searchKeyword},'%')) order by work_date asc, a.id asc")
 	List<MasterVo> report_work_Downloadkey(String searchKeyword);
 
-	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a \n" +
-			"left JOIN user u ON a.staff_id= u.id \n" +
-			"left join event e ON a.event_id = e.id \n" +
-			"where (#{startDate} <= work_date and work_date <= #{endDate}) and event_title like concat('%','${searchKeyword}','%') order by work_date asc, a.id asc")
+	@Select("select a.id, staff_id, work_date, event_title, user_name, user_phone, work_start_time, work_outing_time, work_comeback_time, work_end_time, work_total_time from staff_work_record a " +
+			"left JOIN user u ON a.staff_id= u.id " +
+			"left join event e ON a.event_id = e.id " +
+			"where (#{startDate} <= work_date and work_date <= #{endDate}) and (event_title like concat('%',#{searchKeyword},'%') or user_name like concat('%',#{searchKeyword},'%')) order by work_date asc, a.id asc")
 	List<MasterVo> report_work_Downloadkeydate(String startDate, String endDate, String searchKeyword);
 }

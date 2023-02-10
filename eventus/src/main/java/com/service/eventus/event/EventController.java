@@ -66,25 +66,11 @@ public class EventController {
       LocalDate now = LocalDate.now();
       Calendar time = Calendar.getInstance();
       SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
       String nowTime = format.format(time.getTime());
       
       Calendar cal = Calendar.getInstance();
-      int year_ = now.getYear();
-      int month_ = now.getMonthValue();
-      int day_ = now.getDayOfMonth();
-      cal.set(year_, month_-1, day_);
-      
-      String today = "";
-      
-      if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-    	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-      }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-    	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-      }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-    	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-      }else {
-    	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-      }
+      String today = dateFormat.format(cal.getTime());
       
       	// 총 게시물 수 
 	    int totalListCnt = eventService.findAllCnt();
@@ -480,21 +466,10 @@ public class EventController {
 		
 		workRecordMap.put("today", today);
 	
-		
-		String work_date = year+"-"+month+"-"+day;
-		if(month < 10 && day > 10) {
-			String month_0 = "0" + month;
-			work_date = year+"-"+month_0+"-"+day;
-		}else if(day < 10 && month > 10) {
-			String day_0 = "0" + day;
-			work_date = year+"-"+month+"-"+day_0;
-		}else if(month < 10 && day < 10) {
-			String month_0 = "0" + month;
-			String day_0 = "0" + day;
-			work_date = year+"-"+month_0+"-"+day_0;
-		}else if(month > 10 && day > 10) {
-			work_date = year+"-"+month+"-"+day;
-		}
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+	    Calendar cal = Calendar.getInstance();
+	    String work_date = dateFormat.format(cal.getTime());
+	    
 		workRecordMap.put("work_date", work_date);
 		
 		List<MemberVo> workStaff_list = eventService.workStaff_list(event_id);
@@ -751,26 +726,11 @@ public class EventController {
         LocalDate now = LocalDate.now();
         Calendar time = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
         String nowTime = format.format(time.getTime());
         
         Calendar cal = Calendar.getInstance();
-        int year_ = now.getYear();
-        int month_ = now.getMonthValue();
-        int day_ = now.getDayOfMonth();
-        cal.set(year_, month_-1, day_);
-        
-        String today = "";
-        
-        if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-      	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-        }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-      	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-        }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-      	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-        }else {
-      	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-        }
-        
+	    String today = dateFormat.format(cal.getTime());
         // 총 게시물 수 
 	    int totalListCnt = eventService.findAllCnt();
 
@@ -1066,27 +1026,12 @@ public class EventController {
         	
         }
         
-		// 오늘 날짜
-	      LocalDate now = LocalDate.now();
-	      Calendar time = Calendar.getInstance();
-	      SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
-	      
+		// 오늘 날짜 (오늘-오늘검색일 시)
+	      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 	      Calendar cal = Calendar.getInstance();
-	      int year_ = now.getYear();
-	      int month_ = now.getMonthValue();
-	      int day_ = now.getDayOfMonth();
-	      cal.set(year_, month_-1, day_);
-	      
-	      String today = "";
-	      
-	      if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-	    	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-	      }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-	    	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-	      }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-	    	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-	      }else {
-	    	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
+	      String today = dateFormat.format(cal.getTime());
+	      if(searchDate!=null && searchDate.equals(today+" - "+today)) {
+	    	  searchDate=null;
 	      }
 	      
 		 event_list = eventService.findDownloadList();

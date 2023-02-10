@@ -108,25 +108,9 @@ public class MasterController {
         String user_id = (String) session.getAttribute("user_id");
         
         // 오늘 날짜
-        LocalDate now = LocalDate.now();
-        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
         Calendar cal = Calendar.getInstance();
-        int year_ = now.getYear();
-        int month_ = now.getMonthValue();
-        int day_ = now.getDayOfMonth();
-        cal.set(year_, month_-1, day_);
-        
-        String today = "";
-        
-        if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-      	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-        }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-      	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-        }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-      	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-        }else {
-      	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-        }
+        String today = dateFormat.format(cal.getTime());
         
         int staff_size=0; // 페이지 개수 세기(페이징 처리)
         int staff_num; // 페이지 개수 세기(번호 붙히는 용도)
@@ -351,22 +335,9 @@ public class MasterController {
         LocalDate now = LocalDate.now();
         
         Calendar cal = Calendar.getInstance();
-        int year_ = now.getYear();
-        int month_ = now.getMonthValue();
-        int day_ = now.getDayOfMonth();
-        cal.set(year_, month_-1, day_);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
         
-        String today = "";
-        
-        if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-      	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-        }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-      	  today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-        }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-      	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-        }else {
-      	  today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-        }
+        String today = dateFormat.format(cal.getTime());
         
         int career_size = 0; // 페이지 개수 세기(페이징 처리)
         int career_num; // 페이지 개수 세기(번호 붙히는 용도)
@@ -677,22 +648,12 @@ public class MasterController {
         LocalDate now = LocalDate.now();
         
         Calendar cal = Calendar.getInstance();
-        int year_ = now.getYear();
-        int month_ = now.getMonthValue();
-        int day_ = now.getDayOfMonth();
-        cal.set(year_, month_-1, day_);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String today = dateFormat.format(cal.getTime());
+        if(searchDate!=null && searchDate.equals(today+" - "+today)) {
+	    	  searchDate=null;
+	      }
         
-        String today = "";
-        
-        if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-      	  today = cal.get(Calendar.YEAR)+"-0"+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
-        }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-      	  today = cal.get(Calendar.YEAR)+"-0"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
-        }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-      	  today = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
-        }else {
-      	  today = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
-        }
         
         //총 게시물 수
         int totalListCnt = masterService.CntAll_work();
@@ -712,8 +673,8 @@ public class MasterController {
  	    	model.addAttribute("pagination", pagination);
  	    	
  	    }else if(searchKeyword == null && startDate != null && endDate != null) { //날짜검색, 키워드는 null
- 	    	startDate = startDate.substring(0, 4) + "-" + startDate.substring(5, 7) + "-" + startDate.substring(8, 10);
- 	    	endDate = endDate.substring(0, 4) + "-" + endDate.substring(5, 7) + "-" + endDate.substring(8, 10);
+// 	    	startDate = startDate.substring(0, 4) + "-" + startDate.substring(5, 7) + "-" + startDate.substring(8, 10);
+// 	    	endDate = endDate.substring(0, 4) + "-" + endDate.substring(5, 7) + "-" + endDate.substring(8, 10);
  	    	
  	    	totalListCnt = masterService.WorkSearchCnt_date(startDate, endDate);
  	    	pagination = new PagingVo(totalListCnt, page);
@@ -727,9 +688,9 @@ public class MasterController {
  	    }else if(searchKeyword != null && searchDate != null){ 
  	    	startDate = searchDate.substring(0, 10);
  	    	endDate = searchDate.substring(13, 23);
- 	    	
- 	    	startDate = startDate.substring(0, 4) + "-" + startDate.substring(5, 7) + "-" + startDate.substring(8, 10);
- 	    	endDate = endDate.substring(0, 4) + "-" + endDate.substring(5, 7) + "-" + endDate.substring(8, 10);
+// 	    	
+// 	    	startDate = startDate.substring(0, 4) + "-" + startDate.substring(5, 7) + "-" + startDate.substring(8, 10);
+// 	    	endDate = endDate.substring(0, 4) + "-" + endDate.substring(5, 7) + "-" + endDate.substring(8, 10);
      		
  	    	if(startDate.equals(today) && endDate.equals(today)) { //키워드검색, 날짜null처리
  	    		totalListCnt = masterService.WorkSearchCnt_key(searchKeyword);
@@ -843,22 +804,8 @@ public class MasterController {
          LocalDate now = LocalDate.now();
          
          Calendar cal = Calendar.getInstance();
-         int year_ = now.getYear();
-         int month_ = now.getMonthValue();
-         int day_ = now.getDayOfMonth();
-         cal.set(year_, month_-1, day_);
-         
-         String today = "";
-         
-         if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-       	  today = cal.get(Calendar.YEAR)+"-0"+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
-         }else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-       	  today = cal.get(Calendar.YEAR)+"-0"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
-         }else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-       	  today = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
-         }else {
-       	  today = cal.get(Calendar.YEAR)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
-         }
+         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+         String today = dateFormat.format(cal.getTime());
          
          //총 게시물 수
          int totalListCnt = masterService.CntAll_staffwork(id);
@@ -1034,28 +981,14 @@ public class MasterController {
         }
         
 
-		// 오늘 날짜
-		LocalDate now = LocalDate.now();
-		Calendar time = Calendar.getInstance();
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
-
-		Calendar cal = Calendar.getInstance();
-		int year_ = now.getYear();
-		int month_ = now.getMonthValue();
-		int day_ = now.getDayOfMonth();
-		cal.set(year_, month_-1, day_);
-
-		String today = "";
-
-		if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-			today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-		}else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-			today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-		}else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+".0"+cal.get(Calendar.DAY_OF_MONTH);
-		}else {
-			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.DAY_OF_MONTH);
-		}
+		// 오늘 날짜 (오늘-오늘검색일 시)
+	      LocalDate now = LocalDate.now();
+	      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+	      Calendar cal = Calendar.getInstance();
+	      String today = dateFormat.format(cal.getTime());
+	      if(searchDate!=null && searchDate.equals(today+" - "+today)) {
+	    	  searchDate=null;
+	      }
 
 		staff_list = masterService.staff_findDownloadList(user_id);
 
@@ -1195,28 +1128,13 @@ public class MasterController {
         	
         }
 
-		// 오늘 날짜
-		LocalDate now = LocalDate.now();
-		Calendar time = Calendar.getInstance();
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
-
-		Calendar cal = Calendar.getInstance();
-		int year_ = now.getYear();
-		int month_ = now.getMonthValue();
-		int day_ = now.getDayOfMonth();
-		cal.set(year_, month_-1, day_);
-
-		String today = "";
-
-		if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) < 10) {
-			today = cal.get(Calendar.YEAR)+"-0"+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
-		}else if((cal.get(Calendar.MONTH)+1) < 10 && cal.get(Calendar.DAY_OF_MONTH) > 10){
-			today = cal.get(Calendar.YEAR)+".0"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
-		}else if((cal.get(Calendar.MONTH)+1) > 10 && cal.get(Calendar.DAY_OF_MONTH) < 10){
-			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"-0"+cal.get(Calendar.DAY_OF_MONTH);
-		}else {
-			today = cal.get(Calendar.YEAR)+"."+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.DAY_OF_MONTH);
-		}
+		// 오늘 날짜 (오늘-오늘검색일 시)
+	      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+	      Calendar cal = Calendar.getInstance();
+	      String today = dateFormat.format(cal.getTime());
+	      if(searchDate!=null && searchDate.equals(today+" - "+today)) {
+	    	  searchDate=null;
+	      }
 
 		report_work_list = masterService.report_work_findDownloadList();
 

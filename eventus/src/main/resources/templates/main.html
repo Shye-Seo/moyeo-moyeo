@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="staff_line" th:each=" workLog : ${workLog_list}">
                                     <div class="profile_img">
-                                        <img th:src="'ㅇㅌ https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/'+${workLog.file_name}" alt="profile" onerror="this.src='/imgs/profile_none_img.svg'">
+                                        <img th:src="'https://eventuslab.s3.ap-northeast-2.amazonaws.com/profile_img/'+${workLog.file_name}" alt="profile" onerror="this.src='/imgs/profile_none_img.svg'">
                                     </div>
                                     <div class="staff_info">
                                         <p>[[${workLog.staff_name}]]</p>

@@ -157,6 +157,7 @@ public class EventService {
 	public int end_hire(int event_id) {
 		eventDao.update_event_status(1, event_id);
 		eventDao.update_event_check(1, event_id);
+		eventDao.update_fail_check(2, event_id);
 		return eventDao.countPasser(event_id);
 	}
 	
