@@ -1071,14 +1071,14 @@ public class MasterController {
 
 		}else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
 			staff_list = masterService.staff_Downloadkey(user_id, searchKeyword);
-			filename = "staff_excel_"+searchKeyword+".xlsx";
+			filename = new String(("staff_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 
 		}else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
 			startDate = searchDate.substring(0, 10);
 			endDate = searchDate.substring(13, 23);
 
 			staff_list = masterService.staff_Downloadkeydate(user_id, startDate, endDate, searchKeyword);
-			filename = "staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
+			filename =  new String(("staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 		}
 
         // 데이터 부분 생성
@@ -1235,7 +1235,7 @@ public class MasterController {
 		}else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
 //			 System.out.println("키워드");
 			report_work_list = masterService.report_work_Downloadkey(searchKeyword);
-			filename = "report_work_excel_"+searchKeyword+".xlsx";
+			filename = new String(("staff_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 
 		}else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
 			startDate = searchDate.substring(0, 10);
@@ -1243,7 +1243,7 @@ public class MasterController {
 
 			report_work_list = masterService.report_work_Downloadkeydate(startDate, endDate, searchKeyword);
 //		    	System.out.println("동시");
-			filename = "report_work_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
+			filename =  new String(("staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 		}
 
         // 데이터 부분 생성

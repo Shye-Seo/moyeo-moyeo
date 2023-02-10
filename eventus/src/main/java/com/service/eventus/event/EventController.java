@@ -1106,7 +1106,7 @@ public class EventController {
 		 }else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
 //			 System.out.println("키워드");
 	    		event_list = eventService.event_Downloadkey(searchKeyword);
-	    		filename = "event_excel_"+searchKeyword+".xlsx";
+	    		filename = new String(("staff_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 	    		
 		 }else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
 		    	startDate = searchDate.substring(0, 10);
@@ -1114,7 +1114,7 @@ public class EventController {
 		    	
 		    	event_list = eventService.event_Downloadkeydate(startDate, endDate, searchKeyword);
 //		    	System.out.println("동시");
-		    	filename = "event_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx";
+		    	filename =  new String(("staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 		 }
 		
 		for(EventVo event : event_list) {
