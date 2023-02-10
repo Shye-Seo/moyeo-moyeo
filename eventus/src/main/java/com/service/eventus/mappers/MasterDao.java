@@ -327,14 +327,14 @@ public interface MasterDao {
 	@Select("select event_id, staff_id, resume_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from eventusdb.event e " +
 			"inner join eventusdb.staff_application sa on e.id = sa.event_id " +
 			"inner join eventusdb.user u on sa.staff_id = u.id " +
-			"where (event_title like concat('%','${searchKeyword}','%')) and e.user_id = #{user_id} " +
+			"where (event_title like concat('%','${searchKeyword}','%') or user_name like concat('%','${searchKeyword}','%')) and e.user_id = #{user_id} " +
 			"order by e.event_startDate asc, sa.id asc")
 	List<MasterVo> staff_Downloadkey(String user_id, String searchKeyword);
 
 	@Select("select event_id, staff_id, resume_id, event_title, user_name, user_gender, user_birth, user_phone, user_date_join, event_startDate, event_endDate from eventusdb.event e " +
 			"inner join eventusdb.staff_application sa on e.id = sa.event_id " +
 			"inner join eventusdb.user u on sa.staff_id = u.id " +
-			"where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and event_title like concat('%','${searchKeyword}','%') and e.user_id = #{user_id} " +
+			"where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and (event_title like concat('%','${searchKeyword}','%') or user_name like concat('%','${searchKeyword}','%')) and e.user_id = #{user_id} " +
 			"order by e.event_startDate asc, sa.id asc")
 	List<MasterVo> staff_Downloadkeydate(String user_id, String startDate, String endDate, String searchKeyword);
 

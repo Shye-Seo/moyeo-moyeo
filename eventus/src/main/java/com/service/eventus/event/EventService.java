@@ -331,5 +331,13 @@ public class EventService {
 	public List<EventVo> event_Downloadkeydate(String startDate, String endDate, String searchKeyword) {
 		return eventDao.event_Downloadkeydate(startDate, endDate, searchKeyword);
 	}
+	
+//	public List<BoothVo> findBoothDownloadList(){
+//		return eventDao.findBoothDownloadList();
+//	}
+	
+	public List<BoothVo> findBoothDownloadList(int event_id, String searchKeyword, String startDate, String endDate){
+		return eventDao.findBoothDownloadList(event_id , searchKeyword, startDate, endDate);
+	}
 
 }
