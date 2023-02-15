@@ -31,10 +31,10 @@ public class AmazonS3Controller {
 	@Value("eventuslab")
     private String bucket;
 
-	@Autowired
+	@Autowired(required = false)
 	AwsS3Service awsS3Service;
 
-	@Autowired
+	@Autowired(required = false)
 	AmazonS3Client amazonS3Client;
 
 	@GetMapping("/upload_Eventfiles")
