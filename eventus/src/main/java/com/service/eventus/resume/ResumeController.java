@@ -35,7 +35,7 @@ public class ResumeController {
 	private ResumeService resumeService;
 
 	
-	//이력서 조회 / 등록 / 수정
+	//이력서 조회 (조회,수정페이지,등록페이지)
 	@GetMapping(value="/myresume_forStaff")
 	public ModelAndView resume_register(HttpSession session) {
 		
@@ -120,7 +120,7 @@ public class ResumeController {
 		return mav;
 	}
 	
-	//이력서 추가/수정
+	//이력서 추가/수정 기능
 	@ResponseBody
 	@RequestMapping(value="/resumeAdd", method=RequestMethod.POST)
 	public String resumeAdd(HttpSession session ,MultipartHttpServletRequest multipartRequest, @ModelAttribute ResumeVo resumeVo) throws Exception{

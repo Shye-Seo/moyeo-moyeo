@@ -68,9 +68,9 @@ public class AwsS3Service {
     private String profileFolder; 
 
 
-    private final AmazonS3 s3Client = null;
+    private final AmazonS3 s3Client;
 
-    @Autowired(required = false)
+    @Autowired
     EventService service;
 
     @PostConstruct

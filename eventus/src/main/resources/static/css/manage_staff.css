@@ -139,6 +139,13 @@ pre {
     background-color: #5B8FD208;
 }
 
+.list_ol li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
 /* 관리자 - 직원관리 페이지 */
 
 .index_area{

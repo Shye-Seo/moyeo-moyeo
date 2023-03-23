@@ -136,6 +136,12 @@ button{
     background-color: #5B8FD208;
 }
 
+.list_ol li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .index_area{
 	margin-left:4%;
 	width: 10%;
