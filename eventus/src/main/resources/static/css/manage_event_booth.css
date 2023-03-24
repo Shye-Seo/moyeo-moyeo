@@ -326,7 +326,9 @@ body{
 .modal_content, .modal_content_m{
 	width:540px;
 	height:600px;
-	margin:190px auto;
+	position: absolute;
+    top: calc(50% - 320px);
+    left: calc(50% - 270px);
     background:#fff;
     border:none;
     border-radius: 20px;

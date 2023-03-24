@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>모여모여</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="/js/common.js"></script>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css" />
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/manage_event_booth.css">
@@ -83,7 +84,8 @@
 							<div id="booth_area"><li th:text="${booth.booth_name}" id="text_over"></li></div>
 							<div id="counting_area"><li style="color: #DD5067" th:text="${booth.counting} + ' 명'" th:if="${booth.counting != null and booth.counting != ''}"></li><li style="color: #DD5067" th:text="${booth.counting}" th:if="${booth.counting == null or booth.counting == ''}"></li></div>
 							<div id="time_area"><li style="color: #DD5067" th:text="${booth.expected_time} + ' 분'" th:if="${booth.expected_time != null and booth.expected_time != ''}"></li><li style="color: #DD5067" th:text="${booth.expected_time}" th:if="${booth.expected_time == null or booth.expected_time == ''}"></li></div>
-							<div id="icon_area"><li th:attr="onclick=|modifyModal('${booth.id}', '${booth.booth_name}', '${booth.event_title}', '${event_id}' )|"><img src="imgs/pen.svg"></li></div>
+							<!-- <div id="icon_area"><li th:attr="onclick=|modifyModal('${booth.id}', '${booth.booth_name}', '${booth.event_title}', '${event_id}' )|"><img src="imgs/pen.svg"></li></div> -->
+							<div id="icon_area"><li th:attr="onclick=|modifyModal('${booth.id}', '${booth.booth_name}', '${booth.event_title}', '${event_id}','${booth.counting}','${booth.expected_time}' )|"><img src="imgs/pen.svg"></li></div>
 							<div id="icon_area"><li th:attr="onclick=|deleteModal('${booth.id}', '${event_id}')|"><img src="imgs/close_btn_black.svg"></li></div>
 						</ol>
                     </ul>
@@ -170,15 +172,15 @@
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>부스명</p>
-					        	<input type="text" placeholder="부스명을 입력해주세요." id="booth_name">
+					        	<input type="text" placeholder="부스명을 입력해주세요." id="booth_name" maxlength="50" >
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>카운팅</p>
-					        	<input type="text" placeholder="수용가능한 인원수를 입력해주세요." id="counting">
+					        	<input type="text" class="onlyNum" placeholder="수용가능한 인원수를 입력해주세요." id="counting">
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>소요시간</p>
-					        	<input type="text" placeholder="소요시간을 입력해주세요." id="expected_time">
+					        	<input type="text" class="onlyNum" placeholder="소요시간을 입력해주세요." id="expected_time">
 					        </div>
 					        <div id="modal_btn_div">
 					        	<button type="button" id="modal_insert_btn" th:onclick="'insertBooth('+${event_id}+')'">완료</button>
@@ -201,15 +203,15 @@
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>부스명</p>
-					        	<input type="text" id="booth_name_m">
+					        	<input type="text" id="booth_name_m" maxlength="50" >
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>카운팅</p>
-					        	<input type="text" placeholder="수용가능한 인원수를 입력해주세요." id="counting_m">
+					        	<input class="onlyNum" type="text" placeholder="수용가능한 인원수를 입력해주세요." id="counting_m">
 					        </div>
 					        <div id="modal_input_div">
 					        	<p>소요시간</p>
-					        	<input type="text" placeholder="소요시간을 입력해주세요." id="expected_time_m">
+					        	<input class="onlyNum" type="text" placeholder="소요시간을 입력해주세요." id="expected_time_m">
 					        </div>
 					        <div id="modal_btn_div">
 					        	<button type="button" id="modal_update_btn" th:onclick="updateBooth()">완료</button>
@@ -256,13 +258,15 @@
 			    }
 			    
 			    // 수정 모달
-			    function modifyModal(booth_id, boothName, eventTitle, event_id){
+			    function modifyModal(booth_id, boothName, eventTitle, event_id, counting, time){
 					document.getElementById("modal_modify").style.display="block";
 					
 					$("#modal_event_title #booth_id_m").val(booth_id);
 					$("#modal_input_div #booth_name_m").val(boothName);
 					$("#modal_event_title #event_title_m").text(eventTitle);
 					$("#modal_event_title #event_id_m").val(event_id);
+					$("#modal_input_div #counting_m").val(Number(counting));
+					$("#modal_input_div #expected_time_m").val(Number(time));
 			    	
 			    }
 			    document.getElementById("modal_close_btn_m").onclick = function() {
