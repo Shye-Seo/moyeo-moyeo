@@ -16,6 +16,12 @@
             //필수값 체크
             $('#submit_bt').click(function(){
                 let result = true;
+                
+                if($('.date_input[name="event_endDate"]').val() < $('.date_input[name="event_startDate"]').val()){
+                    alert("행사 기간이 잘못 입력되었습니다.")
+                    result = false;
+                    return false;
+                }
                 $('.required').each(function(){
                     if($(this).val() == ""){
                         $(this).focus();
@@ -147,7 +153,6 @@
 
         // form submit
         function submitDate(actionUrl){
-
             if (confirm("등록 하시겠습니까?") == true){
 
                 let event_position = $('input[name="input_event_position"]').val();

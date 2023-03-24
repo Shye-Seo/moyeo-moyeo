@@ -43,6 +43,12 @@
 .event_line:last-child{
     margin-bottom: 0;
 }
+.event_line>div:last-child {
+    width: calc(100% - 150px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .li_title {
     width: 60px;
     color: #7B8DA3;
@@ -75,6 +81,7 @@
 }
 .event_file img{
     transform: translateY(2px);
+    width: 14px;
 }
 .event_file .file_name{
     overflow: hidden;
@@ -112,6 +119,11 @@
 }
 .table_line div:nth-child(1),.table_line div:nth-child(2){
     width: 23%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 20px;
+    box-sizing: border-box;
 }
 .table_line div:nth-child(3),.table_line div:nth-child(4){
     width: 27%;

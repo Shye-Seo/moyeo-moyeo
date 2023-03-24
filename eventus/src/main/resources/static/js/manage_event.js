@@ -155,6 +155,7 @@ function resume_act(thisId){
 
 			$("#modal_wrap").show();
 			$('.modal_con_L').show();
+            $('#resume_wrap').empty();
 			let app_list = {info:info, resume:resume, school:school, career:career};
 			$('#resume_wrap').append($.templates("#resume_file").render(app_list));
 		}

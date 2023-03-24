@@ -90,7 +90,6 @@
     position:relative;
 }
 .event_box_in{
-    width: calc(250px * 10);
     display: flex;
     gap: 20px;
     position: absolute;
@@ -281,6 +280,9 @@
 .staff_info p:last-child{
     color: #999999;
     margin-top: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .staff_btn{
     width: 72px; height: 50px;

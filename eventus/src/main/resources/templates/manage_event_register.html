@@ -53,25 +53,25 @@
                 	<form name="eventAddForm" action="/eventAdd" enctype="multipart/form-data" method="post" onsubmit="return false">
                     <div class="area1">
                         <span>행사명</span>
-                        <input type="text" name="event_title" class="required" placeholder="행사명을 입력해주세요." >
+                        <input type="text" name="event_title" class="required" placeholder="행사명을 입력해주세요." maxlength="50" >
                         <div class="date_wrap">
                             <span>
                                 <p>시작기간</p>
                                 <!-- <input type="date" name="event_startDate" data-placeholder="YYYY.MM.DD" required> -->
-                                <input type="text" name="event_startDate" class="datepicker date_input required" placeholder="YYYY.MM.DD" autocomplete='off'>
+                                <input type="text" name="event_startDate" class="datepicker date_input required" placeholder="YYYY.MM.DD"  maxlength="10" autocomplete='off'>
                             </span>
                             -
                             <span>
                                 <p>종료기간</p>
                                 <!-- <input type="date" name="event_endDate" data-placeholder="YYYY.MM.DD" required> -->
-                                <input type="text" name="event_endDate" class="datepicker date_input required" placeholder="YYYY.MM.DD" autocomplete='off'>
+                                <input type="text" name="event_endDate" class="datepicker date_input required" placeholder="YYYY.MM.DD" maxlength="10" autocomplete='off'>
                             </span>
                         </div>
                         
                     </div>
                     <div class="area5">
                         <span>행사장소 <br>및 접수마감</span>
-                        <input type="text" class="required" name="event_venue" placeholder="행사장소를 입력해주세요." >
+                        <input type="text" class="required" name="event_venue" placeholder="행사장소를 입력해주세요." maxlength="50" >
                         <div class="date_wrap">
                             <p>접수마감기한</p>
                             <input type="text" name="event_deadline" class="datetimepicker date_input required" placeholder="YYYY.MM.DD 00:00" autocomplete='off'>
@@ -97,7 +97,7 @@
                         <span>담당업무 <br>및 모집인원</span>
                         <div class="position_wrap">
                             <div class="area4_pn">
-                                <input type="text" class="input_po required" name="input_event_position" placeholder="포지션명을 입력해주세요." />
+                                <input type="text" class="input_po required" name="input_event_position" placeholder="포지션명을 입력해주세요." maxlength="15"/>
                                 <span>
                                     <p>모집인원</p>
                                     <p>명</p>
