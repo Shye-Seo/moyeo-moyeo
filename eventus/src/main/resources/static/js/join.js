@@ -12,7 +12,9 @@ $(function() {
     var day = data.getDate();
     var today = year + "." + month + "." + day;
     var id_checked = "0"; // 아이디 중복확인 여부
+    var idf_checked = "0"; // 아이디 형식 체크
     var pw_checked = "0" // 비밀번호 확인 여부
+    var pwc_checked = "0"; // 동일비밀번호 확인 여부
     var email_checked = "0"; // 이메일 중복 확인 여부
 
     // 약관동의
@@ -51,14 +53,26 @@ $(function() {
     // 회원정보 입력
     // 아이디 입력했을 때 중복확인
     $("#member input[name=user_id]").keyup(function() {
+        // 아이디가 영문, 숫자 조합 6~12자인지 확인
+        var regExp = /^[a-zA-Z0-9]{6,12}$/;
 
-        // 공백 아이디 입력 방지
-        if($(this).val().indexOf(" ") >= 0) {
+        if($(this).val() == null || $(this).val() == "") {
+            id_checked = "0";
+            $("#id_check").text("");
+            $("#id_check").css("color", "red");
+        }
+        else if(!regExp.test($(this).val())){
+            idf_checked = "0";
+            $("#id_check").text("아이디가 영문, 숫자 조합 6~12자이어야 합니다.");
+            $("#id_check").css("color", "red");
+        }
+        // 공백 및 중복 아이디 입력 방지
+        else if($(this).val().indexOf(" ") >= 0) {
             id_checked = "0";
             $("#id_check").text("공백 없이 입력해주세요.");
             $("#id_check").css("color", "red");
         }
-        else {
+        else { // 아이디 중복 확인
             $.ajax({
                 type: "GET",
                 url: "/idchk",
@@ -81,7 +95,12 @@ $(function() {
     // 비밀번호가 영문, 숫자 특수기호 중 2가지 이상 조합, 10자~16자 인지 확인
     $("#member input[name=user_pw]").keyup(function() {
         var regExp = /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,16}$/;
-        if(!regExp.test($("#member input[name=user_pw]").val())){
+
+        if($(this).val() == null || $(this).val() == "") {
+            pw_checked = "0";
+            $("#pw_check1").text("");
+        }
+        else if(!regExp.test($("#member input[name=user_pw]").val())){
             pw_checked = "0";
             $("#pw_check1").text("비밀번호가 영문, 숫자 특수기호 중 2가지 이상 조합, 10자~16자이어야 합니다.");
             $("#pw_check1").css("color", "#DD5067");
@@ -95,13 +114,18 @@ $(function() {
 
     // 비밀번호 확인
     $("#member #checked_pw").keyup(function() {
-        if($(this).val() != $("#member input[name=user_pw]").val()) {
-            pw_checked = "0";
+
+        if($(this).val() == null || $(this).val() == "") {
+            pwc_checked = "0";
+            $("#pw_check2").text("");
+        }
+        else if($(this).val() != $("#member input[name=user_pw]").val()) {
+            pwc_checked = "0";
             $("#pw_check2").text("비밀번호가 일치하지 않습니다.");
             $("#pw_check2").css("color", "#DD5067");
         }
         else {
-            pw_checked = "1";
+            pwc_checked = "1";
             $("#pw_check2").text("비밀번호가 일치합니다.");
             $("#pw_check2").css("color", "#5B8FD2");
         }
@@ -111,7 +135,12 @@ $(function() {
     $("#member input[name=user_email]").keyup(function() {
         var email = $(this).val();
         var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-        if(emailReg.test(email)) {
+
+        if(email == '' || email == null) {
+            email_checked = "0";
+            $("#email_check").text("");
+        }
+        else if(emailReg.test(email)) {
             email_checked = "1";
             $("#email_check").text("사용 가능한 이메일입니다.");
             $("#email_check").css("color", "#5B8FD2");
@@ -215,7 +244,7 @@ $(function() {
             return false;
         }
         // 생일 년도, 월, 일 빈칸인지 확인
-        else if($('#member #birth_year').val() == '년도' || $('#member #birth_month').val() == '월' || $('#member #birth_day').val() == '일') {
+        else if($('#member #birth_year').val() == null || $('#member #birth_month').val() == null || $('#member #birth_day').val() == null) {
             alert('생일을 입력해주세요.');
             return false;
         }
@@ -254,7 +283,12 @@ $(function() {
         
         // 비밀번호 형식 맞추었는지, 비밀번호와 비밀번호 확인이 같은지 확인
         else if(pw_checked == "0") {
-            alert("비밀번호를 확인을 해주세요.");
+            alert("비밀번호 확인을 해주세요.");
+            return false;
+        }
+        
+        else if(pwc_checked == "0") {
+            alert("비밀번호 확인을 체크해주세요.");
             return false;
         }
         
@@ -277,7 +311,7 @@ $(function() {
                     user_email: $('#member input[name=user_email]').val(),
                     user_birth: $('#member #birth_year').val() + '-' + $('#member #birth_month').val() + '-' + $('#member #birth_day').val(),
                     user_gender: $("#member input[name=user_gender]:checked").val(),
-                    user_phone: $('#member input[name=user_phone]').val(),
+                    user_phone: $('#member input[name=user_phone]').val().replace(/-/gi, ''),
                     user_date_join: today,
                     user_authority:1,
                 }

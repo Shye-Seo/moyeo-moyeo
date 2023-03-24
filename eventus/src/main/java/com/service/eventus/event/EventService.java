@@ -141,7 +141,7 @@ public class EventService {
         params.put("to", user_phone);
         params.put("from", "010-9878-0502"); // 발신전화번호. 테스트시에는 발신, 수신 둘다 본인 번호로 하면됨
         params.put("type", "SMS");
-        params.put("text", "[TEST]" +user_name +"님, "+ event_name + " 행사에 합격하셨습니다. 홈페이지에서 확인해주세요!"); // 문자 내용 입력
+        params.put("text", "[모여모여]" +user_name +"님, "+ event_name + " 행사에 합격하셨습니다."); // 문자 내용 입력
 
         // send() 를 통해 전송
         try {
