@@ -29,7 +29,7 @@ $(function(){
                 $(this).css('left','0')
             }
             if($(this).position().left < -inbox_width){
-                $(this).css('left',-($(".event_box_in").width()- $(".event_box_wrap").width() -10)+'px')
+                $(this).css('left',-($(".event_box_in").width()- $(".event_box_wrap").width())+'px')
             }
         }
     });
@@ -37,7 +37,7 @@ $(function(){
     window.addEventListener("resize", function() {
         inbox_width = box_count * 250 - $(".event_box_wrap").width()
         if($(".event_box_in").position().left < -inbox_width){
-            $(".event_box_in").css('left',-($(".event_box_in").width()- $(".event_box_wrap").width() -10)+'px')
+            $(".event_box_in").css('left',-($(".event_box_in").width()- $(".event_box_wrap").width())+'px')
         }
     })
     
@@ -50,7 +50,7 @@ function list_next(){
     if(left_num > -inbox_width){
         left_num -= 250;
         if(left_num < -inbox_width){
-            left_num = -($(".event_box_in").width()- $(".event_box_wrap").width() -10);
+            left_num = -($(".event_box_in").width()- $(".event_box_wrap").width());
         }
     }else{
         return false;
