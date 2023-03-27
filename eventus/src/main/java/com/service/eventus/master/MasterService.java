@@ -245,5 +245,9 @@ public class MasterService {
 	public List<MasterVo> Work_SearchList_keydate(String startDate, String endDate, String searchKeyword, int startIndex, int pageSize) {
 		return masterDao.Work_SearchList_keydate(startDate, endDate, searchKeyword, startIndex, pageSize);
 	}
+
+	public int getStaffResult(int staff_id) {
+		return masterDao.getStaffResult(staff_id);
+	}
     
 }
