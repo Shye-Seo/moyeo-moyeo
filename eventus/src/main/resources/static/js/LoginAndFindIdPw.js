@@ -153,7 +153,7 @@ $(function() {
                     }
                     else {
                         $("#getid").text(data.user_id);
-                        let userJoinDate = chkDate(data.user_date_join)
+                        let userJoinDate = data.user_date_join;
                         $("#getdate").text(userJoinDate);
                         $(".tab1_content").css('display', 'none');
                         $(".found_id").css('display', 'block');
