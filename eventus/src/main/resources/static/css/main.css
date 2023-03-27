@@ -7,6 +7,12 @@
     max-width: 1440px;
 }
 
+.noData{
+    text-align: center;
+    margin-top: 130px;
+    color: #999;
+}
+
 .L_area{
     width: 53%;
 }

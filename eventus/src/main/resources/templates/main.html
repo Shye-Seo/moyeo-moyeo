@@ -38,6 +38,7 @@
                                 </button>
                             </div>
                             <div class="event_box_wrap">
+                                <p th:if="${#lists.size(event_list) == 0}" class="noData">행사가 없습니다.</p>
                                 <div class="event_box_in">
                                     <a th:each="event : ${event_list}" th:href="'eventDetail?id='+${event.id}" class="event_box">
                                         <div th:if="${event.event_status == 0}" class="eventStat recruiting"></div>

@@ -45,9 +45,6 @@
 }
 .event_line>div:last-child {
     width: calc(100% - 150px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 .li_title {
     width: 60px;

@@ -25,10 +25,10 @@ $(function(){
     $('.event_box_in').draggable({
         "axis": "x",
         stop: function() {
-            if($(this).position().left > 0){
+            if($(this).position().left > 0 || 0>inbox_width){
                 $(this).css('left','0')
             }
-            if($(this).position().left < -inbox_width){
+            if($(this).position().left < -inbox_width && 0<inbox_width){
                 $(this).css('left',-($(".event_box_in").width()- $(".event_box_wrap").width())+'px')
             }
         }
