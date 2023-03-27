@@ -277,7 +277,7 @@ $(function() {
         
         // 아이디 중복 여부 확인
         else if(id_checked == "0") {
-            alert("아이디 중복확인을 해주세요.");
+            alert("아이디가 형식과 맞지 않거나 이미 존재하는 아이디입니다.");
             return false;
         }
         

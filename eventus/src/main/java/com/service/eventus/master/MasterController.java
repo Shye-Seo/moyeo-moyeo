@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.service.eventus.event.ApplicationVo;
 import com.service.eventus.event.EventVo;
+import com.service.eventus.resume.ResumeVo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -585,6 +586,17 @@ public class MasterController {
     @ResponseBody
     public MasterVo getEventInfo(@RequestParam("id") int id) {
         MasterVo masterVo = masterService.getEventInfo(id);
+        Map resumePosition = masterService.getResumeInfo(3,8);
+        
+        int resume_id = (int) resumePosition.get("resume_id");
+        ResumeVo resumeData = masterService.selectResume(resume_id);
+        
+        String[] pays = masterVo.getEvent_position_pay().split(",");
+        String[] positions = masterVo.getEvent_position().split(",");
+        String staff_position = (String) resumePosition.get("staff_position");
+        
+        
+        
         return masterVo;
     }
 

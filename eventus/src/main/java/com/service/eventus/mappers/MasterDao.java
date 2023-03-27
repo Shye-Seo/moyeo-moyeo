@@ -4,6 +4,7 @@ import com.service.eventus.event.ApplicationVo;
 import com.service.eventus.event.EventVo;
 import com.service.eventus.master.MasterVo;
 import com.service.eventus.master.WorkLogVo;
+import com.service.eventus.resume.ResumeVo;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,6 +13,7 @@ import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -71,7 +73,15 @@ public interface MasterDao {
     // 이벤트 정보 가져오기
     @Select("select * from event where id=#{id}")
     MasterVo getEventInfo(int id);
-
+    
+    // 근로계약서 지원한 포지션과 이력서
+    @Select("SELECT resume_id, staff_position FROM eventusdb.staff_application where event_id = #{event_id} and staff_id = #{staff_id}")
+    Map getResumeInfo(int event_id, int staff_id);
+    
+    //이력서 내용 조회
+    @Select("select * from staff_resume where id = #{id}")
+	ResumeVo selectResume(int id); // 이력서 조회
+ 
     // 근로계약서 정보 입력
     @Insert("insert into contract_file (event_id, staff_id, user_name, user_phone, staff_address, identification_number, contract_date) values (#{event_id}, #{staff_id}, #{user_name}, #{user_phone}, #{staff_address}, #{identification_number}, #{contract_date})")
     void insert_contract(MasterVo masterVo);

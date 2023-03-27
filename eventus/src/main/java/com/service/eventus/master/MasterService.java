@@ -3,6 +3,8 @@ package com.service.eventus.master;
 import com.service.eventus.event.ApplicationVo;
 import com.service.eventus.event.EventVo;
 import com.service.eventus.mappers.MasterDao;
+import com.service.eventus.resume.ResumeVo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -85,7 +88,15 @@ public class MasterService {
     public MasterVo getEventInfo(int id) {
         return masterDao.getEventInfo(id);
     }
-
+    
+    public Map getResumeInfo(int event_id, int staff_id) {
+        return masterDao.getResumeInfo(event_id, staff_id);
+    }
+    
+    public ResumeVo selectResume(int id) {
+    	return masterDao.selectResume(id);
+    }
+    
     public void insert_contract(MasterVo masterVo) {
         masterDao.insert_contract(masterVo);
     }

@@ -364,7 +364,7 @@ pre {
 }
 
 .modal_con_L{
-    width: 47%;
+    width: 47%; height: 100%;
     min-width: 700px;
     background-color: #ffffff;
     display: block;
@@ -374,12 +374,16 @@ pre {
     display: none;
     box-shadow: 3px 3px 6px #99999929;
 }
+#resume_wrap{
+	height: 100%;
+}
 
 #resume_wrapper{
 	display: flex;
     align-items: center;
     flex-direction: column;
     padding: 20px;
+	height: 100%;
 }
 
 .modal_download_area{
@@ -432,6 +436,24 @@ pre {
 
 #resume_content{
 	width: 590px;
+	overflow-y: auto;
+	height: 80%;
+}
+
+#resume_content::-webkit-scrollbar {
+    width: 8px;
+}
+
+#resume_content::-webkit-scrollbar-thumb {
+    height: 30%; 
+    background: #DDDDDD; 
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+}
+
+#resume_content::-webkit-scrollbar-track {
+    background: #ffffff;
 }
 
 #resume_content .resume_title #resume_title_text {
@@ -596,7 +618,7 @@ pre {
 
 .resume_career_info{
 	margin-top: 60px;
-	margin-bottom: 300px;
+	margin-bottom: 20px;
 }
 
 .resume_career_info .resume_table_career .table_row{

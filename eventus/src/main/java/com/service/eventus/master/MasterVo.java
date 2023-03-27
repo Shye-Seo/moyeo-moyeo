@@ -27,6 +27,7 @@ public class MasterVo {
     private int staff_id;
     private String staff_address;
 
+    private String event_position;
     private String event_position_pay;
     private String event_venue;
     private int event_check;
