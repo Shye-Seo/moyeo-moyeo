@@ -1037,11 +1037,17 @@ public class MasterController {
             cell = row.createCell(7);
 
             int pass_check = masterService.checkStaffPasser(staff);
+            int staff_result = masterService.getStaffResult(staff.getStaff_id());
+            System.out.println("staff_result : "+staff_result);
+            
             if(pass_check == 1) {
                 cell.setCellValue("합격");
             }
+            else if(staff_result == 0){
+                cell.setCellValue("대기중");
+            }
             else {
-                cell.setCellValue("불합격");
+            	cell.setCellValue("불합격");
             }
         }
 
