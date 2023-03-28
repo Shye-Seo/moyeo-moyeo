@@ -15,12 +15,24 @@ $(function(){
 
 })
 
+//작성중-넣기
+function putHyphen(event,obj,...number){
+    if(event.keyCode != 8){
+        let text = $(obj).val().replace(/[^0123456789-]/g,"");
+        for(i=0;i<number.length;i++){
+            if(text.length === number[i]){
+                text+= '-';
+            }
+        }
+        $(obj).val(text);
+    }
+}
 
 //전화번호에 - 표시 넣기 
 function chkItemPhone(phonenum) {
     let number = phonenum.replace(/[^0-9]/g, "");
     let phone = "";
-    if (number.length < 9) {
+    if (number.length < 3) {
         return number;
     } else if (number.length < 10) {
         phone += number.substr(0, 2);

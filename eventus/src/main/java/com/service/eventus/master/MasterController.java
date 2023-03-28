@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -584,20 +585,36 @@ public class MasterController {
     // 근로계약서 작성을 위한 이벤트 정보 가져오기
     @RequestMapping("/getEventInfo")
     @ResponseBody
-    public MasterVo getEventInfo(@RequestParam("id") int id) {
-        MasterVo masterVo = masterService.getEventInfo(id);
-        Map resumePosition = masterService.getResumeInfo(3,8);
+    public Map getEventInfo(@RequestParam("id") int event_id, HttpSession session) {
+    	// 세션에 저장된 user_id를 가져온다.
+        int user_id =  (int) session.getAttribute("id");
         
+    	//이벤트 정보 가져오기
+        MasterVo masterVo = masterService.getEventInfo(event_id);
+        //스태프 지원정보 가져오기 (이력서번호, 지원포지션명)
+        Map resumePosition = masterService.getResumeInfo(event_id,user_id);
+        
+        //이력서 내용가져오기 > resumeVo형식
         int resume_id = (int) resumePosition.get("resume_id");
         ResumeVo resumeData = masterService.selectResume(resume_id);
         
+        //이벤트 정보 안 포지션, 시급정보 가져오기
         String[] pays = masterVo.getEvent_position_pay().split(",");
         String[] positions = masterVo.getEvent_position().split(",");
+        //지원한 포지션정보
         String staff_position = (String) resumePosition.get("staff_position");
         
+        //포지션 위치
+        int myPositionsIndex = Arrays.asList(positions).indexOf(staff_position);
+        //스태프의 포지션에 맞는 시급
+        String myPay = pays[myPositionsIndex];
         
-        
-        return masterVo;
+        Map wrapMap = new HashMap();
+        wrapMap.put("eventInfo", masterVo);
+        wrapMap.put("resumeData", resumeData);
+        wrapMap.put("myPay", myPay);
+        wrapMap.put("name", session.getAttribute("user_name"));
+        return wrapMap;
     }
 
     // 근로확인서 및 보안각서 최종 확인 및 저장하기
@@ -609,13 +626,11 @@ public class MasterController {
             String user_id = (String) session.getAttribute("user_id");
             int id = masterService.getUserId(user_id);
             masterVo.setStaff_id(id);
-            // masterVo의 staff_address 띄어쓰기를 +로 바꾸어 저장
-//             masterVo.setStaff_address(masterVo.getStaff_address().replace(" ", "+"));
             mav.addObject("masterVo", masterVo);
-            mav.setViewName("/contract_file");
+            mav.setViewName("/contract_file"); 
             System.out.println(1);
         }
-        else {
+        else {//조회용
             MasterVo masterVo1 = masterService.getContractInfo(masterVo);
             // masterVo.contract_date를 year, month, day로 나누어 int형으로 저장
             String[] contract_date = masterVo1.getContract_date().split("-");
@@ -623,7 +638,7 @@ public class MasterController {
             // contract_date[0~2]을 int형으로 형변환하여 각각 year, month, day에 저장
             int year = Integer.parseInt(contract_date[0]);
             int month = Integer.parseInt(contract_date[1]);
-            int day = Integer.parseInt(contract_date[2]);
+            int day = Integer.parseInt(contract_date[2]); 
 
             masterVo1.setYear(year);
             masterVo1.setMonth(month);
@@ -634,6 +649,7 @@ public class MasterController {
             System.out.println(2);
         }
         System.out.println(3);
+        
         return mav;
     }
 

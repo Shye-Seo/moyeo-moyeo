@@ -223,10 +223,11 @@
 
 #application_con p, #resume_con p{
     font-size: 18px;
-    overflow: hidden;
+    /* overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: nowrap; */
     display: block;
+    padding-right: 20px;
 }
 
 #application_con p{

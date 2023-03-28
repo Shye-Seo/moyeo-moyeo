@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-	
+	<script src="/js/common.js"></script>
 	<style>
 		/* 달력 열리는 위치 수정 */
 		.daterangepicker{
@@ -599,10 +599,20 @@
         }
     </style>
     <script>
+        //이름저장
+        let myName;
 
         // 근로계약서 미등록 클릭시 모달창 띄우기
         $(function() {
-        
+
+            //엔터 막기
+            $('input[type="text"]').keydown(function() {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                }
+            });
+
+            //입력해야하는 칸 보이기
             $(".ckData").on("blur", (e)=>{
                 if($(e.target).val() != null && $(e.target).val() != "" ){
                     $(e.target).css("backgroundColor", "unset");
@@ -611,13 +621,12 @@
                 }
             })
 
-
             // 근로계약서 등록 버튼 클릭 시
             $(".contract_add").click(function() {
                 $("#modal1").css("display", "block");
                 var event_id = $(this).attr("name");
                 // name이 event_id인 input에 event_id값을 넣어주어 전송 시 같이 전달
-                $("input[type=hidden]").val(event_id);
+                $('input[name="event_id"]').val(event_id);
                 $.ajax({
                     url: "/getEventInfo",
                     type: "GET",
@@ -627,12 +636,17 @@
                     dataType: "json",
                 })
                 // 서버로부터 가져온 데이터를 변수에 저장
-                .done(function(eventInfo) {
-                    var event_startDate = eventInfo.event_startDate;
-                    var event_endDate = eventInfo.event_endDate;
-                    var event_position_pay = eventInfo.event_position_pay;
-                    var event_venue = eventInfo.event_venue;
-                    var event_title = eventInfo.event_title;
+                .done(function(data) {
+                    let eventInfo = data.eventInfo;
+                    let resumeData = data.resumeData;
+                    let myPay = data.myPay;
+                    myName = data.name.replace(/\s/gi, "");
+
+                    var event_startDate = eventInfo.event_startDate; // 시작일
+                    var event_endDate = eventInfo.event_endDate; //종료일
+                    var event_position_pay = myPay; //시급
+                    var event_venue = eventInfo.event_venue; //위치
+                    var event_title = eventInfo.event_title; //이벤트명
                     // startDate와 endDate의 날짜 차이 계산
                     var date1 = new Date(event_startDate);
                     var date2 = new Date(event_endDate);
@@ -642,12 +656,17 @@
 
                     // id가 event_venue인 태그에 event_venue값을 넣어줌
                     $("#event_venue").text(event_venue);
+                    $('#contract input[name="event_venue"]').val(event_venue);
                     $("#event_startDate").text(event_startDate);
+                    $('#contract input[name="event_startDate"]').val(event_startDate);
                     $("#event_endDate").text(event_endDate);
+                    $('#contract input[name="event_endDate"]').val(event_endDate);
                     $("#work_date").text(work_date);
+                    $('#contract input[name="work_date"]').val(work_date);
                     $("#event_position_pay").text(event_position_pay);
+                    $('#contract input[name="event_position_pay"]').val(event_position_pay);
                     $("#event_title").text(event_title);
-
+                    $('#contract input[name="event_title"]').val(event_title);
                 })
             });
 
@@ -682,59 +701,92 @@
 
             // input태그에 type이 text인 곳에 빈칸이 있을 경우 "빈칸을 채워주세요." 라는 경고창 띄우기
             $("#next_btn").click(function() {
+                let today = new Date();
+                let year = today.getFullYear(); // 년도
+                let month = today.getMonth() + 1;  // 월
+                let date = today.getDate();  // 날짜
+
                 let flag = true;
                 $(".ck_1").each((index, item)=>{
-                    console.log($(item).val())
                     if($(item).val()=="" || $(item).val() == null){
                         $(item).focus();
                         flag=false;
                         return false;
                     }
+                    //이름 비교
+                    if($(item).attr("id").includes("user_name")){
+                        if($(item).val().replace(/\s/gi, "")  != myName){
+                            alert("이름이 일치하지 않습니다.");
+                            $(item).focus();
+                            flag=false;
+                            return false;
+                        }
+                    }
+                    if($(item).attr("id").includes("year1")){
+                        if($("#year1").val()!=year || $("#month1").val()!=month || $("#day1").val()!=date){
+                            alert("오늘 날짜로 입력해주세요.");
+                            $(item).focus();
+                            flag=false;
+                            return false;
+                        }
+                    }
                 })
-                if(flag==true){
+                if(flag){
                     $("#modal2").css("display", "block");
                     $("#modal1").css("display", "none");
                 }
             });
 
             // 저장 버튼 클릭 시
-
-
             $('#confirm_btn').click(function() {
-                var check = false;
-                $("#modal2 input[type=text]").each(function() {
-                    // id가 user_name1==user_name2==user_name3==user_name4 일 경우 통과
-                    if ($("#user_name1").val() == $("#user_name2").val() && $("#user_name1").val() == $("#user_name3").val() && $("#user_name1").val() == $("#user_name4").val()) { check=true; }
-                    else {
-                        alert("이름이 일치하지 않습니다.");
-                        check = false;
+                var flag = true;
+                $(".ck_2").each((index, item)=>{
+                    if($(item).val()=="" || $(item).val() == null){
+                        $(item).focus();
+                        flag=false;
                         return false;
                     }
-
-                    if ($(this).val() == "") {
-                        alert("빈칸을 채워주세요.");
-                        check = false;
-                        return false;
+                    if($(item).attr("id").includes("user_name")){
+                        if($(item).val().replace(/\s/gi, "") != myName){
+                            alert("이름이 일치하지 않습니다.");
+                            $(item).focus();
+                            flag=false;
+                            return false;
+                        }
                     }
-                    else if ($("#staff_address1").val() != $("#staff_address2").val()) {
-                        alert("주소가 일치하지 않습니다.");
-                        check = false;
-                        return false;
+                    if($(item).attr("id").includes("identification_number2")){
+                        if($(item).val() != $("#identification_number1").val()){
+                            alert("주민등록번호가 일치하지 않습니다.")
+                            $(item).focus();
+                            flag=false;
+                            return false;
+                        }
                     }
-                    // identification_number1!=identification_number2 일 경우 "주민등록번호가 일치하지 않습니다." 라는 경고창 띄우기
-                    else if ($("#identification_number1").val() != $("#identification_number2").val()) {
-                        alert("주민등록번호가 일치하지 않습니다.");
-                        check = false;
-                        return false;
+                    if($(item).attr("id").includes("staff_address2")){
+                        if($(item).val() != $("#staff_address1").val()){
+                            alert("주소가 일치하지 않습니다.") 
+                            $(item).focus();
+                            flag=false;
+                            return false;
+                        }
                     }
-
-
-                    if(check) {
-                        // form을 submit할 때 event_id값을 넘겨줌
-                        $("#contract").submit();
+                    if($(item).attr("id").includes("year2")){
+                        if($("#year2").val()!=$("#year1").val() || $("#month2").val()!=$("#month1").val() || $("#day2").val()!=$("#day1").val()){
+                            alert("날짜가 일치하지 않습니다.")
+                            $(item).focus();
+                            flag=false;
+                            return false;
+                        }
                     }
-                });
-
+                })
+                if(flag) {
+                    // form을 submit할 때 event_id값을 넘겨줌
+                    $(`input[id^="user_name"]`).each((index, item)=>{
+                        let inputVal = $(item).val();
+                        $(item).val(inputVal.replace(/\s/gi, ""));
+                    })
+                    $("#contract").submit();
+                }
             });
         })
     </script>
