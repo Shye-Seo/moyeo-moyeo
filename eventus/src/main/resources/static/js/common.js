@@ -18,7 +18,11 @@ $(function(){
 //작성중-넣기
 function putHyphen(event,obj,...number){
     if(event.keyCode != 8){
-        let text = $(obj).val().replace(/[^0123456789-]/g,"");
+        if(event.keyCode === 109 || event.keyCode === 189){
+            event.preventDefault();// 하이픈 이벤트 막기
+            return false;
+        }
+        let text = $(obj).val().replace(/[^0123456789-]/g,""); //정규식 숫자,하이픈만
         for(i=0;i<number.length;i++){
             if(text.length === number[i]){
                 text+= '-';
