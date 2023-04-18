@@ -240,7 +240,7 @@ button{
 .modal_con_R{
     background-color: #ffffff;
     width: 45%; height: 100%;
-    max-width: 850px;
+    max-width: 850px; min-width: 755px;
     position: absolute;
     top: 0; right: 0;
 }

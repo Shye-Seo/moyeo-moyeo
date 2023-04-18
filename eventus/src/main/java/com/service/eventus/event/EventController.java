@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -508,10 +510,13 @@ public class EventController {
 	public String record_startTime(@RequestParam("staff_id") int staff_id, @RequestParam("staff_name") String staff_name, @RequestParam("event_id") int event_id, 
 			@RequestParam("event_title") String event_title, @RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
 		
+		ZoneId zoneId = ZoneId.of("Asia/Seoul");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		ZonedDateTime zdt = localDateTime.atZone( zoneId ) ;
+		
 		// 현재 시간
-		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-		String start_time = now.format(formatter);
+		String start_time = zdt.format(formatter);
 		
 		eventService.record_startTime(record_id, event_id, staff_id, work_date, start_time);
 		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, start_time, 1);
@@ -524,10 +529,13 @@ public class EventController {
 	public String record_outTime(@RequestParam("staff_id") int staff_id, @RequestParam("staff_name") String staff_name, @RequestParam("event_id") int event_id, 
 		@RequestParam("event_title") String event_title, @RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
 		
+		ZoneId zoneId = ZoneId.of("Asia/Seoul");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		ZonedDateTime zdt = localDateTime.atZone( zoneId ) ;
+		
 		// 현재 시간
-		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-        String out_time = now.format(formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String out_time = zdt.format(formatter);
         
 		eventService.record_outTime(record_id, event_id, staff_id, work_date, out_time);
 		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, out_time, 2);
@@ -540,10 +548,13 @@ public class EventController {
 	public String record_backTime(@RequestParam("staff_id") int staff_id, @RequestParam("staff_name") String staff_name, @RequestParam("event_id") int event_id, 
 			@RequestParam("event_title") String event_title, @RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
 		
+		ZoneId zoneId = ZoneId.of("Asia/Seoul");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		ZonedDateTime zdt = localDateTime.atZone( zoneId ) ;
+		
 		// 현재 시간
-		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-        String back_time = now.format(formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String back_time = zdt.format(formatter);
         
 		eventService.record_backTime(record_id, event_id, staff_id, work_date, back_time);
 		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, back_time, 3);
@@ -556,10 +567,13 @@ public class EventController {
 	public String record_endTime(@RequestParam("staff_id") int staff_id, @RequestParam("staff_name") String staff_name, @RequestParam("event_id") int event_id, 
 			@RequestParam("event_title") String event_title, @RequestParam("work_date") String work_date, @RequestParam("record_id") int record_id, ModelMap model) throws Exception{
 		
+		ZoneId zoneId = ZoneId.of("Asia/Seoul");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		ZonedDateTime zdt = localDateTime.atZone( zoneId ) ;
+		
 		// 현재 시간
-		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-        String end_time = now.format(formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String end_time = zdt.format(formatter);
         
 		eventService.record_endTime(record_id, event_id, staff_id, work_date, end_time);
 		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, end_time, 4);
@@ -573,10 +587,13 @@ public class EventController {
 	public String record_startTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("staff_name") String staff_name, @RequestParam("event_id") int event_id, 
 			@RequestParam("event_title") String event_title, @RequestParam("work_date") String work_date) throws Exception{
 		
+		ZoneId zoneId = ZoneId.of("Asia/Seoul");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		ZonedDateTime zdt = localDateTime.atZone( zoneId ) ;
+		
 		// 현재 시간
-		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-		String start_time = now.format(formatter);
+		String start_time = zdt.format(formatter);
 		
 		eventService.record_startTime_new(event_id, staff_id, work_date, start_time);
 		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, start_time, 1);
@@ -589,10 +606,13 @@ public class EventController {
 	public String record_outTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("staff_name") String staff_name, @RequestParam("event_id") int event_id, 
 			@RequestParam("event_title") String event_title, @RequestParam("work_date") String work_date) throws Exception{
 		
+		ZoneId zoneId = ZoneId.of("Asia/Seoul");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		ZonedDateTime zdt = localDateTime.atZone( zoneId ) ;
+		
 		// 현재 시간
-		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-        String out_time = now.format(formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String out_time = zdt.format(formatter);
         
 		eventService.record_outTime_new(event_id, staff_id, work_date, out_time);
 		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, out_time, 2);
@@ -605,10 +625,13 @@ public class EventController {
 	public String record_backTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("staff_name") String staff_name, @RequestParam("event_id") int event_id, 
 			@RequestParam("event_title") String event_title, @RequestParam("work_date") String work_date) throws Exception{
 		
+		ZoneId zoneId = ZoneId.of("Asia/Seoul");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		ZonedDateTime zdt = localDateTime.atZone( zoneId ) ;
+		
 		// 현재 시간
-		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-        String back_time = now.format(formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String back_time = zdt.format(formatter);
         
 		eventService.record_backTime_new(event_id, staff_id, work_date, back_time);
 		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, back_time, 3);
@@ -621,10 +644,13 @@ public class EventController {
 	public String record_endTime_new(@RequestParam("staff_id") int staff_id, @RequestParam("staff_name") String staff_name, @RequestParam("event_id") int event_id, 
 			@RequestParam("event_title") String event_title, @RequestParam("work_date") String work_date) throws Exception{
 		
+		ZoneId zoneId = ZoneId.of("Asia/Seoul");
+		LocalDateTime localDateTime = LocalDateTime.now();
+		ZonedDateTime zdt = localDateTime.atZone( zoneId ) ;
+		
 		// 현재 시간
-		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
-        String end_time = now.format(formatter);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH : mm");
+        String end_time = zdt.format(formatter);
         
 		eventService.record_endTime_new(event_id, staff_id, work_date, end_time);
 		eventService.insert_work_log(staff_id, staff_name, event_id, event_title, end_time, 4);
