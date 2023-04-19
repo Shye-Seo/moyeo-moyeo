@@ -27,6 +27,10 @@ body {background:#F8F9FB;}
     z-index: 99;
 }
 
+.Msidebar{
+    background-color: #5d7089;
+}
+
 .logo{
     display: block;
     top: 0;
@@ -60,6 +64,11 @@ body {background:#F8F9FB;}
     background-color: #7CA6DB;
     border-left: 10px solid #ffffff99 ;
 }
+
+.Mcategories .menu:hover, .Mcategories .selected{
+    background-color: #8494a9;
+}
+
 
 .menu-categories .menu a{
     height: 130px;
