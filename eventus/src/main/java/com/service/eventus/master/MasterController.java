@@ -754,7 +754,7 @@ public class MasterController {
             String end_time = report_work_list.get(i).getWork_end_time();
             int staff_id = report_work_list.get(i).getId();
             
-            if(start_time != null && end_time != null) {
+            if(start_time != null && end_time != null && end_time != "") {
                 SimpleDateFormat sdf = new SimpleDateFormat("HH : mm");
 
                 Date start = sdf.parse(start_time);
@@ -768,7 +768,7 @@ public class MasterController {
 
                 long diffSec = diff / 1000;
 
-                if(outing_time != null && comeback_time != null ) {
+                if(outing_time != null && outing_time != "" && comeback_time != null ) {
                     Date outing = sdf.parse(outing_time);
                     Date comeback = sdf.parse(comeback_time);
 

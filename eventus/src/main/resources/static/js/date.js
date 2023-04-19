@@ -90,9 +90,6 @@ $(document).ready(function() {
 		if (start == null || start == "") {
 			alert("출근시간을 기록해 주세요.")
 			return false;
-		} else if (end == null || end == "") {
-			alert("퇴근시간을 기록해 주세요.")
-			return false;
 		}
 	
 		
@@ -103,8 +100,9 @@ $(document).ready(function() {
 				return false;
 			}
 		}
-		if (end != null || end != "") {
+		if (end.length > 0) {
 			if (end.indexOf(":") == -1 || end.length < 5) {
+				alert(end.length);
 				alert("퇴근시간 형식이 알맞지 않습니다.")
 				return false;
 			}
