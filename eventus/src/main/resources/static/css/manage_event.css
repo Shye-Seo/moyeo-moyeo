@@ -21,7 +21,7 @@ button{
 	display:flex;
 	width:47%;
 	background: #FAFAFA 0% 0% no-repeat padding-box;
-    border: 0.5px solid #999999;
+    border: 0.5px solid #BBBBBB;
     border-radius: 3px;
 }
 
@@ -79,7 +79,7 @@ button{
     width: 85%;
     height: 40px;
     background: #FAFAFA 0% 0% no-repeat padding-box;
-    border: 0.5px solid #999999;
+    border: 0.5px solid #BBBBBB;
     border-radius: 3px 0 0 3px;
     opacity: 1;
     border-right: none;
@@ -89,7 +89,7 @@ button{
 .text_search .search_button{
 	width: 15%;
     display: flex;
-    border: 0.5px solid #999999;
+    border: 0.5px solid #BBBBBB;
     border-left: none;
     background: #FAFAFA 0% 0% no-repeat padding-box;
     border-radius: 0 3px 3px 0;
@@ -240,21 +240,21 @@ button{
 .modal_con_R{
     background-color: #ffffff;
     width: 45%; height: 100%;
-    max-width: 850px; min-width: 755px;
+    max-width: 850px; min-width: 700px;
     position: absolute;
     top: 0; right: 0;
 }
 
 .modal_con_L{
     width: 40%; height: 100%;
-    max-width: 670px;
+    max-width: 670px; min-width: 600px;
     padding: 20px 35px;
     box-sizing: border-box;
     background-color: #ffffff;
     display: block;
     position: absolute;
     top: 0;
-    right: 48%;
+    left: 17%;
     border-radius: 7px;
     display: none;
     box-shadow: 3px 3px 6px #99999929;
@@ -416,11 +416,16 @@ button{
 
 .personal_info {
     width: 25%;
-    min-width: 136px;
+    min-width: 140px;
 }
 
 .address_info {
     width: 30%;
+}
+.address_info .nowrap{
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .career_info {

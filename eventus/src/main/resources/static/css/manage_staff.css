@@ -24,7 +24,7 @@ pre {
 	display:flex;
 	width:47%;
 	background: #FAFAFA 0% 0% no-repeat padding-box;
-    border: 0.5px solid #999999;
+    border: 0.5px solid #BBBBBB;
     border-radius: 3px;
 }
 
@@ -82,7 +82,7 @@ pre {
     width: 85%;
     height: 40px;
     background: #FAFAFA 0% 0% no-repeat padding-box;
-    border: 0.5px solid #999999;
+    border: 0.5px solid #BBBBBB;
     border-radius: 3px 0 0 3px;
     opacity: 1;
     border-right: none;
@@ -92,7 +92,7 @@ pre {
 .text_search .search_button{
 	width: 15%;
     display: flex;
-    border: 0.5px solid #999999;
+    border: 0.5px solid #BBBBBB;
     border-left: none;
     background: #FAFAFA 0% 0% no-repeat padding-box;
     border-radius: 0 3px 3px 0;
