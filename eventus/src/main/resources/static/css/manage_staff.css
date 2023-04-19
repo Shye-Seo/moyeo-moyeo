@@ -19,7 +19,9 @@ pre {
 #searchForm{
 	display: flex;
 }
-
+.bold{
+	font-weight: bold;
+}
 .date_search{
 	display:flex;
 	width:47%;

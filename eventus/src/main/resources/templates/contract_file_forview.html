@@ -53,7 +53,7 @@
         <b>계약 당사자인 근로자와 사업주는 위와 같이 근로계약을 체결하며, 상호 성실히 이행할 것을 서약한다.</b>
 
         제 1 조【근무장소】
-        1) “근로자”의 근로장소는 <span id="event_venue" th:text="${masterVo.event_venue}"></span> 행사장 전역 으로 한다.
+        1) “근로자”의 근로장소는 <span id="event_venue" class="bold" th:text="${masterVo.event_venue}"></span> 행사장 전역 으로 한다.
         2) “사업주”는 “근로자”의 근무지를 업무 형편에 따라 변경 조정 할 수 있으며 “근로자”는 이에 응한다.
 
         제 2 조【근무내용】
@@ -61,12 +61,12 @@
         2) “사업주”는 “근로자”의 근무내용을 “사업주”의 사정에 따라 변경할 수 있으며 “근로자”는 이에 응한다.
 
         제 3 조【계약기간】
-        1) 본 계약기간은 <span id="event_startDate" th:text="${masterVo.event_startDate}"></span>부터 <span id=event_endDate th:text="${masterVo.event_endDate}"></span>까지 <span id="work_date" th:text="${masterVo.work_date}"></span>일간으로 하되 당사자간의 합의에 의하여 연장할 수 있다.
+        1) 본 계약기간은 <span id="event_startDate" class="bold" th:text="${masterVo.event_startDate}"></span>부터 <span id=event_endDate class="bold" th:text="${masterVo.event_endDate}"></span>까지 <span id="work_date" th:text="${masterVo.work_date}"></span>일간으로 하되 당사자간의 합의에 의하여 연장할 수 있다.
         2) “사업주”의 회사 경영상 필요에 의해 인원 감소사유 발생하여 감원대상으로 선정되거나, 회사 내외적 사유에
          의하여 작업이 사실상 중단되거나 작업 중단이 예상되면 “근로자”의 계약기간을 단축할 수 있다.
 
         제 4 조【임금조건】
-        1) 기본시급 : <span id="event_position_pay" th:text="${masterVo.event_position_pay}"></span>원
+        1) 기본시급 : <span id="event_position_pay" class="bold" th:text="${masterVo.event_position_pay}"></span>원
         ※ 연장근무 시 발생하는 초과근무임금은 행사 후 근무기록 근거에 따라 추가지급
         - 8시간 이상 초과 근무 시 기본시급의 50%를 가산하여 지급
         - 22시~06시 사이의 야간 근로 시 기본시급의 50%를 가산하여 지급
@@ -212,6 +212,9 @@
             width: 40%;
             margin: 0 auto;
         }
+        .bold{
+			font-weight: bold;
+		}
     	#modal1{
      		border-bottom: 1px solid #999999;
     	}
