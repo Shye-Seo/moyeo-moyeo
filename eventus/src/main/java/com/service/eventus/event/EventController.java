@@ -991,8 +991,7 @@ public class EventController {
 	@RequestMapping(value="/event_excel", method= RequestMethod.GET)
 	@ResponseBody
 	public void event_excel(HttpServletResponse response, String searchKeyword, String startDate, String endDate, String searchDate) throws IOException {
-		// 엑셀 파일명
-		String filename = "event_excel.xlsx";
+		
 		System.out.println(searchKeyword);
 		System.out.println(startDate);
 		System.out.println(endDate);
@@ -1059,6 +1058,9 @@ public class EventController {
 	      if(searchDate!=null && searchDate.equals(today+" - "+today)) {
 	    	  searchDate=null;
 	      }
+	      
+	   // 엑셀 파일명
+		String filename = today+"_event_excel.xlsx";
 	      
 		 event_list = eventService.findDownloadList();
 		
@@ -1135,8 +1137,7 @@ public class EventController {
 		@RequestMapping(value="/booth_excel", method= RequestMethod.GET)
 		@ResponseBody
 		public void booth_excel(HttpServletResponse response, String id ,String searchKeyword, String startDate, String endDate, String searchDate) throws IOException {
-			// 엑셀 파일명
-			String filename = "booth_excel.xlsx";
+			
 			System.out.println(searchKeyword);
 			System.out.println(startDate);
 			System.out.println(endDate);
@@ -1206,6 +1207,8 @@ public class EventController {
 		    	  startDate = searchDate.substring(0, 10);
 		    	  endDate = searchDate.substring(13, 23);
 		      }
+		   // 엑셀 파일명
+			String filename = today+"_booth_excel.xlsx";
 		      
 		      booth_list = eventService.findBoothDownloadList(Integer.parseInt(id) ,searchKeyword, startDate, endDate);
 			

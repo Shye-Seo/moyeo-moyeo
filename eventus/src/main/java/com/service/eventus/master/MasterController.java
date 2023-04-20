@@ -944,8 +944,7 @@ public class MasterController {
     public void staff_excel(HttpServletResponse response, HttpSession session, String searchKeyword, String startDate, String endDate, String searchDate) throws IOException {
 
 		String user_id = (String) session.getAttribute("user_id");
-        // 엑셀 파일명
-        String filename = "staff_list.xlsx";
+        
         // 엑셀 파일 생성(xlsx 확장자)
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("staff_list");
@@ -1017,6 +1016,8 @@ public class MasterController {
 	      if(searchDate!=null && searchDate.equals(today+" - "+today)) {
 	    	  searchDate=null;
 	      }
+	   // 엑셀 파일명
+	        String filename = today+"_staff_list.xlsx";
 
 		staff_list = masterService.staff_findDownloadList(user_id);
 
@@ -1092,8 +1093,7 @@ public class MasterController {
     @RequestMapping(value="/report_work_excel", method= RequestMethod.GET)
     @ResponseBody
     public void report_excel_excel(HttpServletResponse response, String searchKeyword, String startDate, String endDate, String searchDate) throws IOException {
-        // 엑셀 파일명
-        String filename = "report_excel_list.xlsx";
+        
         // 엑셀 파일 내용
         // 엑셀 파일 생성(xlsx 확장자)
         Workbook workbook = new XSSFWorkbook();
@@ -1169,6 +1169,8 @@ public class MasterController {
 	      if(searchDate!=null && searchDate.equals(today+" - "+today)) {
 	    	  searchDate=null;
 	      }
+	   // 엑셀 파일명
+	    String filename = today+"_report_excel_list.xlsx";
 
 		report_work_list = masterService.report_work_findDownloadList();
 

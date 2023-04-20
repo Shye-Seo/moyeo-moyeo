@@ -3,6 +3,7 @@
 let now_event_id_for_app = 0;
 let now_event_id_for_work = 0;
 let now_event_title_for_work = "";
+let now_event_title_for_resume = "";
 
 //모달창 활성화 여부
 let modal_L_state = false;
@@ -42,7 +43,7 @@ function modal_close_resume(){
 }
 
 //지원자 모달 act
-function modal_act_application(thisId,chk){
+function modal_act_application(thisId,chk,obj){
     $.ajax({
 		url : "/get_application_list",
 		type : 'get',
@@ -51,6 +52,8 @@ function modal_act_application(thisId,chk){
             const list = data.application_list;
             const positions = data.position_list;
             now_event_id_for_app = data.event_id;
+            now_event_title_for_resume = $(obj).parent().prevAll(".title_area").find("li").text();
+
             if(list.length <=0){
                 alert("현재 지원자가 없습니다.");
                 return false;
@@ -162,12 +165,12 @@ function resume_act(thisId){
 	});
 }
 
-function resume_download(thisId){
-	 let userName = thisId;
+function resume_download(user_name,obj){
+	 let userName = user_name;
 	 let element = document.getElementById('resume_content');
      let opt = {
             margin:       1,
-            filename:     userName+'_이력서.pdf',
+            filename:     `${now_event_title_for_resume}_${userName}_이력서.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas: { // html2canvas 옵션
                 useCORS: true, // 영역 안에 로컬 이미지를 삽입 할 때 옵션 필요
