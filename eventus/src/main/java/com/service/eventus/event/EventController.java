@@ -1074,12 +1074,12 @@ public class EventController {
 		    	
 		    	event_list = eventService.event_Downloaddate(startDate, endDate);
 //		    	System.out.println("날짜");
-		    	filename = "event_excel_"+startDate+"_"+endDate+".xlsx";
+		    	filename = today+"_event_excel_"+startDate+"_"+endDate+".xlsx";
 		    	
 		 }else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
 //			 System.out.println("키워드");
 	    		event_list = eventService.event_Downloadkey(searchKeyword);
-	    		filename = new String(("staff_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
+	    		filename = new String((today+"_staff_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 	    		
 		 }else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
 		    	startDate = searchDate.substring(0, 10);
@@ -1087,7 +1087,7 @@ public class EventController {
 		    	
 		    	event_list = eventService.event_Downloadkeydate(startDate, endDate, searchKeyword);
 //		    	System.out.println("동시");
-		    	filename =  new String(("staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
+		    	filename =  new String((today+"_staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 		 }
 		
 		for(EventVo event : event_list) {
@@ -1222,12 +1222,12 @@ public class EventController {
 //			    	
 //			    	event_list = eventService.event_Downloaddate(startDate, endDate);
 //			    	System.out.println("날짜");
-			    	filename = "booth_excel_"+startDate+"_"+endDate+".xlsx";
+			    	filename = today+"_booth_excel_"+startDate+"_"+endDate+".xlsx";
 			    	
 			 }else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
 //				 System.out.println("키워드");
 //		    		event_list = eventService.event_Downloadkey(searchKeyword);
-		    		filename = new String(("booth_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
+		    		filename = new String((today+"_booth_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 		    		
 			 }else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
 //			    	startDate = searchDate.substring(0, 10);
@@ -1235,7 +1235,7 @@ public class EventController {
 //			    	
 //			    	event_list = eventService.event_Downloadkeydate(startDate, endDate, searchKeyword);
 //			    	System.out.println("동시");
-			    	filename =  new String(("booth_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
+			    	filename =  new String((today+"_booth_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 			 }
 			
 			for(BoothVo booth : booth_list) {

@@ -1029,18 +1029,18 @@ public class MasterController {
 			endDate = searchDate.substring(13, 23);
 
 			staff_list = masterService.staff_Downloaddate(user_id, startDate, endDate);
-			filename = "staff_excel_"+startDate+"_"+endDate+".xlsx";
+			filename = today+"_staff_excel_"+startDate+"_"+endDate+".xlsx";
 
 		}else if(searchKeyword != null && searchDate == null) { //키워드검색, 날짜null처리
 			staff_list = masterService.staff_Downloadkey(user_id, searchKeyword);
-			filename = new String(("staff_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
+			filename = new String((today+"_staff_excel_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 
 		}else if(searchKeyword != null && searchDate != null){ // 키워드&날짜 동시검색
 			startDate = searchDate.substring(0, 10);
 			endDate = searchDate.substring(13, 23);
 
 			staff_list = masterService.staff_Downloadkeydate(user_id, startDate, endDate, searchKeyword);
-			filename =  new String(("staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
+			filename =  new String((today+"_staff_excel_"+startDate+"_"+endDate+"_"+searchKeyword+".xlsx").getBytes("UTF-8"),"ISO-8859-1");
 		}
 
         // 데이터 부분 생성
@@ -1066,7 +1066,7 @@ public class MasterController {
             cell = row.createCell(7);
 
             int pass_check = masterService.checkStaffPasser(staff);
-            int staff_result = masterService.getStaffResult(staff.getStaff_id());
+            int staff_result = masterService.getStaffResult(staff.getStaff_id(), staff.getEvent_id());
             System.out.println("staff_result : "+staff_result);
             
             if(pass_check == 1) {
