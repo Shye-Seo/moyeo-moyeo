@@ -369,6 +369,6 @@ public interface MasterDao {
 			"where (#{startDate} <= work_date and work_date <= #{endDate}) and (event_title like concat('%',#{searchKeyword},'%') or user_name like concat('%',#{searchKeyword},'%')) order by work_date asc, a.id asc")
 	List<MasterVo> report_work_Downloadkeydate(String startDate, String endDate, String searchKeyword);
 
-	@Select("select staff_result from staff_application where staff_id = #{staff_id}")
-	int getStaffResult(int staff_id);
+	@Select("select staff_result from staff_application where staff_id = #{staff_id} and event_id=#{event_id}")
+	int getStaffResult(int staff_id, int event_id);
 }

@@ -223,8 +223,8 @@
 							<div class="a_count">
 
                             <!-- 지원현황 -->
-							<a th:if="${event.event_status == 0}" th:onclick="'modal_act_application('+${event.id}+','+${event.event_check}+')'"><li th:text="${event.application_count} + ' 명'" class="red"></li></a>
-							<a th:if="${event.event_status == 1}" th:onclick="'modal_act_application('+${event.id}+','+${event.event_check}+')'"><li th:text="${event.application_count} + ' 명'" class="black"></li></a>
+							<a th:if="${event.event_status == 0}" th:onclick="'modal_act_application('+${event.id}+','+${event.event_check}+',this)'"><li th:text="${event.application_count} + ' 명'" class="red"></li></a>
+							<a th:if="${event.event_status == 1}" th:onclick="'modal_act_application('+${event.id}+','+${event.event_check}+',this)'"><li th:text="${event.application_count} + ' 명'" class="black"></li></a>
 							
                             <!-- 근무기록 -->
                             <a th:if="${event.event_status == 2}" th:onclick="'modal_act_workRecord('+${event.id}+',this)'" th:data-title="${event.event_title}"><li th:text="${event.staff_count} + ' 명'" class="black"></li></a>
@@ -354,7 +354,6 @@
 						$('#page_num'+[[${nowpage}]]).addClass("thisPage");
                     	var searchWord = /*[[${searchKeyword}]]*/
                     	var nowpage = /*[[${nowpage}]]*/
-                    	console.log(nowpage);
                     </script>
                 </div>
             </div>
@@ -532,10 +531,10 @@
 	    <div id="resume_wrapper">
 		<div class="modal_download_area">
 			<div class="download_area">
-				<div id="pdf" onclick="resume_download({{:resume.id}},this)">
+				<div id="pdf" onclick="resume_download('{{:info.user_name}}',this)">
 					<img src="imgs/event_download.svg" id="download_btn">
 				</div>
-				<div id="pdf_text" onclick="resume_download({{:resume.id}},this)">
+				<div id="pdf_text" onclick="resume_download('{{:info.user_name}}',this)">
 					<span id="pdf_text_">PDF 저장하기</span>
 				</div>
 			</div>

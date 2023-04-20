@@ -177,7 +177,7 @@
                 let element = document.getElementById('modal_all');
                 let opt = {
                     margin:       0.5,
-                    filename:     '근로계약서.pdf',
+                    filename:     '[[${masterVo.event_title}]]_[[${masterVo.user_name}]]_근로계약서.pdf',
                     image:        { type: 'jpeg', quality: 0.98 },
                     html2canvas: { // html2canvas 옵션
                         useCORS: true, // 영역 안에 로컬 이미지를 삽입 할 때 옵션 필요

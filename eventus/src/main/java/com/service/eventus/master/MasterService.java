@@ -257,8 +257,8 @@ public class MasterService {
 		return masterDao.Work_SearchList_keydate(startDate, endDate, searchKeyword, startIndex, pageSize);
 	}
 
-	public int getStaffResult(int staff_id) {
-		return masterDao.getStaffResult(staff_id);
+	public int getStaffResult(int staff_id, int event_id) {
+		return masterDao.getStaffResult(staff_id, event_id);
 	}
     
 }
