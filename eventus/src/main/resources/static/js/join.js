@@ -26,7 +26,7 @@ $(function() {
             $('.normal').prop('checked', false);
         }
     });
-    
+
     // 전체 동의 안 되어 있으면 회원가입 버튼 비활성화
     $(".join_btn").click(function() {
         if($("#all_chk").prop("checked") || ($("#chk1").prop("checked") && $("#chk2").prop("checked"))) {
@@ -49,7 +49,7 @@ $(function() {
             $('.normal').prop('checked', true);
         }
     });
-    
+
     // 회원정보 입력
     // 아이디 입력했을 때 중복확인
     $("#member input[name=user_id]").keyup(function() {
@@ -168,6 +168,8 @@ $(function() {
     // 인증번호 발송
     $('#certifinum_submit').click(function() {
         $("#certifinum_check").attr("disabled", false);
+        clearInterval(timer);
+        $("#certifi_time").text("");
         if($('#member input[name=user_phone]').val() == '') {
             alert('휴대번호를 입력해주세요.');
             $('#member input[name=user_phone]').focus();
@@ -175,7 +177,6 @@ $(function() {
         }
         else {
             alert("인증번호가 발송되었습니다. 인증번호를 입력해주세요.");
-            $("#certifinum_submit").attr("disabled", true);
             setTimeout(function(){
                 $("#certifinum_submit").attr("disabled", false);
             }, 60000);
@@ -274,24 +275,24 @@ $(function() {
             alert("휴대번호 인증을 해주세요.");
             return false;
         }
-        
+
         // 아이디 중복 여부 확인
         else if(id_checked == "0") {
             alert("아이디가 형식과 맞지 않거나 이미 존재하는 아이디입니다.");
             return false;
         }
-        
+
         // 비밀번호 형식 맞추었는지, 비밀번호와 비밀번호 확인이 같은지 확인
         else if(pw_checked == "0") {
             alert("비밀번호 확인을 해주세요.");
             return false;
         }
-        
+
         else if(pwc_checked == "0") {
             alert("비밀번호 확인을 체크해주세요.");
             return false;
         }
-        
+
         // 이메일 형식 갖추었는지 확인
         else if(email_checked == "0") {
             alert("이메일 형식을 확인을 해주세요.");
@@ -339,6 +340,7 @@ function certifinum_checking(input_num){
             certifi_checked = "1";
             $('#certifinum').attr('readonly','true');
             $("#certifinum_submit").val("인증완료");
+            $("#certifinum_submit").attr("disabled", true);
         }else{
             $('#certifinum_check').css({'background':'#DDDDDD'});
             certifi_checked = "0";
@@ -347,4 +349,4 @@ function certifinum_checking(input_num){
         $('#certifinum_check').css({'background':'#DDDDDD'});
         certifi_checked = "0";
     }
-} 
+}

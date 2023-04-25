@@ -696,6 +696,12 @@ select::-webkit-scrollbar-thumb {
     padding: 4px;
 }
 
+/* 자동완성 시 색깔 변하는 것 제거하기 */
+input[name="user_phone"]:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #F8F9FB inset;
+    box-shadow: 0 0 0 1000px #F8F9FB inset;
+}
+
 .phone_area, .certifinum_area {
     position: relative;
 }

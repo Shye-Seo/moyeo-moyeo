@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="css/login.css">
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script src="/js/common.js"></script>
-        <script type="text/javascript" src="/js/join.js"></script>
+        <script src="/js/join.js"></script>
         <script>
             $(function(){
                 $('select').change(function(){
@@ -55,31 +55,31 @@
                 <div id="member">
                     <form>
                         <div class="id_area">
-                            <p class="item">아이디</p>
+                            <p class="item">아이디<sup>*</sup></p>
                             <span id="id_check"></span>
                             <input type="text" name="user_id" placeholder="아이디 입력" value="">
                         </div>
 
                         <div class="pw_area">
-                            <p class="item">비밀번호</p>
+                            <p class="item">비밀번호<sup>*</sup></p>
                             <span id="pw_check1"></span>
                             <input type="password" name="user_pw" placeholder="비밀번호 입력" value="">
                         </div>
 
                         <div class="pw_area">
-                            <p class="item">비밀번호 확인</p>
+                            <p class="item">비밀번호 확인<sup>*</sup></p>
                             <span id="pw_check2"></span>
                             <input type="password" id="checked_pw" placeholder="비밀번호 재확인" value="">
                         </div>
 
                         <div class="name_email_wrap">
                             <div class="name_area">
-                                <p class="item">이름</p>
+                                <p class="item">이름<sup>*</sup></p>
                                 <input type="text" name="user_name" placeholder="이름 입력" value="">
                             </div>
 
                             <div class="email_area">
-                                <p class="item">이메일주소</p>
+                                <p class="item">이메일주소<sup>*</sup></p>
                                 <span id="email_check"></span>
                                 <input type="text" name="user_email" placeholder="example@foryoucom.com" value="">
                             </div>
@@ -87,7 +87,7 @@
 
                         <div class="birth_gender_wrap">
                             <div class="birth_area">
-                            <p class="item">생일/성별</p>
+                            <p class="item">생일/성별<sup>*</sup></p>
                                 <div><select id="birth_year" ><option disabled selected>년</option></select></div>
                                 <div><select id="birth_month"><option disabled selected>월</option></select></div>
                                 <div><select id="birth_day"><option disabled selected>일</option></select></div>
@@ -101,13 +101,13 @@
 
                         <div class="phone_certifinum_wrap">
                             <div class="phone_area">
-                                <p class="item">휴대전화</p>
+                                <p class="item">휴대전화<sup>*</sup></p>
                                 <input type="text" name="user_phone" placeholder="예) 01012345678">
                                 <input type="button" id="certifinum_submit" value="인증">
                             </div>
         
                             <div class="certifinum_area">
-                                <p class="item">인증번호</p>
+                                <p class="item">인증번호<sup>*</sup></p>
                                 <span id="certifi_time"></span>
                                 <input type="text" id="certifinum" placeholder="인증번호 입력" onkeyup="certifinum_checking($(this).val())">
                                 <div class="check_icon"></div>
