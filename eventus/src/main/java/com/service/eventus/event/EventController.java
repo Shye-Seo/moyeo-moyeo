@@ -1117,9 +1117,10 @@ public class EventController {
 				} else {
 					cell.setCellValue("진행완료");
 				}
-				cell = row.createCell(4);
-				cell.setCellValue(event.getStaff_count());
+				
 			}
+			cell = row.createCell(4);
+			cell.setCellValue(event.getStaff_count());
 			cell = row.createCell(5);
 			cell.setCellValue(event.getBooth_count());
 		}

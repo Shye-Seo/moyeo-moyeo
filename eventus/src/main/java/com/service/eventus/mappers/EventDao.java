@@ -216,16 +216,16 @@ public interface EventDao {
 	List<BoothVo> booth_searchList(int event_id, String searchKeyword, int startIndex, int pageSize);
 
 	//다운로드용 리스트 생성
-	@Select("select * from event order by event_status desc, id asc")
+	@Select("select e.*, count(b.booth_name) as booth_count, count(a.staff_id) as staff_count from event e left join (select * from event_booth where flag = 'Y') b on e.id = b.event_id left join staff_application a on e.id = a.event_id group by e.id order by event_status desc, id asc")
 	List<EventVo> findDownloadList();
 
-	@Select("select * from event where (#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate}) order by event_status desc, id asc")
+	@Select("select e.*, count(b.booth_name) as booth_count, count(a.staff_id) as staff_count from event e left join (select * from event_booth where flag = 'Y') b on e.id = b.event_id left join staff_application a on e.id = a.event_id where (#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate}) group by e.id  order by event_status desc, id asc")
 	List<EventVo> event_Downloaddate(String startDate, String endDate);
 
-	@Select("select * from event where event_title like concat('%','${searchKeyword}','%') order by event_status desc, id asc")
+	@Select("select e.*, count(b.booth_name) as booth_count, count(a.staff_id) as staff_count from event e left join (select * from event_booth where flag = 'Y') b on e.id = b.event_id left join staff_application a on e.id = a.event_id where event_title like concat('%','${searchKeyword}','%') group by e.id  order by event_status desc, id asc")
 	List<EventVo> event_Downloadkey(String searchKeyword);
 
-	@Select("select * from event where ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) and event_title like concat('%','${searchKeyword}','%') order by event_status desc, id asc")
+	@Select("select e.*, count(b.booth_name) as booth_count, count(a.staff_id) as staff_count from event e left join (select * from event_booth where flag = 'Y') b on e.id = b.event_id left join staff_application a on e.id = a.event_id where event_title like concat('%','${searchKeyword}','%') and ((#{startDate} <= event_startDate and event_startDate <= #{endDate}) or (#{startDate} <= event_endDate and event_endDate <= #{endDate})) group by e.id  order by event_status desc, id asc")
 	List<EventVo> event_Downloadkeydate(String startDate, String endDate, String searchKeyword);
 	
 	
