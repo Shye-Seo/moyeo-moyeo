@@ -57,7 +57,6 @@ body {background:#F8F9FB;}
 
 .menu-categories .menu:hover{
     background-color: #7CA6DB;
-    border-left: 10px solid #ffffff99 ;
 }
 
 .menu-categories .selected{
