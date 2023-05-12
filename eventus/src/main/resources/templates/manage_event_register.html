@@ -11,9 +11,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script> -->
     <script src="/js/common.js"></script>
+
+        <!-- daterangepicker css -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+	 
+	<!-- daterangepicker js -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/manage_event_register.css">
@@ -52,17 +59,22 @@
                         <span>행사명</span>
                         <input type="text" name="event_title" class="required" placeholder="행사명을 입력해주세요." maxlength="50" >
                         <div class="date_wrap">
-                            <span>
+                            <!-- <span>
                                 <p>시작기간</p>
-                                <!-- <input type="date" name="event_startDate" data-placeholder="YYYY.MM.DD" required> -->
                                 <input type="text" name="event_startDate" class="datepicker date_input required" placeholder="YYYY.MM.DD"  maxlength="10" autocomplete='off'>
                             </span>
                             -
                             <span>
                                 <p>종료기간</p>
-                                <!-- <input type="date" name="event_endDate" data-placeholder="YYYY.MM.DD" required> -->
                                 <input type="text" name="event_endDate" class="datepicker date_input required" placeholder="YYYY.MM.DD" maxlength="10" autocomplete='off'>
-                            </span>
+                            </span> -->
+                            <div class="date_input">
+                                <input type="text" name="searchDate" placeholder="YYYY.MM.DD" id="searchDate" >
+                                <input type="text" name="searchDate" placeholder="YYYY.MM.DD" id="searchDate" >
+                            </div>
+                            <div class="calendar_button">
+                                <button type="button" class="search_img" onclick="calendar();"><img src="imgs/register-calendar.svg"></button>
+                            </div>
                         </div>
                         
                     </div>

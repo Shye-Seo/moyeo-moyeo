@@ -1,0 +1,110 @@
+.pre-button{
+	display: block;
+    position: absolute;
+    top: 50%; right: 0;
+    width: 250px; height: 50px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+}
+
+.modify-wrap{
+    width: 100%;
+    max-width: 1440px;
+    height: auto;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.modify-area{
+    width: 400px;
+}
+
+.modify-area .area_title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.modify-area .form_wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modify-area .box_form{
+    width: 100%;
+}
+
+.modify-area .box_form p{
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.modify-area .box_form input[type="text"]{
+    width: 100%; height: 50px;
+    background-color: #eee;
+    padding: 0 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #0000001A;
+    font-size: 16px;
+}
+.modify-area .box_form input[type="text"]::placeholder{
+    font-size: 14px;
+}
+
+.modify-area .box_form span{
+    display: flex;
+    justify-content: space-between;
+}
+
+#input_phone{
+    width: 275px;
+}
+
+#phone_check_bt, #phone_cancel_bt{
+    width: 100px; height: 50px;
+    background-color: #fff;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #5B8FD2;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#phone_cancel_bt{
+    color: #999;
+    display: none;
+}
+
+.redStar::after{
+    content: " *";
+    color: #DD5067;
+}
+
+.R_area .box_form input[type="text"]{
+    background-color: #fff;
+}
+
+#change_pw_button, #auth_bt{
+    width: 100%; height: 50px;
+    border-radius: 5px;
+    border: 0;
+    background-color: #5B8FD2;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.phone_bt_box, .phone_cancel_bt{
+    display: none;
+}
+

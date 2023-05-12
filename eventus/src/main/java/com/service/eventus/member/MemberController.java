@@ -64,6 +64,7 @@ public class MemberController {
         return mav;
     }
     
+    // 로그아웃로직
     @RequestMapping("/LogoutProc")
     public String Logout (HttpSession session) throws Exception{
     	session.invalidate();
@@ -107,6 +108,13 @@ public class MemberController {
         }else {
             return "failure";
         }
+    }
+    
+    //내 정보 설정 변경 페이지
+    @RequestMapping("/user_modify")
+    public String modifyUserInfo(HttpSession session) {
+    	
+    	return "user_modify";
     }
 
     // 휴대폰인증
