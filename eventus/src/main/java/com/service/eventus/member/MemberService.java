@@ -69,6 +69,11 @@ public class MemberService {
         return memberDao.updatePw(memberVo);
     }
 
+    // 휴대전화 번호 변경
+    public void updatePhone(MemberVo memberVo) throws Exception {
+        memberDao.updatePhone(memberVo);
+    }
+
     // 로그인할때 회원정보 가져올때
     public MemberVo viewMember(MemberVo memberVo) {
         return memberDao.viewMember(memberVo);

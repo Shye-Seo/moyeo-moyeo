@@ -21,7 +21,7 @@ public interface MemberDao {
             "values (#{user_id}, #{user_pw}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, #{user_gender}, #{user_date_join}, #{user_authority})")
     int insertUser(MemberVo memberVo);
 
-    @Select("select * from user where user_id = #{user_id} and user_pw = #{user_pw}")
+    @Select("select * from user where user_id = #{user_id}")
     MemberVo viewMember(MemberVo memberVo);  // 로그인할 때 회원정보 가져올 때
 
     @Select("select count(*) from user where user_id=#{user_id}")
@@ -41,5 +41,8 @@ public interface MemberDao {
     
     @Select("select file_name from staff_file where staff_id =#{user_id} order by id desc limit 1")
     String select_myProfile (int user_id); //프로필 조회
+
+    @Update("update user set user_phone = #{user_phone} where user_id = #{user_id}")
+    void updatePhone(MemberVo memberVo); //휴대폰 번호 변경
 
 }

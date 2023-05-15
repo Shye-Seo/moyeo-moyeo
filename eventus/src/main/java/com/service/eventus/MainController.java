@@ -45,6 +45,4 @@ public class MainController {
 		return "contract_file_forview";
 	}
 
-	@GetMapping(value="ChangePW")
-	public String ChaingPW() { return "ChangePW"; }
 }

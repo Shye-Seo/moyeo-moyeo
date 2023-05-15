@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,6 +68,19 @@ public class MemberController {
     	session.invalidate();
     	return "/login";
     }
+
+    @RequestMapping(value="/changePW")
+    public ModelAndView changePW(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        String user_id = (String) session.getAttribute("user_id");
+        MemberVo memberVo = new MemberVo();
+        memberVo.setUser_id(user_id);
+        memberVo = memberService.viewMember(memberVo);
+
+        mav.addObject("memberVo", memberVo);
+        mav.setViewName("/changePW");
+        return mav;
+    }
     
 
     // 아이디 찾기
@@ -107,6 +119,13 @@ public class MemberController {
         }else {
             return "failure";
         }
+    }
+
+    // 휴대전화 번호 변경
+    @RequestMapping("/updatePhone")
+    @ResponseBody
+    public void updatePhone(@ModelAttribute MemberVo memberVo) throws Exception {
+        memberService.updatePhone(memberVo);
     }
 
     // 휴대폰인증
