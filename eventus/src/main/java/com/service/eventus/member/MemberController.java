@@ -124,9 +124,16 @@ public class MemberController {
     
     //내 정보 설정 변경 페이지
     @RequestMapping("/user_modify")
-    public String modifyUserInfo(HttpSession session) {
-    	
-    	return "user_modify";
+    public ModelAndView modifyUserInfo(HttpSession session) {
+    	ModelAndView mav = new ModelAndView();
+        String user_id = (String) session.getAttribute("user_id");
+        MemberVo memberVo = new MemberVo();
+        memberVo.setUser_id(user_id);
+        memberVo = memberService.viewMember(memberVo);
+
+        mav.addObject("memberVo", memberVo);
+        mav.setViewName("/user_modify");
+        return mav;
     }
 
     // 휴대전화 번호 변경
@@ -142,7 +149,7 @@ public class MemberController {
     public String sendSMS(@RequestParam("user_phone") String userPhoneNumber) throws CoolsmsException { // 휴대폰 문자보내기
         int randomNumber = (int)((Math.random() * (9999 - 1000 +1)) + 1000); // 난수 생성
 
-        memberService.sendSms(userPhoneNumber, randomNumber);
+//        memberService.sendSms(userPhoneNumber, randomNumber);
         System.out.println(randomNumber);
         return Integer.toString(randomNumber);
     }

@@ -175,7 +175,7 @@ $(function() {
             $('#member input[name=user_phone]').focus();
             return false;
         }
-        else {증
+        else {
             alert("인증번호가 발송되었습니다. 인증번호를 입력해주세요.");
             setTimeout(function(){
                 $("#certifinum_submit").attr("disabled", false);
@@ -335,6 +335,7 @@ function certifinum_checking(input_num){
     if(input_num.length >= 4){
         if(certifinum == input_num){
             $('#certifinum_check').css({'background':'#00DE3C'});
+            $('#certifinum_check').css({'font-size':'14px'});
             clearInterval(timer)
             $("#certifi_time").text("");
             certifi_checked = "1";
@@ -342,11 +343,15 @@ function certifinum_checking(input_num){
             $("#certifinum_submit").val("인증완료");
             $("#certifinum_submit").attr("disabled", true);
         }else{
-            $('#certifinum_check').css({'background':'#DDDDDD'});
+            $('#certifinum_check').css({'background':'#FF7E93'});
+            $('#certifinum_check').css({'font-size':'10px'});
+            $('#certifinum_check').attr('value','✕');
             certifi_checked = "0";
         }
     }else{
         $('#certifinum_check').css({'background':'#DDDDDD'});
+        $('#certifinum_check').css({'font-size':'14px'});
+        $('#certifinum_check').attr('value','✓');
         certifi_checked = "0";
     }
 }

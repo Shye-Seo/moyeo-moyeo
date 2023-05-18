@@ -41,37 +41,47 @@
                             <div class="form_wrap">
                                 <div class="box_form">
                                     <p>아이디</p>
-                                    <input type="text" name="id" id="input_id" value="값입력" disabled>
+                                    <input type="text" th:value="${memberVo.user_id}" name="id" id="input_id" disabled>
                                 </div>
                                 <div class="box_form">
                                     <p>이름</p>
-                                    <input type="text" name="name" id="input_name" value="값입력" disabled>
+                                    <input type="text" th:value="${memberVo.user_name}" name="name" id="input_name" disabled>
                                 </div>
                                 <div class="box_form">
                                     <p>이메일주소</p>
-                                    <input type="text" name="email" id="input_email" placeholder="이메일주소를 입력해주세요">
+                                    <input type="text" th:value="${memberVo.user_email}" name="email" id="input_email" placeholder="이메일주소를 입력해주세요">
                                 </div>
                                 <div class="box_form">
                                     <p>생년월일</p>
-                                    <input type="text" name="gender" id="input_gender" value="값입력" disabled>
+                                    <input type="text" th:value="${memberVo.user_birth}" name="gender" id="input_gender" disabled>
                                 </div>
                                 <div class="box_form">
                                     <p>성별</p>
-                                    <input type="text" name="birth" id="input_birth" value="값입력" disabled>
+                                    <input type="text" th:value="${memberVo.user_gender}" name="birth" id="input_birth" disabled>
                                 </div>
                                 <div class="box_form">
                                     <p>휴대전화</p>
                                     <span>
-                                        <input type="text" name="phone" id="input_phone" placeholder="휴대전화번호를 입력해주세요" disabled onkeydown="putHyphen(event,this,3,6)">
-                                        <button type="button" id="phone_check_bt" onclick="click_ckBt()">변경하기</button>
-                                        <button type="button" id="phone_cancel_bt" onclick="click_ckBt()">취소</button>
+                                        <input type="text" name="phone" id="input_phone" class="onlyNum" th:value="${memberVo.user_phone}" placeholder="휴대전화번호를 입력해주세요" disabled>
+                                        <button type="button" id="phone_check_bt" onclick="click_ckBt(1)">변경하기</button>
+                                        <button type="button" id="phone_cancel_bt" onclick="click_ckBt(0)">취소</button>
                                     </span>
                                 </div>
                                 <div class="box_form phone_bt_box">
-                                    <button type="button" id="auth_bt" onclick="send_authNum()">인증번호 발송</button>
+                                    <button type="button" id="auth_bt">인증번호 발송</button>
                                 </div>
-                                <div class="box_form phone_bt_box">
-                                    <input type="text" name="phone" id="input_phone" placeholder="휴대전화번호를 입력해주세요">
+                                <div class="box_form phone_ck_box">
+                                    <span>
+                                        <div class="certifinum_area">
+                                            <span id="certifi_time"></span>
+                                            <input type="text" id="certifinum" placeholder="인증번호 입력" class="onlyNum" onkeyup="certifinum_checking($(this).val())">
+                                            <div class="check_icon"></div>
+                                            <input type="button" id="certifinum_check" value="✓" disabled>
+                                        </div>
+                                        <button type="button" id="resend">재인증</button>
+                                        <button type="button" id="submit_btn">변경</button>
+                                    </span>
+                                    
                                 </div>
                             </div>
                         </form>
@@ -83,15 +93,15 @@
                             <div class="form_wrap">
                                 <div class="box_form">
                                     <p class="redStar">현재 비밀번호</p>
-                                    <input type="text" name="old_pw" id="old_pw" placeholder="현재 비밀번호를 입력해주세요">
+                                    <input type="password" name="old_pw" id="old_pw" placeholder="현재 비밀번호를 입력해주세요" autocomplete="off">
                                 </div>
                                 <div class="box_form">
                                     <p class="redStar">변경 비밀번호</p>
-                                    <input type="text" name="new_pw" id="new_pw" placeholder="변경하실 비밀번호를 입력해주세요">
+                                    <input type="password" name="new_pw" id="new_pw" placeholder="변경하실 비밀번호를 입력해주세요" autocomplete="off">
                                 </div>
                                 <div class="box_form">
                                     <p class="redStar">현재 비밀번호 확인</p>
-                                    <input type="text" name="new_pw_ck" id="new_pw_ck" placeholder="비밀번호를 다시 입력해주세요">
+                                    <input type="password" name="new_pw_ck" id="new_pw_ck" placeholder="비밀번호를 다시 입력해주세요" autocomplete="off">
                                 </div>
                                 <div class="box_form">
                                     <button type="button" id="change_pw_button">변경하기</button>

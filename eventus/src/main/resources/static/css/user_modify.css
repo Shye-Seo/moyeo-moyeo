@@ -19,6 +19,7 @@
     display: flex;
     justify-content: space-around;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .modify-area{
@@ -47,7 +48,8 @@
     margin-bottom: 10px;
 }
 
-.modify-area .box_form input[type="text"]{
+.modify-area .box_form input[type="text"],
+.modify-area .box_form input[type="password"]{
     width: 100%; height: 50px;
     background-color: #eee;
     padding: 0 20px;
@@ -56,8 +58,13 @@
     border: 1px solid #0000001A;
     font-size: 16px;
 }
-.modify-area .box_form input[type="text"]::placeholder{
+.modify-area .box_form input[type="text"]::placeholder,
+.modify-area .box_form input[type="password"]::placeholder{
     font-size: 14px;
+}
+
+.certifinum_area #certifinum{
+    background-color: #fff;
 }
 
 .modify-area .box_form span{
@@ -65,11 +72,11 @@
     justify-content: space-between;
 }
 
-#input_phone{
+#input_phone, .certifinum_area{
     width: 275px;
 }
 
-#phone_check_bt, #phone_cancel_bt{
+#phone_check_bt, #phone_cancel_bt, #submit_btn, #resend{
     width: 100px; height: 50px;
     background-color: #fff;
     border: 1px solid #DDD;
@@ -78,6 +85,17 @@
     color: #5B8FD2;
     font-weight: 500;
     cursor: pointer;
+}
+
+#resend{
+    background-color: #333;
+    color: #FFF;
+}
+
+#submit_btn{
+    background-color: #5B8FD2;
+    color: #FFF;
+    display: none;
 }
 
 #phone_cancel_bt{
@@ -90,7 +108,7 @@
     color: #DD5067;
 }
 
-.R_area .box_form input[type="text"]{
+.R_area .box_form input[type="password"]{
     background-color: #fff;
 }
 
@@ -106,5 +124,33 @@
 
 .phone_bt_box, .phone_cancel_bt{
     display: none;
+}
+
+.phone_ck_box{
+    display: none;
+}
+
+.certifinum_area {
+    position: relative;
+}
+
+#certifinum_check{
+    position: absolute;
+    top: calc(50% - 10px); right: 20px;
+    width: 20px;  height: 20px;
+    border-radius: 50%;
+    background: #ddd;
+    border: 0;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+#certifi_time{
+    color: #DD5067;
+    position: absolute;
+    top: calc(50% - 8px); right: 50px;
+    font-size: 14px;
 }
 
