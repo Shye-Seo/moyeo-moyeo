@@ -68,6 +68,11 @@ public class MemberService {
     public int updatePw(MemberVo memberVo) throws Exception {
         return memberDao.updatePw(memberVo);
     }
+    
+    // 비밀번호 변경을 위한 비밀번호 조회
+    public String selectPw(MemberVo memberVo) throws Exception {
+        return memberDao.selectPw(memberVo);
+    }
 
     // 휴대전화 번호 변경
     public void updatePhone(MemberVo memberVo) throws Exception {

@@ -62,7 +62,7 @@ $(function(){
      // 휴대전화 번호 변경
      $('#submit_btn').click(function() {
         const newPhoneNum = $("#input_phone").val();
-        const userId = $("#input_name").val();
+        const userId = $("#input_id").val();
         $.ajax({
             url: "/updatePhone",
             type: "GET",
@@ -74,6 +74,53 @@ $(function(){
             alert("휴대전화 번호가 변경되었습니다.");
             // history.back();
             location.reload();
+        })
+    })
+
+    // 비밀번호 변경
+    $("#change_pw_button").click(function() {
+        if($("#old_pw").val() == "") {
+            alert("현재 비밀번호를 입력해주세요.");
+            return false;
+        }
+        else if($("#new_pw").val() == "" || $("#new_pw_ck").val() == "") {
+            alert("변경할 비밀번호를 입력해주세요.");
+            return false;
+        }
+        else if($("#new_pw").val().length < 10 || $("#new_pw").val().length > 16) {
+            alert("비밀번호는 10-16자로 입력해주세요.");
+            return false;
+        }
+        else if(!/^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{10,16}$/.test($("#new_pw").val())) {
+            alert("비밀번호는 영문 대소문자/숫자/특수문자 중 2가지 이상 조합해주세요.");
+            return false;
+        }
+        // 비밀번호가 다를 경우
+        else if($("#new_pw").val() != $("#new_pw_ck").val()) {
+            alert("변경할 비밀번호가 일치하지 않습니다.");
+            return false;
+        }
+
+        // ajax로 /updatePw 호출
+        $.ajax({
+            url: "/updatePw_modify",
+            type: "POST",
+            data: {
+                user_id: $("input[name=id]").val(),
+                user_pw: $("#new_pw").val(),
+                old_pw: $("#old_pw").val(),
+            },
+            success: function(data) {
+                if(data === "success"){
+                    alert("비밀번호가 변경되었습니다.");
+                    location.reload();
+                }else if(data === "different"){
+                    alert("현재비밀번호가 일치하지 않습니다.");
+                }else{
+                    console.log("비밀번호 변경실패")
+                }
+                // history.back();
+            }
         })
     })
 
@@ -97,6 +144,15 @@ function click_ckBt(state){
         }
         $("#input_phone").attr('disabled',true);
         $("#input_phone").removeAttr('style');
+
+        $('#certifinum_check').css({'background':'#DDDDDD'});
+        $('#certifinum_check').css({'font-size':'14px'});
+        $('#certifinum_check').attr('value','✓');
+        certifi_checked = "0";
+        
+        $("#certifinum_submit").removeAttr("disabled");
+        $('#resend').show();
+        $('#submit_btn').hide();
 
     }else if(state === 1){
 
@@ -159,8 +215,4 @@ function certifinum_checking(input_num){
     }
 }
 
-// function send_authNum(){
-//     const newPhoneNum = $("input_phone").val();
-
-// }
 

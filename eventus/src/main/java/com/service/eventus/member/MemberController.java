@@ -114,12 +114,33 @@ public class MemberController {
     @RequestMapping("/updatePw")
     @ResponseBody
     public String updatePw(@ModelAttribute MemberVo memberVo) throws Exception {
-        int result = memberService.updatePw(memberVo);
+    	int result = memberService.updatePw(memberVo);
         if(result == 1) {
             return "success";
         }else {
             return "failure";
         }
+    }
+    
+    // 회원정보 페이지에서 비밀번호 변경
+    @RequestMapping("/updatePw_modify")
+    @ResponseBody
+    public String updatePw_modify(@ModelAttribute MemberVo memberVo, 
+    		@RequestParam("old_pw") String oldPw) throws Exception {	
+    	int result = 0;
+    	String presentPw = memberService.selectPw(memberVo);
+    	if(presentPw.equals(oldPw)) {
+    		result = memberService.updatePw(memberVo);
+    	}else {
+    		result = 2;
+    	}
+    	if(result == 1) {
+    		return "success";
+    	}else if(result == 2) {
+    		return "different";
+    	}else {
+    		return "failure";
+    	}
     }
     
     //내 정보 설정 변경 페이지
@@ -140,6 +161,7 @@ public class MemberController {
     @RequestMapping("/updatePhone")
     @ResponseBody
     public void updatePhone(@ModelAttribute MemberVo memberVo) throws Exception {
+    	System.out.println(memberVo);
         memberService.updatePhone(memberVo);
     }
 
