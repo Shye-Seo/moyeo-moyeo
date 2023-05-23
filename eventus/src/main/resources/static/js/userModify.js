@@ -8,8 +8,12 @@ $(function(){
     //인증번호 발송
     $("#auth_bt").click(()=>{
         const newPhoneNum = $("#input_phone").val();
+        const oldPhoneNum = $("#input_phone").attr("data-num");
         if(newPhoneNum == "" || newPhoneNum == undefined) {
             alert("휴대전화 번호를 입력해주세요.");
+            return false;
+        }else if(newPhoneNum == oldPhoneNum){
+            alert("현재 전화번호와 같습니다.");
             return false;
         }
         // 인증번호 요청
@@ -113,13 +117,12 @@ $(function(){
             success: function(data) {
                 if(data === "success"){
                     alert("비밀번호가 변경되었습니다.");
-                    location.reload();
+                    location.href='/LogoutProc';
                 }else if(data === "different"){
                     alert("현재비밀번호가 일치하지 않습니다.");
                 }else{
                     console.log("비밀번호 변경실패")
                 }
-                // history.back();
             }
         })
     })
@@ -134,6 +137,7 @@ function click_ckBt(state){
     certinum = 0;
     certifi_checked = "0"; 
 
+    //취소버튼
     if(state === 0){
         $(".phone_ck_box").hide();
         $(".phone_bt_box").hide();
@@ -144,6 +148,7 @@ function click_ckBt(state){
         }
         $("#input_phone").attr('disabled',true);
         $("#input_phone").removeAttr('style');
+        $("#input_phone").val($("#input_phone").attr("data-num"))
 
         $('#certifinum_check').css({'background':'#DDDDDD'});
         $('#certifinum_check').css({'font-size':'14px'});
@@ -153,7 +158,8 @@ function click_ckBt(state){
         $("#certifinum_submit").removeAttr("disabled");
         $('#resend').show();
         $('#submit_btn').hide();
-
+    
+    //변경하기버튼
     }else if(state === 1){
 
         $(".phone_bt_box").show();
@@ -198,9 +204,7 @@ function certifinum_checking(input_num){
             clearInterval(timer)
             $("#certifi_time").text("");
             certifi_checked = "1";
-            $('#certifinum').attr('readonly','true');
-            $("#certifinum_submit").val("인증완료");
-            $("#certifinum_submit").attr("disabled", true);
+            $('#certifinum').attr('disabled','true');
         }else{
             $('#certifinum_check').css({'background':'#FF7E93'});
             $('#certifinum_check').css({'font-size':'10px'});

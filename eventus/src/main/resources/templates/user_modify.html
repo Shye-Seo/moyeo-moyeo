@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="box_form">
                                     <p>이메일주소</p>
-                                    <input type="text" th:value="${memberVo.user_email}" name="email" id="input_email" placeholder="이메일주소를 입력해주세요">
+                                    <input type="text" th:value="${memberVo.user_email}" name="email" id="input_email" placeholder="이메일주소를 입력해주세요" disabled>
                                 </div>
                                 <div class="box_form">
                                     <p>생년월일</p>
@@ -62,7 +62,7 @@
                                 <div class="box_form">
                                     <p>휴대전화</p>
                                     <span>
-                                        <input type="text" name="phone" id="input_phone" class="onlyNum" th:value="${memberVo.user_phone}" placeholder="휴대전화번호를 입력해주세요" disabled>
+                                        <input type="text" name="phone" id="input_phone" class="onlyNum" th:value="${memberVo.user_phone}" placeholder="휴대전화번호를 입력해주세요" th:data-num = "${memberVo.user_phone}" disabled>
                                         <button type="button" id="phone_check_bt" onclick="click_ckBt(1)">변경하기</button>
                                         <button type="button" id="phone_cancel_bt" onclick="click_ckBt(0)">취소</button>
                                     </span>
