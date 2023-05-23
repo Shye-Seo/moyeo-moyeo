@@ -563,6 +563,21 @@ input:focus-visible {
 
 
 /* join2 */
+
+sup, #sup {
+    color: #dd5067;
+}
+
+#checking {
+    width: 500px;
+    text-align:right;
+    margin: auto;
+}
+
+#checking p {
+    font-size: 12px;
+}
+
 #member {
     width:500px;
     margin:0 auto;
