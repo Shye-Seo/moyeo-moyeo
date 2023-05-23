@@ -16,12 +16,6 @@
             //필수값 체크
             $('#submit_bt').click(function(){
                 let result = true;
-                
-                if($('.date_input[name="event_endDate"]').val() < $('.date_input[name="event_startDate"]').val()){
-                    alert("행사 기간이 잘못 입력되었습니다.")
-                    result = false;
-                    return false;
-                }
                 $('.required').each(function(){
                     if($(this).val() == ""){
                         $(this).focus();
@@ -167,6 +161,9 @@
                 $('.area4').append('<input type="text" name="event_position_endTime" hidden/>')
                 $('.area4').append('<input type="text" name="event_position_pay" hidden/>')
 
+                $('.area4').append('<input type="text" name="event_startDate" hidden/>')
+                $('.area4').append('<input type="text" name="event_endDate" hidden/>')
+
 
                 if(position_num>1){ //추가 없을시 바로 submit
                     for(let i=1;position_num>i;i++){ 
@@ -177,6 +174,14 @@
                         event_position_pay += ','+$('input[name="input_event_position_pay'+i+'"]').val();
                     }
                 }
+
+                //
+                const searchDate = $("#searchDate").val();
+                const searchDateArr = searchDate.split(' - ')
+
+                $('input[name="event_startDate"]').val(searchDateArr[0])
+                $('input[name="event_endDate"]').val(searchDateArr[1])
+                
 
                 // hidden input요소에 합친 값을 저장
                 $('input[name="event_position"]').val(event_position);

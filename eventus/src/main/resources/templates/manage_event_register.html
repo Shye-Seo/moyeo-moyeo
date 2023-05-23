@@ -11,11 +11,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script> -->
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
     <script src="/js/common.js"></script>
 
-        <!-- daterangepicker css -->
+    <!-- daterangepicker css -->
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	 
 	<!-- daterangepicker js -->
@@ -26,7 +26,28 @@
     <link rel="stylesheet" href="css/manage_event_register.css">
     
     <script src="js/event_register.js"></script>
-
+    <script>
+        $(function(){
+            $("#searchDate").daterangepicker({
+                "autoApply": true,	//날짜 선택하면 input에 자동적용
+                "opens":'left',		//왼쪽으로 open
+                locale: {
+                "separator": " - ",          // 시작일시와 종료일시 구분자
+                "format": 'YYYY.MM.DD',     // 일시 노출 포맷
+    //                     	    "applyLabel": "확인",                    // 확인 버튼 텍스트
+    //                     	    "cancelLabel": "취소",                   // 취소 버튼 텍스트
+                "daysOfWeek": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+                "monthNames": ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                },
+                    timePicker: false,                        // 시간 노출 여부
+                    showDropdowns: true,                     // 년월 수동 설정 여부
+                    timePicker24Hour: false,                  // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
+                    timePickerSeconds: false,                 // 초 노출 여부
+                    singleDatePicker: false,                   // 하나의 달력 사용 여부
+                    linkedCalendars: false					  //각 달력 <>연결해서 이동되지 않도록 false
+            })
+        })
+    </script>
 </head>
 <body>
     <div id="wrap">
@@ -59,22 +80,8 @@
                         <span>행사명</span>
                         <input type="text" name="event_title" class="required" placeholder="행사명을 입력해주세요." maxlength="50" >
                         <div class="date_wrap">
-                            <!-- <span>
-                                <p>시작기간</p>
-                                <input type="text" name="event_startDate" class="datepicker date_input required" placeholder="YYYY.MM.DD"  maxlength="10" autocomplete='off'>
-                            </span>
-                            -
-                            <span>
-                                <p>종료기간</p>
-                                <input type="text" name="event_endDate" class="datepicker date_input required" placeholder="YYYY.MM.DD" maxlength="10" autocomplete='off'>
-                            </span> -->
-                            <div class="date_input">
-                                <input type="text" name="searchDate" placeholder="YYYY.MM.DD" id="searchDate" >
-                                <input type="text" name="searchDate" placeholder="YYYY.MM.DD" id="searchDate" >
-                            </div>
-                            <div class="calendar_button">
-                                <button type="button" class="search_img" onclick="calendar();"><img src="imgs/register-calendar.svg"></button>
-                            </div>
+                            <p>시작기간 - 종료기간</p>
+                            <input type="text" class="date_input required" name="searchDate" placeholder="YYYY.MM.DD - YYYY.MM.DD" id="searchDate">
                         </div>
                         
                     </div>
