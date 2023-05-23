@@ -26,7 +26,7 @@
                 })
 
             })
-            
+
         </script>
     </head>
     <body>
@@ -49,6 +49,9 @@
                         <li class="active">회원정보</li>
                         <li class="inactive">가입완료</li>
                     </ul>
+                </div>
+                <div id="checking">
+                    <p><span id="sup">*</span>표시는 필수 입력입니다.</p>
                 </div>
 
                 <!-- 회원 정보 입력 -->
@@ -92,7 +95,7 @@
                                 <div><select id="birth_month"><option disabled selected>월</option></select></div>
                                 <div><select id="birth_day"><option disabled selected>일</option></select></div>
                             </div>
-        
+
                             <div class="gender_area">
                                 <input type="radio" name="user_gender" value="남"/>남성
                                 <input type="radio" name="user_gender" value="여" />여성
@@ -105,7 +108,7 @@
                                 <input type="text" name="user_phone" placeholder="예) 01012345678">
                                 <input type="button" id="certifinum_submit" value="인증">
                             </div>
-        
+
                             <div class="certifinum_area">
                                 <p class="item">인증번호<sup>*</sup></p>
                                 <span id="certifi_time"></span>
@@ -117,7 +120,7 @@
                         <input type="text" name="user_date_join" hidden/>
                     </form>
                 </div>
-    
+
                 <div class="button_position join2_button">
                     <input type="button" value="뒤로" class="back_btn" onclick="location.href='/join1'">
                     <input type="button" value="회원가입" class="join_complete_btn">
