@@ -59,18 +59,18 @@ $(function() {
         if($(this).val() == null || $(this).val() == "") {
             id_checked = "0";
             $("#id_check").text("");
-            $("#id_check").css("color", "red");
+            $("#id_check").css("color", "#DD5067");
         }
         else if(!regExp.test($(this).val())){
             idf_checked = "0";
             $("#id_check").text("아이디가 영문, 숫자 조합 6~12자이어야 합니다.");
-            $("#id_check").css("color", "red");
+            $("#id_check").css("color", "#DD5067");
         }
         // 공백 및 중복 아이디 입력 방지
         else if($(this).val().indexOf(" ") >= 0) {
             id_checked = "0";
             $("#id_check").text("공백 없이 입력해주세요.");
-            $("#id_check").css("color", "red");
+            $("#id_check").css("color", "#DD5067");
         }
         else { // 아이디 중복 확인
             $.ajax({
@@ -81,7 +81,7 @@ $(function() {
                 if(data == 1) {
                     id_checked = "0";
                     $("#id_check").text("이미 사용중인 아이디입니다.");
-                    $("#id_check").css("color", "red");
+                    $("#id_check").css("color", "#DD5067");
                 }
                 else {
                     id_checked = "1";
@@ -312,7 +312,7 @@ $(function() {
                     user_email: $('#member input[name=user_email]').val(),
                     user_birth: $('#member #birth_year').val() + '-' + $('#member #birth_month').val() + '-' + $('#member #birth_day').val(),
                     user_gender: $("#member input[name=user_gender]:checked").val(),
-                    user_phone: $('#member input[name=user_phone]').val().replace(/-/gi, ''),
+                    user_phone: $('#member input[name=user_phone]').val().replace(/\D/g, ""),
                     user_date_join: today,
                     user_authority:1,
                 }
@@ -322,7 +322,7 @@ $(function() {
                 }
                 else {
                     alert("회원가입에 실패하였습니다.");
-                    location.href = "/join2";
+                    location.href = "/join2"; 
                 }
             })
         }

@@ -24,6 +24,8 @@ public class MemberService {
 
     // 회원가입
     public int insertUser(MemberVo memberVo) {
+    	String phoneNum = memberVo.getUser_phone().replaceAll("\\D", "");;
+    	memberVo.setUser_phone(phoneNum);
         return memberDao.insertUser(memberVo);
     }
 
@@ -56,11 +58,15 @@ public class MemberService {
 
     // 아이디 찾기(user_id 반환)
     public Map findId(MemberVo memberVo) throws Exception {
+    	String phoneNum = memberVo.getUser_phone().replaceAll("\\D", "");;
+    	memberVo.setUser_phone(phoneNum);
         return memberDao.findId(memberVo);
     }
 
     // 비밀번호 변경을 위한 아이디 찾기(user_id 반환)
     public String findIdForPw(MemberVo memberVo) throws Exception {
+    	String phoneNum = memberVo.getUser_phone().replaceAll("\\D", "");;
+    	memberVo.setUser_phone(phoneNum);
         return memberDao.findIdForPw(memberVo);
     }
 
