@@ -1029,7 +1029,7 @@ public class EventController {
 		cell.setCellValue("진행현황");
         cell.setCellStyle(style);
 		cell = row.createCell(4);
-		cell.setCellValue("지원현황");
+		cell.setCellValue("지원현황/합격자현황");
         cell.setCellStyle(style);
 		cell = row.createCell(5);
 		cell.setCellValue("부스현황");
