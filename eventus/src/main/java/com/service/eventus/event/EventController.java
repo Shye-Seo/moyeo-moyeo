@@ -155,8 +155,8 @@ public class EventController {
 	    	 
 	    	 LocalDate localdate_start = LocalDate.parse(date_s, DateTimeFormatter.ofPattern("yyyyMMdd"));
 	    	 LocalDate localdate_end = LocalDate.parse(date_e, DateTimeFormatter.ofPattern("yyyyMMdd"));
-	    	 LocalDate localdate = LocalDate.parse(date_d, DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
-	    	 LocalDate localdate_now = LocalDate.parse(nowTime, DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+	    	 LocalDateTime localdate = LocalDateTime.parse(date_d, DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+	    	 LocalDateTime localdate_now = LocalDateTime.parse(nowTime, DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
 	    	 
 	    	 //compareTo메서드를 통한 날짜비교
 	    	 int compare = localdate_start.compareTo(now);

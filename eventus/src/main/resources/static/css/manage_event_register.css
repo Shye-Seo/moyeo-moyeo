@@ -52,7 +52,7 @@
 }
 
 .date_wrap .date_input{
-    width: 60%;
+    width: 60%; min-width : 210px;
     padding-right: 10px;
     padding-top: 15px;
     cursor: pointer;
