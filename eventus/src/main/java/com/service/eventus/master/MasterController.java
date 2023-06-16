@@ -716,11 +716,8 @@ public class MasterController {
  	    }else if(searchKeyword != null && searchDate != null){ 
  	    	startDate = searchDate.substring(0, 10);
  	    	endDate = searchDate.substring(13, 23);
-// 	    	
-// 	    	startDate = startDate.substring(0, 4) + "-" + startDate.substring(5, 7) + "-" + startDate.substring(8, 10);
-// 	    	endDate = endDate.substring(0, 4) + "-" + endDate.substring(5, 7) + "-" + endDate.substring(8, 10);
-     		
- 	    	if(startDate.equals(today) && endDate.equals(today)) { //키워드검색, 날짜null처리
+ 	    	
+ 	    	if(startDate.equals(today.replace("-", ".")) && endDate.equals(today.replace("-", "."))) { //키워드검색, 날짜null처리
  	    		totalListCnt = masterService.WorkSearchCnt_key(searchKeyword);
  	    		pagination = new PagingVo(totalListCnt, page);
  	    		startIndex = pagination.getStartIndex();
