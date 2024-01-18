@@ -25,7 +25,7 @@
 
 <br>
 
-## 💡 ERD 
+## 📝 ERD 
 ![모여모여_ERD](https://github.com/Shye-Seo/moyeo-moyeo/assets/93040911/601bda26-aae1-4c9f-bf84-b926dfc8783e)
 
 <br>
