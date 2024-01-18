@@ -37,3 +37,12 @@
 * 최유경 : 출퇴근기록
 
 <br>
+
+## ✔ Service Flow
+* 관리자
+![이벤터즈랩_와이어프레임_관리자(down)](https://github.com/Shye-Seo/moyeo-moyeo/assets/93040911/17032428-8c10-4fe7-808b-1cd39fb1b70f)
+
+* 스태프
+![이벤터즈랩_와이어프레임_스태프(down)](https://github.com/Shye-Seo/moyeo-moyeo/assets/93040911/625c5f4e-1e76-4972-a595-5d344c84023f)
+
+<br>
